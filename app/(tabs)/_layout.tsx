@@ -1,37 +1,45 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { Tabs } from 'expo-router'
+import React from 'react'
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
-  );
+    return (
+        <Tabs
+            screenOptions={{
+                tabBarActiveTintColor: 'white',
+            }}>
+            <Tabs.Screen
+                name='index'
+                options={{
+                    title: 'Informações',
+                    tabBarIcon: ({ color }) => (
+                        <FontAwesome6 name='chart-simple' size={24} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen name='schedulings'
+                options={{
+                    title: 'Agendamentos',
+                    tabBarIcon: ({ color }) => (
+                        <FontAwesome5 name='calendar-plus' size={24} color={color} />
+                    )
+                }} />
+            <Tabs.Screen name='expenses'
+                options={{
+                    title: 'Despesas',
+                    tabBarIcon: ({ color }) => (
+                        <FontAwesome6 name='arrow-trend-down' size={24} color={color} />
+                    )
+                }} />
+            <Tabs.Screen name='services'
+                options={{
+                    title: 'Serviços',
+                    tabBarIcon: ({ color }) => (
+                        <FontAwesome6 name='bag-shopping' size={24} color={color} />
+                    )
+                }} />
+        </Tabs>
+    )
 }
