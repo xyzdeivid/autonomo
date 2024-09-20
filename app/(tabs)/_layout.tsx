@@ -9,10 +9,12 @@ export default function TabLayout() {
         <Tabs
             screenOptions={{
                 tabBarActiveTintColor: 'white',
+                tabBarInactiveBackgroundColor: 'white'
             }}>
             <Tabs.Screen
                 name='index'
                 options={{
+                    tabBarActiveBackgroundColor: 'darkgreen',
                     title: 'Informações',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='chart-simple' size={24} color={color} />
@@ -21,6 +23,7 @@ export default function TabLayout() {
             />
             <Tabs.Screen name='schedulings'
                 options={{
+                    tabBarActiveBackgroundColor: 'darkblue',
                     title: 'Agendamentos',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome5 name='calendar-plus' size={24} color={color} />
@@ -28,6 +31,7 @@ export default function TabLayout() {
                 }} />
             <Tabs.Screen name='expenses'
                 options={{
+                    tabBarActiveBackgroundColor: 'darkred',
                     title: 'Despesas',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='arrow-trend-down' size={24} color={color} />
@@ -35,6 +39,7 @@ export default function TabLayout() {
                 }} />
             <Tabs.Screen name='services'
                 options={{
+                    tabBarActiveBackgroundColor: '#000033',
                     title: 'Serviços',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='bag-shopping' size={24} color={color} />
