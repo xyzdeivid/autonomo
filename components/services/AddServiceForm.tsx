@@ -62,8 +62,11 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '50%',
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'white'
+        borderBottomWidth: 1,
+        borderBottomColor: 'white',
+        color: 'white',
+        padding: 0,
+        margin: 0
     },
     buttonsContainer: {
         display: 'flex',
