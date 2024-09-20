@@ -12,7 +12,6 @@ export default function AnyItemWarning() {
 
 const styles = StyleSheet.create({
     text: {
-        color: 'white',
         textAlign: 'center',
         padding: 20
     }
