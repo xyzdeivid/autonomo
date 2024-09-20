@@ -3,6 +3,7 @@ import { useContext, useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign'
 
 import { DocsContext } from '@/context/DocsContext'
+import FormBody from '../common/FormBody'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -27,7 +28,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     }
 
     return (
-        <View style={styles.container}>
+        <FormBody>
             <View style={styles.inputContainer}>
                 <Text style={{ color: 'white' }}>Nome:</Text>
                 <TextInput style={styles.input} onChangeText={text => setName(text)} />
@@ -44,16 +45,12 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                     <AntDesign name='close' size={24} color='white' />
                 </Pressable>
             </View>
-        </View>
+        </FormBody>
     )
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#3D3D3D',
-        padding: 10
-    },
     inputContainer: {
         display: 'flex',
         flexDirection: 'row',
