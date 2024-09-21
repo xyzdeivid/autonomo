@@ -9,7 +9,7 @@ export default function NumberInput({ setValue }: NumberInputProps) {
     return (
         <View style={styles.inputContainer}>
             <Text style={{ color: 'black' }}>Valor:</Text>
-            <TextInput style={styles.input} keyboardType='numeric' onChangeText={text => setValue(Number(text))} />
+            <TextInput style={styles.input} keyboardType='numeric' onChangeText={text => setValue(Number(text.replace(',', '.')))} />
         </View>
     )
 

@@ -42,7 +42,7 @@ export default function ServicesList({ setEditServiceForm, setServiceForDeletion
             </DataTable.Header>
             {services.map(service => {
                 return (
-                    <DataTable.Row>
+                    <DataTable.Row key={service._id}>
                         <DataTable.Cell style={styles.text}>{service._id}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>
