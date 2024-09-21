@@ -1,5 +1,5 @@
-import { StyleSheet, View } from 'react-native'
-import { useContext, useState } from 'react'
+import { StyleSheet } from 'react-native'
+import { useContext } from 'react'
 import { DataTable } from 'react-native-paper'
 import { DocsContext } from '@/context/DocsContext'
 import AntDesign from '@expo/vector-icons/AntDesign'
@@ -26,6 +26,12 @@ export default function ServicesList({ setEditServiceForm, setServiceForDeletion
         setEditServiceForm(true)
     }
 
+    const moneyFormat = (value: number) => {
+        const formatedData = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+            .format(Number(value)).replace('R$', '')
+        return formatedData
+    }
+
     return (
         <DataTable style={styles.container}>
             <DataTable.Header>
@@ -38,7 +44,7 @@ export default function ServicesList({ setEditServiceForm, setServiceForDeletion
                 return (
                     <DataTable.Row>
                         <DataTable.Cell style={styles.text}>{service._id}</DataTable.Cell>
-                        <DataTable.Cell style={styles.text}>{service.value}</DataTable.Cell>
+                        <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>
                             <FontAwesome6 onPress={() => editService(service._id)} name='edit' size={18} color='black' />
                         </DataTable.Cell>
