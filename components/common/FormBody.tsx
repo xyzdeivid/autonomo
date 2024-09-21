@@ -16,7 +16,8 @@ export default function FormBody({ children }: FormBodyProps) {
 
 const style = StyleSheet.create({
     body: {
-        backgroundColor: '#3D3D3D',
-        padding: 10
+        backgroundColor: 'white',
+        padding: 16,
+        borderRadius: 6
     }
 })

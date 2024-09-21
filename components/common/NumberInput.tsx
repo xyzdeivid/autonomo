@@ -8,7 +8,7 @@ export default function NumberInput({ setValue }: NumberInputProps) {
 
     return (
         <View style={styles.inputContainer}>
-            <Text style={{ color: 'white' }}>Valor:</Text>
+            <Text style={{ color: 'black' }}>Valor:</Text>
             <TextInput style={styles.input} keyboardType='numeric' onChangeText={text => setValue(Number(text))} />
         </View>
     )
@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
     input: {
         width: '50%',
         borderBottomWidth: 1,
-        borderBottomColor: 'white',
-        color: 'white',
+        borderBottomColor: '#E5E4E4',
+        color: 'black',
         padding: 0,
         margin: 0
     }

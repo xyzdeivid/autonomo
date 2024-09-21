@@ -1,9 +1,11 @@
-import { Pressable, Text } from 'react-native'
+import { Pressable, StyleSheet, Text } from 'react-native'
 import FormBody from '../common/FormBody'
 import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
+import SubmitFormButtons from '../common/SubmitFormButtons'
+import FormTitle from '../common/FormTitle'
 
 interface EditServiceFormProps {
     service: string
@@ -31,16 +33,18 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
     return (
         <FormContainer>
             <FormBody>
-                <Text>{service}</Text>
+                <FormTitle text='Editar Serviço' />
+                <Text style={styles.serviceName}>{service}</Text>
                 <NumberInput setValue={setValue} />
-                <Pressable onPress={() => editService()}>
-                    <Text style={{ color: 'white' }}>Confirmar</Text>
-                </Pressable>
-                <Pressable onPress={() => setEditServiceForm(false)}>
-                    <Text>Cancelar</Text>
-                </Pressable>
+                <SubmitFormButtons submit={editService} setFormOff={setEditServiceForm} submitButtonText='Editar' />
             </FormBody>
         </FormContainer>
     )
 
 }
+
+const styles = StyleSheet.create({
+    serviceName: {
+        fontSize: 20
+    }
+})
