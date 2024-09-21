@@ -5,6 +5,7 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 import { DocsContext } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
 import NumberInput from '../common/NumberInput'
+import FormContainer from '../common/FormContainer'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,21 +30,23 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     }
 
     return (
-        <FormBody>
-            <View style={styles.inputContainer}>
-                <Text style={{ color: 'white' }}>Nome:</Text>
-                <TextInput style={styles.input} onChangeText={text => setName(text)} />
-            </View>
-            <NumberInput setValue={setValue} />
-            <View style={styles.buttonsContainer}>
-                <Pressable onPress={() => addService()} style={styles.button}>
-                    <Text style={{ color: 'white' }}>Cadastrar</Text>
-                </Pressable>
-                <Pressable onPress={() => setAddServiceForm(false)} style={styles.button}>
-                    <AntDesign name='close' size={24} color='white' />
-                </Pressable>
-            </View>
-        </FormBody>
+        <FormContainer>
+            <FormBody>
+                <View style={styles.inputContainer}>
+                    <Text style={{ color: 'white' }}>Nome:</Text>
+                    <TextInput style={styles.input} onChangeText={text => setName(text)} />
+                </View>
+                <NumberInput setValue={setValue} />
+                <View style={styles.buttonsContainer}>
+                    <Pressable onPress={() => addService()} style={styles.button}>
+                        <Text style={{ color: 'white' }}>Cadastrar</Text>
+                    </Pressable>
+                    <Pressable onPress={() => setAddServiceForm(false)} style={styles.button}>
+                        <AntDesign name='close' size={24} color='white' />
+                    </Pressable>
+                </View>
+            </FormBody>
+        </FormContainer>
     )
 
 }

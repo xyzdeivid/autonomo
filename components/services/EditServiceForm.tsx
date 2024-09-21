@@ -3,6 +3,7 @@ import FormBody from '../common/FormBody'
 import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import NumberInput from '../common/NumberInput'
+import FormContainer from '../common/FormContainer'
 
 interface EditServiceFormProps {
     service: string
@@ -28,16 +29,18 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
     }
 
     return (
-        <FormBody>
-            <Text>{service}</Text>
-            <NumberInput setValue={setValue} />
-            <Pressable onPress={() => editService()}>
-                <Text style={{ color: 'white' }}>Confirmar</Text>
-            </Pressable>
-            <Pressable onPress={() => setEditServiceForm(false)}>
-                <Text>Cancelar</Text>
-            </Pressable>
-        </FormBody>
+        <FormContainer>
+            <FormBody>
+                <Text>{service}</Text>
+                <NumberInput setValue={setValue} />
+                <Pressable onPress={() => editService()}>
+                    <Text style={{ color: 'white' }}>Confirmar</Text>
+                </Pressable>
+                <Pressable onPress={() => setEditServiceForm(false)}>
+                    <Text>Cancelar</Text>
+                </Pressable>
+            </FormBody>
+        </FormContainer>
     )
 
 }
