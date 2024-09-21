@@ -1,5 +1,5 @@
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { DocsContext } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
@@ -7,6 +7,7 @@ import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import FormTitle from '../common/FormTitle'
+import { HideTabBarContext } from '@/context/HideTabBar'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -17,6 +18,11 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
     const [services, setServices] = useContext(DocsContext).services
+    const [, setHideTabBar] = useContext(HideTabBarContext)
+
+    useEffect(() => {
+        setHideTabBar(true)
+    }, [])
 
     function addService() {
 

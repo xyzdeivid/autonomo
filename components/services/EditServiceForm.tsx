@@ -1,11 +1,12 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
 import FormBody from '../common/FormBody'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import FormTitle from '../common/FormTitle'
+import { HideTabBarContext } from '@/context/HideTabBar'
 
 interface EditServiceFormProps {
     service: string
@@ -16,6 +17,11 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
 
     const [services, setServices] = useContext(DocsContext).services
     const [value, setValue] = useState(0)
+    const [, setHideTabBar] = useContext(HideTabBarContext)
+
+    useEffect(() => {
+        setHideTabBar(true)
+    }, [])  
 
     const editService = () => {
         // Separando os serviços que não serão editados
