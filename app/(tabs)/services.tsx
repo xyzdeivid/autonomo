@@ -18,7 +18,7 @@ export default function Services() {
         <View style={styles.container}>
             {
                 services[0]
-                    ? <ServicesList setEditServiceForm={setEditServiceForm} setServiceForDeletion={setServiceForDeletion}/>
+                    ? <ServicesList setEditServiceForm={setEditServiceForm} setServiceForDeletion={setServiceForDeletion} />
                     : <AnyItemWarning />
             }
             {
@@ -28,7 +28,7 @@ export default function Services() {
             }
             {
                 editServiceForm
-                    ? <EditServiceForm service={serviceForDeletion} />
+                    ? <EditServiceForm service={serviceForDeletion} setEditServiceForm={setEditServiceForm} />
                     : null
             }
         </View>

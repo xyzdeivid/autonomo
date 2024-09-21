@@ -4,6 +4,7 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 
 import { DocsContext } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
+import NumberInput from '../common/NumberInput'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -33,10 +34,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                 <Text style={{ color: 'white' }}>Nome:</Text>
                 <TextInput style={styles.input} onChangeText={text => setName(text)} />
             </View>
-            <View style={styles.inputContainer}>
-                <Text style={{ color: 'white' }}>Valor:</Text>
-                <TextInput style={styles.input} keyboardType='numeric' onChangeText={text => setValue(Number(text))} />
-            </View>
+            <NumberInput setValue={setValue} />
             <View style={styles.buttonsContainer}>
                 <Pressable onPress={() => addService()} style={styles.button}>
                     <Text style={{ color: 'white' }}>Cadastrar</Text>
