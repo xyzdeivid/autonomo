@@ -24,7 +24,7 @@ export default function Services() {
             {
                 addServiceForm
                     ? <AddServiceForm setAddServiceForm={setAddServiceForm} />
-                    : <AddItemButton setForm={setAddServiceForm} />
+                    : <AddItemButton setForm={setAddServiceForm} bgColor='#000033' />
             }
             {
                 editServiceForm

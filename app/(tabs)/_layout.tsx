@@ -12,9 +12,11 @@ export default function TabLayout() {
         <Tabs
             screenOptions={{
                 tabBarActiveTintColor: 'white',
+                tabBarInactiveTintColor: 'black',
                 tabBarInactiveBackgroundColor: 'white',
                 tabBarStyle: {
-                    display: hideTabBar ? 'none' : 'flex'
+                    display: hideTabBar ? 'none' : 'flex',
+                    borderTopWidth: 0
                 }
             }}>
             <Tabs.Screen
