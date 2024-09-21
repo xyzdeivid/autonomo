@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import { useContext, useState } from 'react'
 
 import { DocsContext } from '@/context/DocsContext'
@@ -16,17 +16,29 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
-    const [, setServices] = useContext(DocsContext).services
+    const [services, setServices] = useContext(DocsContext).services
 
     function addService() {
 
+        // Criando novo serviço
         const service = {
             _id: name, value
         }
 
-        setServices(services => [...services, service])
+        // Verificando se já existe um serviço com o nome igual
+        const isThereAnotherService = services.filter(service => {
+            return service._id == name
+        })
 
-        setAddServiceForm(false)
+        if (isThereAnotherService[0]) {
+            setAddServiceForm(false)
+            setTimeout(() => {
+                Alert.alert('Serviço existente', 'Um serviço com este nome já existe')
+            }, 500)
+        } else {
+            setServices([...services, service])
+            setAddServiceForm(false)
+        }
 
     }
 
