@@ -6,6 +6,7 @@ import AddServiceForm from '@/components/services/AddServiceForm'
 import { DocsContext } from '@/context/DocsContext'
 import ServicesList from '@/components/services/ServicesList'
 import EditServiceForm from '@/components/services/EditServiceForm'
+import Container from '@/components/common/Container'
 
 export default function Services() {
 
@@ -15,7 +16,7 @@ export default function Services() {
     const [services] = useContext(DocsContext).services
 
     return (
-        <View style={styles.container}>
+        <Container>
             {
                 services[0]
                     ? <ServicesList setEditServiceForm={setEditServiceForm} setServiceForDeletion={setServiceForDeletion} />
@@ -31,14 +32,7 @@ export default function Services() {
                     ? <EditServiceForm service={serviceForDeletion} setEditServiceForm={setEditServiceForm} />
                     : null
             }
-        </View>
+        </Container>
     )
 
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white'
-    }
-})

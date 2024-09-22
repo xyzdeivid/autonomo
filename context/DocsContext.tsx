@@ -10,25 +10,43 @@ export interface Service {
     value: number
 }
 
-export type Services = Service[]
-
 export type SetService = React.Dispatch<React.SetStateAction<Service>>
 
-export type SetServices = React.Dispatch<React.SetStateAction<Services>>
+export type SetServices = React.Dispatch<React.SetStateAction<Service[]>>
 
-export type ServicesState = [Services, SetServices]
+export type ServicesState = [Service[], SetServices]
 
-export const DEFAULT_SERVICE: Service = {
+const DEFAULT_SERVICE: Service = {
     _id: '',
+    value: 0
+}
+
+export interface Expense {
+    _id: string
+    date: string
+    name: string
+    value: number
+}
+
+
+export type SetExpenses = React.Dispatch<React.SetStateAction<Expense[]>>
+export type ExpensesState = [Expense[], SetExpenses]
+
+const DEFAULT_EXPENSE: Expense = {
+    _id: '',
+    date: '',
+    name: '',
     value: 0
 }
 
 interface TDocsContext {
     services: ServicesState
+    expenses: ExpensesState
 }
 
 const DEFAULT_CONTEXT: TDocsContext = {
-    services: [[DEFAULT_SERVICE], () => { }]
+    services: [[DEFAULT_SERVICE], () => { }],
+    expenses: [[DEFAULT_EXPENSE], () => { }]
 }
 
 export const DocsContext = createContext<TDocsContext>(DEFAULT_CONTEXT)
@@ -40,10 +58,12 @@ interface DocsProviderProps {
 const DocsProvider = ({ children }: DocsProviderProps) => {
 
     // Documentos usados na aplicação
-    const [services, setServices] = useState<Services>([])
+    const [services, setServices] = useState<Service[]>([])
+    const [expenses, setExpenses] = useState<Expense[]>([])
 
     const docs: TDocsContext = {
-        services: [services, setServices]
+        services: [services, setServices],
+        expenses: [expenses, setExpenses]
     }
 
     return (

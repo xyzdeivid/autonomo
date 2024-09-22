@@ -1,12 +1,20 @@
-import { View } from 'react-native'
-import AnyItemWarning from '@/components/common/AnyItemWarning'
-import AddItemButton from '@/components/common/AddItemButton'
+import Container from "@/components/common/Container"
+import AnyItemWarning from "@/components/common/AnyItemWarning"
+
+import { DocsContext } from "@/context/DocsContext"
+import { useContext } from "react"
 
 export default function Expenses() {
+
+    const [expenses, setExpenses] = useContext(DocsContext).expenses
+
     return (
-        <View>
-            <AnyItemWarning />
-            <AddItemButton />
-        </View>
+        <Container>
+            {
+                expenses[0]
+                ? null
+                : <AnyItemWarning />
+            }
+        </Container>
     )
 }
