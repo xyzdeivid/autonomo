@@ -8,6 +8,7 @@ import FormContainer from '../common/FormContainer'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import FormTitle from '../common/FormTitle'
 import { HideTabBarContext } from '@/context/HideTabBar'
+import NameInput from '../common/NameInput'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -52,10 +53,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
         <FormContainer>
             <FormBody>
                 <FormTitle text='Registrar Serviço' />
-                <View style={styles.inputContainer}>
-                    <Text style={{ color: 'black' }}>Nome:</Text>
-                    <TextInput style={styles.input} onChangeText={text => setName(text)} />
-                </View>
+                <NameInput setName={setName} />
                 <NumberInput setValue={setValue} />
                 <SubmitFormButtons submit={addService} setFormOff={setAddServiceForm} submitButtonText='Cadastrar' />
             </FormBody>
