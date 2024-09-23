@@ -7,22 +7,22 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 
 interface ServicesListProps {
     setEditServiceForm: React.Dispatch<React.SetStateAction<boolean>>
+    setServiceForEdition: React.Dispatch<React.SetStateAction<string>>
     setServiceForDeletion: React.Dispatch<React.SetStateAction<string>>
+    setDeleteServiceForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ServicesList({ setEditServiceForm, setServiceForDeletion }: ServicesListProps) {
+export default function ServicesList({ setEditServiceForm, setServiceForEdition, setServiceForDeletion, setDeleteServiceForm }: ServicesListProps) {
 
-    const [services, setServices] = useContext(DocsContext).services
+    const [services] = useContext(DocsContext).services
 
     const deleteService = (id: string) => {
-        const remainingServices = services.filter(service => {
-            return service._id !== id
-        })
-        setServices(remainingServices)
+        setServiceForDeletion(id)
+        setDeleteServiceForm(true)
     }
 
     const editService = (id: string) => {
-        setServiceForDeletion(id)
+        setServiceForEdition(id)
         setEditServiceForm(true)
     }
 
