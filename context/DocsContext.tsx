@@ -1,35 +1,28 @@
 import React, { createContext, useState } from 'react'
 
-export interface Value {
-    value: number
-    date: string
-}
-
 export interface Service {
     _id: string
     value: number
 }
 
-export type SetService = React.Dispatch<React.SetStateAction<Service>>
+type SetServices = React.Dispatch<React.SetStateAction<Service[]>>
 
-export type SetServices = React.Dispatch<React.SetStateAction<Service[]>>
-
-export type ServicesState = [Service[], SetServices]
+type ServicesState = [Service[], SetServices]
 
 const DEFAULT_SERVICE: Service = {
     _id: '',
     value: 0
 }
 
-export interface Expense {
+interface Expense {
     _id: string
     date: string
     value: number
 }
 
 
-export type SetExpenses = React.Dispatch<React.SetStateAction<Expense[]>>
-export type ExpensesState = [Expense[], SetExpenses]
+type SetExpenses = React.Dispatch<React.SetStateAction<Expense[]>>
+type ExpensesState = [Expense[], SetExpenses]
 
 const DEFAULT_EXPENSE: Expense = {
     _id: '',
@@ -37,14 +30,33 @@ const DEFAULT_EXPENSE: Expense = {
     value: 0
 }
 
+export interface Scheduling {
+	service: Service
+	date: string
+}
+
+type SetSchedulings = React.Dispatch<React.SetStateAction<Scheduling[]>>
+
+type SchedulingsState = [Scheduling[], SetSchedulings]
+
+const DEFAULT_SCHEDULING: Scheduling = {
+	service: {
+		_id: '',
+		value: 0
+	},
+	date: '',
+}
+
 interface TDocsContext {
     services: ServicesState
     expenses: ExpensesState
+    schedulings: SchedulingsState
 }
 
 const DEFAULT_CONTEXT: TDocsContext = {
     services: [[DEFAULT_SERVICE], () => { }],
-    expenses: [[DEFAULT_EXPENSE], () => { }]
+    expenses: [[DEFAULT_EXPENSE], () => { }],
+    schedulings: [[DEFAULT_SCHEDULING], () => { }]
 }
 
 export const DocsContext = createContext<TDocsContext>(DEFAULT_CONTEXT)
@@ -53,15 +65,17 @@ interface DocsProviderProps {
     children: React.ReactNode
 }
 
-const DocsProvider = ({ children }: DocsProviderProps) => {
+export default function DocsProvider({ children }: DocsProviderProps) {
 
     // Documentos usados na aplicação
     const [services, setServices] = useState<Service[]>([])
     const [expenses, setExpenses] = useState<Expense[]>([])
+    const [schedulings, setSchedulings] = useState<Scheduling[]>([])
 
     const docs: TDocsContext = {
         services: [services, setServices],
-        expenses: [expenses, setExpenses]
+        expenses: [expenses, setExpenses],
+        schedulings: [schedulings, setSchedulings]
     }
 
     return (
@@ -71,5 +85,3 @@ const DocsProvider = ({ children }: DocsProviderProps) => {
     )
 
 }
-
-export default DocsProvider

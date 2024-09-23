@@ -13,7 +13,7 @@ export default function Schedulings() {
             <AnyItemWarning />
             {
                 addSchedulingForm
-                ? <AddSchedulingForm />
+                ? <AddSchedulingForm setAddSchedulingForm={setAddSchedulingForm} />
                 : <AddItemButton setForm={setAddSchedulingForm} bgColor='darkblue' />
             }
         </Container>
