@@ -31,6 +31,7 @@ const DEFAULT_EXPENSE: Expense = {
 }
 
 export interface Scheduling {
+    _id: string
 	service: Service
 	date: string
 }
@@ -40,6 +41,7 @@ type SetSchedulings = React.Dispatch<React.SetStateAction<Scheduling[]>>
 type SchedulingsState = [Scheduling[], SetSchedulings]
 
 const DEFAULT_SCHEDULING: Scheduling = {
+    _id: '',
 	service: {
 		_id: '',
 		value: 0

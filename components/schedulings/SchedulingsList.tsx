@@ -1,11 +1,16 @@
-import { DocsContext } from "@/context/DocsContext"
-import { AntDesign } from "@expo/vector-icons"
-import { format, parseISO } from "date-fns"
-import { useContext } from "react"
-import { StyleSheet } from "react-native"
-import { DataTable } from "react-native-paper"
+import { DocsContext } from '@/context/DocsContext'
+import { AntDesign } from '@expo/vector-icons'
+import { format, parseISO } from 'date-fns'
+import { useContext } from 'react'
+import { StyleSheet } from 'react-native'
+import { DataTable } from 'react-native-paper'
 
-export default function SchedulingsList() {
+interface SchedulingsListProps {
+    setSchedulingForDeletion: React.Dispatch<React.SetStateAction<string>>
+    setDeleteSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function SchedulingsList({ setSchedulingForDeletion, setDeleteSchedulingForm }: SchedulingsListProps) {
 
     const [schedulings] = useContext(DocsContext).schedulings
 
@@ -20,6 +25,11 @@ export default function SchedulingsList() {
         return formatedData
     }
 
+    const deleteScheduling = (id: string) => {
+        setSchedulingForDeletion(id)
+        setDeleteSchedulingForm(true)
+    }
+
     return (
         <DataTable style={styles.container}>
             <DataTable.Header>
@@ -30,12 +40,12 @@ export default function SchedulingsList() {
             </DataTable.Header>
             {schedulings.map(scheduling => {
                 return (
-                    <DataTable.Row key={scheduling.service._id}>
+                    <DataTable.Row key={scheduling._id}>
                         <DataTable.Cell style={styles.text}>{scheduling.service._id}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{dateFormat(scheduling.date)}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{moneyFormat(scheduling.service.value)}</DataTable.Cell>
                         <DataTable.Cell>
-                            <AntDesign name='close' size={18} color='black' />
+                            <AntDesign onPress={() => deleteScheduling(scheduling._id)} name='close' size={18} color='black' />
                         </DataTable.Cell>
                     </DataTable.Row>
                 )

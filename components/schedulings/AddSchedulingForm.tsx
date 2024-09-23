@@ -6,6 +6,7 @@ import { DocsContext, Scheduling, Service } from '@/context/DocsContext'
 import DateInput from '../common/DateInput'
 import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
+import { format, parseISO } from 'date-fns'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -13,12 +14,19 @@ interface AddSchedulingFormProps {
 
 export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
 
-    const [service, setService] = useState<Service>({} as Service)
+    const [services] = useContext(DocsContext).services
+    const [service, setService] = useState<Service>(services[0])
     const [date, setDate] = useState('')
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
 
+    const dateFormat = (date: string) => {
+        const formatedDate = format(parseISO(date), 'dd/MM')
+        return formatedDate
+    }
+
     const addScheduling = () => { 
         const newScheduling: Scheduling = {
+            _id: `${service._id} (${dateFormat(date)})`,
             service,
             date
         }

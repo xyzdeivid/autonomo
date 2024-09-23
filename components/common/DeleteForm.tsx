@@ -9,7 +9,7 @@ interface DeleteServiceFormProps {
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function DeleteServiceForm({ targetName, deleteFunction, setFormOff }: DeleteServiceFormProps) {
+export default function DeleteForm({ targetName, deleteFunction, setFormOff }: DeleteServiceFormProps) {
 
     return (
         <FormContainer>
