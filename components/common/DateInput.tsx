@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { format, parseISO } from 'date-fns'
-import { View, Button, Platform, Text, Pressable } from 'react-native'
+import { View, Button, Platform, Text } from 'react-native'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 
-export default function DateInput() {
+interface DateInputProps {
+    setTargetDate: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function DateInput({ setTargetDate }: DateInputProps) {
+
     const [date, setDate] = useState(new Date())
     const [show, setShow] = useState(false)
-    const [textButton, setTextButton] = useState('')
 
     const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
         const currentDate = selectedDate || date
@@ -31,16 +35,16 @@ export default function DateInput() {
         return `${year}-${month}-${day}`
     }
 
-    useEffect(() => {
-        setTextButton(dateFormat(getDate()))
-    }, [date])
 
+    useEffect(() => {
+        setTargetDate(getDate())
+    }, [date])
 
     return (
         <View>
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ marginEnd: 2 }}>Data:</Text>
-                <Button onPress={showDatepicker} title={textButton} />
+                <Button onPress={showDatepicker} title={dateFormat(getDate())} />
             </View>
             {show && (
                 <DateTimePicker

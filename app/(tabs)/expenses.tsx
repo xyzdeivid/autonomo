@@ -5,6 +5,7 @@ import { DocsContext } from '@/context/DocsContext'
 import { useContext, useState } from 'react'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
+import ExpensesList from '@/components/expenses/ExpensesList'
 
 export default function Expenses() {
 
@@ -15,7 +16,7 @@ export default function Expenses() {
         <Container>
             {
                 expenses[0]
-                    ? null
+                    ? <ExpensesList />
                     : <AnyItemWarning />
             }
             {
