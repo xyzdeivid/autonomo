@@ -6,7 +6,7 @@ import { DocsContext } from '@/context/DocsContext'
 import ServicesList from '@/components/services/ServicesList'
 import EditServiceForm from '@/components/services/EditServiceForm'
 import Container from '@/components/common/Container'
-import DeleteServiceForm from '@/components/services/DeleteServiceForm'
+import DeleteForm from '@/components/common/DeleteForm'
 
 export default function Services() {
 
@@ -15,7 +15,15 @@ export default function Services() {
     const [deleteServiceForm, setDeleteServiceForm] = useState(false)
     const [serviceForEdition, setServiceForEdition] = useState('')
     const [serviceForDeletion, setServiceForDeletion] = useState('')
-    const [services] = useContext(DocsContext).services
+    const [services, setServices] = useContext(DocsContext).services
+
+    const deleteService = (id: string) => {
+        const remainingServices = services.filter(service => {
+            return service._id !== id
+        })
+        setServices(remainingServices)
+        setDeleteServiceForm(false)
+    }
 
     return (
         <Container>
@@ -42,9 +50,10 @@ export default function Services() {
             {
                 deleteServiceForm
                     ?
-                    <DeleteServiceForm
-                        serviceName={serviceForDeletion}
-                        setDeleteServiceForm={setDeleteServiceForm}
+                    <DeleteForm
+                        targetName={serviceForDeletion}
+                        deleteFunction={deleteService}
+                        setFormOff={setDeleteServiceForm}
                     />
                     : null
             }
