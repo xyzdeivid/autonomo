@@ -14,12 +14,12 @@ export default function SelectServiceInput({ setService }: SelectServiceInputPro
     return (
         <View>
             <Picker
-                selectedValue={services[0]}
-                onValueChange={(itemValue) => setService(itemValue)}
+                selectedValue={JSON.stringify(services[0])}
+                onValueChange={(itemValue) => setService(JSON.parse(itemValue))}
             >
                 {services.map(service => {
                     return (
-                        <Picker.Item label={service._id} value={service} />
+                        <Picker.Item label={service._id} value={JSON.stringify(service)} />
                     )
                 })}
             </Picker>

@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { Scheduling, Service } from '@/context/DocsContext'
+import { DocsContext, Scheduling, Service } from '@/context/DocsContext'
 import DateInput from '../common/DateInput'
 import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
@@ -15,12 +15,14 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
 
     const [service, setService] = useState<Service>({} as Service)
     const [date, setDate] = useState('')
+    const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
 
     const addScheduling = () => { 
         const newScheduling: Scheduling = {
             service,
             date
         }
+        setSchedulings([...schedulings, newScheduling])
         setAddSchedulingForm(false)
     }
 
