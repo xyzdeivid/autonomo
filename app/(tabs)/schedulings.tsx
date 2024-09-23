@@ -1,14 +1,22 @@
-import { View } from 'react-native'
-import AnyItemWarning from '@/components/common/AnyItemWarning'
+import { useState } from 'react'
 import AddItemButton from '@/components/common/AddItemButton'
+import AnyItemWarning from '@/components/common/AnyItemWarning'
+import Container from '@/components/common/Container'
+import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 
 export default function Schedulings() {
 
+    const [addSchedulingForm, setAddSchedulingForm] = useState(false)
+
     return (
-        <View>
+        <Container>
             <AnyItemWarning />
-            <AddItemButton />
-        </View>
+            {
+                addSchedulingForm
+                ? <AddSchedulingForm />
+                : <AddItemButton setForm={setAddSchedulingForm} bgColor='darkblue' />
+            }
+        </Container>
     )
 
 }
