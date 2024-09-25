@@ -1,10 +1,14 @@
 import { StyleSheet, Text } from 'react-native'
 
-export default function AnyItemWarning() {
+interface AnyItemWarningProps {
+    text: string
+}
+
+export default function AnyItemWarning({ text }: AnyItemWarningProps) {
 
     return (
         <>
-            <Text style={styles.text}>Nenhum item cadastrado</Text>
+            <Text style={styles.text}>{text}</Text>
         </>
     )
 

@@ -27,7 +27,7 @@ export default function Schedulings() {
             {
                 schedulings[0]
                     ? <SchedulingsList setSchedulingForDeletion={setSchedulingForDeletion} setDeleteSchedulingForm={setDeleteSchedulingForm} />
-                    : <AnyItemWarning />
+                    : <AnyItemWarning text='Nenhum agendamento cadastrado' />
             }
             {
                 addSchedulingForm

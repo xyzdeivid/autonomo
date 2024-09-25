@@ -14,7 +14,7 @@ const DEFAULT_SERVICE: Service = {
     value: 0
 }
 
-interface Expense {
+export interface Expense {
     _id: string
     date: string
     value: number

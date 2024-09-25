@@ -35,7 +35,7 @@ export default function Services() {
                         setServiceForDeletion={setServiceForDeletion}
                         setDeleteServiceForm={setDeleteServiceForm}
                     />
-                    : <AnyItemWarning />
+                    : <AnyItemWarning text='Nenhum serviço cadastrado' />
             }
             {
                 addServiceForm
