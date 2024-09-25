@@ -1,4 +1,4 @@
-import { Pressable, View, Text, StyleSheet } from 'react-native'
+import { Pressable, View, Text, StyleSheet, Button } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { useContext } from 'react'
 import { HideTabBarContext } from '@/context/HideTabBar'
@@ -15,17 +15,15 @@ export default function SubmitFormButtons({ submit, setFormOff, submitButtonText
 
     return (
         <View style={styles.buttonsContainer}>
-            <Pressable onPress={() => {
+            <Button title={submitButtonText} onPress={() => {
                 submit()
                 setHideTabBar(false)
-            }} style={{ ...styles.button, backgroundColor: 'darkgreen' }}>
-                <Text style={{ color: 'white' }}>{submitButtonText}</Text>
-            </Pressable>
+            }}/>
             <Pressable onPress={() => {
                 setFormOff(false)
                 setHideTabBar(false)
-                }} style={{ ...styles.button, backgroundColor: 'darkred' }}>
-                <AntDesign name='close' size={24} color='white' />
+                }} style={styles.button}>
+                <AntDesign name='close' size={24} color='darkred' />
             </Pressable>
         </View>
     )

@@ -7,11 +7,13 @@ import { DocsContext } from '@/context/DocsContext'
 import SchedulingsList from '@/components/schedulings/SchedulingsList'
 import DeleteForm from '@/components/common/DeleteForm'
 import MonthInput from '@/components/common/MonthInput'
+import { View } from 'react-native'
 
 export default function Schedulings() {
 
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
+    const [services] = useContext(DocsContext).services
     const [schedulingForDeletion, setSchedulingForDeletion] = useState('')
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
 
@@ -23,18 +25,24 @@ export default function Schedulings() {
         setDeleteSchedulingForm(false)
     }
 
+    const SchedulingsContent = () => (
+        <View>
+            <MonthInput />
+            <SchedulingsList setSchedulingForDeletion={setSchedulingForDeletion} setDeleteSchedulingForm={setDeleteSchedulingForm} />
+        </View>
+    )
+
     return (
         <Container>
-            <MonthInput />
             {
                 schedulings[0]
-                    ? <SchedulingsList setSchedulingForDeletion={setSchedulingForDeletion} setDeleteSchedulingForm={setDeleteSchedulingForm} />
+                    ? <SchedulingsContent />
                     : <AnyItemWarning text='Nenhum agendamento cadastrado' />
             }
             {
                 addSchedulingForm
                     ? <AddSchedulingForm setAddSchedulingForm={setAddSchedulingForm} />
-                    : <AddItemButton setForm={setAddSchedulingForm} bgColor='darkblue' />
+                    : services[0] && (<AddItemButton setForm={setAddSchedulingForm} bgColor='darkblue' />)
             }
             {
                 deleteSchedulingForm

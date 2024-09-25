@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Picker } from '@react-native-picker/picker'
 
 export default function MonthInput() {
-    
-    const [selectedMonth, setSelectedMonth] = useState('Janeiro')
+
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
 
     const months = [
         'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
@@ -11,13 +11,13 @@ export default function MonthInput() {
     ]
 
     return (
-            <Picker
-                selectedValue={selectedMonth}
-                onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-            >
-                {months.map((month, index) => (
-                    <Picker.Item key={index} label={month} value={month} />
-                ))}
-            </Picker>
+        <Picker
+            selectedValue={selectedMonth}
+            onValueChange={(itemValue) => setSelectedMonth(itemValue)}
+        >
+            {months.map((month, index) => (
+                <Picker.Item key={index} label={month} value={index} />
+            ))}
+        </Picker>
     )
 }

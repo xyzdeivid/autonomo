@@ -8,6 +8,7 @@ import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
 import DeleteForm from '@/components/common/DeleteForm'
 import MonthInput from '@/components/common/MonthInput'
+import { View } from 'react-native'
 
 export default function Expenses() {
 
@@ -24,12 +25,18 @@ export default function Expenses() {
         setDeleteExpenseForm(false)
     }
 
+    const ExpensesContent = () => (
+        <View>
+            <MonthInput />
+            <ExpensesList setExpenseForDeletion={setExpenseForDeletion} setDeleteExpenseForm={setDeleteExpenseForm} />
+        </View>
+    )
+
     return (
         <Container>
-            <MonthInput />
             {
                 expenses[0]
-                    ? <ExpensesList setExpenseForDeletion={setExpenseForDeletion} setDeleteExpenseForm={setDeleteExpenseForm} />
+                    ? <ExpensesContent />
                     : <AnyItemWarning text='Nenhuma despesa cadastrada' />
             }
             {
