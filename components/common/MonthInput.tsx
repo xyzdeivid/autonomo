@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Picker } from '@react-native-picker/picker'
+import { MonthContext } from '@/context/Month'
 
 export default function MonthInput() {
 
-    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
+    const [selectedMonth, setSelectedMonth] = useContext(MonthContext)
 
     const months = [
         'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',

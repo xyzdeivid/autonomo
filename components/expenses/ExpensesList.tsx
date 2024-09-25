@@ -1,4 +1,4 @@
-import { DocsContext } from '@/context/DocsContext'
+import { DocsContext, Expense } from '@/context/DocsContext'
 import { AntDesign } from '@expo/vector-icons'
 import { format, parseISO } from 'date-fns'
 import { useContext } from 'react'
@@ -6,13 +6,12 @@ import { StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
 
 interface ExpensesListProps {
+    filteredExpenses: Expense[]
     setExpenseForDeletion: React.Dispatch<React.SetStateAction<string>>
     setDeleteExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ExpensesList({ setExpenseForDeletion, setDeleteExpenseForm }: ExpensesListProps) {
-
-    const [expenses] = useContext(DocsContext).expenses
+export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, setDeleteExpenseForm }: ExpensesListProps) {
 
     const deleteExpense = (id: string) => {
         setExpenseForDeletion(id)
@@ -38,7 +37,7 @@ export default function ExpensesList({ setExpenseForDeletion, setDeleteExpenseFo
                 <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                 <DataTable.Title style={styles.text}>{''}</DataTable.Title>
             </DataTable.Header>
-            {expenses.map(expense => {
+            {filteredExpenses.map(expense => {
                 return (
                     <DataTable.Row key={expense._id}>
                         <DataTable.Cell style={styles.text}>{expense._id}</DataTable.Cell>

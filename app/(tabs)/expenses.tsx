@@ -9,10 +9,12 @@ import ExpensesList from '@/components/expenses/ExpensesList'
 import DeleteForm from '@/components/common/DeleteForm'
 import MonthInput from '@/components/common/MonthInput'
 import { View } from 'react-native'
+import { MonthContext } from '@/context/Month'
 
 export default function Expenses() {
 
     const [expenses, setExpenses] = useContext(DocsContext).expenses
+    const [selectedMonth] = useContext(MonthContext)
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [expenseForDeletion, setExpenseForDeletion] = useState('')
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
@@ -25,10 +27,16 @@ export default function Expenses() {
         setDeleteExpenseForm(false)
     }
 
+    const filterExpenses = () => {
+        return expenses.filter(current => {
+            return Number(current.date.split('-')[1]) === selectedMonth + 1
+        })
+    }
+
     const ExpensesContent = () => (
         <View>
             <MonthInput />
-            <ExpensesList setExpenseForDeletion={setExpenseForDeletion} setDeleteExpenseForm={setDeleteExpenseForm} />
+            <ExpensesList filteredExpenses={filterExpenses()} setExpenseForDeletion={setExpenseForDeletion} setDeleteExpenseForm={setDeleteExpenseForm} />
         </View>
     )
 
