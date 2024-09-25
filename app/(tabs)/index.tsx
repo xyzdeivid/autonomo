@@ -7,6 +7,7 @@ import RevenueChart from '@/components/info/RevenueChart'
 import { StyleSheet, Text, View } from 'react-native'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import RevenueList from '@/components/info/RevenueList'
+import MonthInput from '@/components/common/MonthInput'
 
 export default function Info() {
 
@@ -14,6 +15,7 @@ export default function Info() {
 
     return (
         <Container>
+            <MonthInput />
             {
                 schedulings[0]
                     ? <View>

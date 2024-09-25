@@ -38,7 +38,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
         <FormContainer>
             <FormBody>
                 <FormTitle text='Registrar Agendamento' />
-                <SelectServiceInput setService={setService} />
+                <SelectServiceInput service={service} setService={setService} />
                 <DateInput setTargetDate={setDate} />
                 <SubmitFormButtons submit={addScheduling} setFormOff={setAddSchedulingForm} submitButtonText='Registrar' />
             </FormBody>

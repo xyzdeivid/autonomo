@@ -7,6 +7,7 @@ import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
 import DeleteForm from '@/components/common/DeleteForm'
+import MonthInput from '@/components/common/MonthInput'
 
 export default function Expenses() {
 
@@ -25,6 +26,7 @@ export default function Expenses() {
 
     return (
         <Container>
+            <MonthInput />
             {
                 expenses[0]
                     ? <ExpensesList setExpenseForDeletion={setExpenseForDeletion} setDeleteExpenseForm={setDeleteExpenseForm} />

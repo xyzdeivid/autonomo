@@ -6,6 +6,7 @@ import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import { DocsContext } from '@/context/DocsContext'
 import SchedulingsList from '@/components/schedulings/SchedulingsList'
 import DeleteForm from '@/components/common/DeleteForm'
+import MonthInput from '@/components/common/MonthInput'
 
 export default function Schedulings() {
 
@@ -24,6 +25,7 @@ export default function Schedulings() {
 
     return (
         <Container>
+            <MonthInput />
             {
                 schedulings[0]
                     ? <SchedulingsList setSchedulingForDeletion={setSchedulingForDeletion} setDeleteSchedulingForm={setDeleteSchedulingForm} />
