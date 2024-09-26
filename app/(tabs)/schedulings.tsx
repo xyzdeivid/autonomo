@@ -10,6 +10,7 @@ import MonthInput from '@/components/common/MonthInput'
 import { View } from 'react-native'
 import { MonthContext } from '@/context/Month'
 import { filterSchedulings } from '@/functions/common'
+import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 
 export default function Schedulings() {
 
@@ -45,7 +46,7 @@ export default function Schedulings() {
             {
                 addSchedulingForm
                     ? <AddSchedulingForm setAddSchedulingForm={setAddSchedulingForm} />
-                    : services[0] && (<AddItemButton setForm={setAddSchedulingForm} bgColor='darkblue' />)
+                    : <AddSchedulingButton setAddSchedulingForm={setAddSchedulingForm} />
             }
             {
                 deleteSchedulingForm
