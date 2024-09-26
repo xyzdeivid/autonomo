@@ -1,5 +1,6 @@
-import { DocsContext, Expense, Scheduling } from '@/context/DocsContext'
+import { Expense, Scheduling } from '@/context/DocsContext'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
+import { View } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'
 
 interface RevenueChartProps {
@@ -16,7 +17,16 @@ export default function RevenueChart({ filteredSchedulings, filteredExpenses }: 
     ]
 
     return (
-        <BarChart data={data} />
+        <View style={{ marginStart: 10 }}>
+            <BarChart
+                yAxisThickness={0}
+                xAxisThickness={0}
+                data={data}
+                maxValue={getSchedulingsRevenue(filteredSchedulings)}
+                barBorderTopLeftRadius={3}
+                barBorderTopRightRadius={3}
+            />
+        </View>
     )
 
 }

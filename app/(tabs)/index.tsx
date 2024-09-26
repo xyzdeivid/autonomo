@@ -22,6 +22,13 @@ export default function Info() {
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
                 filteredExpenses={filterExpenses(expenses, selectedMonth)}
             />
+            <View style={{
+                borderBottomColor: '#E0E0E0',
+                borderBottomWidth: 1,
+                marginVertical: 10,
+                marginHorizontal: 10
+            }}
+            />
             <RevenueList
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
                 filteredExpenses={filterExpenses(expenses, selectedMonth)}
