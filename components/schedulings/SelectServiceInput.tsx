@@ -20,7 +20,7 @@ export default function SelectServiceInput({ service, setService }: SelectServic
             >
                 {services.map(current => {
                     return (
-                        <Picker.Item label={current._id} value={current} />
+                        <Picker.Item key={current._id} label={current._id} value={current} />
                     )
                 })}
             </Picker>

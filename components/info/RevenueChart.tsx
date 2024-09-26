@@ -10,9 +10,9 @@ interface RevenueChartProps {
 export default function RevenueChart({ filteredSchedulings, filteredExpenses }: RevenueChartProps) {
 
     const data = [
-        { label: 'Receita', value: getSchedulingsRevenue(filteredSchedulings), frontColor: 'darkgreen' },
-        { label: 'Despesa', value: getExpenses(filteredExpenses), frontColor: 'darkred' },
-        { label: 'Lucro', value: getProfit(filteredSchedulings, filteredExpenses), frontColor: 'darkblue' }
+        { value: getSchedulingsRevenue(filteredSchedulings), frontColor: 'darkgreen' },
+        { value: getExpenses(filteredExpenses), frontColor: 'darkred' },
+        { value: getProfit(filteredSchedulings, filteredExpenses), frontColor: 'darkblue' }
     ]
 
     return (

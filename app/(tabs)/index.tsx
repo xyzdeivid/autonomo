@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
-import RevenueTitle from '@/components/info/RevenueTitle'
 import RevenueChart from '@/components/info/RevenueChart'
 import { View } from 'react-native'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
@@ -19,7 +18,6 @@ export default function Info() {
 
     const Revenue = () => (
         <View>
-            <RevenueTitle />
             <RevenueChart
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
                 filteredExpenses={filterExpenses(expenses, selectedMonth)}

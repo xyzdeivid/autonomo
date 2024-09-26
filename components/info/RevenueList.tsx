@@ -2,6 +2,7 @@ import { Expense, Scheduling } from '@/context/DocsContext'
 import { moneyFormat } from '@/functions/common'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
+import Entypo from '@expo/vector-icons/Entypo'
 
 interface RevenueListProps {
     filteredSchedulings: Scheduling[]
@@ -11,18 +12,19 @@ interface RevenueListProps {
 export default function RevenueList({ filteredSchedulings, filteredExpenses }: RevenueListProps) {
 
     const data = [
-        { title: 'Receita', value: getSchedulingsRevenue(filteredSchedulings) },
-        { title: 'Despesa', value: getExpenses(filteredExpenses) },
-        { title: 'Lucro', value: getProfit(filteredSchedulings, filteredExpenses) }
+        { title: 'Receita', value: getSchedulingsRevenue(filteredSchedulings), itemColor: 'darkgreen' },
+        { title: 'Despesa', value: getExpenses(filteredExpenses), itemColor: 'darkred' },
+        { title: 'Lucro', value: getProfit(filteredSchedulings, filteredExpenses), itemColor: 'darkblue' }
     ]
 
     const renderItem = ({ item }: any) => {
         return (
-            <View>
-                <Text>
+            <View style={styles.listItem}>
+                <View style={{...styles.listItem, marginBottom: 2}}>
+                    <Entypo name="flickr-with-circle" size={16} color={item.itemColor} />
                     <Text style={styles.title}>{item.title}:</Text> 
-                    {moneyFormat(item.value)}
-                </Text>
+                </View>
+                <Text>{moneyFormat(item.value)}</Text>
             </View>
         )
     }
@@ -39,6 +41,12 @@ const styles = StyleSheet.create({
         marginStart: 8
     },
     title: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginStart: 2
+    },
+    listItem: {
+        display: 'flex', 
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 })
