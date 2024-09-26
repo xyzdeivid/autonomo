@@ -10,16 +10,26 @@ import RevenueList from '@/components/info/RevenueList'
 import MonthInput from '@/components/common/MonthInput'
 import MostOfferedServicesChart from '@/components/info/MostOfferedServicesChart'
 import MostOfferedServicesTitle from '@/components/info/MostOfferedServicesTitle'
+import { MonthContext } from '@/context/Month'
+import { filterExpenses, filterSchedulings } from '@/functions/common'
 
 export default function Info() {
 
     const [schedulings] = useContext(DocsContext).schedulings
+    const [expenses] = useContext(DocsContext).expenses
+    const [selectedMonth] = useContext(MonthContext)
 
     const Revenue = () => (
         <View>
             <RevenueTitle />
-            <RevenueChart />
-            <RevenueList />
+            <RevenueChart
+                filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
+                filteredExpenses={filterExpenses(expenses, selectedMonth)}
+            />
+            <RevenueList
+                filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
+                filteredExpenses={filterExpenses(expenses, selectedMonth)}
+            />
         </View>
     )
 

@@ -1,17 +1,18 @@
-import { DocsContext } from '@/context/DocsContext'
+import { DocsContext, Expense, Scheduling } from '@/context/DocsContext'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
-import { useContext } from 'react'
 import { BarChart } from 'react-native-gifted-charts'
 
-export default function RevenueChart() {
+interface RevenueChartProps {
+    filteredSchedulings: Scheduling[]
+    filteredExpenses: Expense[]
+}
 
-    const [schedulings] = useContext(DocsContext).schedulings
-    const [expenses] = useContext(DocsContext).expenses
+export default function RevenueChart({ filteredSchedulings, filteredExpenses }: RevenueChartProps) {
 
     const data = [
-        { label: 'Receita', value: getSchedulingsRevenue(schedulings), frontColor: 'darkgreen' },
-        { label: 'Despesa', value: getExpenses(expenses), frontColor: 'darkred' },
-        { label: 'Lucro', value: getProfit(schedulings, expenses), frontColor: 'darkblue' }
+        { label: 'Receita', value: getSchedulingsRevenue(filteredSchedulings), frontColor: 'darkgreen' },
+        { label: 'Despesa', value: getExpenses(filteredExpenses), frontColor: 'darkred' },
+        { label: 'Lucro', value: getProfit(filteredSchedulings, filteredExpenses), frontColor: 'darkblue' }
     ]
 
     return (

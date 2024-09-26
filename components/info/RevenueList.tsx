@@ -1,18 +1,19 @@
-import { DocsContext } from '@/context/DocsContext'
+import { Expense, Scheduling } from '@/context/DocsContext'
 import { moneyFormat } from '@/functions/common'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
-import { useContext } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 
-export default function RevenueList() {
+interface RevenueListProps {
+    filteredSchedulings: Scheduling[]
+    filteredExpenses: Expense[]
+}
 
-    const [schedulings] = useContext(DocsContext).schedulings
-    const [expenses] = useContext(DocsContext).expenses
+export default function RevenueList({ filteredSchedulings, filteredExpenses }: RevenueListProps) {
 
     const data = [
-        { title: 'Receita', value: getSchedulingsRevenue(schedulings) },
-        { title: 'Despesa', value: getExpenses(expenses) },
-        { title: 'Lucro', value: getProfit(schedulings, expenses) }
+        { title: 'Receita', value: getSchedulingsRevenue(filteredSchedulings) },
+        { title: 'Despesa', value: getExpenses(filteredExpenses) },
+        { title: 'Lucro', value: getProfit(filteredSchedulings, filteredExpenses) }
     ]
 
     const renderItem = ({ item }: any) => {

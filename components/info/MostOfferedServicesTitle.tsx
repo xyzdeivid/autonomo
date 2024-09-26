@@ -1,12 +1,12 @@
-import { FontAwesome6 } from "@expo/vector-icons"
-import { StyleSheet, View, Text } from "react-native"
+import { FontAwesome6 } from '@expo/vector-icons'
+import { StyleSheet, View, Text } from 'react-native'
 
 export default function MostOfferedServicesTitle() {
 
     return (
         <View style={styles.titleContainer}>
             <Text style={styles.title}>Serviços</Text>
-            <FontAwesome6 name='money-bill-trend-up' size={24} color='white' />
+            <FontAwesome6 name='handshake-angle' size={24} color='white' />
         </View>
     )
 
