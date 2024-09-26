@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
+import { StyleSheet, Alert } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 
 import { DocsContext } from '@/context/DocsContext'
@@ -16,10 +16,15 @@ interface AddServiceFormProps {
 
 export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProps) {
 
+    const [allInputsFilled, setAllInputsFilled] = useState(false)
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
     const [services, setServices] = useContext(DocsContext).services
     const [, setHideTabBar] = useContext(HideTabBarContext)
+
+    useEffect(() => {
+        if (name && value) setAllInputsFilled(true)
+    }, [name, value])
 
     useEffect(() => {
         setHideTabBar(true)
@@ -27,24 +32,39 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
     function addService() {
 
-        // Criando novo serviço
-        const service = {
-            _id: name, value
-        }
+        if (allInputsFilled) {
 
-        // Verificando se já existe um serviço com o nome igual
-        const isThereAnotherService = services.filter(service => {
-            return service._id == name
-        })
+            // Criando novo serviço
+            const service = {
+                _id: name, value
+            }
 
-        if (isThereAnotherService[0]) {
-            setAddServiceForm(false)
-            setTimeout(() => {
-                Alert.alert('Serviço existente', 'Um serviço com este nome já existe')
-            }, 500)
+            // Verificando se já existe um serviço com o nome igual
+            const isThereAnotherService = services.filter(service => {
+                return service._id == name
+            })
+
+            if (isThereAnotherService[0]) {
+                setAddServiceForm(false)
+                setTimeout(() => {
+                    Alert.alert('Serviço existente', 'Um serviço com este nome já existe')
+                }, 500)
+            } else {
+                setServices([...services, service])
+                setAddServiceForm(false)
+            }
+
         } else {
-            setServices([...services, service])
+
             setAddServiceForm(false)
+            setHideTabBar(false)
+            setTimeout(() => {
+                Alert.alert(
+                    'Preencha todos os campos',
+                    'Todos os campos do formulário precisam ser preenchidos'
+                )
+            }, 500)
+
         }
 
     }

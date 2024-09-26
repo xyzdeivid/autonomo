@@ -8,6 +8,7 @@ import SubmitFormButtons from '../common/SubmitFormButtons'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import NumberInput from '../common/NumberInput'
 import { DocsContext } from '@/context/DocsContext'
+import { Alert } from 'react-native'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -22,6 +23,7 @@ const getCurrentDate = () => {
 
 export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProps) {
 
+    const [allInputsFilled, setAllInputsFilled] = useState(false)
     const [name, setName] = useState('')
     const [date, setDate] = useState('')
     const [value, setValue] = useState(0)
@@ -29,17 +31,38 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const [expenses, setExpenses] = useContext(DocsContext).expenses
 
     useEffect(() => {
+        if (name && value) setAllInputsFilled(true)
+    }, [name, value])
+
+    useEffect(() => {
         setHideTabBar(true)
     }, [])
 
     const addExpense = () => {
-        const newExpense = {
-            _id: name,
-            date,
-            value
+
+        if (allInputsFilled) {
+
+            const newExpense = {
+                _id: name,
+                date,
+                value
+            }
+            setExpenses([...expenses, newExpense])
+            setAddExpenseForm(false)
+
+        } else {
+
+            setAddExpenseForm(false)
+            setHideTabBar(false)
+            setTimeout(() => {
+                Alert.alert(
+                    'Preencha todos os campos',
+                    'Todos os campos do formulário precisam ser preenchidos'
+                )
+            }, 500)
+            
         }
-        setExpenses([...expenses, newExpense])
-        setAddExpenseForm(false)
+
     }
 
     return (
