@@ -1,18 +1,16 @@
-import { DocsContext } from '@/context/DocsContext'
+import { Scheduling } from '@/context/DocsContext'
 import { AntDesign } from '@expo/vector-icons'
 import { format, parseISO } from 'date-fns'
-import { useContext } from 'react'
 import { StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
 
 interface SchedulingsListProps {
+    filteredSchedulings: Scheduling[]
     setSchedulingForDeletion: React.Dispatch<React.SetStateAction<string>>
     setDeleteSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function SchedulingsList({ setSchedulingForDeletion, setDeleteSchedulingForm }: SchedulingsListProps) {
-
-    const [schedulings] = useContext(DocsContext).schedulings
+export default function SchedulingsList({ filteredSchedulings, setSchedulingForDeletion, setDeleteSchedulingForm }: SchedulingsListProps) {
 
     const dateFormat = (date: string) => {
         const formatedDate = format(parseISO(date), 'dd/MM')
@@ -38,7 +36,7 @@ export default function SchedulingsList({ setSchedulingForDeletion, setDeleteSch
                 <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                 <DataTable.Title style={styles.text}>{''}</DataTable.Title>
             </DataTable.Header>
-            {schedulings.map(scheduling => {
+            {filteredSchedulings.map(scheduling => {
                 return (
                     <DataTable.Row key={scheduling._id}>
                         <DataTable.Cell style={styles.text}>{scheduling.service._id}</DataTable.Cell>

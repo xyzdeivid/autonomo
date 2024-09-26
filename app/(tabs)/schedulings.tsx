@@ -8,12 +8,14 @@ import SchedulingsList from '@/components/schedulings/SchedulingsList'
 import DeleteForm from '@/components/common/DeleteForm'
 import MonthInput from '@/components/common/MonthInput'
 import { View } from 'react-native'
+import { MonthContext } from '@/context/Month'
 
 export default function Schedulings() {
 
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
     const [services] = useContext(DocsContext).services
+    const [selectedMonth] = useContext(MonthContext)
     const [schedulingForDeletion, setSchedulingForDeletion] = useState('')
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
 
@@ -25,10 +27,16 @@ export default function Schedulings() {
         setDeleteSchedulingForm(false)
     }
 
+    const filterSchedulings = () => {
+        return schedulings.filter(current => {
+            return Number(current.date.split('-')[1]) === selectedMonth + 1
+        })
+    }
+
     const SchedulingsContent = () => (
         <View>
             <MonthInput />
-            <SchedulingsList setSchedulingForDeletion={setSchedulingForDeletion} setDeleteSchedulingForm={setDeleteSchedulingForm} />
+            <SchedulingsList filteredSchedulings={filterSchedulings()} setSchedulingForDeletion={setSchedulingForDeletion} setDeleteSchedulingForm={setDeleteSchedulingForm} />
         </View>
     )
 
