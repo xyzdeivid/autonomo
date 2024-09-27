@@ -49,7 +49,7 @@ export default function ServicesList({ setEditServiceForm, setServiceForEdition,
                             <FontAwesome6 onPress={() => editService(service._id)} name='edit' size={18} color='black' />
                         </DataTable.Cell>
                         <DataTable.Cell>
-                            <AntDesign onPress={() => deleteService(service._id)} name='close' size={18} color='black' />
+                            <AntDesign onPress={() => deleteService(service._id)} name='close' size={18} color='darkred' />
                         </DataTable.Cell>
                     </DataTable.Row>
                 )

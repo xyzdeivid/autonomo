@@ -17,6 +17,10 @@ export default function AnyItemWarning({ text }: AnyItemWarningProps) {
 const styles = StyleSheet.create({
     text: {
         textAlign: 'center',
-        padding: 20
+        fontSize: 16,
+        padding: 20,
+        margin: 20,
+        backgroundColor: '#FFA500',
+        borderRadius: 10
     }
 })

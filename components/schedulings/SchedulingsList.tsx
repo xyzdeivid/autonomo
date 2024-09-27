@@ -43,7 +43,7 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
                         <DataTable.Cell style={styles.text}>{dateFormat(scheduling.date)}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{moneyFormat(scheduling.service.value)}</DataTable.Cell>
                         <DataTable.Cell>
-                            <AntDesign onPress={() => deleteScheduling(scheduling._id)} name='close' size={18} color='black' />
+                            <AntDesign onPress={() => deleteScheduling(scheduling._id)} name='close' size={18} color='darkred' />
                         </DataTable.Cell>
                     </DataTable.Row>
                 )

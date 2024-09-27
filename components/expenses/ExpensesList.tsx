@@ -43,7 +43,7 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
                         <DataTable.Cell style={styles.text}>{dateFormat(expense.date)}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{moneyFormat(expense.value)}</DataTable.Cell>
                         <DataTable.Cell>
-                            <AntDesign onPress={() => deleteExpense(expense._id)} name='close' size={18} color='black' />
+                            <AntDesign onPress={() => deleteExpense(expense._id)} name='close' size={18} color='darkred' />
                         </DataTable.Cell>
                     </DataTable.Row>
                 )
