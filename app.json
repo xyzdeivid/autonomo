@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "o-autonomo-app",
+    "name": "o Autônomo",
     "slug": "o-autonomo-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.imdeividsilva.oautonomoapp"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "eca894ed-c287-45fa-8bf2-3579f4d4ac68"
+      }
     }
   }
 }
