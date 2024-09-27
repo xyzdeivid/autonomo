@@ -23,3 +23,7 @@ export const filterExpenses = (expenses: Expense[], selectedMonth: number) => {
         return Number(current.date.split('-')[1]) === selectedMonth + 1
     })
 }
+
+export const generateId = () => {
+    return Math.random().toString(36).substr(2, 9)
+}

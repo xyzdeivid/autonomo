@@ -7,8 +7,9 @@ import DateInput from '../common/DateInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import NumberInput from '../common/NumberInput'
-import { DocsContext } from '@/context/DocsContext'
+import { DocsContext, Expense } from '@/context/DocsContext'
 import { Alert } from 'react-native'
+import { generateId } from '@/functions/common'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -35,8 +36,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
         if (allInputsFilled) {
 
-            const newExpense = {
-                _id: name,
+            const newExpense: Expense = {
+                _id: generateId(),
+                name,
                 date,
                 value
             }

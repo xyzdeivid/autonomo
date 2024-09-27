@@ -39,7 +39,7 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
             {filteredExpenses.map(expense => {
                 return (
                     <DataTable.Row key={expense._id}>
-                        <DataTable.Cell style={styles.text}>{expense._id}</DataTable.Cell>
+                        <DataTable.Cell style={styles.text}>{expense.name}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{dateFormat(expense.date)}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{moneyFormat(expense.value)}</DataTable.Cell>
                         <DataTable.Cell>

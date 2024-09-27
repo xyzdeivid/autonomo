@@ -14,7 +14,7 @@ export default function DeleteForm({ targetName, deleteFunction, setFormOff }: D
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text={`Excluir ${targetName}?`} />
+                <FormTitle text='Confirmar exclusão?' />
                 <SubmitFormButtons submit={() => deleteFunction(targetName)} setFormOff={setFormOff} submitButtonText='Excluir' />
             </FormBody>
         </FormContainer>

@@ -16,6 +16,7 @@ const DEFAULT_SERVICE: Service = {
 
 export interface Expense {
     _id: string
+    name: string
     date: string
     value: number
 }
@@ -26,6 +27,7 @@ type ExpensesState = [Expense[], SetExpenses]
 
 const DEFAULT_EXPENSE: Expense = {
     _id: '',
+    name: '',
     date: '',
     value: 0
 }
