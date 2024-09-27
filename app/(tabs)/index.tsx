@@ -27,7 +27,7 @@ export default function Info() {
                 borderBottomWidth: 1,
                 marginVertical: 10,
                 marginHorizontal: 10
-            }}
+                }}
             />
             <RevenueList
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
@@ -39,11 +39,13 @@ export default function Info() {
     return (
         <Container>
             {
-                schedulings[0]
-                    ? <View>
-                        <MonthInput />
-                        <Revenue />
-                    </View>
+                schedulings[0] && (
+                    <MonthInput />
+                )
+            }
+            {
+                filterSchedulings(schedulings, selectedMonth)[0]
+                    ? <Revenue />
                     : <AnyItemWarning text='Nenhuma informação disponível' />
             }
         </Container>

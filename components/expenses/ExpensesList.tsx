@@ -1,7 +1,6 @@
-import { DocsContext, Expense } from '@/context/DocsContext'
+import { Expense } from '@/context/DocsContext'
 import { AntDesign } from '@expo/vector-icons'
 import { format, parseISO } from 'date-fns'
-import { useContext } from 'react'
 import { StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
 
