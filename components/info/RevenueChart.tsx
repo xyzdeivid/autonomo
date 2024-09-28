@@ -17,7 +17,7 @@ export default function RevenueChart({ filteredSchedulings, filteredExpenses }: 
     ]
 
     return (
-        <View style={{margin: 'auto' }}>
+        <View style={{marginHorizontal: 'auto', marginVertical: 20 }}>
             <BarChart
                 yAxisThickness={0}
                 xAxisThickness={0}

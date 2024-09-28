@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
@@ -13,13 +13,14 @@ import Title from '@/components/info/Title'
 
 export default function Info() {
 
+    const [content, setContent] = useState('financial')
     const [schedulings] = useContext(DocsContext).schedulings
     const [expenses] = useContext(DocsContext).expenses
     const [selectedMonth] = useContext(MonthContext)
 
     const Revenue = () => (
         <View>
-            <Title />
+            <Title content={content} />
             <RevenueChart
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
                 filteredExpenses={filterExpenses(expenses, selectedMonth)}
