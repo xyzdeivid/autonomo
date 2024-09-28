@@ -2,53 +2,56 @@ import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
-import RevenueChart from '@/components/info/RevenueChart'
-import { StyleSheet, Text, View } from 'react-native'
+import { View, Text } from 'react-native'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
-import RevenueList from '@/components/info/RevenueList'
 import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
-import { filterExpenses, filterSchedulings } from '@/functions/common'
+import { filterSchedulings } from '@/functions/common'
 import Title from '@/components/info/Title'
+import Revenue from '@/components/info/Revenue'
+import ContentForm from '@/components/info/ContentForm'
+import Services from '@/components/info/Services'
 
 export default function Info() {
 
     const [content, setContent] = useState('financial')
+    const [contentForm, setContentForm] = useState(false)
     const [schedulings] = useContext(DocsContext).schedulings
-    const [expenses] = useContext(DocsContext).expenses
     const [selectedMonth] = useContext(MonthContext)
 
-    const Revenue = () => (
-        <View>
-            <Title content={content} />
-            <RevenueChart
-                filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
-                filteredExpenses={filterExpenses(expenses, selectedMonth)}
-            />
-            <View style={{
-                borderBottomColor: '#E0E0E0',
-                borderBottomWidth: 1,
-                marginHorizontal: 10,
-                marginBottom: 20
-            }}
-            />
-            <RevenueList
-                filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
-                filteredExpenses={filterExpenses(expenses, selectedMonth)}
-            />
-        </View>
-    )
+    const selectPage = () => {
+        switch (content) {
+            case 'financial':
+                return <Revenue />
+            case 'services':
+                return <Services />
+        }
+    }
 
     return (
         <Container>
             {
                 schedulings[0] && (
-                    <MonthInput />
+                    <View>
+                        <MonthInput />
+                        <Title
+                            content={content}
+                            setContentForm={setContentForm}
+                        />
+                    </View>
+                )
+            }
+            {
+                contentForm && (
+                    <ContentForm
+                        setContent={setContent}
+                        setContentForm={setContentForm}
+                    />
                 )
             }
             {
                 filterSchedulings(schedulings, selectedMonth)[0]
-                    ? <Revenue />
+                    ? selectPage()
                     : <AnyItemWarning text='Nenhuma informação disponível' />
             }
         </Container>

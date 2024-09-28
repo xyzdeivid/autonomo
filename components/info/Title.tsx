@@ -1,12 +1,13 @@
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, StyleSheet, Pressable } from 'react-native'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { useEffect, useState } from 'react'
 
 interface TitleProps {
     content: string
+    setContentForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Title({ content }: TitleProps) {
+export default function Title({ content, setContentForm }: TitleProps) {
 
     const [buttonText, setButtonText] = useState('')
 
@@ -15,14 +16,17 @@ export default function Title({ content }: TitleProps) {
             case 'financial':
                 setButtonText('Financeiro')
                 break
+            case 'services':
+                setButtonText('Serviços')
+                break
         }
     }, [content])
 
     return (
-        <View style={styles.container}>
+        <Pressable onPress={() => setContentForm(true)} style={styles.container}>
             <Text style={styles.title}>{buttonText}</Text>
             <MaterialIcons name='expand-more' size={28} color='black' />
-        </View>
+        </Pressable>
     )
 
 }
