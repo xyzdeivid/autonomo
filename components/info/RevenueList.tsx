@@ -11,28 +11,39 @@ interface RevenueListProps {
 
 export default function RevenueList({ filteredSchedulings, filteredExpenses }: RevenueListProps) {
 
+    const getProfitMargin = () => {
+        return getProfit(filteredSchedulings, filteredExpenses) / getSchedulingsRevenue(filteredSchedulings) * 100
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.infoContainer}>
                 <View style={styles.titleContainer}>
-                    <Entypo name="flickr-with-circle" size={16} color='darkgreen' />
+                    <Entypo name='flickr-with-circle' size={16} color='darkgreen' />
                     <Text style={styles.title}>Receita</Text>
                 </View>
                 <Text>{moneyFormat(getSchedulingsRevenue(filteredSchedulings))}</Text>
             </View>
             <View style={styles.infoContainer}>
                 <View style={styles.titleContainer}>
-                    <Entypo name="flickr-with-circle" size={16} color='darkred' />
+                    <Entypo name='flickr-with-circle' size={16} color='darkred' />
                     <Text style={styles.title}>Despesa</Text>
                 </View>
                 <Text>{moneyFormat(getExpenses(filteredExpenses))}</Text>
             </View>
             <View style={styles.infoContainer}>
                 <View style={styles.titleContainer}>
-                    <Entypo name="flickr-with-circle" size={16} color='darkblue' />
+                    <Entypo name='flickr-with-circle' size={16} color='darkblue' />
                     <Text style={styles.title}>Lucro</Text>
                 </View>
                 <Text>{moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}</Text>
+            </View>
+            <View style={styles.infoContainer}>
+                <View style={styles.titleContainer}>
+                    <Entypo name='flickr-with-circle' size={16} color='#666600' />
+                    <Text style={styles.title}>Margem de Lucro</Text>
+                </View>
+                <Text>{getProfitMargin()}%</Text>
             </View>
         </View>
     )
