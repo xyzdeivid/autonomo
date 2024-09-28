@@ -43,7 +43,7 @@ export default function RevenueList({ filteredSchedulings, filteredExpenses }: R
                     <Entypo name='flickr-with-circle' size={16} color='#666600' />
                     <Text style={styles.title}>Margem de Lucro</Text>
                 </View>
-                <Text>{getProfitMargin()}%</Text>
+                <Text>{Math.ceil(getProfitMargin())}%</Text>
             </View>
         </View>
     )

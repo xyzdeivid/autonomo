@@ -22,16 +22,21 @@ export default function Services() {
         setServices(getMostOfferedServices())
     }, [schedulings])
 
-    function generateColor() {
-        const letters = '0123456789ABCDEF'
-        let color = '#'
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)]
-        }
-        return color
-    }
+    const colors = [
+        '#0000FF',
+        '#008000',
+        '#1E90FF',
+        '#32CD32',
+        '#00BFFF',
+        '#3CB371',
+        '#4682B4',
+        '#66CDAA',
+        '#ADD8E6',
+        '#98FB98'
+    ]
 
     const getMostOfferedServices = () => {
+        let colorIndex = 0
         const servicesArrays = filterSchedulings(schedulings, selectedMonth).map(scheduling => {
             return scheduling.service._id
         }).flat()
@@ -45,10 +50,11 @@ export default function Services() {
             }
         })
         const chartFormat = services.map(current => {
+            colorIndex ++
             return {
                 service: current[0],
                 amount: current[1],
-                color: generateColor()
+                color: colors[colorIndex]
             }
         })
         return chartFormat
