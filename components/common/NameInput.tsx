@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         margin: 0,
         borderRadius: 3,
         width: '70%',
-        marginStart: 8
+        marginStart: 8,
+        paddingHorizontal: 8
     }
 })

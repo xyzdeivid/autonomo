@@ -1,4 +1,5 @@
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { useState } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 import { MaskedTextInput } from 'react-native-mask-text'
 
 interface NumberInputProps {
@@ -13,13 +14,19 @@ export default function NumberInput({ setValue }: NumberInputProps) {
             <MaskedTextInput
                 type='currency'
                 options={{
-                    decimalSeparator: '.',
-                    groupSeparator: ',',
+                    decimalSeparator: ',',
+                    groupSeparator: '.',
                     precision: 2
                 }}
                 style={styles.input}
                 keyboardType='numeric'
-                onChangeText={text => setValue(Number(text))}
+                onChangeText={text => {
+                    // Removendo pontos e vírgulas do valor
+                    let value = text.replace(',', '.')
+                    .replace(/\.(?=.*\.)/g, '')
+
+                    setValue(Number(value))
+                }}
             />
         </View>
     )
