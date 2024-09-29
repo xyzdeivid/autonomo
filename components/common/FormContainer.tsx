@@ -22,6 +22,7 @@ const style = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#E0E0E0'
+        backgroundColor: 'gray',
+        opacity: 0.9,
     }
 })

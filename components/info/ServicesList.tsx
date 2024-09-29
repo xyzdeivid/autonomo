@@ -28,7 +28,7 @@ export default function ServicesList({ services }: ServicesListProps) {
 
 const styles = StyleSheet.create({
     container: {
-        marginStart: 8
+        marginStart: 8,
     },
     infoContainer: {
         display: 'flex',

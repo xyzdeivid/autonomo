@@ -15,13 +15,6 @@ export default function SubmitFormButtons({ submit, setFormOff, submitButtonText
 
     return (
         <>
-            <View style={{
-                borderBottomColor: '#E0E0E0',
-                borderBottomWidth: 1,
-                marginHorizontal: 10,
-                marginBottom: 20
-            }}
-            />
             <View style={styles.buttonsContainer}>
                 <Button color='black' title={submitButtonText} onPress={() => {
                     submit()

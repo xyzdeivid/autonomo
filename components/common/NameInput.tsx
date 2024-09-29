@@ -22,7 +22,9 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     input: {
-        backgroundColor: '#E5E4E4',
+        backgroundColor: 'white',
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray',
         color: 'black',
         padding: 0,
         margin: 0,
