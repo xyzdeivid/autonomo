@@ -10,6 +10,7 @@ import NumberInput from '../common/NumberInput'
 import { DocsContext, Expense } from '@/context/DocsContext'
 import { Alert } from 'react-native'
 import { generateId } from '@/functions/common'
+import { orderExpenses } from '@/functions/expenses'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -42,13 +43,18 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 date,
                 value
             }
-            setExpenses([...expenses, newExpense])
+
+            setExpenses(orderExpenses([...expenses, newExpense]))
+
             setAddExpenseForm(false)
+
 
         } else {
 
             setAddExpenseForm(false)
+
             setHideTabBar(false)
+
             setTimeout(() => {
                 Alert.alert(
                     'Preencha todos os campos',

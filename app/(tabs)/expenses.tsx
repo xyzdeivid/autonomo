@@ -10,6 +10,7 @@ import DeleteForm from '@/components/common/DeleteForm'
 import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
 import { filterExpenses } from '@/functions/common'
+import { orderExpenses } from '@/functions/expenses'
 
 export default function Expenses() {
 
@@ -20,11 +21,15 @@ export default function Expenses() {
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
 
     const deleteExpense = (id: string) => {
+
         const remainingExpenses = expenses.filter(expense => {
             return expense._id !== id
         })
-        setExpenses(remainingExpenses)
+
+        setExpenses(orderExpenses(remainingExpenses))
+
         setDeleteExpenseForm(false)
+
     }
 
     return (
