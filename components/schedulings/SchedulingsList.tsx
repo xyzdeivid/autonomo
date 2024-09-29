@@ -3,7 +3,7 @@ import { AntDesign } from '@expo/vector-icons'
 import { format, parseISO } from 'date-fns'
 import { StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
-import ContainerHandler from './ContainerHandler'
+import ContainerHandler from '../common/ContainerHandler'
 
 interface SchedulingsListProps {
     filteredSchedulings: Scheduling[]
@@ -30,7 +30,7 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
     }
 
     return (
-        <ContainerHandler filteredSchedulings={filteredSchedulings}>
+        <ContainerHandler filteredTargets={filteredSchedulings}>
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title style={styles.text}>Serviço</DataTable.Title>
