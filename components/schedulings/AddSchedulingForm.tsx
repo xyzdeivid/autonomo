@@ -8,6 +8,7 @@ import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { generateId } from '@/functions/common'
 import { HideTabBarContext } from '@/context/HideTabBar'
+import { orderSchedulings } from '@/functions/schedulings'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -27,14 +28,19 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
 
     const addScheduling = () => {
+
         const newScheduling: Scheduling = {
             _id: generateId(),
             service,
             date
         }
-        setSchedulings([...schedulings, newScheduling])
+
+        setSchedulings(orderSchedulings([...schedulings, newScheduling]))
+
         setAddSchedulingForm(false)
+
         setHideTabBar(false)
+
     }
 
     return (

@@ -10,6 +10,8 @@ import { MonthContext } from '@/context/Month'
 import { filterSchedulings } from '@/functions/common'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 
+import { orderSchedulings } from '@/functions/schedulings'
+
 export default function Schedulings() {
 
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
@@ -19,11 +21,15 @@ export default function Schedulings() {
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
 
     const deleteScheduling = (id: string) => {
+
         const remainingSchedulings = schedulings.filter(scheduling => {
             return scheduling._id !== id
         })
-        setSchedulings(remainingSchedulings)
+
+        setSchedulings(orderSchedulings(remainingSchedulings))
+
         setDeleteSchedulingForm(false)
+
     }
 
     return (
