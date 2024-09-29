@@ -7,6 +7,7 @@ import FormContainer from '../common/FormContainer'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import FormTitle from '../common/FormTitle'
 import { HideTabBarContext } from '@/context/HideTabBar'
+import { orderServices } from '@/functions/services'
 
 interface EditServiceFormProps {
     service: string
@@ -24,16 +25,21 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
     }, [])  
 
     const editService = () => {
+
         // Separando os serviços que não serão editados
         const otherServices = services.filter(current => {
             return current._id !== service
         })
+
         const editedService = {
             _id: service,
             value
         }
-        setServices([...otherServices, editedService])
+
+        setServices(orderServices([...otherServices, editedService]))
+
         setEditServiceForm(false)
+
     }
 
     return (

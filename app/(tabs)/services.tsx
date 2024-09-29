@@ -7,6 +7,7 @@ import ServicesList from '@/components/services/ServicesList'
 import EditServiceForm from '@/components/services/EditServiceForm'
 import Container from '@/components/common/Container'
 import DeleteForm from '@/components/common/DeleteForm'
+import { orderServices } from '@/functions/services'
 
 export default function Services() {
 
@@ -18,11 +19,15 @@ export default function Services() {
     const [services, setServices] = useContext(DocsContext).services
 
     const deleteService = (id: string) => {
+
         const remainingServices = services.filter(service => {
             return service._id !== id
         })
-        setServices(remainingServices)
+
+        setServices(orderServices(remainingServices))
+
         setDeleteServiceForm(false)
+
     }
 
     return (

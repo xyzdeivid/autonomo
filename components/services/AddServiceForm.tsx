@@ -10,6 +10,8 @@ import FormTitle from '../common/FormTitle'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import NameInput from '../common/NameInput'
 
+import { orderServices } from '@/functions/services'
+
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -45,13 +47,19 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
             })
 
             if (isThereAnotherService[0]) {
+
                 setAddServiceForm(false)
+
                 setTimeout(() => {
                     Alert.alert('Serviço existente', 'Um serviço com este nome já existe')
                 }, 500)
+
             } else {
-                setServices([...services, service])
+
+                setServices(orderServices([...services, service]))
+
                 setAddServiceForm(false)
+
             }
 
         } else {
