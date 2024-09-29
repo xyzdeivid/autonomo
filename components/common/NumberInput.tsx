@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 10
+        marginBottom: 20
     },
     input: {
         width: '25%',
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
         padding: 0,
         margin: 0,
         textAlign: 'center',
-        marginStart: 2
+        marginStart: 8,
+        borderRadius: 3
     }
 })

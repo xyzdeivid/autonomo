@@ -18,14 +18,16 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 10
+        marginBottom: 20,
+        position: 'relative'
     },
     input: {
-        width: '50%',
-        borderBottomWidth: 1,
-        borderBottomColor: '#E5E4E4',
+        backgroundColor: '#E5E4E4',
         color: 'black',
         padding: 0,
-        margin: 0
+        margin: 0,
+        borderRadius: 3,
+        width: '70%',
+        marginStart: 8
     }
 })

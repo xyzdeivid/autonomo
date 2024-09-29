@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { format, parseISO } from 'date-fns'
-import { View, Button, Platform, Text } from 'react-native'
+import { View, Button, Platform, Text, StyleSheet } from 'react-native'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 
 interface DateInputProps {
@@ -42,9 +42,9 @@ export default function DateInput({ setTargetDate }: DateInputProps) {
 
     return (
         <View>
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <View style={styles.container}>
                 <Text style={{ marginEnd: 2 }}>Data:</Text>
-                <Button onPress={showDatepicker} title={dateFormat(getDate())} />
+                <Button color='black' onPress={showDatepicker} title={dateFormat(getDate())} />
             </View>
             {show && (
                 <DateTimePicker
@@ -57,3 +57,12 @@ export default function DateInput({ setTargetDate }: DateInputProps) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        display: 'flex', 
+        flexDirection: 'row', 
+        alignItems: 'center',
+        marginBottom: 20
+    }
+})

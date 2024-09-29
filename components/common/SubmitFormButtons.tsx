@@ -14,18 +14,26 @@ export default function SubmitFormButtons({ submit, setFormOff, submitButtonText
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
     return (
-        <View style={styles.buttonsContainer}>
-            <Button title={submitButtonText} onPress={() => {
-                submit()
-                setHideTabBar(false)
-            }}/>
-            <Pressable onPress={() => {
-                setFormOff(false)
-                setHideTabBar(false)
+        <>
+            <View style={{
+                borderBottomColor: '#E0E0E0',
+                borderBottomWidth: 1,
+                marginHorizontal: 10,
+                marginBottom: 20
+            }}
+            />
+            <View style={styles.buttonsContainer}>
+                <Button color='black' title={submitButtonText} onPress={() => {
+                    submit()
+                    setHideTabBar(false)
+                }} />
+                <Pressable onPress={() => {
+                    setFormOff(false)
+                    setHideTabBar(false)
                 }} style={styles.button}>
-                <AntDesign name='close' size={24} color='darkred' />
-            </Pressable>
-        </View>
+                    <AntDesign name='close' size={24} color='darkred' />
+                </Pressable>
+            </View></>
     )
 
 }
