@@ -8,6 +8,7 @@ import SubmitFormButtons from '../common/SubmitFormButtons'
 import FormTitle from '../common/FormTitle'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import { orderServices } from '@/functions/services'
+import FormInputs from '../common/FormInputs'
 
 interface EditServiceFormProps {
     service: string
@@ -22,7 +23,7 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
 
     useEffect(() => {
         setHideTabBar(true)
-    }, [])  
+    }, [])
 
     const editService = () => {
 
@@ -46,8 +47,10 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
         <FormContainer>
             <FormBody>
                 <FormTitle text='Editar Serviço' />
-                <Text style={styles.serviceName}>{service}</Text>
-                <NumberInput setValue={setValue} />
+                <FormInputs>
+                    <Text style={styles.serviceName}>{service}</Text>
+                    <NumberInput setValue={setValue} />
+                </FormInputs>
                 <SubmitFormButtons submit={editService} setFormOff={setEditServiceForm} submitButtonText='Editar' />
             </FormBody>
         </FormContainer>
@@ -57,6 +60,7 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
 
 const styles = StyleSheet.create({
     serviceName: {
-        fontSize: 20
+        fontSize: 20,
+        marginBottom: 20
     }
 })

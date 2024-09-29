@@ -11,6 +11,7 @@ import { DocsContext, Expense } from '@/context/DocsContext'
 import { Alert } from 'react-native'
 import { generateId } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
+import FormInputs from '../common/FormInputs'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -61,7 +62,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     'Todos os campos do formulário precisam ser preenchidos'
                 )
             }, 500)
-            
+
         }
 
     }
@@ -70,9 +71,11 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
         <FormContainer>
             <FormBody>
                 <FormTitle text='Registrar Despesa' />
-                <NameInput setName={setName} />
-                <DateInput setTargetDate={setDate} />
-                <NumberInput setValue={setValue} />
+                <FormInputs>
+                    <NameInput setName={setName} />
+                    <DateInput setTargetDate={setDate} />
+                    <NumberInput setValue={setValue} />
+                </FormInputs>
                 <SubmitFormButtons submit={addExpense} setFormOff={setAddExpenseForm} submitButtonText='Registrar' />
             </FormBody>
         </FormContainer>

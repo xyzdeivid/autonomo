@@ -18,6 +18,10 @@ const style = StyleSheet.create({
     body: {
         backgroundColor: '#E0E0E0',
         padding: 16,
-        borderRadius: 6
+        borderRadius: 6,
+        minWidth: '80%',
+        marginHorizontal: 20,
+        borderWidth: 1,
+        borderColor: 'gray'
     }
 })

@@ -11,6 +11,7 @@ import { HideTabBarContext } from '@/context/HideTabBar'
 import NameInput from '../common/NameInput'
 
 import { orderServices } from '@/functions/services'
+import FormInputs from '../common/FormInputs'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -81,8 +82,10 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
         <FormContainer>
             <FormBody>
                 <FormTitle text='Registrar Serviço' />
-                <NameInput setName={setName} />
-                <NumberInput setValue={setValue} />
+                <FormInputs>
+                    <NameInput setName={setName} />
+                    <NumberInput setValue={setValue} />
+                </FormInputs>
                 <SubmitFormButtons submit={addService} setFormOff={setAddServiceForm} submitButtonText='Cadastrar' />
             </FormBody>
         </FormContainer>

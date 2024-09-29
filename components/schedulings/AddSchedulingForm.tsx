@@ -9,6 +9,7 @@ import SubmitFormButtons from '../common/SubmitFormButtons'
 import { generateId } from '@/functions/common'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import { orderSchedulings } from '@/functions/schedulings'
+import FormInputs from '../common/FormInputs'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -47,8 +48,10 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
         <FormContainer>
             <FormBody>
                 <FormTitle text='Registrar Agendamento' />
-                <SelectServiceInput service={service} setService={setService} />
-                <DateInput setTargetDate={setDate} />
+                <FormInputs>
+                    <SelectServiceInput service={service} setService={setService} />
+                    <DateInput setTargetDate={setDate} />
+                </FormInputs>
                 <SubmitFormButtons submit={addScheduling} setFormOff={setAddSchedulingForm} submitButtonText='Registrar' />
             </FormBody>
         </FormContainer>
