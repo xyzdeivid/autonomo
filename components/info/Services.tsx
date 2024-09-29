@@ -56,7 +56,7 @@ export default function Services() {
                 amount: current[1],
                 color: colors[colorIndex]
             }
-        })
+        }).sort((a, b) => b.amount - a.amount)
         return chartFormat
     }
 

@@ -1,4 +1,4 @@
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons'
 import { View, Text, StyleSheet } from 'react-native'
 
 interface ServicesListProps {
@@ -15,7 +15,7 @@ export default function ServicesList({ services }: ServicesListProps) {
         <View style={styles.container}>
             {services.map(current => {
                 return (
-                    <View style={styles.infoContainer}>
+                    <View key={current.service} style={styles.infoContainer}>
                         <Entypo name='flickr-with-circle' size={16} color={current.color} />
                         <Text style={styles.text}>{current.service}</Text>
                     </View>
