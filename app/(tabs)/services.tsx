@@ -8,6 +8,8 @@ import EditServiceForm from '@/components/services/EditServiceForm'
 import Container from '@/components/common/Container'
 import DeleteForm from '@/components/common/DeleteForm'
 import { orderServices } from '@/functions/services'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Alert } from 'react-native'
 
 export default function Services() {
 
@@ -18,15 +20,25 @@ export default function Services() {
     const [serviceForDeletion, setServiceForDeletion] = useState('')
     const [services, setServices] = useContext(DocsContext).services
 
-    const deleteService = (id: string) => {
+    const deleteService = async (id: string) => {
 
         const remainingServices = services.filter(service => {
             return service._id !== id
         })
 
-        setServices(orderServices(remainingServices))
+        try {
 
-        setDeleteServiceForm(false)
+            await AsyncStorage.setItem('services', JSON.stringify(remainingServices))
+
+            setServices(orderServices(remainingServices))
+
+            setDeleteServiceForm(false)
+
+        } catch (error) {
+
+            Alert.alert('Erro ao salvar no banco de dados')
+
+        }
 
     }
 

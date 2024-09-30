@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Alert, StyleSheet, Text } from 'react-native'
 import FormBody from '../common/FormBody'
 import { useContext, useEffect, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
@@ -9,6 +9,7 @@ import FormTitle from '../common/FormTitle'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import { orderServices } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface EditServiceFormProps {
     service: string
@@ -25,7 +26,7 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
         setHideTabBar(true)
     }, [])
 
-    const editService = () => {
+    const editService = async () => {
 
         // Separando os serviços que não serão editados
         const otherServices = services.filter(current => {
@@ -37,9 +38,21 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
             value
         }
 
-        setServices(orderServices([...otherServices, editedService]))
+        try {
 
-        setEditServiceForm(false)
+            await AsyncStorage.setItem('services', JSON.stringify([...otherServices, editedService]))
+
+            setServices(orderServices([...otherServices, editedService]))
+
+            setEditServiceForm(false)
+
+        } catch (error) {
+
+            Alert.alert('Erro ao salvar no banco de dados')
+
+        }
+
+
 
     }
 

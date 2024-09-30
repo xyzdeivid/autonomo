@@ -1,4 +1,7 @@
-import { createContext, useState } from 'react'
+import { orderServices } from '@/functions/services'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { createContext, useEffect, useState } from 'react'
+import { Alert } from 'react-native'
 
 export interface Service {
     _id: string
@@ -75,6 +78,22 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [services, setServices] = useState<Service[]>([])
     const [expenses, setExpenses] = useState<Expense[]>([])
     const [schedulings, setSchedulings] = useState<Scheduling[]>([])
+
+    const getServicesFromDb = async () => {
+        try {
+            const data = await AsyncStorage.getItem('services')
+            if (data) {
+                setServices(orderServices(JSON.parse(data)))
+            }
+        } catch (error) {
+            Alert.alert('Erro ao acessar banco de dados')
+        }
+        
+    }
+
+    useEffect(() => {
+        getServicesFromDb()
+    }, [])
 
     const docs: TDocsContext = {
         services: [services, setServices],
