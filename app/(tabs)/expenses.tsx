@@ -11,6 +11,8 @@ import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
 import { filterExpenses } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Alert } from 'react-native'
 
 export default function Expenses() {
 
@@ -20,15 +22,25 @@ export default function Expenses() {
     const [expenseForDeletion, setExpenseForDeletion] = useState('')
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
 
-    const deleteExpense = (id: string) => {
+    const deleteExpense = async (id: string) => {
 
         const remainingExpenses = expenses.filter(expense => {
             return expense._id !== id
         })
 
-        setExpenses(orderExpenses(remainingExpenses))
+        try {
+
+            await AsyncStorage.setItem('expenses', JSON.stringify(remainingExpenses))
+
+            setExpenses(orderExpenses(remainingExpenses))
 
         setDeleteExpenseForm(false)
+
+        } catch (error) {
+            
+            Alert.alert('Erro ao salvar no banco de dados')
+
+        }
 
     }
 

@@ -1,3 +1,4 @@
+import { orderExpenses } from '@/functions/expenses'
 import { orderServices } from '@/functions/services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createContext, useEffect, useState } from 'react'
@@ -91,8 +92,20 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         
     }
 
+    const getExpensesFromDb = async () => {
+        try {
+            const data = await AsyncStorage.getItem('expenses')
+            if (data) {
+                setExpenses(orderExpenses(JSON.parse(data)))
+            }
+        } catch (error) {
+            Alert.alert('Erro ao acessar banco de dados')
+        }
+    }
+
     useEffect(() => {
         getServicesFromDb()
+        getExpensesFromDb()
     }, [])
 
     const docs: TDocsContext = {

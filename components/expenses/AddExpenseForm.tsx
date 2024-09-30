@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
@@ -34,7 +35,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
         setHideTabBar(true)
     }, [])
 
-    const addExpense = () => {
+    const addExpense = async () => {
 
         if (allInputsFilled) {
 
@@ -45,9 +46,19 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 value
             }
 
-            setExpenses(orderExpenses([...expenses, newExpense]))
+            try {
 
-            setAddExpenseForm(false)
+                await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
+
+                setExpenses(orderExpenses([...expenses, newExpense]))
+
+                setAddExpenseForm(false)
+
+            } catch (error) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
 
 
         } else {
