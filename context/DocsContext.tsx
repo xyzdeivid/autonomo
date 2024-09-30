@@ -1,4 +1,5 @@
 import { orderExpenses } from '@/functions/expenses'
+import { orderSchedulings } from '@/functions/schedulings'
 import { orderServices } from '@/functions/services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createContext, useEffect, useState } from 'react'
@@ -103,9 +104,21 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         }
     }
 
+    const getSchedulingsFromDb = async () => {
+        try {
+            const data = await AsyncStorage.getItem('schedulings')
+            if (data) {
+                setSchedulings(orderSchedulings(JSON.parse(data)))
+            }
+        } catch (error) {
+            Alert.alert('Erro ao acessar banco de dados')
+        }
+    }
+
     useEffect(() => {
         getServicesFromDb()
         getExpensesFromDb()
+        getSchedulingsFromDb()
     }, [])
 
     const docs: TDocsContext = {

@@ -11,6 +11,7 @@ import { filterSchedulings } from '@/functions/common'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 
 import { orderSchedulings } from '@/functions/schedulings'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Schedulings() {
 
@@ -20,15 +21,23 @@ export default function Schedulings() {
     const [schedulingForDeletion, setSchedulingForDeletion] = useState('')
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
 
-    const deleteScheduling = (id: string) => {
+    const deleteScheduling = async (id: string) => {
 
         const remainingSchedulings = schedulings.filter(scheduling => {
             return scheduling._id !== id
         })
 
-        setSchedulings(orderSchedulings(remainingSchedulings))
+        try {
 
-        setDeleteSchedulingForm(false)
+            await AsyncStorage.setItem('schedulings', JSON.stringify(remainingSchedulings))
+
+            setSchedulings(orderSchedulings(remainingSchedulings))
+
+            setDeleteSchedulingForm(false)
+
+        } catch (error) {
+
+        }
 
     }
 
@@ -40,7 +49,7 @@ export default function Schedulings() {
                 )
             }
             {
-                filterSchedulings(schedulings,selectedMonth)[0]
+                filterSchedulings(schedulings, selectedMonth)[0]
                     ? <SchedulingsList
                         filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
                         setSchedulingForDeletion={setSchedulingForDeletion}

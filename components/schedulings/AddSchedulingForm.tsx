@@ -10,6 +10,8 @@ import { generateId } from '@/functions/common'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import { orderSchedulings } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Alert } from 'react-native'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -28,7 +30,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     const [date, setDate] = useState('')
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
 
-    const addScheduling = () => {
+    const addScheduling = async () => {
 
         const newScheduling: Scheduling = {
             _id: generateId(),
@@ -36,11 +38,21 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
             date
         }
 
-        setSchedulings(orderSchedulings([...schedulings, newScheduling]))
+        try {
 
-        setAddSchedulingForm(false)
+            await AsyncStorage.setItem('schedulings', JSON.stringify([...schedulings, newScheduling]))
 
-        setHideTabBar(false)
+            setSchedulings(orderSchedulings([...schedulings, newScheduling]))
+
+            setAddSchedulingForm(false)
+
+            setHideTabBar(false)
+
+        } catch (error) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+            
+        }
 
     }
 
