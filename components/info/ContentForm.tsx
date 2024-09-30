@@ -19,7 +19,7 @@ export default function ContentForm({ setContent, setContentForm }: ContentFormP
     }, [])
 
     const data = [
-        ['financial', 'Financeiro'],
+        ['financial', 'Finanças'],
         ['services', 'Serviços']
     ]
 

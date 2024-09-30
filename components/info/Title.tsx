@@ -14,7 +14,7 @@ export default function Title({ content, setContentForm }: TitleProps) {
     useEffect(() => {
         switch (content) {
             case 'financial':
-                setButtonText('Financeiro')
+                setButtonText('Finanças')
                 break
             case 'services':
                 setButtonText('Serviços')
