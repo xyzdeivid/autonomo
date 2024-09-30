@@ -37,40 +37,52 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
         if (allInputsFilled) {
 
-            // Criando novo serviço
-            const service = {
-                _id: name, value
-            }
-
-            // Verificando se já existe um serviço com o nome igual
-            const isThereAnotherService = services.filter(service => {
-                return service._id == name
-            })
-
-            if (isThereAnotherService[0]) {
+            if (services.length === 10) {
 
                 setAddServiceForm(false)
 
                 setTimeout(() => {
-                    Alert.alert('Serviço existente', 'Um serviço com este nome já existe')
+                    Alert.alert('Você só pode registrar 10 serviços')
                 }, 500)
 
-            } else {
+            }
+            else {
 
-                try {
-                    
-                    await AsyncStorage.setItem('services', JSON.stringify([...services, service]))
+                // Criando novo serviço
+                const service = {
+                    _id: name, value
+                }
 
-                    setServices(orderServices([...services, service]))
+                // Verificando se já existe um serviço com o nome igual
+                const isThereAnotherService = services.filter(service => {
+                    return service._id == name
+                })
+
+                if (isThereAnotherService[0]) {
 
                     setAddServiceForm(false)
 
-                } catch (e) {
+                    setTimeout(() => {
+                        Alert.alert('Serviço existente', 'Um serviço com este nome já existe')
+                    }, 500)
 
-                    Alert.alert('Erro ao salvar no banco de dados!')
+                } else {
+
+                    try {
+
+                        await AsyncStorage.setItem('services', JSON.stringify([...services, service]))
+
+                        setServices(orderServices([...services, service]))
+
+                        setAddServiceForm(false)
+
+                    } catch (e) {
+
+                        Alert.alert('Erro ao salvar no banco de dados!')
+
+                    }
 
                 }
-
             }
 
         } else {
