@@ -17,7 +17,7 @@ export default function ServicesList({ services }: ServicesListProps) {
                 return (
                     <View key={current.service} style={styles.infoContainer}>
                         <Entypo name='flickr-with-circle' size={16} color={current.color} />
-                        <Text style={styles.text}>{current.service}</Text>
+                        <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>{current.service}:</Text> {current.amount}x</Text>
                     </View>
                 )
             })}

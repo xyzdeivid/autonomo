@@ -13,13 +13,13 @@ export default function ServicesChart({ services }: ServicesChartProps) {
 
     const data = () => {
         return services.map(current => {
-            return { value: current.amount, color: current.color, text: String(current.amount) }
+            return { value: current.amount, color: current.color }
         })
     }
 
     return (
         <View style={{ marginHorizontal: 'auto', marginVertical: 20 }}>
-            <PieChart data={data()} donut showText textColor='white' />
+            <PieChart data={data()} donut />
         </View>
     )
 
