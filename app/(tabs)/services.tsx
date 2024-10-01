@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddServiceForm from '@/components/services/AddServiceForm'
-import { DocsContext } from '@/context/DocsContext'
+import { DocsContext, Service } from '@/context/DocsContext'
 import ServicesList from '@/components/services/ServicesList'
 import EditServiceForm from '@/components/services/EditServiceForm'
 import Container from '@/components/common/Container'
@@ -10,6 +10,8 @@ import DeleteForm from '@/components/common/DeleteForm'
 import { orderServices } from '@/functions/services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
+import DeleteExpenseForm from '@/components/expenses/DeleteExpenseForm'
+import DeleteServiceForm from '@/components/services/DeleteServiceForm'
 
 export default function Services() {
 
@@ -17,7 +19,7 @@ export default function Services() {
     const [editServiceForm, setEditServiceForm] = useState(false)
     const [deleteServiceForm, setDeleteServiceForm] = useState(false)
     const [serviceForEdition, setServiceForEdition] = useState('')
-    const [serviceForDeletion, setServiceForDeletion] = useState('')
+    const [serviceForDeletion, setServiceForDeletion] = useState({} as Service)
     const [services, setServices] = useContext(DocsContext).services
 
     const deleteService = async (id: string) => {
@@ -66,12 +68,7 @@ export default function Services() {
             }
             {
                 deleteServiceForm
-                    ?
-                    <DeleteForm
-                        targetName={serviceForDeletion}
-                        deleteFunction={deleteService}
-                        setFormOff={setDeleteServiceForm}
-                    />
+                    ? <DeleteServiceForm service={serviceForDeletion} deleteFunction={deleteService} setFormOff={setDeleteServiceForm} />
                     : null
             }
         </Container>
