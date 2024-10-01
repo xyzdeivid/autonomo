@@ -1,9 +1,15 @@
 import { Expense, Scheduling } from "@/context/DocsContext"
+import { format, parseISO } from "date-fns"
 
 export const moneyFormat = (value: number) => {
     const formatedData = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
         .format(Number(value)).replace('R$', '')
     return formatedData
+}
+
+export const dateFormat = (date: string) => {
+    const formatedDate = format(parseISO(date), 'dd/MM')
+    return formatedDate
 }
 
 export const getCurrentMonth = () => {
