@@ -1,5 +1,4 @@
 import { Expense } from '@/context/DocsContext'
-import { AntDesign } from '@expo/vector-icons'
 import { format, parseISO } from 'date-fns'
 import { StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
@@ -7,14 +6,14 @@ import ContainerHandler from '../common/ContainerHandler'
 
 interface ExpensesListProps {
     filteredExpenses: Expense[]
-    setExpenseForDeletion: React.Dispatch<React.SetStateAction<string>>
+    setExpenseForDeletion: React.Dispatch<React.SetStateAction<Expense>>
     setDeleteExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, setDeleteExpenseForm }: ExpensesListProps) {
 
-    const deleteExpense = (id: string) => {
-        setExpenseForDeletion(id)
+    const deleteExpense = (expense: Expense) => {
+        setExpenseForDeletion(expense)
         setDeleteExpenseForm(true)
     }
 
@@ -36,17 +35,13 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
                     <DataTable.Title style={styles.text}>Nome</DataTable.Title>
                     <DataTable.Title style={styles.text}>Data</DataTable.Title>
                     <DataTable.Title style={styles.text}>Valor</DataTable.Title>
-                    <DataTable.Title style={styles.text}>{''}</DataTable.Title>
                 </DataTable.Header>
                 {filteredExpenses.map(expense => {
                     return (
-                        <DataTable.Row key={expense._id}>
+                        <DataTable.Row onPress={() => deleteExpense(expense)} key={expense._id}>
                             <DataTable.Cell style={styles.text}>{expense.name}</DataTable.Cell>
                             <DataTable.Cell style={styles.text}>{dateFormat(expense.date)}</DataTable.Cell>
                             <DataTable.Cell style={styles.text}>{moneyFormat(expense.value)}</DataTable.Cell>
-                            <DataTable.Cell>
-                                <AntDesign onPress={() => deleteExpense(expense._id)} name='close' size={18} color='darkred' />
-                            </DataTable.Cell>
                         </DataTable.Row>
                     )
                 })}
