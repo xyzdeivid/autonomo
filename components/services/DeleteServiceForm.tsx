@@ -4,7 +4,7 @@ import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { Service } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
-import { dateFormat, moneyFormat } from '@/functions/common'
+import { moneyFormat } from '@/functions/common'
 
 interface DeleteServiceFormProps {
     service: Service
@@ -22,7 +22,12 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                     <Text><Text style={styles.label}>Serviço:</Text> {service._id}</Text>
                     <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(service.value)}</Text>
                 </View>
-                <SubmitFormButtons submit={() => deleteFunction(service._id)} setFormOff={setFormOff} submitButtonText='Excluir' />
+                <SubmitFormButtons
+                    submit={() => deleteFunction(service._id)}
+                    setFormOff={setFormOff}
+                    submitButtonText='Excluir'
+                    submitButtonColor='darkred'
+                />
             </FormBody>
         </FormContainer>
     )

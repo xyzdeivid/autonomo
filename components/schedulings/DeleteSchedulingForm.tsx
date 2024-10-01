@@ -23,7 +23,12 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                     <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
                     <Text><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
                 </View>
-                <SubmitFormButtons submit={() => deleteFunction(scheduling._id)} setFormOff={setFormOff} submitButtonText='Excluir' />
+                <SubmitFormButtons
+                    submit={() => deleteFunction(scheduling._id)}
+                    setFormOff={setFormOff}
+                    submitButtonText='Excluir'
+                    submitButtonColor='darkred'
+                />
             </FormBody>
         </FormContainer>
     )

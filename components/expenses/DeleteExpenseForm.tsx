@@ -22,7 +22,12 @@ export default function DeleteExpenseForm({ expense, deleteFunction, setFormOff 
                     <Text><Text style={styles.label}>Despesa:</Text> {expense.name}</Text>
                     <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(expense.value)}</Text>
                 </View>
-                <SubmitFormButtons submit={() => deleteFunction(expense)} setFormOff={setFormOff} submitButtonText='Excluir' />
+                <SubmitFormButtons
+                    submit={() => deleteFunction(expense)}
+                    setFormOff={setFormOff}
+                    submitButtonText='Excluir'
+                    submitButtonColor='darkred'
+                />
             </FormBody>
         </FormContainer>
     )

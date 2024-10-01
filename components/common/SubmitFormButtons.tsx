@@ -7,16 +7,17 @@ interface SubmitFormButtonsProps {
     submit: () => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
     submitButtonText: string
+    submitButtonColor?: string
 }
 
-export default function SubmitFormButtons({ submit, setFormOff, submitButtonText }: SubmitFormButtonsProps) {
+export default function SubmitFormButtons({ submit, setFormOff, submitButtonText, submitButtonColor }: SubmitFormButtonsProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
     return (
         <>
             <View style={styles.buttonsContainer}>
-                <Button color='darkgreen' title={submitButtonText} onPress={() => {
+                <Button color={submitButtonColor ? submitButtonColor : 'darkgreen'} title={submitButtonText} onPress={() => {
                     submit()
                     setHideTabBar(false)
                 }} />
