@@ -1,7 +1,7 @@
 import { DocsContext, Service } from '@/context/DocsContext'
 import { Picker } from '@react-native-picker/picker'
 import { useContext } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 interface SelectServiceInputProps {
     service: Service
@@ -14,8 +14,9 @@ export default function SelectServiceInput({ service, setService }: SelectServic
 
     return (
         <View>
+            <Text style={styles.label}>Serviço:</Text>
             <Picker
-                style={styles.container}
+                style={styles.inputContainer}
                 selectedValue={service}
                 onValueChange={(itemValue) => setService(itemValue)}
             >
@@ -31,7 +32,10 @@ export default function SelectServiceInput({ service, setService }: SelectServic
 }
 
 const styles = StyleSheet.create({
-    container: {
+    label: {
+        marginBottom: 5
+    },
+    inputContainer: {
         backgroundColor: '#E0E0E0', 
         borderRadius: 6,
         marginBottom: 20

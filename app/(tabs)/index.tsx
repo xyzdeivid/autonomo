@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
@@ -22,24 +22,26 @@ export default function Info() {
     const selectPage = () => {
         switch (content) {
             case 'financial':
-                return <Revenue />
+                return (
+                    <View>
+                        <Title content={content} setContentForm={setContentForm} />
+                        <Revenue />
+                    </View>
+            )
             case 'services':
-                return <Services />
+                return (
+                    <View>
+                        <Title content={content} setContentForm={setContentForm} />
+                        <Services />
+                    </View>
+                )
         }
     }
 
     return (
         <Container>
             {
-                schedulings[0] && (
-                    <View>
-                        <MonthInput />
-                        <Title
-                            content={content}
-                            setContentForm={setContentForm}
-                        />
-                    </View>
-                )
+                schedulings[0] && (<MonthInput />)
             }
             {
                 contentForm && (

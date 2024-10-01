@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         textAlign: 'center', 
         marginBottom: 20,
         borderBottomWidth: 1.5,
-        borderBottomColor: 'gray',
+        borderBottomColor: '#E0E0E0',
         padding: 8,
         borderTopLeftRadius: 6,
         borderTopRightRadius: 6
