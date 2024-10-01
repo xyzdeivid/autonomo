@@ -54,7 +54,7 @@ export default function Info() {
             {
                 filterSchedulings(schedulings, selectedMonth)[0]
                     ? selectPage()
-                    : <AnyItemWarning text='Nenhuma informação disponível' />
+                    : <AnyItemWarning text='Nenhum agendamento cadastrado' />
             }
         </Container>
     )
