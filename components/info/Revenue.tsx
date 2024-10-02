@@ -1,8 +1,9 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
 import { useState } from 'react'
 import FinancePeriodButtons from './FinancePeriodButtons'
 import MonthlyRevenue from './MonthlyRevenue'
+import Daily from './Daily'
 
 export default function Revenue() {
     
@@ -13,7 +14,7 @@ export default function Revenue() {
             case 'monthly':
                 return <MonthlyRevenue />
             case 'daily':
-                return <Text>Hello World</Text>
+                return <Daily />
         }
     }
 
