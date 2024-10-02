@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 
 import { View } from 'react-native'
-import RevenueChart from './RevenueChart'
-import RevenueList from './RevenueList'
+import RevenueChart from './MonthlyRevenueChart'
+import RevenueList from './MonthlyRevenueList'
 
 import { DocsContext } from '@/context/DocsContext'
 import { MonthContext } from '@/context/Month'
