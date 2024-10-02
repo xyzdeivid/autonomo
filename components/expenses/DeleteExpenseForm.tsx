@@ -5,6 +5,8 @@ import FormTitle from '../common/FormTitle'
 import { Expense } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { moneyFormat } from '@/functions/common'
+import { useContext, useEffect } from 'react'
+import { HideTabBarContext } from '@/context/HideTabBar'
 
 interface DeleteExpenseFormProps {
     expense: Expense
@@ -13,6 +15,12 @@ interface DeleteExpenseFormProps {
 }
 
 export default function DeleteExpenseForm({ expense, deleteFunction, setFormOff }: DeleteExpenseFormProps) {
+
+    const [, setHideTabBar] = useContext(HideTabBarContext)
+
+    useEffect(() => {
+        setHideTabBar(true)
+    }, [])
 
     return (
         <FormContainer>

@@ -5,6 +5,8 @@ import FormTitle from '../common/FormTitle'
 import { Scheduling } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
+import { useContext, useEffect } from 'react'
+import { HideTabBarContext } from '@/context/HideTabBar'
 
 interface DeleteSchedulingFormProps {
     scheduling: Scheduling
@@ -13,6 +15,12 @@ interface DeleteSchedulingFormProps {
 }
 
 export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFormOff }: DeleteSchedulingFormProps) {
+
+    const [, setHideTabBar] = useContext(HideTabBarContext)
+
+    useEffect(() => {
+        setHideTabBar(true)
+    }, [])
 
     return (
         <FormContainer>

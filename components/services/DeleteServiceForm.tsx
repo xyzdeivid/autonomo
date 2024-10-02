@@ -5,6 +5,8 @@ import FormTitle from '../common/FormTitle'
 import { Service } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { moneyFormat } from '@/functions/common'
+import { useContext, useEffect } from 'react'
+import { HideTabBarContext } from '@/context/HideTabBar'
 
 interface DeleteServiceFormProps {
     service: Service
@@ -13,6 +15,12 @@ interface DeleteServiceFormProps {
 }
 
 export default function DeleteServiceForm({ service, deleteFunction, setFormOff }: DeleteServiceFormProps) {
+
+    const [, setHideTabBar] = useContext(HideTabBarContext)
+
+    useEffect(() => {
+        setHideTabBar(true)
+    }, [])
 
     return (
         <FormContainer>
