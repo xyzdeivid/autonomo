@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { useState } from 'react'
 import FinancePeriodButtons from './FinancePeriodButtons'
 import MonthlyRevenue from './MonthlyRevenue'
-import Daily from './Daily'
+import Daily from './DailyRevenueChart'
 
 export default function Revenue() {
     
