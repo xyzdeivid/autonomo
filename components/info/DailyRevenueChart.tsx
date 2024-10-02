@@ -23,6 +23,13 @@ export default function Daily() {
         })
     }
 
+    const findTheMostProfitableDay = () => {
+        const values = getDays(filteredSchedulings).map(day => {
+            return day.amount
+        })
+        return values.sort((a, b) => b - a)[0]
+    }
+
     return (
         <View style={{ marginVertical: 20 }}>
             <BarChart
@@ -36,6 +43,7 @@ export default function Daily() {
                 yAxisThickness={0}
                 xAxisThickness={0}
                 barWidth={12}
+                maxValue={findTheMostProfitableDay()}
             />
             <View style={{ marginTop: 8, marginStart: 8 }}>
                 <Text>Y: Valor</Text>
