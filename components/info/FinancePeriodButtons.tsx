@@ -9,23 +9,31 @@ export default function FinancePeriodButtons({ period, setPeriod }: FinancePerio
 
     const checkPeriod = (button: string) => {
         return period === button
-            ? ['darkgreen', 'white']
-            : ['transparent', 'black']
+            ? 'darkgreen'
+            : 'green'
     }
 
     return (
         <View style={styles.container}>
             <Pressable
-                style={{ ...styles.button, backgroundColor: checkPeriod('monthly')[0] }}
+                style={{
+                    ...styles.button, backgroundColor: checkPeriod('monthly'),
+                    borderTopLeftRadius: 4,
+                    borderBottomLeftRadius: 4
+                }}
                 onPress={() => setPeriod('monthly')}
             >
-                <Text style={{ color: checkPeriod('monthly')[1] }}>Mensal</Text>
+                <Text style={{ color: 'white' }}>Mensal</Text>
             </Pressable>
             <Pressable
-                style={{ ...styles.button, backgroundColor: checkPeriod('daily')[0] }}
+                style={{
+                    ...styles.button, backgroundColor: checkPeriod('daily'),
+                    borderTopRightRadius: 4,
+                    borderBottomRightRadius: 4
+                }}
                 onPress={() => setPeriod('daily')}
             >
-                <Text style={{ color: checkPeriod('daily')[1] }}>Diária</Text>
+                <Text style={{ color: 'white' }}>Diária</Text>
             </Pressable>
         </View>
     )
@@ -36,11 +44,9 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        marginStart: 8
+        marginStart: 8,
     },
     button: {
-        marginEnd: 8,
-        padding: 8,
-        borderRadius: 4
+        padding: 8
     }
 })
