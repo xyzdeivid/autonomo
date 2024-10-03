@@ -3,9 +3,10 @@ import { View, Pressable, Text, StyleSheet } from 'react-native'
 interface FinancePeriodButtonsProps {
     period: string
     setPeriod: React.Dispatch<React.SetStateAction<string>>
+    mgTop?: number
 }
 
-export default function FinancePeriodButtons({ period, setPeriod }: FinancePeriodButtonsProps) {
+export default function FinancePeriodButtons({ period, setPeriod, mgTop }: FinancePeriodButtonsProps) {
 
     const checkPeriod = (button: string) => {
         return period === button
@@ -14,7 +15,7 @@ export default function FinancePeriodButtons({ period, setPeriod }: FinancePerio
     }
 
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, marginTop: mgTop ? mgTop : 0}}>
             <Pressable
                 style={{
                     ...styles.button, backgroundColor: checkPeriod('monthly'),
@@ -23,7 +24,7 @@ export default function FinancePeriodButtons({ period, setPeriod }: FinancePerio
                 }}
                 onPress={() => setPeriod('monthly')}
             >
-                <Text style={{ color: 'white' }}>Mensal</Text>
+                <Text style={{ color: 'white' }}>Mês</Text>
             </Pressable>
             <Pressable
                 style={{
@@ -33,7 +34,7 @@ export default function FinancePeriodButtons({ period, setPeriod }: FinancePerio
                 }}
                 onPress={() => setPeriod('daily')}
             >
-                <Text style={{ color: 'white' }}>Diária</Text>
+                <Text style={{ color: 'white' }}>Dia</Text>
             </Pressable>
         </View>
     )
@@ -45,8 +46,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         marginStart: 8,
+        marginBottom: 30
     },
     button: {
-        padding: 8
+        padding: 4
     }
 })

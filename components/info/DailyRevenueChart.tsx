@@ -8,7 +8,7 @@ import { BarChart } from 'react-native-gifted-charts'
 import { DocsContext } from '@/context/DocsContext'
 import { MonthContext } from '@/context/Month'
 
-export default function Daily() {
+export default function DailyRevenueChart() {
 
     const [schedulings] = useContext(DocsContext).schedulings
     const [selectedMonth] = useContext(MonthContext)
@@ -31,7 +31,7 @@ export default function Daily() {
     }
 
     return (
-        <View style={{ marginVertical: 20 }}>
+        <View>
             <BarChart
                 data={data()}
                 cappedBars
@@ -45,10 +45,6 @@ export default function Daily() {
                 barWidth={12}
                 maxValue={findTheMostProfitableDay()}
             />
-            <View style={{ marginTop: 8, marginStart: 8 }}>
-                <Text>Y: Valor</Text>
-                <Text>X: Dia</Text>
-            </View>
         </View>
     )
 

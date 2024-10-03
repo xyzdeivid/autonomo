@@ -1,9 +1,8 @@
 import { View } from 'react-native'
 
 import { useState } from 'react'
-import FinancePeriodButtons from './FinancePeriodButtons'
 import MonthlyRevenue from './MonthlyRevenue'
-import Daily from './DailyRevenueChart'
+import DailyRevenue from './DailyRevenue'
 
 export default function Revenue() {
     
@@ -12,15 +11,14 @@ export default function Revenue() {
     const getContent = () => {
         switch (period) {
             case 'monthly':
-                return <MonthlyRevenue />
+                return <MonthlyRevenue period={period} setPeriod={setPeriod} />
             case 'daily':
-                return <Daily />
+                return <DailyRevenue period={period} setPeriod={setPeriod} />
         }
     }
 
     return (
         <View style={{ zIndex: -1 }}>
-            <FinancePeriodButtons period={period} setPeriod={setPeriod} />
             {getContent()}
         </View>
     )
