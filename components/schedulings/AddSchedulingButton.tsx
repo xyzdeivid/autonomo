@@ -19,7 +19,7 @@ export default function AddSchedulingButton({ setAddSchedulingForm }: AddSchedul
     }
 
     return (
-        <Pressable onPress={() => checkServices()} style={{ ...styles.button, backgroundColor: 'darkblue' }}>
+        <Pressable onPress={() => checkServices()} style={{ ...styles.button, backgroundColor: 'black' }}>
             <Entypo name='add-to-list' size={24} color='white' />
         </Pressable>
     )

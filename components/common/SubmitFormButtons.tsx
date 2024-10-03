@@ -17,7 +17,7 @@ export default function SubmitFormButtons({ submit, setFormOff, submitButtonText
     return (
         <>
             <View style={styles.buttonsContainer}>
-                <Button color={submitButtonColor ? submitButtonColor : 'darkgreen'} title={submitButtonText} onPress={() => {
+                <Button color={submitButtonColor ? submitButtonColor : '#004AAD'} title={submitButtonText} onPress={() => {
                     submit()
                     setHideTabBar(false)
                 }} />

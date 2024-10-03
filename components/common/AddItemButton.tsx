@@ -3,13 +3,18 @@ import Entypo from '@expo/vector-icons/Entypo'
 
 interface AddItemButtonProps {
     setForm: React.Dispatch<React.SetStateAction<boolean>>,
-    bgColor: string
+    bgColor?: string
 }
 
 export default function AddItemButton({ setForm, bgColor }: AddItemButtonProps) {
 
     return (
-        <Pressable onPress={() => setForm(true)} style={{...styles.button, backgroundColor: bgColor}}>
+        <Pressable onPress={() => setForm(true)}
+            style={{
+                ...styles.button,
+                backgroundColor: bgColor ? bgColor : 'black'
+            }}
+        >
             <Entypo name='add-to-list' size={24} color='white' />
         </Pressable>
     )

@@ -40,8 +40,9 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginStart: 8,
-        marginBottom: 10
+        marginTop: 8,
+        marginBottom: 24,
+        marginStart: 8
     },
     titleText: {
         fontSize: 16,

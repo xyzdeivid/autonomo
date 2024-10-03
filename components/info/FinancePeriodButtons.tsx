@@ -46,9 +46,10 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         marginStart: 8,
-        marginBottom: 30
+        marginBottom: 30,
     },
     button: {
-        padding: 4
+        paddingHorizontal: 8,
+        paddingVertical: 4
     }
 })

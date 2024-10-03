@@ -87,7 +87,12 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     <DateInput setTargetDate={setDate} />
                     <NumberInput setValue={setValue} />
                 </FormInputs>
-                <SubmitFormButtons submit={addExpense} setFormOff={setAddExpenseForm} submitButtonText='Registrar' />
+                <SubmitFormButtons
+                    submit={addExpense}
+                    setFormOff={setAddExpenseForm}
+                    submitButtonText='Registrar'
+                    submitButtonColor='darkred'
+                />
             </FormBody>
         </FormContainer>
     )

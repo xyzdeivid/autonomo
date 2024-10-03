@@ -11,9 +11,13 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
+                headerStyle: {
+                    backgroundColor: '#004AAD'
+                },
                 tabBarActiveTintColor: 'white',
                 tabBarInactiveTintColor: 'black',
                 tabBarInactiveBackgroundColor: 'white',
+                tabBarActiveBackgroundColor: '#004AAD',
                 tabBarStyle: {
                     display: hideTabBar ? 'none' : 'flex',
                     borderTopWidth: 0
@@ -22,7 +26,6 @@ export default function TabLayout() {
             <Tabs.Screen
                 name='index'
                 options={{
-                    tabBarActiveBackgroundColor: 'darkgreen',
                     title: 'Informações',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='chart-simple' size={24} color={color} />
@@ -31,7 +34,6 @@ export default function TabLayout() {
             />
             <Tabs.Screen name='schedulings'
                 options={{
-                    tabBarActiveBackgroundColor: 'darkblue',
                     title: 'Agendamentos',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome5 name='calendar-plus' size={24} color={color} />
@@ -39,15 +41,17 @@ export default function TabLayout() {
                 }} />
             <Tabs.Screen name='expenses'
                 options={{
-                    tabBarActiveBackgroundColor: 'darkred',
                     title: 'Despesas',
+                    tabBarActiveBackgroundColor: 'darkred',
+                    headerStyle: {
+                        backgroundColor: 'darkred'
+                    },
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='arrow-trend-down' size={24} color={color} />
                     )
                 }} />
             <Tabs.Screen name='services'
                 options={{
-                    tabBarActiveBackgroundColor: '#000033',
                     title: 'Serviços',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='bag-shopping' size={24} color={color} />
