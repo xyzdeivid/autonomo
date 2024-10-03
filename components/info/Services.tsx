@@ -21,7 +21,7 @@ export default function Services() {
 
     useEffect(() => {
         setServices(getMostOfferedServices())
-    }, [schedulings])
+    }, [schedulings, selectedMonth])
 
     const colors = [
         '#0000FF',
