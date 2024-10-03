@@ -5,6 +5,7 @@ import { DocsContext } from '@/context/DocsContext'
 import { filterSchedulings } from '@/functions/common'
 import { MonthContext } from '@/context/Month'
 import ServicesList from './ServicesList'
+import InfoTitle from '../common/InfoTitle'
 
 type ServicesProps = {
     service: string
@@ -63,6 +64,7 @@ export default function Services() {
 
     return (
         <View style={{ zIndex: -1 }}>
+            <InfoTitle text='Serviços mais oferecidos' />
             <ServicesChart services={services} />
             <View style={{
                 borderBottomColor: '#E0E0E0',

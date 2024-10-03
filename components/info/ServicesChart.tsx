@@ -18,7 +18,7 @@ export default function ServicesChart({ services }: ServicesChartProps) {
     }
 
     return (
-        <View style={{ marginHorizontal: 'auto', marginVertical: 20 }}>
+        <View style={{ marginHorizontal: 'auto', marginBottom: 40 }}>
             <PieChart data={data()} donut />
         </View>
     )
