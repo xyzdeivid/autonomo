@@ -12,6 +12,7 @@ import { orderSchedulings } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
+import StockInfo from './StockInfo'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -59,9 +60,12 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text='Registrar Agendamento' />
+                <FormTitle text='Agendamento / Venda' />
                 <FormInputs>
                     <SelectServiceInput service={service} setService={setService} />
+                    {service.amount && (
+                        <StockInfo amount={service.amount} />
+                    )}
                     <DateInput setTargetDate={setDate} />
                 </FormInputs>
                 <SubmitFormButtons submit={addScheduling} setFormOff={setAddSchedulingForm} submitButtonText='Registrar' />
