@@ -22,13 +22,29 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
         setHideTabBar(true)
     }, [])
 
+    const checkTitle = () => {
+        if (service.amount) {
+            return 'Produto'
+        } else {
+            return 'Serviço'
+        }
+    }
+
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text='Sobre Serviço' />
+                <FormTitle text={`Sobre ${checkTitle()}`} />
                 <View>
                     <Text><Text style={styles.label}>Serviço:</Text> {service._id}</Text>
                     <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(service.value)}</Text>
+                    {
+                        service.amount && (
+                            <Text>
+                                <Text style={styles.label}>Quantidade: </Text>
+                                {service.amount}
+                            </Text>
+                        )
+                    }
                 </View>
                 <SubmitFormButtons
                     submit={() => deleteFunction(service._id)}
