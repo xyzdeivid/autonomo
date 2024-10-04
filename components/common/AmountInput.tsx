@@ -1,14 +1,15 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 
 interface AmountInputProps {
+    text: string
     setAmount: React.Dispatch<React.SetStateAction<number>>
 }
 
-export default function AmountInput({ setAmount }: AmountInputProps) {
+export default function AmountInput({ text, setAmount }: AmountInputProps) {
 
     return (
         <View style={styles.inputContainer}>
-            <Text>Quantidade:</Text>
+            <Text>{text}:</Text>
             <TextInput onChangeText={text => setAmount(Number(text))} style={styles.input} keyboardType='numeric' />
         </View>
     )

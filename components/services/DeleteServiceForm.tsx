@@ -33,7 +33,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                     {
                         service.amount && (
                             <Text>
-                                <Text style={styles.label}>Quantidade: </Text>
+                                <Text style={styles.label}>Estoque: </Text>
                                 {service.amount}
                             </Text>
                         )

@@ -22,28 +22,22 @@ interface AddSchedulingFormProps {
 export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
-    const [amount, setAmount] = useState(0)
     const [services] = useContext(DocsContext).services
     const [service, setService] = useState<Service>(services[0])
     const [actualServiceAmount, setActualServiceAmount] = useState(service.amount || 0)
 
-    useEffect(() => {
-        setHideTabBar(true)
-    }, [])
-
-    useEffect(() => {
-        if (service.amount) 
-        setActualServiceAmount(service.amount - amount)
-    }, [amount])
-    
     const [date, setDate] = useState('')
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
+    const [amount, setAmount] = useState(0)
 
     const addScheduling = async () => {
 
         const newScheduling: Scheduling = {
             _id: generateId(),
-            service,
+            service: {
+                _id: service._id,
+                value: service.amount ? service.value * amount : service.value
+            },
             date
         }
 
@@ -60,10 +54,19 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
         } catch (error) {
 
             Alert.alert('Erro ao acessar banco de dados')
-            
+
         }
 
     }
+
+    useEffect(() => {
+        setHideTabBar(true)
+    }, [])
+
+    useEffect(() => {
+        if (service.amount)
+            setActualServiceAmount(service.amount - amount)
+    }, [amount])
 
     return (
         <FormContainer>
@@ -76,7 +79,10 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                     )}
                     <DateInput setTargetDate={setDate} />
                     {service.amount && (
-                        <AmountInput setAmount={setAmount} />
+                        <AmountInput
+                            text='Quantidade'
+                            setAmount={setAmount}
+                        />
                     )}
                 </FormInputs>
                 <SubmitFormButtons submit={addScheduling} setFormOff={setAddSchedulingForm} submitButtonText='Registrar' />

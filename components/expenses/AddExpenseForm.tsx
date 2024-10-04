@@ -81,7 +81,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text='Registrar Despesa' />
+                <FormTitle text='Despesa' />
                 <FormInputs>
                     <NameInput setName={setName} />
                     <DateInput setTargetDate={setDate} />

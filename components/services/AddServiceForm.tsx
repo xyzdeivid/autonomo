@@ -54,7 +54,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
                 // Criando novo serviço
                 const service: Service = {
-                    _id: name, 
+                    _id: name,
                     value
                 }
 
@@ -122,13 +122,16 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text={`Registrar ${checkTitle()}`} />
+                <FormTitle text={`${checkTitle()}`} />
                 <FormInputs>
                     <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                     <NameInput setName={setName} />
                     <NumberInput setValue={setValue} />
                     {choice === 'product' && (
-                        <AmountInput setAmount={setAmount} />
+                        <AmountInput
+                            text='Estoque'
+                            setAmount={setAmount}
+                        />
                     )}
                 </FormInputs>
                 <SubmitFormButtons submit={addService} setFormOff={setAddServiceForm} submitButtonText='Cadastrar' />
