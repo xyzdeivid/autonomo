@@ -28,7 +28,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
 
     const [date, setDate] = useState('')
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
-    const [amount, setAmount] = useState(0)
+    const [amount, setAmount] = useState(1)
 
     const addScheduling = async () => {
 
@@ -82,6 +82,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                         <AmountInput
                             text='Quantidade'
                             setAmount={setAmount}
+                            defaultValue={amount}
                         />
                     )}
                 </FormInputs>

@@ -3,14 +3,15 @@ import { View, Text, TextInput, StyleSheet } from 'react-native'
 interface AmountInputProps {
     text: string
     setAmount: React.Dispatch<React.SetStateAction<number>>
+    defaultValue?: number
 }
 
-export default function AmountInput({ text, setAmount }: AmountInputProps) {
+export default function AmountInput({ text, setAmount, defaultValue }: AmountInputProps) {
 
     return (
         <View style={styles.inputContainer}>
             <Text>{text}:</Text>
-            <TextInput onChangeText={text => setAmount(Number(text))} style={styles.input} keyboardType='numeric' />
+            <TextInput value={defaultValue ? String(defaultValue) : undefined} onChangeText={text => setAmount(Number(text))} style={styles.input} keyboardType='numeric' />
         </View>
     )
 
