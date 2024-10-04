@@ -1,7 +1,7 @@
 import { StyleSheet, Alert } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { DocsContext } from '@/context/DocsContext'
+import { DocsContext, Service } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
 import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
@@ -13,6 +13,7 @@ import NameInput from '../common/NameInput'
 import { orderServices } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
+import AmountInput from './AmountInput'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -23,6 +24,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     const [allInputsFilled, setAllInputsFilled] = useState(false)
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
+    const [amount, setAmount] = useState(0)
     const [services, setServices] = useContext(DocsContext).services
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [choice, setChoice] = useState('service')
@@ -51,8 +53,14 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
             else {
 
                 // Criando novo serviço
-                const service = {
-                    _id: name, value
+                const service: Service = {
+                    _id: name, 
+                    value
+                }
+
+                // Adicionando propriedade caso seja um product
+                if (amount) {
+                    service.amount = amount
                 }
 
                 // Verificando se já existe um serviço com o nome igual
@@ -102,14 +110,26 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
     }
 
+    const checkTitle = () => {
+        switch (choice) {
+            case 'service':
+                return 'Serviço'
+            case 'product':
+                return 'Produto'
+        }
+    }
+
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text='Registrar Serviço' />
+                <FormTitle text={`Registrar ${checkTitle()}`} />
                 <FormInputs>
                     <NameInput setName={setName} />
                     <NumberInput setValue={setValue} />
                     <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
+                    {choice === 'product' && (
+                        <AmountInput setAmount={setAmount} />
+                    )}
                 </FormInputs>
                 <SubmitFormButtons submit={addService} setFormOff={setAddServiceForm} submitButtonText='Cadastrar' />
             </FormBody>

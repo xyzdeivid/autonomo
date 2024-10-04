@@ -9,8 +9,8 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
 
     const checkChoice = (button: string) => {
         return choice === button
-            ? 'darkgreen'
-            : 'green'
+            ? 'darkblue'
+            : 'blue'
     }
 
     return (
@@ -45,7 +45,8 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: 20
     },
     button: {
         paddingHorizontal: 8,
