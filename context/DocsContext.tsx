@@ -38,9 +38,13 @@ const DEFAULT_EXPENSE: Expense = {
     value: 0
 }
 
+interface SchedulingService extends Service {
+    amount?: number
+}
+
 export interface Scheduling {
     _id: string
-	service: Service
+	service: SchedulingService
 	date: string
 }
 

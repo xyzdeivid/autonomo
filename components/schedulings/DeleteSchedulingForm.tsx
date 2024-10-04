@@ -22,14 +22,30 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
         setHideTabBar(true)
     }, [])
 
+    const checkTitle = () => {
+        if (scheduling.service.amount) {
+            return ['Venda', 'Produto']
+        } else {
+            return ['Agendamento', 'Serviço']
+        }
+    }
+
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text='Sobre Agendamento' />
+                <FormTitle text={`Sobre ${checkTitle()[0]}`} />
                 <View>
-                    <Text><Text style={styles.label}>Serviço:</Text> {scheduling.service._id}</Text>
+                    <Text><Text style={styles.label}>{checkTitle()[1]}:</Text> {scheduling.service._id}</Text>
                     <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
                     <Text><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
+                    {
+                        scheduling.service.amount
+                            ? <Text>
+                                <Text style={styles.label}>Quantidade: </Text>
+                                {scheduling.service.amount}
+                            </Text>
+                            : null
+                    }
                 </View>
                 <SubmitFormButtons
                     submit={() => deleteFunction(scheduling._id)}
