@@ -13,6 +13,7 @@ import FormInputs from '../common/FormInputs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import StockInfo from './StockInfo'
+import AmountInput from '../common/AmountInput'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -21,13 +22,20 @@ interface AddSchedulingFormProps {
 export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [amount, setAmount] = useState(0)
+    const [services] = useContext(DocsContext).services
+    const [service, setService] = useState<Service>(services[0])
+    const [actualServiceAmount, setActualServiceAmount] = useState(service.amount || 0)
 
     useEffect(() => {
         setHideTabBar(true)
     }, [])
 
-    const [services] = useContext(DocsContext).services
-    const [service, setService] = useState<Service>(services[0])
+    useEffect(() => {
+        if (service.amount) 
+        setActualServiceAmount(service.amount - amount)
+    }, [amount])
+    
     const [date, setDate] = useState('')
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
 
@@ -64,9 +72,12 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                 <FormInputs>
                     <SelectServiceInput service={service} setService={setService} />
                     {service.amount && (
-                        <StockInfo amount={service.amount} />
+                        <StockInfo amount={actualServiceAmount} />
                     )}
                     <DateInput setTargetDate={setDate} />
+                    {service.amount && (
+                        <AmountInput setAmount={setAmount} />
+                    )}
                 </FormInputs>
                 <SubmitFormButtons submit={addScheduling} setFormOff={setAddSchedulingForm} submitButtonText='Registrar' />
             </FormBody>

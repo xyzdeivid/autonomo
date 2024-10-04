@@ -13,7 +13,7 @@ import NameInput from '../common/NameInput'
 import { orderServices } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
-import AmountInput from './AmountInput'
+import AmountInput from '../common/AmountInput'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
