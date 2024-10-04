@@ -12,7 +12,7 @@ export default function AddItemButton({ setForm, bgColor }: AddItemButtonProps) 
         <Pressable onPress={() => setForm(true)}
             style={{
                 ...styles.button,
-                backgroundColor: bgColor ? bgColor : 'black'
+                backgroundColor: bgColor ? bgColor : '#004AAD'
             }}
         >
             <Entypo name='add-to-list' size={24} color='white' />

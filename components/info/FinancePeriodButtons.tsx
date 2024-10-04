@@ -10,8 +10,8 @@ export default function FinancePeriodButtons({ period, setPeriod, mgTop }: Finan
 
     const checkPeriod = (button: string) => {
         return period === button
-            ? 'darkgreen'
-            : 'green'
+            ? 'darkblue'
+            : 'blue'
     }
 
     return (

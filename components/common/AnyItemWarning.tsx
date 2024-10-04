@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         padding: 20,
         margin: 20,
-        backgroundColor: '#FFA500',
+        backgroundColor: 'darkgray',
         borderRadius: 10
     }
 })
