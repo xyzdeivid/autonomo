@@ -8,6 +8,7 @@ import { Alert } from 'react-native'
 export interface Service {
     _id: string
     value: number
+    amount?: number
 }
 
 type SetServices = React.Dispatch<React.SetStateAction<Service[]>>

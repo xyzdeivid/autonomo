@@ -12,6 +12,7 @@ import NameInput from '../common/NameInput'
 
 import { orderServices } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
+import ServiceOrProductButtons from './ServiceOrProductButtons'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -24,6 +25,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     const [value, setValue] = useState(0)
     const [services, setServices] = useContext(DocsContext).services
     const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [choice, setChoice] = useState('service')
 
     useEffect(() => {
         if (name && value) setAllInputsFilled(true)
@@ -107,6 +109,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                 <FormInputs>
                     <NameInput setName={setName} />
                     <NumberInput setValue={setValue} />
+                    <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                 </FormInputs>
                 <SubmitFormButtons submit={addService} setFormOff={setAddServiceForm} submitButtonText='Cadastrar' />
             </FormBody>
