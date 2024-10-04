@@ -28,7 +28,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
             <FormBody>
                 <FormTitle text={`Sobre ${checkTitle(service)}`} />
                 <View>
-                    <Text><Text style={styles.label}>Serviço:</Text> {service._id}</Text>
+                    <Text><Text style={styles.label}>{checkTitle(service)}:</Text> {service._id}</Text>
                     <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(service.value)}</Text>
                     {
                         service.amount && (
