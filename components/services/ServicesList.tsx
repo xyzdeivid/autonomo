@@ -6,7 +6,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 
 interface ServicesListProps {
     setEditServiceForm: React.Dispatch<React.SetStateAction<boolean>>
-    setServiceForEdition: React.Dispatch<React.SetStateAction<string>>
+    setServiceForEdition: React.Dispatch<React.SetStateAction<Service>>
     setServiceForDeletion: React.Dispatch<React.SetStateAction<Service>>
     setDeleteServiceForm: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -20,8 +20,8 @@ export default function ServicesList({ setEditServiceForm, setServiceForEdition,
         setDeleteServiceForm(true)
     }
 
-    const editService = (id: string) => {
-        setServiceForEdition(id)
+    const editService = (service: Service) => {
+        setServiceForEdition(service)
         setEditServiceForm(true)
     }
 
@@ -44,7 +44,7 @@ export default function ServicesList({ setEditServiceForm, setServiceForEdition,
                         <DataTable.Cell style={styles.text}>{service._id}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>
-                            <FontAwesome6 onPress={() => editService(service._id)} name='edit' size={18} color='black' />
+                            <FontAwesome6 onPress={() => editService(service)} name='edit' size={18} color='black' />
                         </DataTable.Cell>
                     </DataTable.Row>
                 )

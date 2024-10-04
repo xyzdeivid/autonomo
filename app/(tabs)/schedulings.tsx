@@ -55,7 +55,7 @@ export default function Schedulings() {
                         setSchedulingForDeletion={setSchedulingForDeletion}
                         setDeleteSchedulingForm={setDeleteSchedulingForm}
                     />
-                    : <AnyItemWarning text='Nenhum agendamento cadastrado' />
+                    : <AnyItemWarning text='Nenhum agendamento ou venda cadastrada' />
             }
             {
                 addSchedulingForm

@@ -7,6 +7,7 @@ import SubmitFormButtons from '../common/SubmitFormButtons'
 import { moneyFormat } from '@/functions/common'
 import { useContext, useEffect } from 'react'
 import { HideTabBarContext } from '@/context/HideTabBar'
+import { checkTitle } from '@/functions/services'
 
 interface DeleteServiceFormProps {
     service: Service
@@ -22,18 +23,10 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
         setHideTabBar(true)
     }, [])
 
-    const checkTitle = () => {
-        if (service.amount) {
-            return 'Produto'
-        } else {
-            return 'Serviço'
-        }
-    }
-
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text={`Sobre ${checkTitle()}`} />
+                <FormTitle text={`Sobre ${checkTitle(service)}`} />
                 <View>
                     <Text><Text style={styles.label}>Serviço:</Text> {service._id}</Text>
                     <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(service.value)}</Text>

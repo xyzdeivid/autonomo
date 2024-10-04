@@ -18,7 +18,7 @@ export default function Services() {
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [editServiceForm, setEditServiceForm] = useState(false)
     const [deleteServiceForm, setDeleteServiceForm] = useState(false)
-    const [serviceForEdition, setServiceForEdition] = useState('')
+    const [serviceForEdition, setServiceForEdition] = useState({} as Service)
     const [serviceForDeletion, setServiceForDeletion] = useState({} as Service)
     const [services, setServices] = useContext(DocsContext).services
 
@@ -54,7 +54,7 @@ export default function Services() {
                         setServiceForDeletion={setServiceForDeletion}
                         setDeleteServiceForm={setDeleteServiceForm}
                     />
-                    : <AnyItemWarning text='Nenhum serviço cadastrado' />
+                    : <AnyItemWarning text='Nenhum serviço ou produto cadastrado' />
             }
             {
                 addServiceForm

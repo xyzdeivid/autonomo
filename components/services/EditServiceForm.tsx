@@ -1,18 +1,18 @@
 import { Alert, StyleSheet, Text } from 'react-native'
 import FormBody from '../common/FormBody'
 import { useContext, useEffect, useState } from 'react'
-import { DocsContext } from '@/context/DocsContext'
+import { DocsContext, Service } from '@/context/DocsContext'
 import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import FormTitle from '../common/FormTitle'
 import { HideTabBarContext } from '@/context/HideTabBar'
-import { orderServices } from '@/functions/services'
+import { checkTitle, orderServices } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface EditServiceFormProps {
-    service: string
+    service: Service
     setEditServiceForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -30,11 +30,11 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
 
         // Separando os serviços que não serão editados
         const otherServices = services.filter(current => {
-            return current._id !== service
+            return current._id !== service._id
         })
 
         const editedService = {
-            _id: service,
+            _id: service._id,
             value
         }
 
@@ -59,9 +59,9 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text='Editar Serviço' />
+                <FormTitle text={`Editar ${checkTitle(service)}`} />
                 <FormInputs>
-                    <Text style={styles.serviceName}>{service}</Text>
+                    <Text style={styles.serviceName}>{service._id}</Text>
                     <NumberInput setValue={setValue} />
                 </FormInputs>
                 <SubmitFormButtons submit={editService} setFormOff={setEditServiceForm} submitButtonText='Editar' />
