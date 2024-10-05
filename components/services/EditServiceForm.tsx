@@ -33,9 +33,14 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
             return current._id !== service._id
         })
 
-        const editedService = {
-            _id: service._id,
-            value
+        const editedService = {} as Service
+
+        editedService.category = service.category
+        editedService._id = service._id
+        editedService.value = service.value
+
+        if (editedService.category === 'product') {
+            editedService.amount = service.amount
         }
 
         try {

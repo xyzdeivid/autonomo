@@ -52,16 +52,13 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
             }
             else {
 
-                // Criando novo serviço
-                const service: Service = {
-                    _id: name,
-                    value
-                }
+                const service: Service = { } as Service
 
-                // Adicionando propriedade caso seja um product
-                if (amount) {
-                    service.amount = amount
-                }
+                service.category = choice
+                service._id = name
+                service.value = value
+                service.amount = amount
+
 
                 // Verificando se já existe um serviço com o nome igual
                 const isThereAnotherService = services.filter(service => {

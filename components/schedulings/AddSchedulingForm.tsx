@@ -46,6 +46,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     const updateStock = async () => {
         if (service.amount) {
             const updatedService: Service = {
+                category: service.category,
                 _id: service._id,
                 amount: service.amount - amount,
                 value: service.value
@@ -69,6 +70,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
             const newScheduling: Scheduling = {
                 _id: generateId(),
                 service: {
+                    category: service.category,
                     _id: service._id,
                     value: service.amount ? service.value * amount : service.value,
                     amount: amount

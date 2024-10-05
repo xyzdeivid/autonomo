@@ -6,6 +6,7 @@ import { createContext, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 
 export interface Service {
+    category: string
     _id: string
     value: number
     amount?: number
@@ -16,6 +17,7 @@ type SetServices = React.Dispatch<React.SetStateAction<Service[]>>
 type ServicesState = [Service[], SetServices]
 
 const DEFAULT_SERVICE: Service = {
+    category: '',
     _id: '',
     value: 0
 }
@@ -55,6 +57,7 @@ type SchedulingsState = [Scheduling[], SetSchedulings]
 const DEFAULT_SCHEDULING: Scheduling = {
     _id: '',
 	service: {
+        category: '',
 		_id: '',
 		value: 0
 	},

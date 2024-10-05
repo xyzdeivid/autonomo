@@ -31,7 +31,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                     <Text><Text style={styles.label}>{checkTitle(service)}:</Text> {service._id}</Text>
                     <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(service.value)}</Text>
                     {
-                        service.amount && (
+                        service.category === 'product' && (
                             <Text>
                                 <Text style={styles.label}>Estoque: </Text>
                                 {service.amount}

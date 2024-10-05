@@ -37,6 +37,7 @@ export default function Schedulings() {
             if (service.amount) {
 
                 const updatedService: Service = {
+                    category: service.category,
                     _id: service._id,
                     value: service.value,
                     amount: service.amount + amount
@@ -61,7 +62,7 @@ export default function Schedulings() {
             }
 
         }
-        
+
     }
 
     const deleteScheduling = async (scheduling: Scheduling) => {
