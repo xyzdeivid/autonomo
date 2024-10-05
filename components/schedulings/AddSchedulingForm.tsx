@@ -30,31 +30,53 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
     const [amount, setAmount] = useState(0)
 
+    const checkAllInputs = () => {
+        if (service.amount) {
+            if (amount) {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
+    }
+
     const addScheduling = async () => {
 
-        const newScheduling: Scheduling = {
-            _id: generateId(),
-            service: {
-                _id: service._id,
-                value: service.amount ? service.value * amount : service.value,
-                amount: amount
-            },
-            date
-        }
+        if (checkAllInputs()) {
+            const newScheduling: Scheduling = {
+                _id: generateId(),
+                service: {
+                    _id: service._id,
+                    value: service.amount ? service.value * amount : service.value,
+                    amount: amount
+                },
+                date
+            }
 
-        try {
+            try {
 
-            await AsyncStorage.setItem('schedulings', JSON.stringify([...schedulings, newScheduling]))
+                await AsyncStorage.setItem('schedulings', JSON.stringify([...schedulings, newScheduling]))
 
-            setSchedulings(orderSchedulings([...schedulings, newScheduling]))
+                setSchedulings(orderSchedulings([...schedulings, newScheduling]))
+
+                setAddSchedulingForm(false)
+
+                setHideTabBar(false)
+
+            } catch (error) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+        } else {
 
             setAddSchedulingForm(false)
 
-            setHideTabBar(false)
-
-        } catch (error) {
-
-            Alert.alert('Erro ao acessar banco de dados')
+            setTimeout(() => {
+                Alert.alert('Todos os campos precisam ser preenchidos')
+            }, 500)
 
         }
 
@@ -72,7 +94,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text='Agendamento / Venda' />
+                <FormTitle text={service.amount ? 'Registrar Venda' : 'Registrar Agendamento'} />
                 <FormInputs>
                     <SelectServiceInput service={service} setService={setService} />
                     {service.amount && (

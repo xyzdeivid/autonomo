@@ -35,17 +35,21 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
             <FormBody>
                 <FormTitle text={`Sobre ${checkTitle()[0]}`} />
                 <View>
-                    <Text><Text style={styles.label}>{checkTitle()[1]}:</Text> {scheduling.service._id}</Text>
-                    <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
-                    <Text><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>{checkTitle()[1]}:</Text> {scheduling.service._id}</Text>
                     {
                         scheduling.service.amount
-                            ? <Text>
-                                <Text style={styles.label}>Quantidade: </Text>
-                                {scheduling.service.amount}
-                            </Text>
+                            ? <View>
+                                <Text style={styles.labelContainer}>
+                                    <Text style={styles.label}>Quantidade: </Text>
+                                    {scheduling.service.amount}
+                                </Text>
+                                <Text style={styles.labelContainer}><Text style={styles.label}>Valor Unitário:</Text>{moneyFormat(scheduling.service.value / scheduling.service.amount)}</Text>
+                            </View>
                             : null
                     }
+                    <Text style={styles.labelContainer}><Text style={styles.label}>{scheduling.service.amount ? 'Valor Total' : 'Valor'}:</Text>{moneyFormat(scheduling.service.value)}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
+
                 </View>
                 <SubmitFormButtons
                     submit={() => deleteFunction(scheduling._id)}
@@ -60,6 +64,9 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
 }
 
 const styles = StyleSheet.create({
+    labelContainer: {
+        marginBottom: 4
+    },
     label: {
         fontWeight: 'bold'
     }

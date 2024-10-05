@@ -11,7 +11,7 @@ import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 
 import { orderSchedulings } from '@/functions/schedulings'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import DeleteSchedulingForm from '@/components/schedulings/DeleteSchedulingForm'
+import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
 
 export default function Schedulings() {
 

@@ -122,7 +122,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     return (
         <FormContainer>
             <FormBody>
-                <FormTitle text={`${checkTitle()}`} />
+                <FormTitle text={`Registrar ${checkTitle()}`} />
                 <FormInputs>
                     <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                     <NameInput setName={setName} />
