@@ -7,9 +7,10 @@ export const orderServices = (services: Service[]) => {
 }
 
 export const checkTitle = (service: Service) => {
-    if (service.amount) {
-        return 'Produto'
-    } else {
-        return 'Serviço'
+    switch (service.category) {
+        case 'service':
+            return 'Serviço'
+        case 'product':
+            return 'Produto'
     }
 }

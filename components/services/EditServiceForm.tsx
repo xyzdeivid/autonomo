@@ -37,11 +37,8 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
 
         editedService.category = service.category
         editedService._id = service._id
-        editedService.value = service.value
-
-        if (editedService.category === 'product') {
-            editedService.amount = service.amount
-        }
+        editedService.value = value
+        editedService.amount = service.amount
 
         try {
 
