@@ -21,7 +21,7 @@ export default function Info() {
 
     const servicesSchedulings = () => {
         return schedulings.filter(scheduling => {
-            return !scheduling.service.amount
+            return scheduling.service.category === 'service'
         })
     }
 

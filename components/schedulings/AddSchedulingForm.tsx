@@ -122,11 +122,11 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                 <FormTitle text={service.amount ? 'Registrar Venda' : 'Registrar Agendamento'} />
                 <FormInputs>
                     <SelectServiceInput service={service} setService={setService} />
-                    {service.amount && (
+                    {service.category === 'product' && (
                         <StockInfo amount={actualServiceAmount} />
                     )}
                     <DateInput setTargetDate={setDate} />
-                    {service.amount && (
+                    {service.category === 'product' && (
                         <AmountInput
                             text='Quantidade'
                             setAmount={setAmount}
