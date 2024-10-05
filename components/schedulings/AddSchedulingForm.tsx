@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import StockInfo from './StockInfo'
 import AmountInput from '../common/AmountInput'
+import { orderServices } from '@/functions/services'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -22,7 +23,7 @@ interface AddSchedulingFormProps {
 export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
-    const [services] = useContext(DocsContext).services
+    const [services, setServices] = useContext(DocsContext).services
     const [service, setService] = useState<Service>(services[0])
     const [actualServiceAmount, setActualServiceAmount] = useState(service.amount || 0)
 
@@ -42,9 +43,29 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
         }
     }
 
+    const updateStock = async () => {
+        if (service.amount) {
+            const updatedService: Service = {
+                _id: service._id,
+                amount: service.amount - amount,
+                value: service.value
+            }
+            const remainingServices = services.filter(service => {
+                return service._id !== updatedService._id
+            })
+            try {
+                await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, updatedService]))
+                setServices(orderServices([...remainingServices, updatedService]))
+            } catch (error) {
+                Alert.alert('Erro ao acessar banco de dados')
+            }
+        }
+    }
+
     const addScheduling = async () => {
 
         if (checkAllInputs()) {
+
             const newScheduling: Scheduling = {
                 _id: generateId(),
                 service: {
@@ -56,6 +77,8 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
             }
 
             try {
+
+                await updateStock()
 
                 await AsyncStorage.setItem('schedulings', JSON.stringify([...schedulings, newScheduling]))
 
