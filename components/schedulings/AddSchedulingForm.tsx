@@ -44,7 +44,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     }
 
     const updateStock = async () => {
-        if (service.amount) {
+        if (service.category === 'product') {
             const updatedService: Service = {
                 category: service.category,
                 _id: service._id,

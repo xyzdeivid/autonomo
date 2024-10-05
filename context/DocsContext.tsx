@@ -9,7 +9,7 @@ export interface Service {
     category: string
     _id: string
     value: number
-    amount?: number
+    amount: number
 }
 
 type SetServices = React.Dispatch<React.SetStateAction<Service[]>>
@@ -19,7 +19,8 @@ type ServicesState = [Service[], SetServices]
 const DEFAULT_SERVICE: Service = {
     category: '',
     _id: '',
-    value: 0
+    value: 0,
+    amount: 0
 }
 
 export interface Expense {
@@ -40,13 +41,9 @@ const DEFAULT_EXPENSE: Expense = {
     value: 0
 }
 
-interface SchedulingService extends Service {
-    amount?: number
-}
-
 export interface Scheduling {
     _id: string
-	service: SchedulingService
+	service: Service
 	date: string
 }
 
@@ -59,7 +56,8 @@ const DEFAULT_SCHEDULING: Scheduling = {
 	service: {
         category: '',
 		_id: '',
-		value: 0
+		value: 0,
+        amount: 0
 	},
 	date: '',
 }
