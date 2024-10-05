@@ -19,6 +19,12 @@ export default function Info() {
     const [schedulings] = useContext(DocsContext).schedulings
     const [selectedMonth] = useContext(MonthContext)
 
+    const servicesSchedulings = () => {
+        return schedulings.filter(scheduling => {
+            return !scheduling.service.amount
+        })
+    }
+
     const selectPage = () => {
         switch (content) {
             case 'financial':
@@ -32,7 +38,7 @@ export default function Info() {
                 return (
                     <View>
                         <Title content={content} setContentForm={setContentForm} />
-                        <Services />
+                        <Services schedulings={servicesSchedulings()} />
                     </View>
                 )
         }

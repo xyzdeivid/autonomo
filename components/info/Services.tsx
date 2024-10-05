@@ -1,23 +1,26 @@
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import ServicesChart from './ServicesChart'
 import { useContext, useEffect, useState } from 'react'
-import { DocsContext } from '@/context/DocsContext'
+import { DocsContext, Scheduling } from '@/context/DocsContext'
 import { filterSchedulings } from '@/functions/common'
 import { MonthContext } from '@/context/Month'
 import ServicesList from './ServicesList'
 import InfoTitle from '../common/InfoTitle'
 
-type ServicesProps = {
+type ServicesT = {
     service: string
     amount: number
     color: string
 }[]
 
-export default function Services() {
+interface ServicesProps {
+    schedulings: Scheduling[]
+}
 
-    const [schedulings] = useContext(DocsContext).schedulings
+export default function Services({ schedulings }: ServicesProps) {
+
     const [selectedMonth] = useContext(MonthContext)
-    const [services, setServices] = useState<ServicesProps>([] as ServicesProps)
+    const [services, setServices] = useState<ServicesT>([] as ServicesT)
 
     useEffect(() => {
         setServices(getMostOfferedServices())
@@ -55,7 +58,7 @@ export default function Services() {
             return {
                 service: current[0],
                 amount: current[1],
-                color: colors[colorIndex]
+                color: colors[colorIndex - 1]
             }
         }).sort((a, b) => b.amount - a.amount)
         return chartFormat
