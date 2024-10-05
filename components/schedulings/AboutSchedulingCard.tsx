@@ -10,7 +10,7 @@ import { HideTabBarContext } from '@/context/HideTabBar'
 
 interface DeleteSchedulingFormProps {
     scheduling: Scheduling
-    deleteFunction: (id: string) => void
+    deleteFunction: (scheduling: Scheduling) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -52,7 +52,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
 
                 </View>
                 <SubmitFormButtons
-                    submit={() => deleteFunction(scheduling._id)}
+                    submit={() => deleteFunction(scheduling)}
                     setFormOff={setFormOff}
                     submitButtonText='Excluir'
                     submitButtonColor='darkred'

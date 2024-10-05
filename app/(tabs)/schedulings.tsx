@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import Container from '@/components/common/Container'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
-import { DocsContext, Scheduling } from '@/context/DocsContext'
+import { DocsContext, Scheduling, Service } from '@/context/DocsContext'
 import SchedulingsList from '@/components/schedulings/SchedulingsList'
 import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
@@ -12,19 +12,64 @@ import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 import { orderSchedulings } from '@/functions/schedulings'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
+import { orderServices } from '@/functions/services'
+import { Alert } from 'react-native'
 
 export default function Schedulings() {
 
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
+    const [services, setServices] = useContext(DocsContext).services
     const [selectedMonth] = useContext(MonthContext)
     const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Scheduling)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
 
-    const deleteScheduling = async (id: string) => {
+    const checkAmount = async (scheduling: Scheduling) => {
 
-        const remainingSchedulings = schedulings.filter(scheduling => {
-            return scheduling._id !== id
+        const amount = scheduling.service.amount
+
+        if (amount) {
+
+            const service = services.filter(current => {
+                return current._id === scheduling.service._id
+            })[0]
+
+            if (service.amount) {
+
+                const updatedService: Service = {
+                    _id: service._id,
+                    value: service.value,
+                    amount: service.amount + amount
+                }
+
+                const remainingServices = services.filter(current => {
+                    current._id !== updatedService._id
+                })
+
+                try {
+
+                    await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, updatedService]))
+
+                    setServices(orderServices([...remainingServices, updatedService]))
+
+                } catch (error) {
+
+                    Alert.alert('Erro ao acessar banco de dados')
+
+                }
+
+            }
+
+        }
+        
+    }
+
+    const deleteScheduling = async (scheduling: Scheduling) => {
+
+        await checkAmount(scheduling)
+
+        const remainingSchedulings = schedulings.filter(current => {
+            return current._id !== scheduling._id
         })
 
         try {
@@ -36,6 +81,8 @@ export default function Schedulings() {
             setDeleteSchedulingForm(false)
 
         } catch (error) {
+
+            Alert.alert('Erro ao acessar banco de dados')
 
         }
 
