@@ -1,6 +1,5 @@
-import { Alert, Pressable, StyleSheet } from 'react-native'
+import { Alert, Button, StyleSheet, View } from 'react-native'
 
-import { Entypo } from '@expo/vector-icons'
 import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
@@ -19,18 +18,21 @@ export default function AddSchedulingButton({ setAddSchedulingForm }: AddSchedul
     }
 
     return (
-        <Pressable onPress={() => checkServices()} style={{ ...styles.button, backgroundColor: '#004AAD' }}>
-            <Entypo name='add-to-list' size={24} color='white' />
-        </Pressable>
+        <View style={styles.buttonContainer}>
+            <Button
+                onPress={() => checkServices()}
+                color={'#004AAD'}
+                title='Cadastrar'
+            />
+        </View>
     )
 
 }
 
 const styles = StyleSheet.create({
-    button: {
-        padding: 6,
-        alignSelf: 'flex-start',
-        marginStart: 10,
-        borderRadius: 3
+    buttonContainer: {
+        width: '50%',
+        marginHorizontal: 'auto',
+        marginTop: 16
     }
 })

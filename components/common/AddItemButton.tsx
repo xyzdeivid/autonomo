@@ -1,5 +1,4 @@
-import { Pressable, StyleSheet } from 'react-native'
-import Entypo from '@expo/vector-icons/Entypo'
+import { View, Button, StyleSheet } from 'react-native'
 
 interface AddItemButtonProps {
     setForm: React.Dispatch<React.SetStateAction<boolean>>,
@@ -9,23 +8,21 @@ interface AddItemButtonProps {
 export default function AddItemButton({ setForm, bgColor }: AddItemButtonProps) {
 
     return (
-        <Pressable onPress={() => setForm(true)}
-            style={{
-                ...styles.button,
-                backgroundColor: bgColor ? bgColor : '#004AAD'
-            }}
-        >
-            <Entypo name='add-to-list' size={24} color='white' />
-        </Pressable>
+        <View style={styles.buttonContainer}>
+            <Button
+                onPress={() => setForm(true)}
+                color={bgColor ? bgColor : '#004AAD'}
+                title='Cadastrar'
+            />
+        </View>
     )
 
 }
 
 const styles = StyleSheet.create({
-    button: {
-        padding: 6,
-        alignSelf: 'flex-start',
-        marginStart: 10,
-        borderRadius: 3
+    buttonContainer: {
+        width: '50%',
+        marginHorizontal: 'auto',
+        marginTop: 16
     }
 })
