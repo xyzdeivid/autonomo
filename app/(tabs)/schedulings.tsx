@@ -26,37 +26,36 @@ export default function Schedulings() {
 
     const checkAmount = async (scheduling: Scheduling) => {
 
-        const service = services.filter(current => {
+        // Separando produto a ser atualizado
+        const product = services.filter(current => {
             return current._id === scheduling.service._id
         })[0]
 
         // Verificando se o produto ainda está cadastrado no sistema
-        if (service) {
+        if (product) {
 
-            if (service.category === 'product') {
+            // Separando outros produtos
+            const remainingProducts = services.filter(current => {
+                return current !== product
+            })
 
-                const updatedService: Service = {
-                    category: service.category,
-                    _id: service._id,
-                    value: service.value,
-                    amount: service.amount + scheduling.service.amount
-                }
+            // Atualizando estoque do produto
+            const updatedProduct: Service = {
+                category: product.category,
+                _id: product._id,
+                value: product.value,
+                amount: product.amount + scheduling.service.amount
+            }
 
-                const remainingServices = services.filter(current => {
-                    current._id !== updatedService._id
-                })
+            try {
 
-                try {
+                await AsyncStorage.setItem('services', JSON.stringify([...remainingProducts, updatedProduct]))
 
-                    await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, updatedService]))
+                setServices(orderServices([...remainingProducts, updatedProduct]))
 
-                    setServices(orderServices([...remainingServices, updatedService]))
+            } catch (error) {
 
-                } catch (error) {
-
-                    Alert.alert('Erro ao acessar banco de dados')
-
-                }
+                Alert.alert('Erro ao acessar banco de dados')
 
             }
 
@@ -66,7 +65,8 @@ export default function Schedulings() {
 
     const deleteScheduling = async (scheduling: Scheduling) => {
 
-        await checkAmount(scheduling)
+        if (scheduling.service.category === 'product')
+            await checkAmount(scheduling)
 
         const remainingSchedulings = schedulings.filter(current => {
             return current._id !== scheduling._id
