@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
@@ -39,6 +39,13 @@ export default function Info() {
                     <View>
                         <Title content={content} setContentForm={setContentForm} />
                         <Services schedulings={servicesSchedulings()} />
+                    </View>
+                )
+            case 'products':
+                return (
+                    <View>
+                        <Title content={content} setContentForm={setContentForm} />
+                        <Text>Hello World</Text>
                     </View>
                 )
         }

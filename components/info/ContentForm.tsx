@@ -20,18 +20,12 @@ export default function ContentForm({ setContent, setContentForm }: ContentFormP
 
     const data = [
         ['financial', 'Finanças'],
-        ['services', 'Serviços']
+        ['services', 'Serviços'],
+        ['products', 'Produtos']
     ]
 
     const setContentOnPage = (page: string) => {
-        switch (page) {
-            case 'financial':
-                setContent(page)
-                break
-            case 'services':
-                setContent(page)
-                break
-        }
+        setContent(page)
         setContentForm(false)
         setHideTabBar(false)
     }

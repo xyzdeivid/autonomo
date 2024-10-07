@@ -19,6 +19,9 @@ export default function Title({ content, setContentForm }: TitleProps) {
             case 'services':
                 setButtonText('Serviços')
                 break
+            case 'products':
+                setButtonText('Produtos')
+                break
         }
     }, [content])
 
