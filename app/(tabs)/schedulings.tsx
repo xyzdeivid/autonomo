@@ -26,38 +26,32 @@ export default function Schedulings() {
 
     const checkAmount = async (scheduling: Scheduling) => {
 
-        const amount = scheduling.service.amount
+        const service = services.filter(current => {
+            return current._id === scheduling.service._id
+        })[0]
 
-        if (amount) {
+        if (service.category === 'product') {
 
-            const service = services.filter(current => {
-                return current._id === scheduling.service._id
-            })[0]
+            const updatedService: Service = {
+                category: service.category,
+                _id: service._id,
+                value: service.value,
+                amount: service.amount + scheduling.service.amount
+            }
 
-            if (service.amount) {
+            const remainingServices = services.filter(current => {
+                current._id !== updatedService._id
+            })
 
-                const updatedService: Service = {
-                    category: service.category,
-                    _id: service._id,
-                    value: service.value,
-                    amount: service.amount + amount
-                }
+            try {
 
-                const remainingServices = services.filter(current => {
-                    current._id !== updatedService._id
-                })
+                await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, updatedService]))
 
-                try {
+                setServices(orderServices([...remainingServices, updatedService]))
 
-                    await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, updatedService]))
+            } catch (error) {
 
-                    setServices(orderServices([...remainingServices, updatedService]))
-
-                } catch (error) {
-
-                    Alert.alert('Erro ao acessar banco de dados')
-
-                }
+                Alert.alert('Erro ao acessar banco de dados')
 
             }
 
