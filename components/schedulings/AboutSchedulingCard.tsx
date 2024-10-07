@@ -23,7 +23,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     }, [])
 
     const checkTitle = () => {
-        if (scheduling.service.amount) {
+        if (scheduling.service.category === 'product') {
             return ['Venda', 'Produto']
         } else {
             return ['Agendamento', 'Serviço']
