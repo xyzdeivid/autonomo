@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text } from 'react-native'
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native'
 import FormBody from '../common/FormBody'
 import { useContext, useEffect, useState } from 'react'
 import { DocsContext, Service } from '@/context/DocsContext'
@@ -19,7 +19,7 @@ interface EditServiceFormProps {
 export default function EditServiceForm({ service, setEditServiceForm }: EditServiceFormProps) {
 
     const [services, setServices] = useContext(DocsContext).services
-    const [value, setValue] = useState(0)
+    const [value, setValue] = useState(service.value)
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
     useEffect(() => {
@@ -65,6 +65,12 @@ export default function EditServiceForm({ service, setEditServiceForm }: EditSer
                 <FormInputs>
                     <Text style={styles.serviceName}>{service._id}</Text>
                     <NumberInput setValue={setValue} />
+                    {service.category === 'product' && (
+                        <View style={styles.inputContainer}>
+                            <Text>Estoque: </Text>
+                            <TextInput style={styles.input} keyboardType='numeric' />
+                        </View>
+                    )}
                 </FormInputs>
                 <SubmitFormButtons submit={editService} setFormOff={setEditServiceForm} submitButtonText='Editar' />
             </FormBody>
@@ -77,5 +83,19 @@ const styles = StyleSheet.create({
     serviceName: {
         fontSize: 20,
         marginBottom: 20
+    },
+    inputContainer: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    input: {
+        width: '25%',
+        backgroundColor: '#E0E0E0',
+        color: 'black',
+        padding: 0,
+        margin: 0,
+        textAlign: 'center',
+        marginStart: 8,
+        borderRadius: 3
     }
 })

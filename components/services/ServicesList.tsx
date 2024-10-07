@@ -41,7 +41,7 @@ export default function ServicesList({ setEditServiceForm, setServiceForEdition,
             {services.map(service => {
                 return (
                     <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
-                        <DataTable.Cell style={styles.text}>{service._id}</DataTable.Cell>
+                        <DataTable.Cell style={styles.text}>{service._id}{service.category === 'product' ? ` (${service.amount}un)` : null}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>
                             <FontAwesome6 onPress={() => editService(service)} name='edit' size={18} color='black' />
