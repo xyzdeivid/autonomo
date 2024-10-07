@@ -1,11 +1,12 @@
 import { View } from 'react-native'
 import ServicesChart from './ServicesChart'
 import { useContext, useEffect, useState } from 'react'
-import { DocsContext, Scheduling } from '@/context/DocsContext'
+import { Scheduling } from '@/context/DocsContext'
 import { filterSchedulings } from '@/functions/common'
 import { MonthContext } from '@/context/Month'
 import ServicesList from './ServicesList'
 import InfoTitle from '../common/InfoTitle'
+import { colors } from '@/constants/chartColors'
 
 type ServicesT = {
     service: string
@@ -25,19 +26,6 @@ export default function Services({ schedulings }: ServicesProps) {
     useEffect(() => {
         setServices(getMostOfferedServices())
     }, [schedulings, selectedMonth])
-
-    const colors = [
-        '#0000FF',
-        '#008000',
-        '#1E90FF',
-        '#32CD32',
-        '#00BFFF',
-        '#3CB371',
-        '#4682B4',
-        '#66CDAA',
-        '#ADD8E6',
-        '#98FB98'
-    ]
 
     const getMostOfferedServices = () => {
         let colorIndex = 0
@@ -67,7 +55,7 @@ export default function Services({ schedulings }: ServicesProps) {
 
     return (
         <View style={{ zIndex: -1 }}>
-            <InfoTitle text='Serviços mais oferecidos' />
+            <InfoTitle text='Serviços mais prestados' />
             <ServicesChart services={services} />
             <View style={{
                 borderBottomColor: '#E0E0E0',

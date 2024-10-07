@@ -11,6 +11,7 @@ import Title from '@/components/info/Title'
 import Revenue from '@/components/info/Revenue'
 import ContentForm from '@/components/info/ContentForm'
 import Services from '@/components/info/Services'
+import Products from '@/components/info/Products'
 
 export default function Info() {
 
@@ -22,6 +23,12 @@ export default function Info() {
     const servicesSchedulings = () => {
         return schedulings.filter(scheduling => {
             return scheduling.service.category === 'service'
+        })
+    }
+
+    const productsSchedulings = () => {
+        return schedulings.filter(scheduling => {
+            return scheduling.service.category === 'product'
         })
     }
 
@@ -45,7 +52,7 @@ export default function Info() {
                 return (
                     <View>
                         <Title content={content} setContentForm={setContentForm} />
-                        <Text>Hello World</Text>
+                        <Products schedulings={productsSchedulings()} />
                     </View>
                 )
         }
