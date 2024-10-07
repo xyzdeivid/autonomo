@@ -30,28 +30,33 @@ export default function Schedulings() {
             return current._id === scheduling.service._id
         })[0]
 
-        if (service.category === 'product') {
+        // Verificando se o produto ainda está cadastrado no sistema
+        if (service) {
 
-            const updatedService: Service = {
-                category: service.category,
-                _id: service._id,
-                value: service.value,
-                amount: service.amount + scheduling.service.amount
-            }
+            if (service.category === 'product') {
 
-            const remainingServices = services.filter(current => {
-                current._id !== updatedService._id
-            })
+                const updatedService: Service = {
+                    category: service.category,
+                    _id: service._id,
+                    value: service.value,
+                    amount: service.amount + scheduling.service.amount
+                }
 
-            try {
+                const remainingServices = services.filter(current => {
+                    current._id !== updatedService._id
+                })
 
-                await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, updatedService]))
+                try {
 
-                setServices(orderServices([...remainingServices, updatedService]))
+                    await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, updatedService]))
 
-            } catch (error) {
+                    setServices(orderServices([...remainingServices, updatedService]))
 
-                Alert.alert('Erro ao acessar banco de dados')
+                } catch (error) {
+
+                    Alert.alert('Erro ao acessar banco de dados')
+
+                }
 
             }
 
