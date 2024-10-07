@@ -31,20 +31,25 @@ export default function RevenueList({ filteredSchedulings, filteredExpenses }: R
                 </View>
                 <Text>{moneyFormat(getExpenses(filteredExpenses))}</Text>
             </View>
-            <View style={styles.infoContainer}>
-                <View style={styles.titleContainer}>
-                    <Entypo name='flickr-with-circle' size={16} color='darkblue' />
-                    <Text style={styles.title}>Lucro</Text>
+            {getProfit(filteredSchedulings, filteredExpenses) > 0 && (
+                <View style={styles.infoContainer}>
+                    <View style={styles.titleContainer}>
+                        <Entypo name='flickr-with-circle' size={16} color='darkblue' />
+                        <Text style={styles.title}>Lucro</Text>
+                    </View>
+                    <Text>{moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}</Text>
                 </View>
-                <Text>{moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}</Text>
-            </View>
-            <View style={styles.infoContainer}>
-                <View style={styles.titleContainer}>
-                    <Entypo name='flickr-with-circle' size={16} color='#666600' />
-                    <Text style={styles.title}>Margem de Lucro</Text>
+
+            )}
+            {getProfit(filteredSchedulings, filteredExpenses) > 0 && (
+                <View style={styles.infoContainer}>
+                    <View style={styles.titleContainer}>
+                        <Entypo name='flickr-with-circle' size={16} color='#666600' />
+                        <Text style={styles.title}>Margem de Lucro</Text>
+                    </View>
+                    <Text>{Math.ceil(getProfitMargin())}%</Text>
                 </View>
-                <Text>{Math.ceil(getProfitMargin())}%</Text>
-            </View>
+            )}
         </View>
     )
 

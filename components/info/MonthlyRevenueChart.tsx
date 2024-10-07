@@ -10,18 +10,27 @@ interface RevenueChartProps {
 
 export default function RevenueChart({ filteredSchedulings, filteredExpenses }: RevenueChartProps) {
 
-    const data = [
-        { value: getSchedulingsRevenue(filteredSchedulings), frontColor: 'darkgreen' },
-        { value: getExpenses(filteredExpenses), frontColor: 'darkred' },
-        { value: getProfit(filteredSchedulings, filteredExpenses), frontColor: 'darkblue' }
-    ]
+    const getData = () => {
+        if (getProfit(filteredSchedulings, filteredExpenses) > 0) {
+            return [
+                { value: getSchedulingsRevenue(filteredSchedulings), frontColor: 'darkgreen' },
+                { value: getExpenses(filteredExpenses), frontColor: 'darkred' },
+                { value: getProfit(filteredSchedulings, filteredExpenses), frontColor: 'darkblue' }
+            ]
+        } else {
+            return [
+                { value: getSchedulingsRevenue(filteredSchedulings), frontColor: 'darkgreen' },
+                { value: getExpenses(filteredExpenses), frontColor: 'darkred' }
+            ]
+        }
+    }
 
     return (
         <View style={{ marginHorizontal: 'auto' }}>
             <BarChart
                 yAxisThickness={0}
                 xAxisThickness={0}
-                data={data}
+                data={getData()}
                 maxValue={getSchedulingsRevenue(filteredSchedulings)}
                 barBorderTopLeftRadius={3}
                 barBorderTopRightRadius={3}
