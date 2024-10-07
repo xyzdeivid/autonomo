@@ -27,7 +27,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     const [amount, setAmount] = useState(0)
     const [services, setServices] = useContext(DocsContext).services
     const [, setHideTabBar] = useContext(HideTabBarContext)
-    const [choice, setChoice] = useState('service')
+    const [choice, setChoice] = useState('product')
 
     useEffect(() => {
         if (name && value) setAllInputsFilled(true)

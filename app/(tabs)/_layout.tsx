@@ -35,7 +35,7 @@ export default function TabLayout() {
             />
             <Tabs.Screen name='schedulings'
                 options={{
-                    title: 'Agendamentos / Vendas',
+                    title: 'Vendas ou Agendamentos',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome5 name='calendar-plus' size={24} color={color} />
                     )
@@ -53,7 +53,7 @@ export default function TabLayout() {
                 }} />
             <Tabs.Screen name='services'
                 options={{
-                    title: 'Serviços / Produtos',
+                    title: 'Produtos ou Serviços',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='bag-shopping' size={24} color={color} />
                     )
