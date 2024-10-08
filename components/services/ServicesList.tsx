@@ -36,16 +36,12 @@ export default function ServicesList({ setEditServiceForm, setServiceForEdition,
             <DataTable.Header>
                 <DataTable.Title style={styles.text}>Nome</DataTable.Title>
                 <DataTable.Title style={styles.text}>Valor</DataTable.Title>
-                <DataTable.Title style={styles.text}>{''}</DataTable.Title>
             </DataTable.Header>
             {services.map(service => {
                 return (
                     <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
                         <DataTable.Cell style={styles.text}>{service._id}{service.category === 'product' ? ` (${service.amount}un)` : null}</DataTable.Cell>
                         <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
-                        <DataTable.Cell style={styles.text}>
-                            <FontAwesome6 onPress={() => editService(service)} name='edit' size={18} color='black' />
-                        </DataTable.Cell>
                     </DataTable.Row>
                 )
             })}

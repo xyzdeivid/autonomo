@@ -4,14 +4,11 @@ import AddItemButton from '@/components/common/AddItemButton'
 import AddServiceForm from '@/components/services/AddServiceForm'
 import { DocsContext, Service } from '@/context/DocsContext'
 import ServicesList from '@/components/services/ServicesList'
-import EditServiceForm from '@/components/services/EditServiceForm'
 import Container from '@/components/common/Container'
-import DeleteForm from '@/components/common/DeleteForm'
 import { orderServices } from '@/functions/services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
-import DeleteExpenseForm from '@/components/expenses/DeleteExpenseForm'
-import DeleteServiceForm from '@/components/services/DeleteServiceForm'
+import DeleteServiceForm from '@/components/services/AboutServiceForm'
 
 export default function Services() {
 
@@ -60,11 +57,6 @@ export default function Services() {
                 addServiceForm
                     ? <AddServiceForm setAddServiceForm={setAddServiceForm} />
                     : <AddItemButton setForm={setAddServiceForm} />
-            }
-            {
-                editServiceForm
-                    ? <EditServiceForm service={serviceForEdition} setEditServiceForm={setEditServiceForm} />
-                    : null
             }
             {
                 deleteServiceForm
