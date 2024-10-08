@@ -12,6 +12,8 @@ import NumberInput from '../common/NumberInput'
 import EditValueInput from './EditValueInput'
 import ActualValue from './ActualValue'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import ActualStock from './ActualStock'
+import EditStockInput from './EditStockInput'
 
 interface DeleteServiceFormProps {
     service: Service
@@ -27,6 +29,9 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
 
     const [editValueInput, setEditValueInput] = useState(false)
     const [value, setValue] = useState(0)
+
+    const [editStockInput, setEditStockInput] = useState(false)
+    const [stock, setStock] = useState(0)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -50,7 +55,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
             try {
 
                 if (remainingServices[0]) {
-                    
+
                     await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, editedService]))
 
                     setServices(orderServices([...remainingServices, editedService]))
@@ -82,6 +87,56 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
 
     }
 
+    const editStock = async () => {
+
+        if (stock) {
+
+            const remainingServices = services.filter(current => {
+                return current !== service
+            })
+
+            const editedService: Service = {
+                category: service.category,
+                _id: service._id,
+                value: service.value,
+                amount: stock
+            }
+
+            try {
+
+                if (remainingServices[0]) {
+
+                    await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, editedService]))
+
+                    setServices(orderServices([...remainingServices, editedService]))
+
+                    setEditStockInput(false)
+
+                } else {
+
+                    await AsyncStorage.setItem('services', JSON.stringify([editedService]))
+
+                    setServices([editedService])
+
+                    setEditStockInput(false)
+
+                }
+
+
+            } catch (error) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
+        } else {
+
+            setEditStockInput(false)
+
+        }
+
+    }
+
     return (
         <FormContainer>
             <FormBody>
@@ -105,11 +160,11 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                         service.category === 'product' && (
                             <View style={styles.inputContainer}>
                                 <View style={styles.infoContainer}>
-                                    <Text style={styles.label}>Estoque: </Text>
-                                    <Text>{service.amount}</Text>
-                                    <Pressable style={styles.editButton}>
-                                        <Text>Editar</Text>
-                                    </Pressable>
+                                    {
+                                        editStockInput
+                                            ? <EditStockInput setStock={setStock} editStock={editStock} />
+                                            : <ActualStock stock={stock || service.amount} setEditStockInput={setEditStockInput} />
+                                    }
                                 </View>
                             </View>
                         )
