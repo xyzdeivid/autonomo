@@ -32,16 +32,14 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
         <ContainerHandler filteredTargets={filteredExpenses}>
             <DataTable>
                 <DataTable.Header>
-                    <DataTable.Title style={styles.text}>Nome</DataTable.Title>
+                    <DataTable.Title style={styles.text}>Nome - Valor</DataTable.Title>
                     <DataTable.Title style={styles.text}>Data</DataTable.Title>
-                    <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                 </DataTable.Header>
                 {filteredExpenses.map(expense => {
                     return (
                         <DataTable.Row onPress={() => deleteExpense(expense)} key={expense._id}>
-                            <DataTable.Cell style={styles.text}>{expense.name}</DataTable.Cell>
+                            <DataTable.Cell style={styles.text}>{expense.name} -{moneyFormat(expense.value)}</DataTable.Cell>
                             <DataTable.Cell style={styles.text}>{dateFormat(expense.date)}</DataTable.Cell>
-                            <DataTable.Cell style={styles.text}>{moneyFormat(expense.value)}</DataTable.Cell>
                         </DataTable.Row>
                     )
                 })}

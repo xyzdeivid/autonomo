@@ -32,16 +32,14 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
         <ContainerHandler filteredTargets={filteredSchedulings}>
             <DataTable>
                 <DataTable.Header>
-                    <DataTable.Title style={styles.text}>Serviço</DataTable.Title>
+                    <DataTable.Title style={styles.text}>Serviço - Valor</DataTable.Title>
                     <DataTable.Title style={styles.text}>Data</DataTable.Title>
-                    <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                 </DataTable.Header>
                 {filteredSchedulings.map(scheduling => {
                     return (
                         <DataTable.Row onPress={() => deleteScheduling(scheduling)} key={scheduling._id}>
-                            <DataTable.Cell style={styles.text}>{scheduling.service._id}</DataTable.Cell>
+                            <DataTable.Cell style={styles.text}>{scheduling.service._id} -{moneyFormat(scheduling.service.value)}</DataTable.Cell>
                             <DataTable.Cell style={styles.text}>{dateFormat(scheduling.date)}</DataTable.Cell>
-                            <DataTable.Cell style={styles.text}>{moneyFormat(scheduling.service.value)}</DataTable.Cell>
                         </DataTable.Row>
                     )
                 })}
