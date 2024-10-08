@@ -6,6 +6,7 @@ import { Text, View } from 'react-native'
 import InfoTitle from '../common/InfoTitle'
 import ProductsChart from './ProductsChart'
 import ProductsList from './ProductsList'
+import AnyItemWarning from '../common/AnyItemWarning'
 
 interface ProductsProps {
     schedulings: Scheduling[]
@@ -42,7 +43,7 @@ export default function Products({ schedulings }: ProductsProps) {
                 if (product.product === scheduling.service._id) {
                     product.amount += scheduling.service.amount
                 }
-                
+
             })
         })
 
@@ -56,16 +57,22 @@ export default function Products({ schedulings }: ProductsProps) {
 
     return (
         <View style={{ zIndex: -1 }}>
-            <InfoTitle text='Produtos mais vendidos' />
-            <ProductsChart products={products} />
-            <View style={{
-                borderBottomColor: '#E0E0E0',
-                borderBottomWidth: 1,
-                marginHorizontal: 10,
-                marginBottom: 20
-            }}
-            />
-            <ProductsList products={products} />
+            {
+                products[0]
+                    ? <View>
+                        <InfoTitle text='Produtos mais vendidos' />
+                        <ProductsChart products={products} />
+                        <View style={{
+                            borderBottomColor: '#E0E0E0',
+                            borderBottomWidth: 1,
+                            marginHorizontal: 10,
+                            marginBottom: 20
+                        }}
+                        />
+                        <ProductsList products={products} />
+                    </View>
+                    : <AnyItemWarning text='Nenhum produto registrado' />
+            }
         </View>
     )
 

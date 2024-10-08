@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import ServicesChart from './ServicesChart'
 import { useContext, useEffect, useState } from 'react'
 import { Scheduling } from '@/context/DocsContext'
@@ -7,6 +7,7 @@ import { MonthContext } from '@/context/Month'
 import ServicesList from './ServicesList'
 import InfoTitle from '../common/InfoTitle'
 import { colors } from '@/constants/chartColors'
+import AnyItemWarning from '../common/AnyItemWarning'
 
 type ServicesT = {
     service: string
@@ -42,7 +43,7 @@ export default function Services({ schedulings }: ServicesProps) {
             }
         })
         const chartFormat = services.map(current => {
-            colorIndex ++
+            colorIndex++
             return {
                 service: current[0],
                 amount: current[1],
@@ -55,16 +56,22 @@ export default function Services({ schedulings }: ServicesProps) {
 
     return (
         <View style={{ zIndex: -1 }}>
-            <InfoTitle text='Serviços mais prestados' />
-            <ServicesChart services={services} />
-            <View style={{
-                borderBottomColor: '#E0E0E0',
-                borderBottomWidth: 1,
-                marginHorizontal: 10,
-                marginBottom: 20
-            }}
-            />
-            <ServicesList services={services} />
+            {
+                services[0]
+                    ? <View>
+                        <InfoTitle text='Serviços mais prestados' />
+                        <ServicesChart services={services} />
+                        <View style={{
+                            borderBottomColor: '#E0E0E0',
+                            borderBottomWidth: 1,
+                            marginHorizontal: 10,
+                            marginBottom: 20
+                        }}
+                        />
+                        <ServicesList services={services} />
+                    </View>
+                    : <AnyItemWarning text='Nenhum serviço registrado' />
+            }
         </View>
     )
 
