@@ -30,6 +30,13 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
         }
     }
 
+    const checkValueText = () => {
+        if (scheduling.service.category === 'product') {
+            return 'Valor Total'
+        }
+        return 'Valor'
+    }
+
     return (
         <FormContainer>
             <FormBody>
@@ -37,9 +44,9 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                 <View>
                     <Text style={styles.labelContainer}><Text style={styles.label}>{checkTitle()[1]}:</Text> {scheduling.service._id}</Text>
                     {
-                        scheduling.service.amount
+                        scheduling.service.category === 'product'
                             ? <View>
-                                <Text style={styles.labelContainer}><Text style={styles.label}>Preço:</Text>{moneyFormat(scheduling.service.value / scheduling.service.amount)}</Text>
+                                <Text style={styles.labelContainer}><Text style={styles.label}>Valor Unitário:</Text>{moneyFormat(scheduling.service.value / scheduling.service.amount)}</Text>
                                 <Text style={styles.labelContainer}>
                                     <Text style={styles.label}>Quantidade: </Text>
                                     {scheduling.service.amount}
@@ -47,7 +54,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                             </View>
                             : null
                     }
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Valor de Venda:</Text>{moneyFormat(scheduling.service.value)}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>{checkValueText()}:</Text>{moneyFormat(scheduling.service.value)}</Text>
                     <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
 
                 </View>

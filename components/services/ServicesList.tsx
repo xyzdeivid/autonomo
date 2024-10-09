@@ -1,8 +1,9 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useContext } from 'react'
 import { DataTable } from 'react-native-paper'
 import { DocsContext, Service } from '@/context/DocsContext'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
+import MoreInfoWarning from '../common/MoreInfoWarning'
 
 interface ServicesListProps {
     setEditServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -32,20 +33,23 @@ export default function ServicesList({ setEditServiceForm, setServiceForEdition,
     }
 
     return (
-        <DataTable style={styles.container}>
-            <DataTable.Header>
-                <DataTable.Title style={styles.text}>Nome</DataTable.Title>
-                <DataTable.Title style={styles.text}>Valor</DataTable.Title>
-            </DataTable.Header>
-            {services.map(service => {
-                return (
-                    <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
-                        <DataTable.Cell style={styles.text}>{service._id}{service.category === 'product' ? ` (${service.amount}un)` : null}</DataTable.Cell>
-                        <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
-                    </DataTable.Row>
-                )
-            })}
-        </DataTable>
+        <View>
+            <DataTable style={styles.container}>
+                <DataTable.Header>
+                    <DataTable.Title style={styles.text}>Nome</DataTable.Title>
+                    <DataTable.Title style={styles.text}>Valor</DataTable.Title>
+                </DataTable.Header>
+                {services.map(service => {
+                    return (
+                        <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
+                            <DataTable.Cell style={styles.text}>{service._id}{service.category === 'product' ? ` (${service.amount}un)` : null}</DataTable.Cell>
+                            <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
+                        </DataTable.Row>
+                    )
+                })}
+            </DataTable>
+            <MoreInfoWarning text='Para mais informações sobre o serviço, basta clicar em cima!' />
+        </View>
     )
 
 }
