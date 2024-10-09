@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 import { HideTabBarContext } from '@/context/HideTabBar'
+import Feather from '@expo/vector-icons/Feather';
 
 export default function TabLayout() {
 
@@ -36,8 +37,12 @@ export default function TabLayout() {
             <Tabs.Screen name='schedulings'
                 options={{
                     title: 'Vendas ou Agendamentos',
+                    tabBarActiveBackgroundColor: 'darkgreen',
+                    headerStyle: {
+                        backgroundColor: 'darkgreen'
+                    },
                     tabBarIcon: ({ color }) => (
-                        <FontAwesome5 name='calendar-plus' size={24} color={color} />
+                        <FontAwesome6 name="arrow-trend-up" size={24} color={color} />
                     )
                 }} />
             <Tabs.Screen name='expenses'

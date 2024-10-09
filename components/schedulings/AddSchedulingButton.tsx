@@ -21,7 +21,7 @@ export default function AddSchedulingButton({ setAddSchedulingForm }: AddSchedul
         <View style={styles.buttonContainer}>
             <Button
                 onPress={() => checkServices()}
-                color={'#004AAD'}
+                color={'darkgreen'}
                 title='Cadastrar'
             />
         </View>

@@ -7,7 +7,7 @@ interface MoreInfoWarningProps {
 export default function MoreInfoWarning({ text }: MoreInfoWarningProps) {
 
     return (
-        <View>
+        <View style={styles.container}>
             <Text style={styles.text}>{text}</Text>
         </View>
     )
@@ -15,6 +15,9 @@ export default function MoreInfoWarning({ text }: MoreInfoWarningProps) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        marginBottom: 14
+    },
     text: {
         fontSize: 10,
         color: 'gray',

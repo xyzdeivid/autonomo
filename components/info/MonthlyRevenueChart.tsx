@@ -13,14 +13,14 @@ export default function RevenueChart({ filteredSchedulings, filteredExpenses }: 
     const getData = () => {
         if (getProfit(filteredSchedulings, filteredExpenses) > 0) {
             return [
-                { value: getSchedulingsRevenue(filteredSchedulings), frontColor: 'darkgreen' },
-                { value: getExpenses(filteredExpenses), frontColor: 'darkred' },
-                { value: getProfit(filteredSchedulings, filteredExpenses), frontColor: 'darkblue' }
+                { value: getSchedulingsRevenue(filteredSchedulings), frontColor: '#006600' },
+                { value: getExpenses(filteredExpenses), frontColor: '#660000' },
+                { value: getProfit(filteredSchedulings, filteredExpenses), frontColor: '#000066' }
             ]
         } else {
             return [
-                { value: getSchedulingsRevenue(filteredSchedulings), frontColor: 'darkgreen' },
-                { value: getExpenses(filteredExpenses), frontColor: 'darkred' }
+                { value: getSchedulingsRevenue(filteredSchedulings), frontColor: '#006600' },
+                { value: getExpenses(filteredExpenses), frontColor: '#660000' }
             ]
         }
     }

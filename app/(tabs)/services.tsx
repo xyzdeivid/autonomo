@@ -13,9 +13,7 @@ import DeleteServiceForm from '@/components/services/AboutServiceForm'
 export default function Services() {
 
     const [addServiceForm, setAddServiceForm] = useState(false)
-    const [editServiceForm, setEditServiceForm] = useState(false)
     const [deleteServiceForm, setDeleteServiceForm] = useState(false)
-    const [serviceForEdition, setServiceForEdition] = useState({} as Service)
     const [serviceForDeletion, setServiceForDeletion] = useState({} as Service)
     const [services, setServices] = useContext(DocsContext).services
 
@@ -46,8 +44,6 @@ export default function Services() {
             {
                 services[0]
                     ? <ServicesList
-                        setEditServiceForm={setEditServiceForm}
-                        setServiceForEdition={setServiceForEdition}
                         setServiceForDeletion={setServiceForDeletion}
                         setDeleteServiceForm={setDeleteServiceForm}
                     />

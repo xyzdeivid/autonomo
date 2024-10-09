@@ -10,13 +10,13 @@ export default function ContainerHandler({ filteredTargets, children }: Containe
 
     if (filteredTargets.length > 8) {
         return (
-            <ScrollView style={{ marginBottom: 14, maxHeight: 450 }}>
+            <ScrollView style={{ maxHeight: 450 }}>
                 {children}
             </ScrollView>
         )
     } else {
         return (
-            <View style={{ marginBottom: 14 }}>
+            <View>
                 {children}
             </View>
         )

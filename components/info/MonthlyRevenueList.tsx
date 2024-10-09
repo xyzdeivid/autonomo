@@ -3,6 +3,8 @@ import { moneyFormat } from '@/functions/common'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
 import { StyleSheet, Text, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 
 interface RevenueListProps {
     filteredSchedulings: Scheduling[]
@@ -11,44 +13,49 @@ interface RevenueListProps {
 
 export default function RevenueList({ filteredSchedulings, filteredExpenses }: RevenueListProps) {
 
-    const getProfitMargin = () => {
-        return getProfit(filteredSchedulings, filteredExpenses) / getSchedulingsRevenue(filteredSchedulings) * 100
-    }
-
     return (
         <View style={styles.container}>
-            <View style={styles.infoContainer}>
-                <View style={styles.titleContainer}>
-                    <Entypo name='flickr-with-circle' size={16} color='darkgreen' />
-                    <Text style={styles.title}>Receita</Text>
+            <View
+                style={{
+                    ...styles.infoContainer,
+                    borderColor: '#009900',
+                    backgroundColor: '#006600'
+                }}
+            >
+                <View style={styles.label}>
+                    <FontAwesome6 name='circle-dot' size={12} color='#CCFFCC' />
+                    <Text style={{ ...styles.title, color: '#CCFFCC' }}>Receita</Text>
                 </View>
-                <Text>{moneyFormat(getSchedulingsRevenue(filteredSchedulings))}</Text>
+                <Text style={{ color: '#CCFFCC' }}>{moneyFormat(getSchedulingsRevenue(filteredSchedulings))}</Text>
             </View>
-            <View style={styles.infoContainer}>
-                <View style={styles.titleContainer}>
-                    <Entypo name='flickr-with-circle' size={16} color='darkred' />
-                    <Text style={styles.title}>Despesa</Text>
+            <View
+                style={{
+                    ...styles.infoContainer,
+                    backgroundColor: '#660000',
+                    borderColor: '#990000'
+                }}
+            >
+                <View style={styles.label}>
+                    <FontAwesome6 name='circle-dot' size={12} color='#FFCCCC' />
+                    <Text style={{ ...styles.title, color: '#FFCCCC' }}>Despesa</Text>
                 </View>
-                <Text>{moneyFormat(getExpenses(filteredExpenses))}</Text>
+                <Text style={{ color: '#FFCCCC' }}>{moneyFormat(getExpenses(filteredExpenses))}</Text>
             </View>
             {getProfit(filteredSchedulings, filteredExpenses) > 0 && (
-                <View style={styles.infoContainer}>
-                    <View style={styles.titleContainer}>
-                        <Entypo name='flickr-with-circle' size={16} color='darkblue' />
-                        <Text style={styles.title}>Lucro</Text>
+                <View
+                    style={{
+                        ...styles.infoContainer,
+                        backgroundColor: '#000066',
+                        borderColor: '#000099'
+                    }}
+                >
+                    <View style={styles.label}>
+                        <FontAwesome6 name='circle-dot' size={12} color='#CCCCFF' />
+                        <Text style={{ ...styles.title, color: '#CCCCFF' }}>Lucro</Text>
                     </View>
-                    <Text>{moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}</Text>
+                    <Text style={{ color: '#CCCCFF' }}>{moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}</Text>
                 </View>
 
-            )}
-            {getProfit(filteredSchedulings, filteredExpenses) > 0 && (
-                <View style={styles.infoContainer}>
-                    <View style={styles.titleContainer}>
-                        <Entypo name='flickr-with-circle' size={16} color='#666600' />
-                        <Text style={styles.title}>Margem de Lucro</Text>
-                    </View>
-                    <Text>{Math.ceil(getProfitMargin())}%</Text>
-                </View>
             )}
         </View>
     )
@@ -63,15 +70,20 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 12,
+        borderRadius: 8,
+        borderWidth: 2
     },
-    titleContainer: {
+    label: {
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 6
     },
     title: {
         fontWeight: 'bold',
-        marginStart: 2
+        color: 'white',
+        marginStart: 4
     }
 })
