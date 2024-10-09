@@ -51,7 +51,7 @@ export default function RevenueList({ filteredSchedulings, filteredExpenses }: R
                 >
                     <View style={styles.label}>
                         <FontAwesome6 name='circle-dot' size={12} color='#CCCCFF' />
-                        <Text style={{ ...styles.title, color: '#CCCCFF' }}>Lucro</Text>
+                        <Text style={{ ...styles.title, color: '#CCCCFF' }}>Livre</Text>
                     </View>
                     <Text style={{ color: '#CCCCFF' }}>{moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}</Text>
                 </View>

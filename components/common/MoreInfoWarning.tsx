@@ -16,12 +16,11 @@ export default function MoreInfoWarning({ text }: MoreInfoWarningProps) {
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 14
+        marginBottom: 8,
+        padding: 8
     },
     text: {
         fontSize: 10,
-        color: 'gray',
-        marginTop: 8,
-        marginStart: 4
+        color: 'gray'
     }
 })

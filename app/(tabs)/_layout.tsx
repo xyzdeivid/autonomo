@@ -1,9 +1,7 @@
 import { Tabs } from 'expo-router'
 import React, { useContext } from 'react'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
 import { HideTabBarContext } from '@/context/HideTabBar'
-import Feather from '@expo/vector-icons/Feather';
 
 export default function TabLayout() {
 
