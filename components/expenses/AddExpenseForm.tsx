@@ -9,11 +9,12 @@ import SubmitFormButtons from '../common/SubmitFormButtons'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import NumberInput from '../common/NumberInput'
 import { DocsContext, Expense } from '@/context/DocsContext'
-import { Alert } from 'react-native'
+import { View, Alert } from 'react-native'
 import { generateId } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import FormInputs from '../common/FormInputs'
 import ExpenseCategoryButtons from './ExpenseCategoryButtons'
+import AmountInput from '../common/AmountInput'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -25,6 +26,8 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const [name, setName] = useState('')
     const [date, setDate] = useState('')
     const [value, setValue] = useState(0)
+    const [resaleValue, setResaleValue] = useState(0)
+    const [stock, setStock] = useState(0)
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [expenses, setExpenses] = useContext(DocsContext).expenses
     const [choice, setChoice] = useState('expense')
@@ -88,7 +91,25 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
                     <NameInput setName={setName} />
                     <DateInput setTargetDate={setDate} />
-                    <NumberInput setValue={setValue} />
+                    <NumberInput
+                        label={choice === 'resale'
+                            ? 'Valor de Compra'
+                            : ''
+                        }
+                        setValue={setValue}
+                    />
+                    {choice === 'resale' && (
+                        <View>
+                            <NumberInput
+                                label='Valor de Venda'
+                                setValue={setResaleValue}
+                            />
+                            <AmountInput
+                                text='Estoque'
+                                setAmount={setStock}
+                            />
+                        </View>
+                    )}
                 </FormInputs>
                 <SubmitFormButtons
                     submit={addExpense}

@@ -3,13 +3,14 @@ import { MaskedTextInput } from 'react-native-mask-text'
 
 interface NumberInputProps {
     setValue: React.Dispatch<React.SetStateAction<number>>
+    label?: string
 }
 
-export default function NumberInput({ setValue }: NumberInputProps) {
+export default function NumberInput({ setValue, label }: NumberInputProps) {
 
     return (
         <View style={styles.inputContainer}>
-            <Text style={{ color: 'black' }}>Valor:</Text>
+            <Text style={{ color: 'black' }}>{label ? label : 'Valor'}:</Text>
             <MaskedTextInput
                 type='currency'
                 options={{
