@@ -49,10 +49,9 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                     Alert.alert('Você só pode registrar 10 serviços')
                 }, 500)
 
-            }
-            else {
+            } else {
 
-                const service: Service = { } as Service
+                const service: Service = {} as Service
 
                 service.category = choice
                 service._id = name

@@ -31,7 +31,7 @@ export default function ContentForm({ setContent, setContentForm }: ContentFormP
     }
 
     return (
-        <FormContainer>
+        <FormContainer setFormOff={setContentForm}>
             <FormBody>
                 <FormTitle text='Qual conteúdo deseja mostrar?' />
                 {data.map(current => {

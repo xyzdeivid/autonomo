@@ -8,13 +8,14 @@ import DateInput from '../common/DateInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import NumberInput from '../common/NumberInput'
-import { DocsContext, Expense } from '@/context/DocsContext'
+import { DocsContext, Expense, Service } from '@/context/DocsContext'
 import { View, Alert } from 'react-native'
 import { generateId } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import FormInputs from '../common/FormInputs'
 import ExpenseCategoryButtons from './ExpenseCategoryButtons'
 import AmountInput from '../common/AmountInput'
+import { orderServices } from '@/functions/services'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -30,6 +31,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const [stock, setStock] = useState(0)
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [expenses, setExpenses] = useContext(DocsContext).expenses
+    const [services, setServices] = useContext(DocsContext).services
     const [choice, setChoice] = useState('expense')
 
     useEffect(() => {
@@ -44,11 +46,47 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
         if (allInputsFilled) {
 
-            const newExpense: Expense = {
-                _id: generateId(),
-                name,
-                date,
-                value
+            // const newExpense: Expense = {
+            //     _id: generateId(),
+            //     name,
+            //     date,
+            //     value
+            // }
+
+            const newExpense = {} as Expense
+
+            newExpense._id = generateId()
+            newExpense.name = name
+            newExpense.date = date
+
+            if (choice === 'resale') {
+
+                // Agregando valor total a despesa
+                newExpense.value = value * stock
+
+                const newProduct: Service = {
+                    category: 'product',
+                    value: resaleValue,
+                    _id: name,
+                    amount: stock
+                }
+
+                try {
+
+                    await AsyncStorage.setItem('services', JSON.stringify([...services, newProduct]))
+
+                    setServices(orderServices([...services, newProduct]))
+
+                } catch (error) {
+
+                    Alert.alert('Erro ao acessar banco de dados')
+
+                }
+
+            } else {
+
+                newExpense.value = value
+
             }
 
             try {
@@ -90,7 +128,10 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 <FormInputs>
                     <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
                     <NameInput setName={setName} />
-                    <DateInput setTargetDate={setDate} />
+                    <DateInput
+                        setTargetDate={setDate}
+                        bgColor='#660000'
+                    />
                     <NumberInput
                         label={choice === 'resale'
                             ? 'Valor de Compra'

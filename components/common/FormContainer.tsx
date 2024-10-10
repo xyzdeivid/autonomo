@@ -1,6 +1,6 @@
 import { HideTabBarContext } from '@/context/HideTabBar'
 import { useContext } from 'react'
-import { Pressable, StyleSheet } from 'react-native'
+import { Pressable, Text, StyleSheet } from 'react-native'
 
 interface FormContainerProps {
     children: React.ReactNode
@@ -23,6 +23,7 @@ export default function FormContainer({ children, setFormOff }: FormContainerPro
             <Pressable onPress={() => closeForm('body')}>
                 {children}
             </Pressable>
+            <Text style={style.closeFormWarning}>Clique em qualquer lugar da tela para sair</Text>
         </Pressable>
     )
 
@@ -38,5 +39,11 @@ const style = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'gray',
         opacity: 0.9,
+    },
+    closeFormWarning: {
+        fontSize: 10,
+        position: 'absolute',
+        bottom: 0,
+        marginBottom: 8
     }
 })

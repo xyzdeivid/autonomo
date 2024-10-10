@@ -5,9 +5,10 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 
 interface DateInputProps {
     setTargetDate: React.Dispatch<React.SetStateAction<string>>
+    bgColor?: string
 }
 
-export default function DateInput({ setTargetDate }: DateInputProps) {
+export default function DateInput({ setTargetDate, bgColor }: DateInputProps) {
 
     const [date, setDate] = useState(new Date())
     const [show, setShow] = useState(false)
@@ -44,7 +45,7 @@ export default function DateInput({ setTargetDate }: DateInputProps) {
         <View>
             <View style={styles.container}>
                 <Text style={{ marginEnd: 2 }}>Data:</Text>
-                <Button color='#004AAD' onPress={showDatepicker} title={dateFormat(getDate())} />
+                <Button color={bgColor ? bgColor : '#004AAD'} onPress={showDatepicker} title={dateFormat(getDate())} />
             </View>
             {show && (
                 <DateTimePicker
