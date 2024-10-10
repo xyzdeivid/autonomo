@@ -11,7 +11,7 @@ import NumberInput from '../common/NumberInput'
 import { DocsContext, Expense, Service } from '@/context/DocsContext'
 import { View, Alert } from 'react-native'
 import { generateId } from '@/functions/common'
-import { orderExpenses } from '@/functions/expenses'
+import { isThereAnotherService, orderExpenses, takeExistingService, takeRemainingServices } from '@/functions/expenses'
 import FormInputs from '../common/FormInputs'
 import ExpenseCategoryButtons from './ExpenseCategoryButtons'
 import AmountInput from '../common/AmountInput'
@@ -46,13 +46,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
         if (allInputsFilled) {
 
-            // const newExpense: Expense = {
-            //     _id: generateId(),
-            //     name,
-            //     date,
-            //     value
-            // }
-
+            // Criando nova despesa
             const newExpense = {} as Expense
 
             newExpense._id = generateId()
@@ -61,9 +55,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
             if (choice === 'resale') {
 
-                // Agregando valor total a despesa
-                newExpense.value = value * stock
-
+                // Criando novo produto
                 const newProduct: Service = {
                     category: 'product',
                     value: resaleValue,
@@ -71,15 +63,64 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     amount: stock
                 }
 
-                try {
+                // Agregando valor total a despesa
+                newExpense.value = value * stock
 
-                    await AsyncStorage.setItem('services', JSON.stringify([...services, newProduct]))
+                // Verificando se já existe um produto igual ao novo criado
+                const alreadyExist = isThereAnotherService(services, newProduct)
 
-                    setServices(orderServices([...services, newProduct]))
+                if (alreadyExist) {
 
-                } catch (error) {
+                    // Pegando serviço existente
+                    const existingService = takeExistingService(services, name)
 
-                    Alert.alert('Erro ao acessar banco de dados')
+                    // Pegando outros serviços
+                    const remainingServices = takeRemainingServices(services, existingService)
+
+                    // Atualizando estoque e valor
+                    existingService.amount = existingService.amount + stock
+                    existingService.value = resaleValue
+
+                    const newServices = [...remainingServices, existingService]
+
+                    try {
+
+                        // Registrando novo produto
+                        await AsyncStorage.setItem('services', JSON.stringify(newServices))
+                        setServices(orderServices(newServices))
+
+                        // Registrando nova despesa
+                        await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
+                        setExpenses(orderExpenses([...expenses, newExpense]))
+
+                        setAddExpenseForm(false)
+                        
+                    } catch (error) {
+
+                        Alert.alert('Erro ao acessar banco de dados')
+                        
+                    }
+
+                } else {
+
+                    try {
+
+                        // Registrando novo produto
+                        await AsyncStorage.setItem('services', JSON.stringify([...services, newProduct]))
+                        setServices(orderServices([...services, newProduct]))
+
+                        // Registrando nova despesa
+                        await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
+                        setExpenses(orderExpenses([...expenses, newExpense]))
+
+                        setAddExpenseForm(false)
+
+                        
+                    } catch (error) {
+
+                        Alert.alert('Erro ao acessar banco de dados')
+                        
+                    }
 
                 }
 
@@ -87,22 +128,13 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
                 newExpense.value = value
 
-            }
-
-            try {
-
+                // Registrando nova despesa
                 await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
-
                 setExpenses(orderExpenses([...expenses, newExpense]))
 
                 setAddExpenseForm(false)
 
-            } catch (error) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
             }
-
 
         } else {
 

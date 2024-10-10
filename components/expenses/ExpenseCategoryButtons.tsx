@@ -35,7 +35,7 @@ export default function ExpenseCategoryButtons({ choice, setChoice }: ExpenseCat
                 }}
                 onPress={() => setChoice('resale')}
             >
-                <Text style={styles.textButton}>Produto A Revender</Text>
+                <Text style={styles.textButton}>Revenda</Text>
             </Pressable>
         </View>
     )
