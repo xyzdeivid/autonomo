@@ -117,7 +117,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     }
 
     return (
-        <FormContainer>
+        <FormContainer setFormOff={setAddServiceForm}>
             <FormBody>
                 <FormTitle text={`Registrar ${checkTitle()}`} />
                 <FormInputs>
@@ -131,7 +131,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                         />
                     )}
                 </FormInputs>
-                <SubmitFormButtons submit={addService} setFormOff={setAddServiceForm} submitButtonText='Cadastrar' />
+                <SubmitFormButtons submit={addService} submitButtonText='Cadastrar' />
             </FormBody>
         </FormContainer>
     )

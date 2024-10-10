@@ -138,7 +138,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
     }
 
     return (
-        <FormContainer>
+        <FormContainer setFormOff={setFormOff}>
             <FormBody>
                 <FormTitle text={`Sobre ${checkTitle(service)}`} />
                 <View>
@@ -172,7 +172,6 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                 </View>
                 <SubmitFormButtons
                     submit={() => deleteFunction(service._id)}
-                    setFormOff={setFormOff}
                     submitButtonText='Excluir'
                     submitButtonColor='darkred'
                 />

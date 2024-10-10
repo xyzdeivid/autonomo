@@ -79,7 +79,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     }
 
     return (
-        <FormContainer>
+        <FormContainer setFormOff={setAddExpenseForm}>
             <FormBody>
                 <FormTitle text='Registrar Despesa' />
                 <FormInputs>
@@ -89,7 +89,6 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 </FormInputs>
                 <SubmitFormButtons
                     submit={addExpense}
-                    setFormOff={setAddExpenseForm}
                     submitButtonText='Registrar'
                     submitButtonColor='darkred'
                 />

@@ -1,15 +1,29 @@
-import { StyleSheet, View } from 'react-native'
+import { HideTabBarContext } from '@/context/HideTabBar'
+import { useContext } from 'react'
+import { Pressable, StyleSheet } from 'react-native'
 
 interface FormContainerProps {
     children: React.ReactNode
+    setFormOff: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function FormContainer({ children }: FormContainerProps) {
+export default function FormContainer({ children, setFormOff }: FormContainerProps) {
+
+    const [, setHideTabBar] = useContext(HideTabBarContext)
+
+    const closeForm = (key: string) => {
+        if (key !== 'body') {
+            setFormOff(false)
+            setHideTabBar(false)
+        }
+    }
 
     return (
-        <View style={style.container}>
-            {children}
-        </View>
+        <Pressable onPress={() => closeForm('container')} style={style.container}>
+            <Pressable onPress={() => closeForm('body')}>
+                {children}
+            </Pressable>
+        </Pressable>
     )
 
 }

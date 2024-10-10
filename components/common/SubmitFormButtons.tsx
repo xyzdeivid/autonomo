@@ -1,33 +1,24 @@
-import { Pressable, View, StyleSheet, Button } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
+import { View, StyleSheet, Button } from 'react-native'
 import { useContext } from 'react'
 import { HideTabBarContext } from '@/context/HideTabBar'
 
 interface SubmitFormButtonsProps {
     submit: () => void
-    setFormOff: React.Dispatch<React.SetStateAction<boolean>>
     submitButtonText: string
     submitButtonColor?: string
 }
 
-export default function SubmitFormButtons({ submit, setFormOff, submitButtonText, submitButtonColor }: SubmitFormButtonsProps) {
+export default function SubmitFormButtons({ submit, submitButtonText, submitButtonColor }: SubmitFormButtonsProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
     return (
-        <>
-            <View style={styles.buttonsContainer}>
-                <Button color={submitButtonColor ? submitButtonColor : '#004AAD'} title={submitButtonText} onPress={() => {
-                    submit()
-                    setHideTabBar(false)
-                }} />
-                <Pressable onPress={() => {
-                    setFormOff(false)
-                    setHideTabBar(false)
-                }} style={styles.button}>
-                    <AntDesign name='close' size={24} color='darkred' />
-                </Pressable>
-            </View></>
+        <View style={styles.buttonsContainer}>
+            <Button color={submitButtonColor ? submitButtonColor : '#004AAD'} title={submitButtonText} onPress={() => {
+                submit()
+                setHideTabBar(false)
+            }} />
+        </View>
     )
 
 }

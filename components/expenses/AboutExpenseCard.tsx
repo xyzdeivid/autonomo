@@ -8,13 +8,13 @@ import { moneyFormat } from '@/functions/common'
 import { useContext, useEffect } from 'react'
 import { HideTabBarContext } from '@/context/HideTabBar'
 
-interface DeleteExpenseFormProps {
+interface AboutExpenseCardProps {
     expense: Expense
     deleteFunction: (expense: Expense) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function DeleteExpenseForm({ expense, deleteFunction, setFormOff }: DeleteExpenseFormProps) {
+export default function AboutExpenseCard({ expense, deleteFunction, setFormOff }: AboutExpenseCardProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
@@ -23,7 +23,7 @@ export default function DeleteExpenseForm({ expense, deleteFunction, setFormOff 
     }, [])
 
     return (
-        <FormContainer>
+        <FormContainer setFormOff={setFormOff}>
             <FormBody>
                 <FormTitle text='Sobre Despesa' />
                 <View>
@@ -32,7 +32,6 @@ export default function DeleteExpenseForm({ expense, deleteFunction, setFormOff 
                 </View>
                 <SubmitFormButtons
                     submit={() => deleteFunction(expense)}
-                    setFormOff={setFormOff}
                     submitButtonText='Excluir'
                     submitButtonColor='darkred'
                 />

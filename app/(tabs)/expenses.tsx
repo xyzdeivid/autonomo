@@ -6,14 +6,13 @@ import { useContext, useState } from 'react'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
-import DeleteForm from '@/components/common/DeleteForm'
 import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
 import { filterExpenses } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
-import DeleteExpenseForm from '@/components/expenses/DeleteExpenseForm'
+import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
 
 export default function Expenses() {
 
@@ -68,7 +67,7 @@ export default function Expenses() {
             }
             {
                 deleteExpenseForm && (
-                    <DeleteExpenseForm
+                    <AboutExpenseCard
                         expense={expenseForDeletion}
                         deleteFunction={deleteExpense}
                         setFormOff={setDeleteExpenseForm}

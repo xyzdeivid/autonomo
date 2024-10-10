@@ -38,7 +38,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     }
 
     return (
-        <FormContainer>
+        <FormContainer setFormOff={setFormOff}>
             <FormBody>
                 <FormTitle text={`Sobre ${checkTitle()[0]}`} />
                 <View>
@@ -60,7 +60,6 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                 </View>
                 <SubmitFormButtons
                     submit={() => deleteFunction(scheduling)}
-                    setFormOff={setFormOff}
                     submitButtonText='Excluir'
                     submitButtonColor='darkred'
                 />

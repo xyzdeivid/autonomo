@@ -150,7 +150,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     }, [])
 
     return (
-        <FormContainer>
+        <FormContainer setFormOff={setAddSchedulingForm}>
             <FormBody>
                 <FormTitle text={service.amount ? 'Registrar Venda' : 'Registrar Agendamento'} />
                 <FormInputs>
@@ -166,7 +166,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                         />
                     )}
                 </FormInputs>
-                <SubmitFormButtons submit={addScheduling} setFormOff={setAddSchedulingForm} submitButtonText='Registrar' />
+                <SubmitFormButtons submit={addScheduling} submitButtonText='Registrar' />
             </FormBody>
         </FormContainer>
     )
