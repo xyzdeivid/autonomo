@@ -13,6 +13,7 @@ import { Alert } from 'react-native'
 import { generateId } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import FormInputs from '../common/FormInputs'
+import ExpenseCategoryButtons from './ExpenseCategoryButtons'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -26,6 +27,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const [value, setValue] = useState(0)
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [expenses, setExpenses] = useContext(DocsContext).expenses
+    const [choice, setChoice] = useState('expense')
 
     useEffect(() => {
         if (name && value) setAllInputsFilled(true)
@@ -83,6 +85,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
             <FormBody>
                 <FormTitle text='Registrar Despesa' />
                 <FormInputs>
+                    <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
                     <NameInput setName={setName} />
                     <DateInput setTargetDate={setDate} />
                     <NumberInput setValue={setValue} />
