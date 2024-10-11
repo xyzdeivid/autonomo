@@ -24,10 +24,12 @@ const DEFAULT_SERVICE: Service = {
 }
 
 export interface Expense {
+    category: string
     _id: string
     name: string
     date: string
     value: number
+    amount: number
 }
 
 
@@ -35,10 +37,12 @@ type SetExpenses = React.Dispatch<React.SetStateAction<Expense[]>>
 type ExpensesState = [Expense[], SetExpenses]
 
 const DEFAULT_EXPENSE: Expense = {
+    category: '',
     _id: '',
     name: '',
     date: '',
-    value: 0
+    value: 0,
+    amount: 0
 }
 
 export interface Scheduling {

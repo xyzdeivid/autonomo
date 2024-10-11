@@ -4,7 +4,7 @@ import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { Expense } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
-import { moneyFormat } from '@/functions/common'
+import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect } from 'react'
 import { HideTabBarContext } from '@/context/HideTabBar'
 
@@ -27,8 +27,17 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff }
             <FormBody>
                 <FormTitle text='Sobre Despesa' />
                 <View>
-                    <Text><Text style={styles.label}>Despesa:</Text> {expense.name}</Text>
-                    <Text><Text style={styles.label}>Valor:</Text>{moneyFormat(expense.value)}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Despesa:</Text> {expense.name}</Text>
+                    {
+                        expense.category === 'resale' && (
+                            <View>
+                                <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {expense.amount}</Text>
+                                <Text style={styles.labelContainer}><Text style={styles.label}>Valor Unitário:</Text>{moneyFormat(expense.value / expense.amount)}</Text>
+                            </View>
+                        )
+                    }
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(expense.value)}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}</Text>
                 </View>
                 <SubmitFormButtons
                     submit={() => deleteFunction(expense)}
@@ -42,6 +51,9 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff }
 }
 
 const styles = StyleSheet.create({
+    labelContainer: {
+        marginBottom: 4
+    },
     label: {
         fontWeight: 'bold'
     }

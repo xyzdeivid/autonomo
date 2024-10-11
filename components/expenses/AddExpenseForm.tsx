@@ -63,8 +63,10 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     amount: stock
                 }
 
-                // Agregando valor total a despesa
+                // Aplicando categoria a despesa
+                newExpense.category = 'resale'
                 newExpense.value = value * stock
+                newExpense.amount = stock
 
                 // Verificando se já existe um produto igual ao novo criado
                 const alreadyExist = isThereAnotherService(services, newProduct)
@@ -126,6 +128,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
             } else {
 
+                // Aplicando categoria a despesa
+                newExpense.category = 'expense'
+                
                 newExpense.value = value
 
                 // Registrando nova despesa
@@ -178,7 +183,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                                 setValue={setResaleValue}
                             />
                             <AmountInput
-                                text='Estoque'
+                                text='Quantidade (un)'
                                 setAmount={setStock}
                             />
                         </View>
