@@ -28,3 +28,21 @@ export const checkServicesAmount = (services: Service[], service: Service) => {
     return true
 
 }
+
+export const getServicesByCategory = (services: Service[], category: number) => {
+
+    if (category === 1) {
+
+        return services.filter(service => 
+            service.category === 'product'
+        )
+
+    } else {
+
+        return services.filter(service => 
+            service.category === 'service'
+        )
+        
+    }
+
+}

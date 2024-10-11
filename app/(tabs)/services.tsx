@@ -5,10 +5,11 @@ import AddServiceForm from '@/components/services/AddServiceForm'
 import { DocsContext, Service } from '@/context/DocsContext'
 import ServicesList from '@/components/services/ServicesList'
 import Container from '@/components/common/Container'
-import { orderServices } from '@/functions/services'
+import { getServicesByCategory, orderServices } from '@/functions/services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Alert } from 'react-native'
+import { Alert, View } from 'react-native'
 import DeleteServiceForm from '@/components/services/AboutServiceForm'
+import SelectCategoryInput from '@/components/services/SelectCategoryInput'
 
 export default function Services() {
 
@@ -16,6 +17,7 @@ export default function Services() {
     const [deleteServiceForm, setDeleteServiceForm] = useState(false)
     const [serviceForDeletion, setServiceForDeletion] = useState({} as Service)
     const [services, setServices] = useContext(DocsContext).services
+    const [category, setCategory] = useState(0)
 
     const deleteService = async (id: string) => {
 
@@ -39,14 +41,24 @@ export default function Services() {
 
     }
 
+    const ServicesContent = () => {
+        return (
+            <View>
+                <SelectCategoryInput category={category} setCategory={setCategory} />
+                <ServicesList
+                    setServiceForDeletion={setServiceForDeletion}
+                    setDeleteServiceForm={setDeleteServiceForm}
+                    services={getServicesByCategory(services, category)}
+                />
+            </View>
+        )
+    }
+
     return (
         <Container>
             {
                 services[0]
-                    ? <ServicesList
-                        setServiceForDeletion={setServiceForDeletion}
-                        setDeleteServiceForm={setDeleteServiceForm}
-                    />
+                    ? <ServicesContent />
                     : <AnyItemWarning text='Nenhum produto ou serviço cadastrado' />
             }
             {

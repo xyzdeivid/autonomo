@@ -7,11 +7,10 @@ import MoreInfoWarning from '../common/MoreInfoWarning'
 interface ServicesListProps {
     setServiceForDeletion: React.Dispatch<React.SetStateAction<Service>>
     setDeleteServiceForm: React.Dispatch<React.SetStateAction<boolean>>
+    services: Service[]
 }
 
-export default function ServicesList({ setServiceForDeletion, setDeleteServiceForm }: ServicesListProps) {
-
-    const [services] = useContext(DocsContext).services
+export default function ServicesList({ setServiceForDeletion, setDeleteServiceForm, services }: ServicesListProps) {
 
     const deleteService = (service: Service) => {
         setServiceForDeletion(service)
