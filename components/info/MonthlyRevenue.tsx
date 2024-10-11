@@ -30,13 +30,6 @@ export default function MonthlyRevenue({ period, setPeriod }: MonthlyRevenueProp
                 filteredExpenses={filterExpenses(expenses, selectedMonth)}
             />
             <FinancePeriodButtons period={period} setPeriod={setPeriod} />
-            <View style={{
-                borderBottomColor: '#E0E0E0',
-                borderBottomWidth: 1,
-                marginHorizontal: 10,
-                marginBottom: 20
-            }}
-            />
             <RevenueList
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
                 filteredExpenses={filterExpenses(expenses, selectedMonth)}

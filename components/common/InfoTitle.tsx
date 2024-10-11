@@ -28,7 +28,7 @@ export default function InfoTitle({ text }: InfoTitleProps) {
 
     return (
         <View style={styles.titleContainer}>
-            <FontAwesome name='info-circle' size={16} color='black' />
+            <FontAwesome name='info-circle' size={16} color='white' />
             <Text style={styles.titleText}>{text} do mês de {months[selectedMonth][0]}</Text>
         </View>
     )
@@ -42,10 +42,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 8,
         marginBottom: 24,
-        marginStart: 8
+        backgroundColor: '#004AAD',
+        marginHorizontal: 20,
+        padding: 10,
+        borderRadius: 10
     },
     titleText: {
         fontSize: 16,
-        marginStart: 4
+        marginStart: 4,
+        color: 'white'
     }
 })

@@ -74,7 +74,7 @@ export default function Info() {
             {
                 filterSchedulings(schedulings, selectedMonth)[0]
                     ? selectPage()
-                    : <AnyItemWarning text='Nenhum agendamento ou venda cadastrado' />
+                    : <AnyItemWarning text='Nenhuma venda ou agendamento cadastrado' />
             }
         </Container>
     )
