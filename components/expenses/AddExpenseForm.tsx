@@ -131,7 +131,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                         setAddExpenseForm(false)
 
                         setTimeout(() => {
-                            Alert.alert('Você só pode registrar 5 items por categoria')
+                            Alert.alert('Você só pode registrar 8 items por categoria')
                         }, 500)
 
                     }

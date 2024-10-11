@@ -21,7 +21,7 @@ export const checkServicesAmount = (services: Service[], service: Service) => {
         return current.category === service.category
     }).length
 
-    if (servicesAmount === 5) {
+    if (servicesAmount === 8) {
         return false
     }
 
