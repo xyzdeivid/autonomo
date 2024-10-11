@@ -1,4 +1,5 @@
-import { Scheduling } from '@/context/DocsContext'
+import { Scheduling, Expense } from '@/context/DocsContext'
+import { getExpenses, getSchedulingsRevenue } from './revenue'
 
 export const getDays = (filteredSchedulings: Scheduling[]) => {
 
@@ -31,4 +32,11 @@ export const getDays = (filteredSchedulings: Scheduling[]) => {
 
     return formatDays
 
+}
+
+export const findGreaterData = (schedulings: Scheduling[], expenses: Expense[]) => {
+    if (getSchedulingsRevenue(schedulings) < getExpenses(expenses)) {
+        return getExpenses(expenses)
+    }
+    return getSchedulingsRevenue(schedulings)
 }

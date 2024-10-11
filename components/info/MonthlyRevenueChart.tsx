@@ -1,4 +1,5 @@
 import { Expense, Scheduling } from '@/context/DocsContext'
+import { findGreaterData } from '@/functions/info'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
 import { View } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'
@@ -31,7 +32,7 @@ export default function RevenueChart({ filteredSchedulings, filteredExpenses }: 
                 yAxisThickness={0}
                 xAxisThickness={0}
                 data={getData()}
-                maxValue={getSchedulingsRevenue(filteredSchedulings)}
+                maxValue={findGreaterData(filteredSchedulings, filteredExpenses)}
                 barBorderTopLeftRadius={3}
                 barBorderTopRightRadius={3}
             />
