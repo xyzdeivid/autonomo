@@ -13,10 +13,12 @@ import { orderExpenses } from '@/functions/expenses'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
+import { orderServices } from '@/functions/services'
 
 export default function Expenses() {
 
     const [expenses, setExpenses] = useContext(DocsContext).expenses
+    const [services, setServices] = useContext(DocsContext).services
     const [selectedMonth] = useContext(MonthContext)
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [expenseForDeletion, setExpenseForDeletion] = useState({} as Expense)
@@ -27,6 +29,47 @@ export default function Expenses() {
         const remainingExpenses = expenses.filter(current => {
             return current._id !== expense._id
         })
+
+        if (expense.category === 'resale') {
+
+            // Achando produto da despesa
+            const productForExpense = services.find((service) => {
+                return service._id === expense.name
+            })
+
+            // Separando outros produtos
+            const otherServicesAndProducts = services.filter(service => {
+                return service !== productForExpense
+            })
+
+            if (productForExpense) {
+
+                // Atualizando quantidade do produto
+                productForExpense.amount = productForExpense.amount - expense.amount
+
+
+
+                try {
+
+                    await AsyncStorage.setItem('services', JSON.stringify([...otherServicesAndProducts, productForExpense]))
+                    await AsyncStorage.setItem('expenses', JSON.stringify(remainingExpenses))
+
+                    setServices(orderServices([...otherServicesAndProducts, productForExpense]))
+                    setExpenses(orderExpenses(remainingExpenses))
+
+                    setDeleteExpenseForm(false)
+
+                } catch (error) {
+
+                    Alert.alert('Erro ao salvar no banco de dados')
+
+                }
+
+            }
+
+        }
+
+
 
         try {
 
