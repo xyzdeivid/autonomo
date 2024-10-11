@@ -34,7 +34,7 @@ export default function TabLayout() {
             />
             <Tabs.Screen name='schedulings'
                 options={{
-                    title: 'Vendas ou Agendamentos',
+                    title: 'Entradas',
                     tabBarActiveBackgroundColor: 'darkgreen',
                     headerStyle: {
                         backgroundColor: 'darkgreen'
@@ -45,7 +45,7 @@ export default function TabLayout() {
                 }} />
             <Tabs.Screen name='expenses'
                 options={{
-                    title: 'Despesas',
+                    title: 'Saídas',
                     tabBarActiveBackgroundColor: 'darkred',
                     headerStyle: {
                         backgroundColor: 'darkred'
@@ -56,7 +56,7 @@ export default function TabLayout() {
                 }} />
             <Tabs.Screen name='services'
                 options={{
-                    title: 'Produtos ou Serviços',
+                    title: 'Items',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='bag-shopping' size={24} color={color} />
                     )
