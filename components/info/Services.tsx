@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import ServicesChart from './ServicesChart'
 import { useContext, useEffect, useState } from 'react'
 import { Scheduling } from '@/context/DocsContext'
