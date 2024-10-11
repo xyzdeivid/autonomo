@@ -1,4 +1,4 @@
-import { Service } from "@/context/DocsContext";
+import { Service } from '@/context/DocsContext'
 
 export const orderServices = (services: Service[]) => {
 
@@ -13,4 +13,18 @@ export const checkTitle = (service: Service) => {
         case 'product':
             return 'Produto'
     }
+}
+
+export const checkServicesAmount = (services: Service[], service: Service) => {
+
+    const servicesAmount = services.filter(current => {
+        return current.category === service.category
+    }).length
+
+    if (servicesAmount === 5) {
+        return false
+    }
+
+    return true
+
 }

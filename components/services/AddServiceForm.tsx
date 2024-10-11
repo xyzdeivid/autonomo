@@ -10,7 +10,7 @@ import FormTitle from '../common/FormTitle'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import NameInput from '../common/NameInput'
 
-import { orderServices } from '@/functions/services'
+import { checkServicesAmount, orderServices } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
@@ -41,22 +41,14 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
         if (allInputsFilled) {
 
-            if (services.length === 10) {
+            const service: Service = {} as Service
 
-                setAddServiceForm(false)
+            service.category = choice
+            service._id = name
+            service.value = value
+            service.amount = amount
 
-                setTimeout(() => {
-                    Alert.alert('Você só pode registrar 10 serviços')
-                }, 500)
-
-            } else {
-
-                const service: Service = {} as Service
-
-                service.category = choice
-                service._id = name
-                service.value = value
-                service.amount = amount
+            if (checkServicesAmount(services, service)) {
 
 
                 // Verificando se já existe um serviço com o nome igual
@@ -89,6 +81,15 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                     }
 
                 }
+
+            } else {
+
+                setAddServiceForm(false)
+
+                setTimeout(() => {
+                    Alert.alert('Você só pode registrar 5 items por categoria')
+                }, 500)
+
             }
 
         } else {

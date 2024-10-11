@@ -15,7 +15,7 @@ import { isThereAnotherService, orderExpenses, takeExistingService, takeRemainin
 import FormInputs from '../common/FormInputs'
 import ExpenseCategoryButtons from './ExpenseCategoryButtons'
 import AmountInput from '../common/AmountInput'
-import { orderServices } from '@/functions/services'
+import { checkServicesAmount, orderServices } from '@/functions/services'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -96,32 +96,44 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                         setExpenses(orderExpenses([...expenses, newExpense]))
 
                         setAddExpenseForm(false)
-                        
+
                     } catch (error) {
 
                         Alert.alert('Erro ao acessar banco de dados')
-                        
+
                     }
 
                 } else {
 
-                    try {
+                    if (checkServicesAmount(services, newProduct)) {
 
-                        // Registrando novo produto
-                        await AsyncStorage.setItem('services', JSON.stringify([...services, newProduct]))
-                        setServices(orderServices([...services, newProduct]))
+                        try {
 
-                        // Registrando nova despesa
-                        await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
-                        setExpenses(orderExpenses([...expenses, newExpense]))
+                            // Registrando novo produto
+                            await AsyncStorage.setItem('services', JSON.stringify([...services, newProduct]))
+                            setServices(orderServices([...services, newProduct]))
+
+                            // Registrando nova despesa
+                            await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
+                            setExpenses(orderExpenses([...expenses, newExpense]))
+
+                            setAddExpenseForm(false)
+
+
+                        } catch (error) {
+
+                            Alert.alert('Erro ao acessar banco de dados')
+
+                        }
+
+                    } else {
 
                         setAddExpenseForm(false)
 
-                        
-                    } catch (error) {
+                        setTimeout(() => {
+                            Alert.alert('Você só pode registrar 5 items por categoria')
+                        }, 500)
 
-                        Alert.alert('Erro ao acessar banco de dados')
-                        
                     }
 
                 }
@@ -130,7 +142,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
                 // Aplicando categoria a despesa
                 newExpense.category = 'expense'
-                
+
                 newExpense.value = value
 
                 // Registrando nova despesa
