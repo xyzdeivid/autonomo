@@ -34,9 +34,15 @@ export const getDays = (filteredSchedulings: Scheduling[]) => {
 
 }
 
-export const findGreaterData = (schedulings: Scheduling[], expenses: Expense[]) => {
+const getData = (schedulings: Scheduling[], expenses: Expense[]) => {
     if (getSchedulingsRevenue(schedulings) < getExpenses(expenses)) {
         return getExpenses(expenses)
+    } else {
+        return getSchedulingsRevenue(schedulings)
     }
-    return getSchedulingsRevenue(schedulings)
+}
+
+export const findGreaterData = (schedulings: Scheduling[], expenses: Expense[]) => {
+    const data = getData(schedulings, expenses)
+    return Math.ceil(data / 500) * 500
 }
