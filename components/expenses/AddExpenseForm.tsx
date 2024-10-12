@@ -16,6 +16,7 @@ import FormInputs from '../common/FormInputs'
 import ExpenseCategoryButtons from './ExpenseCategoryButtons'
 import AmountInput from '../common/AmountInput'
 import { checkServicesAmount, orderServices } from '@/functions/services'
+import ProductNameInput from './ProductNameInput'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -25,6 +26,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
     const [allInputsFilled, setAllInputsFilled] = useState(false)
     const [name, setName] = useState('')
+    const [productName, setProductName] = useState('')
     const [date, setDate] = useState('')
     const [value, setValue] = useState(0)
     const [resaleValue, setResaleValue] = useState(0)
@@ -59,7 +61,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 const newProduct: Service = {
                     category: 'product',
                     value: resaleValue,
-                    _id: name,
+                    _id: productName,
                     amount: stock
                 }
 
@@ -67,6 +69,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 newExpense.category = 'resale'
                 newExpense.value = value * stock
                 newExpense.amount = stock
+                newExpense.productName = productName
 
                 // Verificando se já existe um produto igual ao novo criado
                 const alreadyExist = isThereAnotherService(services, newProduct)
@@ -74,7 +77,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 if (alreadyExist) {
 
                     // Pegando serviço existente
-                    const existingService = takeExistingService(services, name)
+                    const existingService = takeExistingService(services, productName)
 
                     // Pegando outros serviços
                     const remainingServices = takeRemainingServices(services, existingService)
@@ -177,6 +180,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 <FormInputs>
                     <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
                     <NameInput setName={setName} />
+                    {choice === 'resale' && (
+                        <ProductNameInput setProductName={setProductName} />
+                    )}
                     <DateInput
                         setTargetDate={setDate}
                         bgColor='#660000'

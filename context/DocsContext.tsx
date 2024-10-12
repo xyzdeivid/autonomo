@@ -30,6 +30,7 @@ export interface Expense {
     date: string
     value: number
     amount: number
+    productName?: string
 }
 
 
@@ -42,7 +43,7 @@ const DEFAULT_EXPENSE: Expense = {
     name: '',
     date: '',
     value: 0,
-    amount: 0
+    amount: 0,
 }
 
 export interface Scheduling {

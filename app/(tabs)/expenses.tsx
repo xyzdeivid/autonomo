@@ -34,7 +34,7 @@ export default function Expenses() {
 
             // Achando produto da despesa
             const productForExpense = services.find((service) => {
-                return service._id === expense.name
+                return service._id === expense.productName
             })
 
             // Separando outros produtos
