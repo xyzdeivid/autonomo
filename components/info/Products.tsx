@@ -1,8 +1,7 @@
-import { colors } from '@/constants/chartColors'
 import { Scheduling } from '@/context/DocsContext'
 import { MonthContext } from '@/context/Month'
 import { useContext, useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import InfoTitle from '../common/InfoTitle'
 import ProductsChart from './ProductsChart'
 import ProductsList from './ProductsList'
@@ -62,13 +61,6 @@ export default function Products({ schedulings }: ProductsProps) {
                     ? <View>
                         <InfoTitle text='Produtos mais vendidos' />
                         <ProductsChart products={products} />
-                        <View style={{
-                            borderBottomColor: '#E0E0E0',
-                            borderBottomWidth: 1,
-                            marginHorizontal: 10,
-                            marginBottom: 20
-                        }}
-                        />
                         <ProductsList products={products} />
                     </View>
                     : <AnyItemWarning text='Nenhum produto registrado' />

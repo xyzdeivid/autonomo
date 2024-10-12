@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     title: {
-        fontSize: 32
+        fontSize: 26
     }
 })

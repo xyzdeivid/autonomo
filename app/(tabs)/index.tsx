@@ -68,10 +68,10 @@ export default function Info() {
                         <Title content={content} setContentForm={setContentForm} />
                         <View style={{
                             width: '95%',
-                            height: 1.5,
+                            height: 1,
                             backgroundColor: 'lightgray',
                             marginHorizontal: 'auto',
-                            marginVertical: 20
+                            marginVertical: 26
                         }} />
                         {selectPage()}
                     </View>
