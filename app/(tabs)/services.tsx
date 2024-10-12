@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert, View } from 'react-native'
 import DeleteServiceForm from '@/components/services/AboutServiceForm'
 import SelectCategoryInput from '@/components/services/SelectCategoryInput'
+import ServicesContent from '@/components/services/ServicesContent'
 
 export default function Services() {
 
@@ -41,24 +42,17 @@ export default function Services() {
 
     }
 
-    const ServicesContent = () => {
-        return (
-            <View>
-                <SelectCategoryInput category={category} setCategory={setCategory} />
-                <ServicesList
-                    setServiceForDeletion={setServiceForDeletion}
-                    setDeleteServiceForm={setDeleteServiceForm}
-                    services={getServicesByCategory(services, category)}
-                />
-            </View>
-        )
-    }
-
     return (
         <Container>
             {
                 services[0]
-                    ? <ServicesContent />
+                    ? <ServicesContent
+                        category={category}
+                        setCategory={setCategory}
+                        services={services}
+                        setServiceForDeletion={setServiceForDeletion}
+                        setDeleteServiceForm={setDeleteServiceForm}
+                    />
                     : <AnyItemWarning text='Nenhum produto ou serviço cadastrado' />
             }
             {
@@ -68,7 +62,11 @@ export default function Services() {
             }
             {
                 deleteServiceForm
-                    ? <DeleteServiceForm service={serviceForDeletion} deleteFunction={deleteService} setFormOff={setDeleteServiceForm} />
+                    ? <DeleteServiceForm
+                        service={serviceForDeletion}
+                        deleteFunction={deleteService}
+                        setFormOff={setDeleteServiceForm}
+                    />
                     : null
             }
         </Container>

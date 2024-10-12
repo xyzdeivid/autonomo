@@ -36,6 +36,7 @@ export default function InfoTitle({ text }: InfoTitleProps) {
 }
 
 const styles = StyleSheet.create({
+
     titleContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -43,13 +44,15 @@ const styles = StyleSheet.create({
         marginTop: 8,
         marginBottom: 24,
         backgroundColor: '#004AAD',
-        marginHorizontal: 20,
+        marginHorizontal: 16,
         padding: 10,
         borderRadius: 10
     },
+
     titleText: {
         fontSize: 16,
-        marginStart: 4,
+        marginStart: 8,
         color: 'white'
     }
+
 })
