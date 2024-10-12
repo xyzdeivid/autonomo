@@ -180,31 +180,38 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 <FormInputs>
                     <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
                     <NameInput setName={setName} />
-                    {choice === 'resale' && (
-                        <ProductNameInput setProductName={setProductName} />
-                    )}
                     <DateInput
                         setTargetDate={setDate}
                         bgColor='#660000'
                     />
+                    <View style={{
+                            width: '95%',
+                            height: 1.5,
+                            backgroundColor: 'lightgray',
+                            marginHorizontal: 'auto',
+                            marginBottom: 20
+                        }} />
+                    {choice === 'resale' && (
+                        <ProductNameInput setProductName={setProductName} />
+                    )}
+                    {choice === 'resale' && (
+                            <AmountInput
+                                text='Quantidade (un)'
+                                setAmount={setStock}
+                            />
+                    )}
                     <NumberInput
                         label={choice === 'resale'
-                            ? 'Valor de Compra'
+                            ? 'Valor de Compra (un)'
                             : ''
                         }
                         setValue={setValue}
                     />
                     {choice === 'resale' && (
-                        <View>
-                            <NumberInput
-                                label='Valor de Venda'
-                                setValue={setResaleValue}
-                            />
-                            <AmountInput
-                                text='Quantidade (un)'
-                                setAmount={setStock}
-                            />
-                        </View>
+                        <NumberInput
+                        label='Valor de Venda (un)'
+                        setValue={setResaleValue}
+                    />
                     )}
                 </FormInputs>
                 <SubmitFormButtons
