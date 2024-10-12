@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
@@ -36,24 +36,15 @@ export default function Info() {
         switch (content) {
             case 'financial':
                 return (
-                    <View>
-                        <Title content={content} setContentForm={setContentForm} />
-                        <Revenue />
-                    </View>
-            )
+                    <Revenue />
+                )
             case 'services':
                 return (
-                    <View>
-                        <Title content={content} setContentForm={setContentForm} />
-                        <Services schedulings={servicesSchedulings()} />
-                    </View>
+                    <Services schedulings={servicesSchedulings()} />
                 )
             case 'products':
                 return (
-                    <View>
-                        <Title content={content} setContentForm={setContentForm} />
-                        <Products schedulings={productsSchedulings()} />
-                    </View>
+                    <Products schedulings={productsSchedulings()} />
                 )
         }
     }
@@ -73,7 +64,17 @@ export default function Info() {
             }
             {
                 filterSchedulings(schedulings, selectedMonth)[0]
-                    ? selectPage()
+                    ? <View>
+                        <Title content={content} setContentForm={setContentForm} />
+                        <View style={{
+                            width: '95%',
+                            height: 1.5,
+                            backgroundColor: 'lightgray',
+                            marginHorizontal: 'auto',
+                            marginVertical: 20
+                        }} />
+                        {selectPage()}
+                    </View>
                     : <AnyItemWarning text='Nenhuma venda ou agendamento cadastrado' />
             }
         </Container>
