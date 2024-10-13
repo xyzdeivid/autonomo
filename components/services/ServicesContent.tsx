@@ -19,9 +19,9 @@ export default function ServicesContent({ category, setCategory,
 
     const getServiceOrProductName = () => {
         if (category === 1) {
-            return 'produto'
+            return 'serviço'
         }
-        return 'serviço'
+        return 'produto'
     }
 
     return (

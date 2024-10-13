@@ -8,8 +8,8 @@ interface SelectCategoryInputProps {
 export default function SelectCategoryInput({ category, setCategory }: SelectCategoryInputProps) {
 
     const categories = [
-        'Serviços',
-        'Produtos'
+        'Produtos',
+        'Serviços'
     ]
 
     return (

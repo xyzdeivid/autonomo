@@ -34,13 +34,13 @@ export const getServicesByCategory = (services: Service[], category: number) => 
     if (category === 1) {
 
         return services.filter(service => 
-            service.category === 'product'
+            service.category === 'service'
         )
 
     } else {
 
         return services.filter(service => 
-            service.category === 'service'
+            service.category === 'product'
         )
         
     }
