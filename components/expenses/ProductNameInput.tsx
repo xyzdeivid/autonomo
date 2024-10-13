@@ -8,7 +8,7 @@ export default function ProductNameInput({ setProductName }: ProductNameInputPro
     return (
         <View style={styles.inputContainer}>
             <Text style={{ color: 'black' }}>Nome do Produto:</Text>
-            <TextInput style={styles.input} onChangeText={text => setProductName(text)} />
+            <TextInput style={styles.input} onChangeText={text => setProductName(text.trim())} />
         </View>
     )
 }

@@ -8,7 +8,7 @@ export default function NameInput({ setName }: NameInputProps) {
     return (
         <View style={styles.inputContainer}>
             <Text style={{ color: 'black' }}>Nome:</Text>
-            <TextInput style={styles.input} onChangeText={text => setName(text)} />
+            <TextInput style={styles.input} onChangeText={text => setName(text.trim())} />
         </View>
     )
 }
