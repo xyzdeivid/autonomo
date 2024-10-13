@@ -53,7 +53,9 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
                 // Verificando se já existe um serviço com o nome igual
                 const isThereAnotherService = services.filter(service => {
-                    return service._id == name
+                    const serviceName = service._id.toLocaleLowerCase()
+                    const nameToCompare = name.toLocaleLowerCase()
+                    return serviceName === nameToCompare
                 })
 
                 if (isThereAnotherService[0]) {
