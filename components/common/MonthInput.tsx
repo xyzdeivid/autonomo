@@ -6,28 +6,29 @@ export default function MonthInput() {
 
     const [selectedMonth, setSelectedMonth] = useContext(MonthContext)
 
-    const months: [string, number][] = [
-        ['Janeiro', 0], 
-        ['Fevereiro', 1], 
-        ['Março', 2], 
-        ['Abril', 3], 
-        ['Maio', 4], 
-        ['Junho', 5],
-        ['Julho', 6], 
-        ['Agosto', 7], 
-        ['Setembro', 8], 
-        ['Outubro', 9], 
-        ['Novembro', 10], 
-        ['Dezembro', 11]
+    const months: string[] = [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro'
     ]
 
     return (
         <Picker
             selectedValue={selectedMonth}
             onValueChange={(itemValue) => setSelectedMonth(itemValue)}
+            dropdownIconColor='lightgray'
         >
-            {months.map((month) => (
-                <Picker.Item key={month[1]} label={month[0]} value={month[1]} />
+            {months.map((month, index) => (
+                <Picker.Item key={index} label={month} value={index} />
             ))}
         </Picker>
     )
