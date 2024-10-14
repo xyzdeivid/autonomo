@@ -1,7 +1,6 @@
 import { StyleSheet, View } from 'react-native'
-import { useContext } from 'react'
 import { DataTable } from 'react-native-paper'
-import { DocsContext, Service } from '@/context/DocsContext'
+import { Service } from '@/context/DocsContext'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 
 interface ServicesListProps {

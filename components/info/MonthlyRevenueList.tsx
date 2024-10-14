@@ -2,8 +2,6 @@ import { Expense, Scheduling } from '@/context/DocsContext'
 import { moneyFormat } from '@/functions/common'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
 import { StyleSheet, Text, View } from 'react-native'
-import Entypo from '@expo/vector-icons/Entypo'
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 
 interface RevenueListProps {

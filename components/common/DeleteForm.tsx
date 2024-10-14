@@ -12,10 +12,10 @@ interface DeleteServiceFormProps {
 export default function DeleteForm({ targetName, deleteFunction, setFormOff }: DeleteServiceFormProps) {
 
     return (
-        <FormContainer>
+        <FormContainer setFormOff={setFormOff}>
             <FormBody>
                 <FormTitle text='Confirmar exclusão?' />
-                <SubmitFormButtons submit={() => deleteFunction(targetName)} setFormOff={setFormOff} submitButtonText='Excluir' />
+                <SubmitFormButtons submit={() => deleteFunction(targetName)} submitButtonText='Excluir' />
             </FormBody>
         </FormContainer>
     )

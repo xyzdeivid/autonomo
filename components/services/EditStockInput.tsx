@@ -1,5 +1,4 @@
 import { Pressable, StyleSheet, View, Text, TextInput } from 'react-native'
-import { MaskedTextInput } from 'react-native-mask-text'
 
 interface EditStockInputProps {
     setStock: React.Dispatch<React.SetStateAction<number>>
