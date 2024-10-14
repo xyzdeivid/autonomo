@@ -20,6 +20,8 @@ export default function ServicesContent({ category, setCategory,
     const getServiceOrProductName = () => {
         if (category === 1) {
             return 'serviço'
+        } else if (category === 2) {
+            return 'serviço orçamentário'
         }
         return 'produto'
     }

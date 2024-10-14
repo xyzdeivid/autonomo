@@ -12,6 +12,8 @@ export const checkTitle = (service: Service) => {
             return 'Serviço'
         case 'product':
             return 'Produto'
+        case 'budget':
+            return 'Serviço Orçamentário'
     }
 }
 
@@ -33,16 +35,20 @@ export const getServicesByCategory = (services: Service[], category: number) => 
 
     if (category === 1) {
 
-        return services.filter(service => 
+        return services.filter(service =>
             service.category === 'service'
         )
 
-    } else {
+    } else if (category === 2) {
 
-        return services.filter(service => 
-            service.category === 'product'
+        return services.filter(service =>
+            service.category === 'budget'
         )
-        
+
     }
+
+    return services.filter(service =>
+        service.category === 'product'
+    )
 
 }

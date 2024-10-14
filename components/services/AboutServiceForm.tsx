@@ -144,16 +144,18 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                         <Text style={styles.label}>{checkTitle(service)}: </Text>
                         <Text>{service._id}</Text>
                     </View>
-                    <View style={styles.inputContainer}>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.label}>Valor:</Text>
-                            {
-                                editValueInput
-                                    ? <EditValueInput setValue={setValue} editValue={editValue} />
-                                    : <ActualValue value={value || service.value} setEditValueInput={setEditValueInput} />
-                            }
+                    {service.category !== 'budget' && (
+                        <View style={styles.inputContainer}>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.label}>Valor:</Text>
+                                {
+                                    editValueInput
+                                        ? <EditValueInput setValue={setValue} editValue={editValue} />
+                                        : <ActualValue value={value || service.value} setEditValueInput={setEditValueInput} />
+                                }
+                            </View>
                         </View>
-                    </View>
+                    )}
                     {
                         service.category === 'product' && (
                             <View style={styles.inputContainer}>

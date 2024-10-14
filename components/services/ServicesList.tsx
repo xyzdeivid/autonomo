@@ -27,13 +27,17 @@ export default function ServicesList({ setServiceForDeletion, setDeleteServiceFo
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title style={styles.text}>Nome</DataTable.Title>
-                    <DataTable.Title style={styles.text}>Valor</DataTable.Title>
+                    {services[0].category !== 'budget' && (
+                        <DataTable.Title style={styles.text}>Valor</DataTable.Title>
+                    )}
                 </DataTable.Header>
                 {services.map(service => {
                     return (
                         <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
                             <DataTable.Cell style={styles.text}>{service._id}</DataTable.Cell>
-                            <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
+                            {service.category !== 'budget' && (
+                                <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
+                            )}
                         </DataTable.Row>
                     )
                 })}
