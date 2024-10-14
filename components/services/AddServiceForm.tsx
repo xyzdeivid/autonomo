@@ -1,4 +1,4 @@
-import { StyleSheet, Alert } from 'react-native'
+import { Alert, Text, View } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { DocsContext, Service } from '@/context/DocsContext'
@@ -14,6 +14,8 @@ import { checkServicesAmount, orderServices } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
+import NoValueButton from './NoValueButton'
+import InfoTitle from '../common/InfoTitle'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -28,14 +30,21 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     const [services, setServices] = useContext(DocsContext).services
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [choice, setChoice] = useState('product')
+    const [noValue, setNoValue] = useState(false)
 
     useEffect(() => {
-        if (name && value) setAllInputsFilled(true)
-    }, [name, value])
+        if (name) setAllInputsFilled(true)
+    }, [name])
 
     useEffect(() => {
         setHideTabBar(true)
     }, [])
+
+    useEffect(() => {
+        noValue
+            ? setChoice('budget')
+            : setChoice('service')
+    }, [noValue])
 
     async function addService() {
 
@@ -115,6 +124,8 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                 return 'Serviço'
             case 'product':
                 return 'Produto'
+            case 'budget':
+                return 'Serviço Orçamentário'
         }
     }
 
@@ -124,8 +135,21 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                 <FormTitle text={`Registrar ${checkTitle()}`} />
                 <FormInputs>
                     <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
+                    {choice === 'budget' && (
+                        <Text style={{ marginBottom: 20, color: 'darkgray' }} >O valor será definido ao registrar entrada.</Text>
+                    )}
                     <NameInput setName={setName} />
-                    <NumberInput setValue={setValue} />
+                    {!noValue && (
+                        <NumberInput setValue={setValue} />
+                    )}
+                    {choice === 'service' || choice === 'budget'
+                        ? <NoValueButton
+                            noValue={noValue}
+                            setNoValue={setNoValue}
+                            setChoice={setChoice}
+                        />
+                        : null
+                    }
                     {choice === 'product' && (
                         <AmountInput
                             text='Estoque'
@@ -139,30 +163,3 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     )
 
 }
-
-const styles = StyleSheet.create({
-    inputContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 10
-    },
-    input: {
-        width: '50%',
-        borderBottomWidth: 1,
-        borderBottomColor: '#E5E4E4',
-        color: 'black',
-        padding: 0,
-        margin: 0
-    },
-    buttonsContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-    button: {
-        color: 'black',
-        padding: 4
-    }
-})
