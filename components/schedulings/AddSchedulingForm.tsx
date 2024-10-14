@@ -15,7 +15,6 @@ import { Alert } from 'react-native'
 import StockInfo from './StockInfo'
 import AmountInput from '../common/AmountInput'
 import { orderServices } from '@/functions/services'
-import FreeSaleButton from './FreeSaleButton'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -155,7 +154,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
             <FormBody>
                 <FormTitle text={service.amount ? 'Registrar Venda' : 'Registrar Agendamento'} />
                 <FormInputs>
-                    <FreeSaleButton />
                     <SelectServiceInput service={service} setService={setService} />
                     {service.category === 'product' && (
                         <StockInfo amount={service.amount - amount} />
