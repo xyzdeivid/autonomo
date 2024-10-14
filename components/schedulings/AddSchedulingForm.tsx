@@ -8,13 +8,14 @@ import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { generateId } from '@/functions/common'
 import { HideTabBarContext } from '@/context/HideTabBar'
-import { orderSchedulings } from '@/functions/schedulings'
+import { getSchedulingValue, orderSchedulings } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import StockInfo from './StockInfo'
 import AmountInput from '../common/AmountInput'
 import { orderServices } from '@/functions/services'
+import NumberInput from '../common/NumberInput'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -27,6 +28,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     const [service, setService] = useState<Service>(services[0])
 
     const [date, setDate] = useState('')
+    const [value, setValue] = useState(0)
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
     const [amount, setAmount] = useState(0)
 
@@ -99,7 +101,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                     service: {
                         category: service.category,
                         _id: service._id,
-                        value: service.amount ? service.value * amount : service.value,
+                        value: getSchedulingValue(service, amount, value),
                         amount: amount
                     },
                     date
@@ -152,7 +154,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     return (
         <FormContainer setFormOff={setAddSchedulingForm}>
             <FormBody>
-                <FormTitle text={service.amount ? 'Registrar Venda' : 'Registrar Agendamento'} />
+                <FormTitle text='Registrar Entrada' />
                 <FormInputs>
                     <SelectServiceInput service={service} setService={setService} />
                     {service.category === 'product' && (
@@ -165,6 +167,13 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                             setAmount={setAmount}
                         />
                     )}
+                    {
+                        service.category === 'budget' && (
+                            <NumberInput
+                                setValue={setValue}
+                            />
+                        )
+                    }
                 </FormInputs>
                 <SubmitFormButtons submit={addScheduling} submitButtonText='Registrar' />
             </FormBody>
