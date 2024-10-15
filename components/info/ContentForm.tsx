@@ -4,6 +4,8 @@ import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { useContext, useEffect } from 'react'
 import { HideTabBarContext } from '@/context/HideTabBar'
+import { DocsContext } from '@/context/DocsContext'
+import { thereIsBudget, thereIsProduct, thereIsService } from '@/functions/info'
 
 interface ContentFormProps {
     setContent: React.Dispatch<React.SetStateAction<string>>
@@ -13,17 +15,11 @@ interface ContentFormProps {
 export default function ContentForm({ setContent, setContentForm }: ContentFormProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [schedulings] = useContext(DocsContext).schedulings
 
     useEffect(() => {
         setHideTabBar(true)
     }, [])
-
-    const data = [
-        ['financial', 'Finanças'],
-        ['products', 'Produtos'],
-        ['services', 'Serviços'],
-        ['budgets', 'Orçamentários']
-    ]
 
     const setContentOnPage = (page: string) => {
         setContent(page)
@@ -35,13 +31,28 @@ export default function ContentForm({ setContent, setContentForm }: ContentFormP
         <FormContainer setFormOff={setContentForm}>
             <FormBody>
                 <FormTitle text='Qual conteúdo deseja mostrar?' />
-                {data.map(current => {
-                    return (
-                        <View key={`${current[0]}-${current[1]}`} style={styles.button}>
-                            <Button onPress={() => setContentOnPage(current[0])} title={current[1]} />
+                <View style={styles.button}>
+                    <Button onPress={() => setContentOnPage('financial')} title='Finanças' />
+                </View>
+                {
+                    thereIsProduct(schedulings) && (
+                        <View style={styles.button}>
+                            <Button onPress={() => setContentOnPage('products')} title='Produtos' />
                         </View>
                     )
-                })}
+                }
+                {
+                    thereIsService(schedulings) && (
+                        <View style={styles.button}>
+                            <Button onPress={() => setContentOnPage('services')} title='Serviços' />
+                        </View>
+                    )
+                }
+                {
+                    thereIsBudget(schedulings) && (
+                        <Button onPress={() => setContentOnPage('budgets')} title='Orçamentários' />
+                    )
+                }
             </FormBody>
         </FormContainer>
     )

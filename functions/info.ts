@@ -46,3 +46,27 @@ export const findGreaterData = (schedulings: Scheduling[], expenses: Expense[]) 
     const data = getData(schedulings, expenses)
     return Math.ceil(data / 500) * 500
 }
+
+export const thereIsProduct = (schedulings: Scheduling[]) => {
+    const product = schedulings.filter(scheduling => (
+        scheduling.service.category === 'product'
+    ))[0]
+    if (product) return true
+    return false
+}
+
+export const thereIsService = (schedulings: Scheduling[]) => {
+    const service = schedulings.filter(scheduling => (
+        scheduling.service.category === 'service'
+    ))[0]
+    if (service) return true
+    return false
+}
+
+export const thereIsBudget = (schedulings: Scheduling[]) => {
+    const budget = schedulings.filter(scheduling => (
+        scheduling.service.category === 'budget'
+    ))[0]
+    if (budget) return true
+    return false
+}
