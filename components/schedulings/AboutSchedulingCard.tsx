@@ -22,14 +22,6 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
         setHideTabBar(true)
     }, [])
 
-    const checkTitle = () => {
-        if (scheduling.service.category === 'product') {
-            return ['Venda', 'Produto']
-        } else {
-            return ['Agendamento', 'Serviço']
-        }
-    }
-
     const checkValueText = () => {
         if (scheduling.service.category === 'product') {
             return 'Valor Total'
@@ -40,9 +32,9 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     return (
         <FormContainer setFormOff={setFormOff}>
             <FormBody>
-                <FormTitle text={`Sobre ${checkTitle()[0]}`} />
+                <FormTitle text='Sobre Entrada' />
                 <View>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>{checkTitle()[1]}:</Text> {scheduling.service._id}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {scheduling.service._id}</Text>
                     {
                         scheduling.service.category === 'product'
                             ? <View>

@@ -41,7 +41,7 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
                     })}
                 </DataTable>
             </ContainerHandler>
-            <MoreInfoWarning text='Para mais informações sobre a despesa, basta clicar em cima!' />
+            <MoreInfoWarning />
         </View>
     )
 

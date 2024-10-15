@@ -1,14 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native'
 
-interface MoreInfoWarningProps {
-    text: string
-}
-
-export default function MoreInfoWarning({ text }: MoreInfoWarningProps) {
+export default function MoreInfoWarning() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>{text}</Text>
+            <Text style={styles.text}>Para mais informações ou exclusão do item, basta clicar sobre ele!</Text>
         </View>
     )
 

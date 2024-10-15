@@ -42,7 +42,7 @@ export default function ServicesList({ setServiceForDeletion, setDeleteServiceFo
                     )
                 })}
             </DataTable>
-            <MoreInfoWarning text='Para mais informações sobre o produto/serviço, basta clicar em cima!' />
+            <MoreInfoWarning />
         </View>
     )
 

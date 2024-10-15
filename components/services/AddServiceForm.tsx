@@ -1,4 +1,4 @@
-import { Alert, Text, View } from 'react-native'
+import { Alert, Text } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { DocsContext, Service } from '@/context/DocsContext'
@@ -14,8 +14,6 @@ import { checkServicesAmount, orderServices } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
-import NoValueButton from './NoValueButton'
-import InfoTitle from '../common/InfoTitle'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -30,7 +28,6 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     const [services, setServices] = useContext(DocsContext).services
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [choice, setChoice] = useState('product')
-    const [noValue, setNoValue] = useState(false)
 
     useEffect(() => {
         if (name) setAllInputsFilled(true)
@@ -39,12 +36,6 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     useEffect(() => {
         setHideTabBar(true)
     }, [])
-
-    useEffect(() => {
-        noValue
-            ? setChoice('budget')
-            : setChoice('service')
-    }, [noValue])
 
     async function addService() {
 
@@ -125,7 +116,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
             case 'product':
                 return 'Produto'
             case 'budget':
-                return 'Serviço Orçamentário'
+                return 'Orçamentário'
         }
     }
 
@@ -139,17 +130,9 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                         <Text style={{ marginBottom: 20, color: 'darkgray' }} >O valor será definido ao registrar entrada.</Text>
                     )}
                     <NameInput setName={setName} />
-                    {!noValue && (
+                    {choice !== 'budget' && (
                         <NumberInput setValue={setValue} />
                     )}
-                    {choice === 'service' || choice === 'budget'
-                        ? <NoValueButton
-                            noValue={noValue}
-                            setNoValue={setNoValue}
-                            setChoice={setChoice}
-                        />
-                        : null
-                    }
                     {choice === 'product' && (
                         <AmountInput
                             text='Estoque'

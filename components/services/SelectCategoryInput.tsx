@@ -10,7 +10,7 @@ export default function SelectCategoryInput({ category, setCategory }: SelectCat
     const categories = [
         'Produtos',
         'Serviços',
-        'Serviços Orçamentários'
+        'Orçamentários'
     ]
 
     return (

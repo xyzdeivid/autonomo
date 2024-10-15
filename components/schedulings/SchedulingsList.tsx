@@ -47,7 +47,7 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
                     })}
                 </DataTable>
             </ContainerHandler>
-            <MoreInfoWarning text='Para mais informações sobre a venda/agendamento, basta clicar em cima!' />
+            <MoreInfoWarning />
         </View>
     )
 

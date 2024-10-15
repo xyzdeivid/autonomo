@@ -29,13 +29,22 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
             <Pressable
                 style={{
                     ...styles.button,
-                    borderTopRightRadius: 4,
-                    borderBottomRightRadius: 4,
                     backgroundColor: checkChoice('service')
                 }}
                 onPress={() => setChoice('service')}
             >
                 <Text style={styles.textButton}>Serviço</Text>
+            </Pressable>
+            <Pressable
+                style={{
+                    ...styles.button,
+                    borderTopRightRadius: 4,
+                    borderBottomRightRadius: 4,
+                    backgroundColor: checkChoice('budget')
+                }}
+                onPress={() => setChoice('budget')}
+            >
+                <Text style={styles.textButton}>Orçamentário</Text>
             </Pressable>
         </View>
     )
