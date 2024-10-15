@@ -12,6 +12,7 @@ import Revenue from '@/components/info/Revenue'
 import ContentForm from '@/components/info/ContentForm'
 import Services from '@/components/info/Services'
 import Products from '@/components/info/Products'
+import Budgets from '@/components/info/Budgets'
 
 export default function Info() {
 
@@ -32,6 +33,12 @@ export default function Info() {
         })
     }
 
+    const budgetsSchedulings = () => {
+        return schedulings.filter(scheduling => {
+            return scheduling.service.category === 'budget'
+        })
+    }
+
     const selectPage = () => {
         switch (content) {
             case 'financial':
@@ -45,6 +52,10 @@ export default function Info() {
             case 'products':
                 return (
                     <Products schedulings={productsSchedulings()} />
+                )
+                case 'budgets':
+                return (
+                    <Budgets schedulings={budgetsSchedulings()} />
                 )
         }
     }

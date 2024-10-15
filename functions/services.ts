@@ -13,7 +13,7 @@ export const checkTitle = (service: Service) => {
         case 'product':
             return 'Produto'
         case 'budget':
-            return 'Serviço Orçamentário'
+            return 'Orçamentário'
     }
 }
 

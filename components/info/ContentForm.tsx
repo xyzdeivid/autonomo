@@ -20,8 +20,9 @@ export default function ContentForm({ setContent, setContentForm }: ContentFormP
 
     const data = [
         ['financial', 'Finanças'],
+        ['products', 'Produtos'],
         ['services', 'Serviços'],
-        ['products', 'Produtos']
+        ['budgets', 'Orçamentários']
     ]
 
     const setContentOnPage = (page: string) => {
