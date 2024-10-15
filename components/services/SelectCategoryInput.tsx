@@ -1,16 +1,16 @@
 import { Picker } from '@react-native-picker/picker'
 
 interface SelectCategoryInputProps {
-    category: number
-    setCategory: React.Dispatch<React.SetStateAction<number>>
+    category: string
+    setCategory: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function SelectCategoryInput({ category, setCategory }: SelectCategoryInputProps) {
 
     const categories = [
-        'Produtos',
-        'Serviços',
-        'Orçamentários'
+        ['Produtos', 'product'],
+        ['Serviços', 'service'],
+        ['Orçamentários', 'budget']
     ]
 
     return (
@@ -20,7 +20,7 @@ export default function SelectCategoryInput({ category, setCategory }: SelectCat
         >
             {categories.map((current, index) => {
                 return (
-                    <Picker.Item key={current} label={current} value={index} />
+                    <Picker.Item key={current[0]} label={current[0]} value={current[1]} />
                 )
             })}
         </Picker>

@@ -16,7 +16,7 @@ export default function Services() {
     const [deleteServiceForm, setDeleteServiceForm] = useState(false)
     const [serviceForDeletion, setServiceForDeletion] = useState({} as Service)
     const [services, setServices] = useContext(DocsContext).services
-    const [category, setCategory] = useState(0)
+    const [category, setCategory] = useState('')
 
     const deleteService = async (id: string) => {
 
@@ -51,7 +51,7 @@ export default function Services() {
                         setServiceForDeletion={setServiceForDeletion}
                         setDeleteServiceForm={setDeleteServiceForm}
                     />
-                    : <AnyItemWarning text='Nenhum produto ou serviço cadastrado' />
+                    : <AnyItemWarning text='Nenhum item cadastrado' />
             }
             {
                 addServiceForm

@@ -31,24 +31,23 @@ export const checkServicesAmount = (services: Service[], service: Service) => {
 
 }
 
-export const getServicesByCategory = (services: Service[], category: number) => {
+export const getServicesByCategory = (services: Service[], category: string) => {
 
-    if (category === 1) {
-
-        return services.filter(service =>
-            service.category === 'service'
-        )
-
-    } else if (category === 2) {
-
-        return services.filter(service =>
-            service.category === 'budget'
-        )
-
+    switch (category) {
+        case 'product':
+            return services.filter(service =>
+                service.category === 'product'
+            )
+        case 'service':
+            return services.filter(service =>
+                service.category === 'service'
+            )
+        case 'budget':
+            return services.filter(service =>
+                service.category === 'budget'
+            )
+        default:
+            return []
     }
-
-    return services.filter(service =>
-        service.category === 'product'
-    )
 
 }

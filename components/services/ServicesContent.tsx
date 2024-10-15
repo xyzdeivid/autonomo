@@ -7,8 +7,8 @@ import { getServicesByCategory } from '@/functions/services'
 import { Service } from '@/context/DocsContext'
 
 interface ServicesContentProps {
-    category: number
-    setCategory: React.Dispatch<React.SetStateAction<number>>
+    category: string
+    setCategory: React.Dispatch<React.SetStateAction<string>>
     services: Service[]
     setServiceForDeletion: React.Dispatch<React.SetStateAction<Service>>
     setDeleteServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,12 +18,14 @@ export default function ServicesContent({ category, setCategory,
     services, setServiceForDeletion, setDeleteServiceForm }: ServicesContentProps) {
 
     const getServiceOrProductName = () => {
-        if (category === 1) {
-            return 'serviço'
-        } else if (category === 2) {
-            return 'serviço orçamentário'
+        switch (category) {
+            case 'product':
+                return 'produto'
+            case 'service':
+                return 'serviço'
+            case 'budget':
+                return 'orçamentário'
         }
-        return 'produto'
     }
 
     return (
