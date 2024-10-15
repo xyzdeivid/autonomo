@@ -14,7 +14,7 @@ export default function SelectServiceInput({ service, setService }: SelectServic
 
     return (
         <View>
-            <Text style={styles.label}>Serviço / Produto:</Text>
+            <Text style={styles.label}>Produto / Serviço / Orçamentário:</Text>
             <Picker
                 style={styles.inputContainer}
                 selectedValue={service}

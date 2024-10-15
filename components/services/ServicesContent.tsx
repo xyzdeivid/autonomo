@@ -32,11 +32,11 @@ export default function ServicesContent({ category, setCategory,
         <View>
             <SelectCategoryInput category={category} setCategory={setCategory} />
             {
-                getServicesByCategory(services, category)[0]
+                services[0]
                     ? <ServicesList
                         setServiceForDeletion={setServiceForDeletion}
                         setDeleteServiceForm={setDeleteServiceForm}
-                        services={getServicesByCategory(services, category)}
+                        services={services}
                     />
                     : <AnyItemWarning text={`Nenhum ${getServiceOrProductName()} cadastrado`} />
             }

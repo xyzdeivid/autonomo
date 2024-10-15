@@ -17,9 +17,10 @@ import AmountInput from '../common/AmountInput'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
+    setCategory: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProps) {
+export default function AddServiceForm({ setAddServiceForm, setCategory }: AddServiceFormProps) {
 
     const [allInputsFilled, setAllInputsFilled] = useState(false)
     const [name, setName] = useState('')
@@ -43,10 +44,16 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
             const service: Service = {} as Service
 
+            // Criando serviço
             service.category = choice
             service._id = name
             service.value = value
             service.amount = amount
+
+            // Configurando categoria para a lista de items
+            if (!services[0]) {
+                setCategory(choice)
+            }
 
             if (checkServicesAmount(services, service)) {
 

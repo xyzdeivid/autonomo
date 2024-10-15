@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddServiceForm from '@/components/services/AddServiceForm'
 import { DocsContext, Service } from '@/context/DocsContext'
 import Container from '@/components/common/Container'
-import { orderServices } from '@/functions/services'
+import { getServicesByCategory, orderServices } from '@/functions/services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import DeleteServiceForm from '@/components/services/AboutServiceForm'
@@ -17,6 +17,12 @@ export default function Services() {
     const [serviceForDeletion, setServiceForDeletion] = useState({} as Service)
     const [services, setServices] = useContext(DocsContext).services
     const [category, setCategory] = useState('')
+
+    useEffect(() => {
+        if (services[0]) {
+            setCategory(services[0].category)
+        }   
+    }, [])
 
     const deleteService = async (id: string) => {
 
@@ -47,7 +53,7 @@ export default function Services() {
                     ? <ServicesContent
                         category={category}
                         setCategory={setCategory}
-                        services={services}
+                        services={getServicesByCategory(services, category)}
                         setServiceForDeletion={setServiceForDeletion}
                         setDeleteServiceForm={setDeleteServiceForm}
                     />
@@ -55,7 +61,10 @@ export default function Services() {
             }
             {
                 addServiceForm
-                    ? <AddServiceForm setAddServiceForm={setAddServiceForm} />
+                    ? <AddServiceForm
+                        setAddServiceForm={setAddServiceForm}
+                        setCategory={setCategory}
+                    />
                     : <AddItemButton setForm={setAddServiceForm} />
             }
             {
