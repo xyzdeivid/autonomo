@@ -51,3 +51,12 @@ export const getServicesByCategory = (services: Service[], category: string) => 
     }
 
 }
+
+export const getCategoryAndSet = (
+    items: Service[],
+    setCategory: React.Dispatch<React.SetStateAction<string>>
+) => {
+    if (items[0]) {
+        setCategory(items[0].category)
+    }
+}

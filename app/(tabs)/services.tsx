@@ -4,7 +4,7 @@ import AddItemButton from '@/components/common/AddItemButton'
 import AddServiceForm from '@/components/services/AddServiceForm'
 import { DocsContext, Service } from '@/context/DocsContext'
 import Container from '@/components/common/Container'
-import { getServicesByCategory, orderServices } from '@/functions/services'
+import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/functions/services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import DeleteServiceForm from '@/components/services/AboutServiceForm'
@@ -19,9 +19,7 @@ export default function Services() {
     const [category, setCategory] = useState('')
 
     useEffect(() => {
-        if (services[0]) {
-            setCategory(services[0].category)
-        }   
+        getCategoryAndSet(services, setCategory)
     }, [])
 
     const deleteService = async (id: string) => {
@@ -33,6 +31,8 @@ export default function Services() {
         try {
 
             await AsyncStorage.setItem('services', JSON.stringify(remainingServices))
+
+            getCategoryAndSet(remainingServices, setCategory)
 
             setServices(orderServices(remainingServices))
 
