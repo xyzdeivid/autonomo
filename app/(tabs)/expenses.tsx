@@ -101,7 +101,7 @@ export default function Expenses() {
                         setExpenseForDeletion={setExpenseForDeletion}
                         setDeleteExpenseForm={setDeleteExpenseForm}
                     />
-                    : <AnyItemWarning text='Nenhuma despesa cadastrada' />
+                    : <AnyItemWarning text='Nenhuma saída cadastrada' />
             }
             {
                 addExpenseForm

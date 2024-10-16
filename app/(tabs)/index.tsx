@@ -86,7 +86,7 @@ export default function Info() {
                         }} />
                         {selectPage()}
                     </View>
-                    : <AnyItemWarning text='Nenhuma venda ou agendamento cadastrado' />
+                    : <AnyItemWarning text='Nenhuma informação disponível' />
             }
         </Container>
     )

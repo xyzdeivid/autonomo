@@ -134,7 +134,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
                 <FormInputs>
                     <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                     {choice === 'budget' && (
-                        <Text style={{ marginBottom: 20, color: 'darkgray' }} >O valor será definido ao registrar entrada.</Text>
+                        <Text style={{ marginBottom: 20, color: 'gray' }} >O valor será definido ao registrar entrada.</Text>
                     )}
                     <NameInput setName={setName} />
                     {choice !== 'budget' && (
