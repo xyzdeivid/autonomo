@@ -20,7 +20,7 @@ export default function Services() {
 
     useEffect(() => {
         getCategoryAndSet(services, setCategory)
-    }, [])
+    }, [services])
 
     const deleteService = async (id: string) => {
 
@@ -31,8 +31,6 @@ export default function Services() {
         try {
 
             await AsyncStorage.setItem('services', JSON.stringify(remainingServices))
-
-            getCategoryAndSet(remainingServices, setCategory)
 
             setServices(orderServices(remainingServices))
 

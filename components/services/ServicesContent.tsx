@@ -18,11 +18,13 @@ export default function ServicesContent({ category, setCategory,
     return (
         <View>
             <SelectCategoryInput category={category} setCategory={setCategory} />
-            <ServicesList
-                setServiceForDeletion={setServiceForDeletion}
-                setDeleteServiceForm={setDeleteServiceForm}
-                services={services}
-            />
+            {services[0] && (
+                <ServicesList
+                    setServiceForDeletion={setServiceForDeletion}
+                    setDeleteServiceForm={setDeleteServiceForm}
+                    services={services}
+                />
+            )}
         </View>
     )
 
