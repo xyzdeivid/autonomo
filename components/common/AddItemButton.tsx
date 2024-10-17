@@ -11,7 +11,7 @@ export default function AddItemButton({ setForm, bgColor }: AddItemButtonProps) 
         <View style={styles.buttonContainer}>
             <Button
                 onPress={() => setForm(true)}
-                color={bgColor ? bgColor : '#004AAD'}
+                color={bgColor ? bgColor : '#08819B'}
                 title='Cadastrar'
             />
         </View>

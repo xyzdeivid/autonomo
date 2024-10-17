@@ -14,10 +14,14 @@ export default function SubmitFormButtons({ submit, submitButtonText, submitButt
 
     return (
         <View style={styles.buttonsContainer}>
-            <Button color={submitButtonColor ? submitButtonColor : '#004AAD'} title={submitButtonText} onPress={() => {
-                submit()
-                setHideTabBar(false)
-            }} />
+            <Button
+                color={submitButtonColor ? submitButtonColor : '#08819B'}
+                title={submitButtonText}
+                onPress={() => {
+                    submit()
+                    setHideTabBar(false)
+                }}
+            />
         </View>
     )
 

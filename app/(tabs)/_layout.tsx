@@ -12,12 +12,12 @@ export default function TabLayout() {
             screenOptions={{
                 tabBarShowLabel: false,
                 headerStyle: {
-                    backgroundColor: '#004AAD'
+                    backgroundColor: '#112935'
                 },
                 tabBarActiveTintColor: 'white',
                 tabBarInactiveTintColor: 'black',
                 tabBarInactiveBackgroundColor: 'white',
-                tabBarActiveBackgroundColor: '#004AAD',
+                tabBarActiveBackgroundColor: '#112935',
                 tabBarStyle: {
                     display: hideTabBar ? 'none' : 'flex',
                     borderTopWidth: 0
@@ -35,10 +35,6 @@ export default function TabLayout() {
             <Tabs.Screen name='schedulings'
                 options={{
                     title: 'Entradas',
-                    tabBarActiveBackgroundColor: 'darkgreen',
-                    headerStyle: {
-                        backgroundColor: 'darkgreen'
-                    },
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name="arrow-trend-up" size={24} color={color} />
                     )

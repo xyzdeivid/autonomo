@@ -9,8 +9,8 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
 
     const checkChoice = (button: string) => {
         return choice === button
-            ? 'darkblue'
-            : 'blue'
+            ? '#000000'
+            : '#404040'
     }
 
     return (

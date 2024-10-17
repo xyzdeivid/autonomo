@@ -45,7 +45,7 @@ export default function DateInput({ setTargetDate, bgColor }: DateInputProps) {
         <View>
             <View style={styles.container}>
                 <Text style={{ marginEnd: 2 }}>Data:</Text>
-                <Button color={bgColor ? bgColor : '#004AAD'} onPress={showDatepicker} title={dateFormat(getDate())} />
+                <Button color={bgColor ? bgColor : '#000000'} onPress={showDatepicker} title={dateFormat(getDate())} />
             </View>
             {show && (
                 <DateTimePicker

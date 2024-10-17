@@ -10,12 +10,12 @@ export default function FinancePeriodButtons({ period, setPeriod, mgTop }: Finan
 
     const checkPeriod = (button: string) => {
         return period === button
-            ? 'darkblue'
-            : 'blue'
+            ? '#000000'
+            : '#404040'
     }
 
     return (
-        <View style={{...styles.container, marginTop: mgTop ? mgTop : 0}}>
+        <View style={{ ...styles.container, marginTop: mgTop ? mgTop : 0 }}>
             <Pressable
                 style={{
                     ...styles.button, backgroundColor: checkPeriod('monthly'),
