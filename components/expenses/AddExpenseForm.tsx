@@ -178,7 +178,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     return (
         <FormContainer setFormOff={setAddExpenseForm}>
             <FormBody>
-                <FormTitle text='Registrar Despesa' />
+                <FormTitle text='Registrar Saída' />
                 <FormInputs>
                     <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
                     <NameInput setName={setName} />
