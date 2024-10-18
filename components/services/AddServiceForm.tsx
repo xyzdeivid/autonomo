@@ -22,7 +22,6 @@ interface AddServiceFormProps {
 
 export default function AddServiceForm({ setAddServiceForm, setCategory }: AddServiceFormProps) {
 
-    const [allInputsFilled, setAllInputsFilled] = useState(false)
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
     const [amount, setAmount] = useState(0)
@@ -30,9 +29,25 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [choice, setChoice] = useState('product')
 
-    useEffect(() => {
-        if (name) setAllInputsFilled(true)
-    }, [name])
+    const checkAllInputs = () => {
+
+        switch (choice) {
+
+            case 'product':
+                return name && value && amount
+
+            case 'service':
+                return name && value
+
+            case 'budget':
+                return name
+
+            default:
+                return true
+
+        }
+
+    }
 
     useEffect(() => {
         setHideTabBar(true)
@@ -40,7 +55,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
     async function addService() {
 
-        if (allInputsFilled) {
+        if (checkAllInputs()) {
 
             const service: Service = {} as Service
 
@@ -70,7 +85,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
                     setAddServiceForm(false)
 
                     setTimeout(() => {
-                        Alert.alert('Serviço existente', 'Um serviço com este nome já existe')
+                        Alert.alert('Item existente', 'Um item com este nome já existe')
                     }, 500)
 
                 } else {
@@ -107,6 +122,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
             setAddServiceForm(false)
             setHideTabBar(false)
+
             setTimeout(() => {
                 Alert.alert(
                     'Preencha todos os campos',
