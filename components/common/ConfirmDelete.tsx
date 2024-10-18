@@ -9,7 +9,7 @@ export default function ConfirmDelete({ deleteFunction, setConfirmDelete }: Conf
 
     return (
         <View style={styles.container}>
-            <Text>Tem certeza que deseja excluir?</Text>
+            <Text style={styles.text}>Tem certeza que deseja excluir?</Text>
             <View style={styles.buttonsContainer}>
                 <Button 
                 color='darkred' 
@@ -31,7 +31,17 @@ export default function ConfirmDelete({ deleteFunction, setConfirmDelete }: Conf
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginTop: 20
+    },
+    text: {
+        backgroundColor: '#E0E0E0',
+        fontWeight: 'bold',
+        alignSelf: 'flex-start',
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 4, 
+        marginBottom: 6
     },
     buttonsContainer: {
         display: 'flex',
