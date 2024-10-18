@@ -33,21 +33,25 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
     const [amount, setAmount] = useState(0)
 
-    const checkAllInputs = () => {
+    const checkAllInputs = (): boolean => {
 
-        if (service.category === 'product') {
+        switch (service.category) {
 
-            if (amount) {
+            case 'product':
+                if (amount) return true
+                return false
 
+            case 'service':
                 return true
 
-            }
-
-            return false
+            case 'budget':
+                if(value) return true
+                return false
+ 
+            default:
+                return false
 
         }
-
-        return true
 
     }
 

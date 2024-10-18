@@ -29,21 +29,24 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [choice, setChoice] = useState('product')
 
-    const checkAllInputs = () => {
+    const checkAllInputs = (): boolean => {
 
         switch (choice) {
 
             case 'product':
-                return name && value && amount
+                if (name && value && amount) return true
+                return false
 
             case 'service':
-                return name && value
+                if (name && value) return true
+                return false
 
             case 'budget':
-                return name
+                if (name) return true
+                return false
 
             default:
-                return true
+                return false
 
         }
 

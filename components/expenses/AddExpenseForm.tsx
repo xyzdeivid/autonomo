@@ -35,19 +35,21 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const [services, setServices] = useContext(DocsContext).services
     const [choice, setChoice] = useState('expense')
 
-    const checkAllInputs = () => {
+    const checkAllInputs = (): boolean => {
 
         switch (choice) {
 
             case 'expense':
-                return name && value
+                if (name && value) return true
+                return false
 
             case 'resale':
-                return name && productName &&
-                stock && value && resaleValue
+                if(name && productName &&
+                stock && value && resaleValue) return true
+                return false
         
             default:
-                return true
+                return false
 
         }
 
