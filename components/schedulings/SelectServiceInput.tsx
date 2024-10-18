@@ -1,16 +1,14 @@
-import { DocsContext, Service } from '@/context/DocsContext'
+import { Service } from '@/context/DocsContext'
 import { Picker } from '@react-native-picker/picker'
-import { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 interface SelectServiceInputProps {
     service: Service
     setService: React.Dispatch<React.SetStateAction<Service>>
+    services: Service[]
 }
 
-export default function SelectServiceInput({ service, setService }: SelectServiceInputProps) {
-
-    const [services] = useContext(DocsContext).services
+export default function SelectServiceInput({ service, setService, services }: SelectServiceInputProps) {
 
     return (
         <View>

@@ -25,9 +25,8 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff }
     return (
         <FormContainer setFormOff={setFormOff}>
             <FormBody>
-                <FormTitle text='Sobre Despesa' />
+                <FormTitle text={expense.name} />
                 <View>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Despesa:</Text> {expense.name}</Text>
                     {
                         expense.category === 'resale' && (
                             <View>

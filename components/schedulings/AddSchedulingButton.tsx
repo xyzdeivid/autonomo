@@ -2,6 +2,7 @@ import { Alert, Button, StyleSheet, View } from 'react-native'
 
 import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
+import { getServices } from '@/functions/schedulings'
 
 interface AddSchedulingButtonProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -12,9 +13,9 @@ export default function AddSchedulingButton({ setAddSchedulingForm }: AddSchedul
     const [services] = useContext(DocsContext).services
 
     const checkServices = () => {
-        services[0]
+        getServices(services)[0]
             ? setAddSchedulingForm(true)
-            : Alert.alert('Sem serviço disponível', 'Você precisa ter um serviço registrado para cadastrar um agendamento')
+            : Alert.alert('Sem item disponível', 'Verifique se você tem algum item ou estoque disponível.')
     }
 
     return (

@@ -9,7 +9,7 @@ import { MonthContext } from '@/context/Month'
 import { filterSchedulings } from '@/functions/common'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 
-import { orderSchedulings } from '@/functions/schedulings'
+import { getServices, orderSchedulings } from '@/functions/schedulings'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
 import { orderServices } from '@/functions/services'
@@ -106,8 +106,13 @@ export default function Schedulings() {
             }
             {
                 addSchedulingForm
-                    ? <AddSchedulingForm setAddSchedulingForm={setAddSchedulingForm} />
-                    : <AddSchedulingButton setAddSchedulingForm={setAddSchedulingForm} />
+                    ? <AddSchedulingForm
+                        setAddSchedulingForm={setAddSchedulingForm}
+                        services={getServices(services)}
+                    />
+                    : <AddSchedulingButton
+                        setAddSchedulingForm={setAddSchedulingForm}
+                    />
             }
             {
                 deleteSchedulingForm

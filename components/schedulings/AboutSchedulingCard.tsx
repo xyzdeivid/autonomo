@@ -32,13 +32,12 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     return (
         <FormContainer setFormOff={setFormOff}>
             <FormBody>
-                <FormTitle text='Sobre Entrada' />
+                <FormTitle text={scheduling.service._id} />
                 <View>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {scheduling.service._id}</Text>
                     {
                         scheduling.service.category === 'product'
                             ? <View>
-                                <Text style={styles.labelContainer}><Text style={styles.label}>Valor Unitário:</Text>{moneyFormat(scheduling.service.value / scheduling.service.amount)}</Text>
+                                <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(scheduling.service.value / scheduling.service.amount)}</Text>
                                 <Text style={styles.labelContainer}>
                                     <Text style={styles.label}>Quantidade: </Text>
                                     {scheduling.service.amount}

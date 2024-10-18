@@ -12,3 +12,21 @@ export const getSchedulingValue = (service: Service, amount: number, value: numb
     }
     return value
 }
+
+export const getServices = (services: Service[]) => {
+
+    const productsCategory = services.filter(service => (
+        service.category === 'product' && service.amount > 0
+    ))
+
+    const servicesCategory = services.filter(service => (
+        service.category === 'service'
+    ))
+
+    const budgetCategory = services.filter(service => (
+        service.category === 'budget'
+    ))
+
+    return [...productsCategory, ...servicesCategory, ...budgetCategory]
+
+}

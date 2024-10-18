@@ -19,16 +19,17 @@ import NumberInput from '../common/NumberInput'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
+    services: Service[]
 }
 
-export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
+export default function AddSchedulingForm({ setAddSchedulingForm, services }: AddSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
-    const [services, setServices] = useContext(DocsContext).services
     const [service, setService] = useState<Service>(services[0])
 
     const [date, setDate] = useState('')
     const [value, setValue] = useState(0)
+    const [, setServices] = useContext(DocsContext).services
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
     const [amount, setAmount] = useState(0)
 
@@ -156,7 +157,11 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
             <FormBody>
                 <FormTitle text='Registrar Entrada' />
                 <FormInputs>
-                    <SelectServiceInput service={service} setService={setService} />
+                    <SelectServiceInput
+                        service={service}
+                        setService={setService}
+                        services={services}
+                    />
                     {service.category === 'product' && (
                         <StockInfo amount={service.amount - amount} />
                     )}

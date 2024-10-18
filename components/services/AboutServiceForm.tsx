@@ -138,12 +138,8 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
     return (
         <FormContainer setFormOff={setFormOff}>
             <FormBody>
-                <FormTitle text={`Sobre ${checkTitle(service)}`} />
+                <FormTitle text={service._id} />
                 <View>
-                    <View style={{ ...styles.inputContainer, ...styles.infoContainer }}>
-                        <Text style={styles.label}>Nome: </Text>
-                        <Text>{service._id}</Text>
-                    </View>
                     {service.category !== 'budget' && (
                         <View style={styles.inputContainer}>
                             <View style={styles.infoContainer}>
