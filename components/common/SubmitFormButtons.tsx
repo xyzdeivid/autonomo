@@ -1,6 +1,4 @@
 import { View, StyleSheet, Button } from 'react-native'
-import { useContext } from 'react'
-import { HideTabBarContext } from '@/context/HideTabBar'
 
 interface SubmitFormButtonsProps {
     submit: () => void
@@ -10,8 +8,6 @@ interface SubmitFormButtonsProps {
 
 export default function SubmitFormButtons({ submit, submitButtonText, submitButtonColor }: SubmitFormButtonsProps) {
 
-    const [, setHideTabBar] = useContext(HideTabBarContext)
-
     return (
         <View style={styles.buttonsContainer}>
             <Button
@@ -19,7 +15,6 @@ export default function SubmitFormButtons({ submit, submitButtonText, submitButt
                 title={submitButtonText}
                 onPress={() => {
                     submit()
-                    setHideTabBar(false)
                 }}
             />
         </View>

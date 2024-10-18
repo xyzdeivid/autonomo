@@ -12,6 +12,7 @@ import ActualValue from './ActualValue'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ActualStock from './ActualStock'
 import EditStockInput from './EditStockInput'
+import ConfirmDelete from '../common/ConfirmDelete'
 
 interface DeleteServiceFormProps {
     service: Service
@@ -30,6 +31,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
 
     const [editStockInput, setEditStockInput] = useState(false)
     const [stock, setStock] = useState(0)
+    const [confirmDelete, setConfirmDelete] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -166,11 +168,21 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                         )
                     }
                 </View>
-                <SubmitFormButtons
-                    submit={() => deleteFunction(service._id)}
-                    submitButtonText='Excluir'
-                    submitButtonColor='darkred'
-                />
+                {
+                    !confirmDelete
+                        ? <SubmitFormButtons
+                            submit={() => setConfirmDelete(true)}
+                            submitButtonText='Excluir'
+                            submitButtonColor='darkred'
+                        />
+                        : <ConfirmDelete
+                            deleteFunction={() => {
+                                deleteFunction(service._id)
+                                setHideTabBar(false)
+                            }}
+                            setConfirmDelete={setConfirmDelete}
+                        />
+                }
             </FormBody>
         </FormContainer>
     )

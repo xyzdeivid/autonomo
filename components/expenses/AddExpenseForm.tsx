@@ -156,6 +156,8 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
             }
 
+            setHideTabBar(false)
+
         } else {
 
             setAddExpenseForm(false)

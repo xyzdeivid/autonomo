@@ -101,6 +101,8 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
             }
 
+            setHideTabBar(false)
+
         } else {
 
             setAddServiceForm(false)

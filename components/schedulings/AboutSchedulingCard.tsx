@@ -5,8 +5,9 @@ import FormTitle from '../common/FormTitle'
 import { Scheduling } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { HideTabBarContext } from '@/context/HideTabBar'
+import ConfirmDelete from '../common/ConfirmDelete'
 
 interface DeleteSchedulingFormProps {
     scheduling: Scheduling
@@ -17,6 +18,7 @@ interface DeleteSchedulingFormProps {
 export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFormOff }: DeleteSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [confirmDelete, setConfirmDelete] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -49,11 +51,21 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                     <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
 
                 </View>
-                <SubmitFormButtons
-                    submit={() => deleteFunction(scheduling)}
-                    submitButtonText='Excluir'
-                    submitButtonColor='darkred'
-                />
+                {
+                    !confirmDelete
+                        ? <SubmitFormButtons
+                            submit={() => setConfirmDelete(true)}
+                            submitButtonText='Excluir'
+                            submitButtonColor='darkred'
+                        />
+                        : <ConfirmDelete
+                            deleteFunction={() => {
+                                deleteFunction(scheduling)
+                                setHideTabBar(false)
+                            }}
+                            setConfirmDelete={setConfirmDelete}
+                        />
+                }
             </FormBody>
         </FormContainer>
     )
