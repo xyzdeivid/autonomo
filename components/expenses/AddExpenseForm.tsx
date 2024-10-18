@@ -113,8 +113,6 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                         await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
                         setExpenses(orderExpenses([...expenses, newExpense]))
 
-                        setAddExpenseForm(false)
-
                     } catch (error) {
 
                         Alert.alert('Erro ao acessar banco de dados')
@@ -135,9 +133,6 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                             await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
                             setExpenses(orderExpenses([...expenses, newExpense]))
 
-                            setAddExpenseForm(false)
-
-
                         } catch (error) {
 
                             Alert.alert('Erro ao acessar banco de dados')
@@ -145,8 +140,6 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                         }
 
                     } else {
-
-                        setAddExpenseForm(false)
 
                         setTimeout(() => {
                             Alert.alert('Você só pode registrar 8 items por categoria')
@@ -167,17 +160,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
                 setExpenses(orderExpenses([...expenses, newExpense]))
 
-                setAddExpenseForm(false)
-
             }
 
-            setHideTabBar(false)
-
         } else {
-
-            setAddExpenseForm(false)
-
-            setHideTabBar(false)
 
             setTimeout(() => {
                 Alert.alert(
@@ -187,6 +172,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
             }, 500)
 
         }
+
+        setAddExpenseForm(false)
+        setHideTabBar(false)
 
     }
 

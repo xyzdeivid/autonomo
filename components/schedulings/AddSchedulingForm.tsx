@@ -120,10 +120,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
 
                     setSchedulings(orderSchedulings([...schedulings, newScheduling]))
 
-                    setAddSchedulingForm(false)
-
-                    setHideTabBar(false)
-
                 } catch (error) {
 
                     Alert.alert('Erro ao acessar banco de dados')
@@ -131,8 +127,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
                 }
 
             } else {
-
-                setAddSchedulingForm(false)
 
                 setTimeout(() => {
                     Alert.alert('Produto sem estoque')
@@ -142,13 +136,14 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
 
         } else {
 
-            setAddSchedulingForm(false)
-
             setTimeout(() => {
                 Alert.alert('Todos os campos precisam ser preenchidos')
             }, 500)
 
         }
+
+        setAddSchedulingForm(false)
+        setHideTabBar(false)
 
     }
 

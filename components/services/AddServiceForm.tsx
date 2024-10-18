@@ -85,8 +85,6 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
                 if (isThereAnotherService[0]) {
 
-                    setAddServiceForm(false)
-
                     setTimeout(() => {
                         Alert.alert('Item existente', 'Um item com este nome já existe')
                     }, 500)
@@ -99,8 +97,6 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
                         setServices(orderServices([...services, service]))
 
-                        setAddServiceForm(false)
-
                     } catch (e) {
 
                         Alert.alert('Erro ao salvar no banco de dados!')
@@ -111,20 +107,13 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
             } else {
 
-                setAddServiceForm(false)
-
                 setTimeout(() => {
                     Alert.alert('Você só pode registrar 8 items por categoria')
                 }, 500)
 
             }
 
-            setHideTabBar(false)
-
         } else {
-
-            setAddServiceForm(false)
-            setHideTabBar(false)
 
             setTimeout(() => {
                 Alert.alert(
@@ -134,6 +123,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
             }, 500)
 
         }
+
+        setAddServiceForm(false)
+        setHideTabBar(false)
 
     }
 
