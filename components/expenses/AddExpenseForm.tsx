@@ -24,7 +24,6 @@ interface AddExpenseFormProps {
 
 export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProps) {
 
-    const [allInputsFilled, setAllInputsFilled] = useState(false)
     const [name, setName] = useState('')
     const [productName, setProductName] = useState('')
     const [date, setDate] = useState('')
@@ -36,9 +35,23 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const [services, setServices] = useContext(DocsContext).services
     const [choice, setChoice] = useState('expense')
 
-    useEffect(() => {
-        if (name && value) setAllInputsFilled(true)
-    }, [name, value])
+    const checkAllInputs = () => {
+
+        switch (choice) {
+
+            case 'expense':
+                return name && value
+
+            case 'resale':
+                return name && productName &&
+                stock && value && resaleValue
+        
+            default:
+                return true
+
+        }
+
+    }
 
     useEffect(() => {
         setHideTabBar(true)
@@ -46,7 +59,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
     const addExpense = async () => {
 
-        if (allInputsFilled) {
+        if (checkAllInputs()) {
 
             // Criando nova despesa
             const newExpense = {} as Expense
