@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { filterSchedulings } from '@/functions/common'
+import { filterSchedulings, moneyFormat } from '@/functions/common'
 import { getDays } from '@/functions/info'
 
 import { View, Text } from 'react-native'
@@ -17,8 +17,12 @@ export default function DailyRevenueChart() {
     const data = () => {
         return getDays(filteredSchedulings).map(day => {
             return {
-                label: day.day,
-                value: day.amount
+                label: `Dia ${day.day}`,
+                value: day.amount,
+                topLabelComponent: () => (
+                    <Text style={{ marginBottom: 2 }} >{moneyFormat(day.amount)}</Text>
+                ),
+                barWidth: getBarWidth(day.amount)
             }
         })
     }
@@ -28,6 +32,19 @@ export default function DailyRevenueChart() {
             return day.amount
         })
         return values.sort((a, b) => b - a)[0]
+    }
+
+    const getBarWidth = (number: number) => {
+        const basicWidth = 38
+        const numberOfDigits = number.toString().length
+        switch (numberOfDigits) {
+            case 4:
+                return basicWidth + 12
+            case 3:
+                return basicWidth + 8
+            default:
+                return basicWidth
+        }
     }
 
     return (
@@ -40,10 +57,9 @@ export default function DailyRevenueChart() {
                 frontColor='lightblue'
                 barBorderTopLeftRadius={3}
                 barBorderTopRightRadius={3}
-                yAxisThickness={0}
-                xAxisThickness={0}
-                barWidth={12}
-                maxValue={findTheMostProfitableDay()}
+                maxValue={findTheMostProfitableDay() + 30}
+                hideYAxisText
+                hideRules
             />
         </View>
     )

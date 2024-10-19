@@ -32,25 +32,25 @@ export default function ContentForm({ setContent, setContentForm }: ContentFormP
             <FormBody>
                 <FormTitle text='Qual conteúdo deseja mostrar?' />
                 <View style={styles.button}>
-                    <Button onPress={() => setContentOnPage('financial')} title='Finanças Gerais' />
+                    <Button color='black' onPress={() => setContentOnPage('financial')} title='Finanças Gerais' />
                 </View>
                 {
                     thereIsProduct(schedulings) && (
                         <View style={styles.button}>
-                            <Button onPress={() => setContentOnPage('products')} title='Produtos' />
+                            <Button color='black' onPress={() => setContentOnPage('products')} title='Produtos' />
                         </View>
                     )
                 }
                 {
                     thereIsService(schedulings) && (
                         <View style={styles.button}>
-                            <Button onPress={() => setContentOnPage('services')} title='Serviços' />
+                            <Button color='black' onPress={() => setContentOnPage('services')} title='Serviços' />
                         </View>
                     )
                 }
                 {
                     thereIsBudget(schedulings) && (
-                        <Button onPress={() => setContentOnPage('budgets')} title='Orçamentários' />
+                        <Button color='black' onPress={() => setContentOnPage('budgets')} title='Orçamentários' />
                     )
                 }
             </FormBody>

@@ -14,10 +14,17 @@ export default function DailyRevenue({ period, setPeriod }: DailyRevenueProps) {
         <View>
             <InfoTitle text='Receita diária' />
             <DailyRevenueChart />
+            <View style={{
+                width: '85%',
+                height: 1,
+                backgroundColor: 'lightgray',
+                marginHorizontal: 'auto',
+                marginTop: 20,
+                marginBottom: 24
+            }} />
             <FinancePeriodButtons
                 period={period}
                 setPeriod={setPeriod}
-                mgTop={16}
             />
         </View>
     )

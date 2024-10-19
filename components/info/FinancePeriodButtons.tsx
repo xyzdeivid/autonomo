@@ -24,7 +24,7 @@ export default function FinancePeriodButtons({ period, setPeriod, mgTop }: Finan
                 }}
                 onPress={() => setPeriod('monthly')}
             >
-                <Text style={{ color: 'white' }}>Mês</Text>
+                <Text style={{ color: 'white' }}>Mensal</Text>
             </Pressable>
             <Pressable
                 style={{
@@ -34,7 +34,7 @@ export default function FinancePeriodButtons({ period, setPeriod, mgTop }: Finan
                 }}
                 onPress={() => setPeriod('daily')}
             >
-                <Text style={{ color: 'white' }}>Dia</Text>
+                <Text style={{ color: 'white' }}>Diária</Text>
             </Pressable>
         </View>
     )

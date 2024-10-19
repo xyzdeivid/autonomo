@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 12,
         borderRadius: 10,
-        marginTop: 26
+        marginTop: 26,
+        zIndex: -1
     },
     title: {
         fontSize: 26
