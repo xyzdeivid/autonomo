@@ -44,7 +44,7 @@ const getData = (schedulings: Scheduling[], expenses: Expense[]) => {
 
 export const findGreaterData = (schedulings: Scheduling[], expenses: Expense[]) => {
     const data = getData(schedulings, expenses)
-    return Math.ceil(data / 500) * 500
+    return data
 }
 
 export const thereIsProduct = (schedulings: Scheduling[]) => {

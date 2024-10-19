@@ -14,7 +14,7 @@ export default function Title({ content, setContentForm }: TitleProps) {
     useEffect(() => {
         switch (content) {
             case 'financial':
-                setButtonText('Finanças')
+                setButtonText('Finanças Gerais')
                 break
             case 'services':
                 setButtonText('Serviços')
@@ -44,10 +44,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#E0E0E0',
         marginHorizontal: 20,
+        marginBottom: 24,
         paddingVertical: 8,
         paddingHorizontal: 12,
         borderRadius: 10,
-        marginTop: 10
+        marginTop: 26
     },
     title: {
         fontSize: 26

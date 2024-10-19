@@ -32,7 +32,7 @@ export default function ContentForm({ setContent, setContentForm }: ContentFormP
             <FormBody>
                 <FormTitle text='Qual conteúdo deseja mostrar?' />
                 <View style={styles.button}>
-                    <Button onPress={() => setContentOnPage('financial')} title='Finanças' />
+                    <Button onPress={() => setContentOnPage('financial')} title='Finanças Gerais' />
                 </View>
                 {
                     thereIsProduct(schedulings) && (

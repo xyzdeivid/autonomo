@@ -77,13 +77,6 @@ export default function Info() {
                 filterSchedulings(schedulings, selectedMonth)[0]
                     ? <View>
                         <Title content={content} setContentForm={setContentForm} />
-                        <View style={{
-                            width: '95%',
-                            height: 1,
-                            backgroundColor: 'lightgray',
-                            marginHorizontal: 'auto',
-                            marginVertical: 26
-                        }} />
                         {selectPage()}
                     </View>
                     : <AnyItemWarning text='Nenhuma informação disponível' />

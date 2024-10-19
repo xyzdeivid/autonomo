@@ -24,16 +24,24 @@ export default function MonthlyRevenue({ period, setPeriod }: MonthlyRevenueProp
 
     return (
         <View>
-            <InfoTitle text='Finanças' />
+            <InfoTitle text='Finanças Gerais' />
             <RevenueChart
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
                 filteredExpenses={filterExpenses(expenses, selectedMonth)}
             />
-            <FinancePeriodButtons period={period} setPeriod={setPeriod} />
             <RevenueList
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
                 filteredExpenses={filterExpenses(expenses, selectedMonth)}
             />
+            <View style={{
+                width: '85%',
+                height: 1,
+                backgroundColor: 'lightgray',
+                marginHorizontal: 'auto',
+                marginTop: 20,
+                marginBottom: 24
+            }} />
+            <FinancePeriodButtons period={period} setPeriod={setPeriod} />
         </View>
     )
 

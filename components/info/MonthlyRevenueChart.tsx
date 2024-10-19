@@ -1,8 +1,7 @@
 import { Expense, Scheduling } from '@/context/DocsContext'
-import { moneyFormat } from '@/functions/common'
 import { findGreaterData } from '@/functions/info'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'
 
 interface RevenueChartProps {
@@ -17,51 +16,31 @@ export default function RevenueChart({ filteredSchedulings, filteredExpenses }: 
             return [
                 {
                     value: getSchedulingsRevenue(filteredSchedulings),
-                    frontColor: '#006600',
-                    topLabelComponent: () => (
-                        <Text style={{ color: 'black', fontSize: 8, marginBottom: 2 }}>
-                            {moneyFormat(getSchedulingsRevenue(filteredSchedulings))}
-                        </Text>
-                    )
+                    frontColor: '#009900',
+                    capColor: '#006600'
                 },
                 {
                     value: getExpenses(filteredExpenses),
-                    frontColor: '#660000',
-                    topLabelComponent: () => (
-                        <Text style={{ color: 'black', fontSize: 8, marginBottom: 2 }}>
-                            {moneyFormat(getExpenses(filteredExpenses))}
-                        </Text>
-                    )
+                    frontColor: '#990000',
+                    capColor: '#660000'
                 },
                 {
                     value: getProfit(filteredSchedulings, filteredExpenses),
-                    frontColor: '#000066',
-                    topLabelComponent: () => (
-                        <Text style={{ color: 'black', fontSize: 8, marginBottom: 2 }}>
-                            {moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}
-                        </Text>
-                    )
+                    frontColor: '#000099',
+                    capColor: '#000066'
                 }
             ]
         } else {
             return [
                 {
                     value: getSchedulingsRevenue(filteredSchedulings),
-                    frontColor: '#006600',
-                    topLabelComponent: () => (
-                        <Text style={{ color: 'black', fontSize: 8, marginBottom: 2 }}>
-                            {moneyFormat(getSchedulingsRevenue(filteredSchedulings))}
-                        </Text>
-                    )
+                    frontColor: '#009900',
+                    capColor: '#006600'
                 },
                 {
                     value: getExpenses(filteredExpenses),
-                    frontColor: '#660000',
-                    topLabelComponent: () => (
-                        <Text style={{ color: 'black', fontSize: 8, marginBottom: 2 }}>
-                            {moneyFormat(getExpenses(filteredExpenses))}
-                        </Text>
-                    )
+                    frontColor: '#990000',
+                    capColor: '#660000'
                 }
             ]
         }
@@ -72,12 +51,12 @@ export default function RevenueChart({ filteredSchedulings, filteredExpenses }: 
             <BarChart
                 yAxisThickness={0}
                 xAxisThickness={2}
-                barWidth={45}
+                barWidth={60}
                 data={getData()}
-                hideRules
                 maxValue={findGreaterData(filteredSchedulings, filteredExpenses)}
-                barBorderTopLeftRadius={3}
-                barBorderTopRightRadius={3}
+                hideYAxisText
+                cappedBars
+                hideRules
             />
         </View>
     )
