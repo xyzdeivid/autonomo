@@ -17,6 +17,7 @@ import ExpenseCategoryButtons from './ExpenseCategoryButtons'
 import AmountInput from '../common/AmountInput'
 import { checkServicesAmount, orderServices } from '@/functions/services'
 import ProductNameInput from './ProductNameInput'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -181,7 +182,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     return (
         <FormContainer setFormOff={setAddExpenseForm}>
             <FormBody>
-                <FormTitle text='Registrar Saída' />
+                <FormTitle text='Registrar Saída'>
+                    <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
+                </FormTitle>
                 <FormInputs>
                     <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
                     <NameInput setName={setName} />

@@ -14,6 +14,7 @@ import { checkAllInputs, checkIfThereIsAnotherService, checkServicesAmount, chec
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -96,7 +97,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
     return (
         <FormContainer setFormOff={setAddServiceForm}>
             <FormBody>
-                <FormTitle text={`Registrar ${checkTitle(choice)}`} />
+                <FormTitle text={`Novo ${checkTitle(choice)}`}>
+                <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
+                </FormTitle>
                 <FormInputs>
                     <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                     {choice === 'budget' && (

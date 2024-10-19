@@ -16,6 +16,7 @@ import StockInfo from './StockInfo'
 import AmountInput from '../common/AmountInput'
 import { orderServices } from '@/functions/services'
 import NumberInput from '../common/NumberInput'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -154,7 +155,9 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
     return (
         <FormContainer setFormOff={setAddSchedulingForm}>
             <FormBody>
-                <FormTitle text='Registrar Entrada' />
+                <FormTitle text='Registrar Entrada'>
+                    <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
+                </FormTitle>
                 <FormInputs>
                     <SelectServiceInput
                         service={service}
