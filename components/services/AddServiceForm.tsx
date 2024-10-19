@@ -10,7 +10,7 @@ import FormTitle from '../common/FormTitle'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import NameInput from '../common/NameInput'
 
-import { checkServicesAmount, orderServices } from '@/functions/services'
+import { checkAllInputs, checkIfThereIsAnotherService, checkServicesAmount, checkTitle, createNewService, orderServices } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
@@ -29,44 +29,16 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [choice, setChoice] = useState('product')
 
-    const checkAllInputs = (): boolean => {
-
-        switch (choice) {
-
-            case 'product':
-                if (name && value && amount) return true
-                return false
-
-            case 'service':
-                if (name && value) return true
-                return false
-
-            case 'budget':
-                if (name) return true
-                return false
-
-            default:
-                return false
-
-        }
-
-    }
-
     useEffect(() => {
         setHideTabBar(true)
     }, [])
 
     async function addService() {
 
-        if (checkAllInputs()) {
-
-            const service: Service = {} as Service
+        if (checkAllInputs(choice, name, value, amount)) {
 
             // Criando serviço
-            service.category = choice
-            service._id = name
-            service.value = value
-            service.amount = amount
+            const service = createNewService(choice, name, value, amount)
 
             // Configurando categoria para a lista de items
             if (!services[0]) {
@@ -75,15 +47,8 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
             if (checkServicesAmount(services, service)) {
 
-
                 // Verificando se já existe um serviço com o nome igual
-                const isThereAnotherService = services.filter(service => {
-                    const serviceName = service._id.toLocaleLowerCase()
-                    const nameToCompare = name.toLocaleLowerCase()
-                    return serviceName === nameToCompare
-                })
-
-                if (isThereAnotherService[0]) {
+                if (checkIfThereIsAnotherService(services, name)) {
 
                     setTimeout(() => {
                         Alert.alert('Item existente', 'Um item com este nome já existe')
@@ -94,7 +59,6 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
                     try {
 
                         await AsyncStorage.setItem('services', JSON.stringify([...services, service]))
-
                         setServices(orderServices([...services, service]))
 
                     } catch (e) {
@@ -129,21 +93,10 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
     }
 
-    const checkTitle = () => {
-        switch (choice) {
-            case 'service':
-                return 'Serviço'
-            case 'product':
-                return 'Produto'
-            case 'budget':
-                return 'Orçamentário'
-        }
-    }
-
     return (
         <FormContainer setFormOff={setAddServiceForm}>
             <FormBody>
-                <FormTitle text={`Registrar ${checkTitle()}`} />
+                <FormTitle text={`Registrar ${checkTitle(choice)}`} />
                 <FormInputs>
                     <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                     {choice === 'budget' && (

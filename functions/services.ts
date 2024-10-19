@@ -6,17 +6,6 @@ export const orderServices = (services: Service[]) => {
 
 }
 
-export const checkTitle = (service: Service) => {
-    switch (service.category) {
-        case 'service':
-            return 'Serviço'
-        case 'product':
-            return 'Produto'
-        case 'budget':
-            return 'Orçamentário'
-    }
-}
-
 export const checkServicesAmount = (services: Service[], service: Service) => {
 
     const servicesAmount = services.filter(current => {
@@ -58,5 +47,68 @@ export const getCategoryAndSet = (
 ) => {
     if (items[0]) {
         setCategory(items[0].category)
+    }
+}
+
+export const checkAllInputs = (
+    choice: string, name: string, 
+    value: number, amount: number
+): boolean => {
+
+    switch (choice) {
+
+        case 'product':
+            if (name && value && amount) return true
+            return false
+
+        case 'service':
+            if (name && value) return true
+            return false
+
+        case 'budget':
+            if (name) return true
+            return false
+
+        default:
+            return false
+
+    }
+
+}
+
+export const createNewService = (
+    choice: string, name: string,
+    value: number, amount: number
+) => {
+    return {
+        category: choice,
+        _id: name,
+        value,
+        amount
+    }
+}
+
+export const checkIfThereIsAnotherService = (services: Service[], name: string): boolean => {
+
+    const isThereAnotherService = services.filter(service => {
+        const serviceName = service._id.toLocaleLowerCase()
+        const nameToCompare = name.toLocaleLowerCase()
+        return serviceName === nameToCompare
+    })[0]
+
+    return isThereAnotherService
+        ? true
+        : false
+
+}
+
+export const checkTitle = (item: string) => {
+    switch (item) {
+        case 'service':
+            return 'Serviço'
+        case 'product':
+            return 'Produto'
+        case 'budget':
+            return 'Orçamentário'
     }
 }
