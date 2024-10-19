@@ -2,6 +2,8 @@ import { Tabs } from 'expo-router'
 import React, { useContext } from 'react'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { HideTabBarContext } from '@/context/HideTabBar'
+import headerIcon from '@/assets/images/header-icon.png'
+import { Image } from 'react-native'
 
 export default function TabLayout() {
 
@@ -10,6 +12,9 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
+                headerRight: () => (
+                    <Image source={headerIcon} style={{ width: 32, height: 32, marginEnd: 10, marginTop: 3 }} />
+                ),
                 tabBarShowLabel: false,
                 headerStyle: {
                     backgroundColor: '#112935'
