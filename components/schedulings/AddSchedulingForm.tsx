@@ -10,7 +10,6 @@ import { generateId } from '@/functions/common'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import { getSchedulingValue, orderSchedulings } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import StockInfo from './StockInfo'
 import AmountInput from '../common/AmountInput'
@@ -56,24 +55,24 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
 
     }
 
-    const updateStock = async () => {
+    const updateStock = () => {
+
         if (service.category === 'product') {
+
             const updatedService: Service = {
                 category: service.category,
                 _id: service._id,
                 amount: service.amount - amount,
                 value: service.value
             }
+
             const remainingServices = services.filter(service => {
                 return service._id !== updatedService._id
             })
-            try {
-                await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, updatedService]))
-                setServices(orderServices([...remainingServices, updatedService]))
-            } catch (error) {
-                Alert.alert('Erro ao acessar banco de dados')
-            }
+
+            setServices(orderServices([...remainingServices, updatedService]))
         }
+
     }
 
     const checkAmount = (category: string) => {
@@ -96,7 +95,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
 
     }
 
-    const addScheduling = async () => {
+    const addScheduling = () => {
 
         if (checkAllInputs()) {
 
@@ -113,19 +112,8 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
                     date
                 }
 
-                try {
-
-                    await updateStock()
-
-                    await AsyncStorage.setItem('schedulings', JSON.stringify([...schedulings, newScheduling]))
-
-                    setSchedulings(orderSchedulings([...schedulings, newScheduling]))
-
-                } catch (error) {
-
-                    Alert.alert('Erro ao acessar banco de dados')
-
-                }
+                updateStock()
+                setSchedulings(orderSchedulings([...schedulings, newScheduling]))
 
             } else {
 

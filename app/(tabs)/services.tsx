@@ -5,8 +5,6 @@ import AddServiceForm from '@/components/services/AddServiceForm'
 import { DocsContext, Service } from '@/context/DocsContext'
 import Container from '@/components/common/Container'
 import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/functions/services'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Alert } from 'react-native'
 import DeleteServiceForm from '@/components/services/AboutServiceForm'
 import ServicesContent from '@/components/services/ServicesContent'
 
@@ -22,25 +20,14 @@ export default function Services() {
         getCategoryAndSet(services, setCategory)
     }, [services])
 
-    const deleteService = async (id: string) => {
+    const deleteService = (id: string) => {
 
         const remainingServices = services.filter(service => {
             return service._id !== id
         })
 
-        try {
-
-            await AsyncStorage.setItem('services', JSON.stringify(remainingServices))
-
-            setServices(orderServices(remainingServices))
-
-            setDeleteServiceForm(false)
-
-        } catch (error) {
-
-            Alert.alert('Erro ao salvar no banco de dados')
-
-        }
+        setServices(orderServices(remainingServices))
+        setDeleteServiceForm(false)
 
     }
 

@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, View, Text, TextInput } from 'react-native'
 
 interface EditStockInputProps {
     setStock: React.Dispatch<React.SetStateAction<number>>
-    editStock: () => Promise<void>
+    editStock: () => void
 }
 
 export default function EditStockInput({ setStock, editStock }: EditStockInputProps) {

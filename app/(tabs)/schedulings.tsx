@@ -10,10 +10,8 @@ import { filterSchedulings } from '@/functions/common'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 
 import { getServices, orderSchedulings } from '@/functions/schedulings'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
 import { orderServices } from '@/functions/services'
-import { Alert } from 'react-native'
 
 export default function Schedulings() {
 
@@ -24,7 +22,7 @@ export default function Schedulings() {
     const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Scheduling)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
 
-    const checkAmount = async (scheduling: Scheduling) => {
+    const checkAmount = (scheduling: Scheduling) => {
 
         // Separando produto a ser atualizado
         const product = services.filter(current => {
@@ -47,44 +45,22 @@ export default function Schedulings() {
                 amount: product.amount + scheduling.service.amount
             }
 
-            try {
-
-                await AsyncStorage.setItem('services', JSON.stringify([...remainingProducts, updatedProduct]))
-
-                setServices(orderServices([...remainingProducts, updatedProduct]))
-
-            } catch (error) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
+            setServices(orderServices([...remainingProducts, updatedProduct]))
 
         }
 
     }
 
-    const deleteScheduling = async (scheduling: Scheduling) => {
+    const deleteScheduling = (scheduling: Scheduling) => {
 
         if (scheduling.service.category === 'product')
-            await checkAmount(scheduling)
-
+        checkAmount(scheduling)
         const remainingSchedulings = schedulings.filter(current => {
             return current._id !== scheduling._id
         })
 
-        try {
-
-            await AsyncStorage.setItem('schedulings', JSON.stringify(remainingSchedulings))
-
-            setSchedulings(orderSchedulings(remainingSchedulings))
-
-            setDeleteSchedulingForm(false)
-
-        } catch (error) {
-
-            Alert.alert('Erro ao acessar banco de dados')
-
-        }
+        setSchedulings(orderSchedulings(remainingSchedulings))
+        setDeleteSchedulingForm(false)
 
     }
 

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
@@ -60,7 +59,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
         setHideTabBar(true)
     }, [])
 
-    const addExpense = async () => {
+    const addExpense = () => {
 
         if (checkAllInputs()) {
 
@@ -104,41 +103,15 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
                     const newServices = [...remainingServices, existingService]
 
-                    try {
-
-                        // Registrando novo produto
-                        await AsyncStorage.setItem('services', JSON.stringify(newServices))
-                        setServices(orderServices(newServices))
-
-                        // Registrando nova despesa
-                        await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
-                        setExpenses(orderExpenses([...expenses, newExpense]))
-
-                    } catch (error) {
-
-                        Alert.alert('Erro ao acessar banco de dados')
-
-                    }
+                    setServices(orderServices(newServices))
+                    setExpenses(orderExpenses([...expenses, newExpense]))
 
                 } else {
 
                     if (checkServicesAmount(services, newProduct)) {
 
-                        try {
-
-                            // Registrando novo produto
-                            await AsyncStorage.setItem('services', JSON.stringify([...services, newProduct]))
-                            setServices(orderServices([...services, newProduct]))
-
-                            // Registrando nova despesa
-                            await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
-                            setExpenses(orderExpenses([...expenses, newExpense]))
-
-                        } catch (error) {
-
-                            Alert.alert('Erro ao acessar banco de dados')
-
-                        }
+                        setServices(orderServices([...services, newProduct]))
+                        setExpenses(orderExpenses([...expenses, newExpense]))
 
                     } else {
 
@@ -157,8 +130,6 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
                 newExpense.value = value
 
-                // Registrando nova despesa
-                await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
                 setExpenses(orderExpenses([...expenses, newExpense]))
 
             }

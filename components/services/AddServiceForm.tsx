@@ -1,7 +1,6 @@
 import { Alert, Text } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { DocsContext, Service } from '@/context/DocsContext'
+import { DocsContext } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
 import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
@@ -34,7 +33,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
         setHideTabBar(true)
     }, [])
 
-    async function addService() {
+    const addService = () => {
 
         if (checkAllInputs(choice, name, value, amount)) {
 
@@ -57,16 +56,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
                 } else {
 
-                    try {
-
-                        await AsyncStorage.setItem('services', JSON.stringify([...services, service]))
-                        setServices(orderServices([...services, service]))
-
-                    } catch (e) {
-
-                        Alert.alert('Erro ao salvar no banco de dados!')
-
-                    }
+                    setServices(orderServices([...services, service]))
 
                 }
 

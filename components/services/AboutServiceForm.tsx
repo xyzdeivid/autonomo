@@ -9,7 +9,6 @@ import { HideTabBarContext } from '@/context/HideTabBar'
 import { orderServices } from '@/functions/services'
 import EditValueInput from './EditValueInput'
 import ActualValue from './ActualValue'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import ActualStock from './ActualStock'
 import EditStockInput from './EditStockInput'
 import ConfirmDelete from '../common/ConfirmDelete'
@@ -37,12 +36,12 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
         setHideTabBar(true)
     }, [])
 
-    const editValue = async () => {
+    const editValue = () => {
 
         if (value) {
 
             const remainingServices = services.filter(current => {
-                return current !== service
+                return current._id !== service._id
             })
 
             const editedService: Service = {
@@ -52,32 +51,19 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                 amount: service.amount
             }
 
-            try {
+            if (remainingServices[0]) {
 
-                if (remainingServices[0]) {
+                setServices(orderServices([...remainingServices, editedService]))
+                setFormOff(false)
 
-                    await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, editedService]))
+            } else {
 
-                    setServices(orderServices([...remainingServices, editedService]))
-
-                    setEditValueInput(false)
-
-                } else {
-
-                    await AsyncStorage.setItem('services', JSON.stringify([editedService]))
-
-                    setServices([editedService])
-
-                    setEditValueInput(false)
-
-                }
-
-
-            } catch (error) {
-
-                Alert.alert('Erro ao acessar banco de dados')
+                setServices([editedService])
+                setFormOff(false)
 
             }
+
+            setHideTabBar(false)
 
         } else {
 
@@ -87,12 +73,12 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
 
     }
 
-    const editStock = async () => {
+    const editStock = () => {
 
         if (stock) {
 
             const remainingServices = services.filter(current => {
-                return current !== service
+                return current._id !== service._id
             })
 
             const editedService: Service = {
@@ -102,32 +88,19 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                 amount: stock
             }
 
-            try {
+            if (remainingServices[0]) {
 
-                if (remainingServices[0]) {
+                setServices(orderServices([...remainingServices, editedService]))
+                setFormOff(false)
 
-                    await AsyncStorage.setItem('services', JSON.stringify([...remainingServices, editedService]))
+            } else {
 
-                    setServices(orderServices([...remainingServices, editedService]))
-
-                    setEditStockInput(false)
-
-                } else {
-
-                    await AsyncStorage.setItem('services', JSON.stringify([editedService]))
-
-                    setServices([editedService])
-
-                    setEditStockInput(false)
-
-                }
-
-
-            } catch (error) {
-
-                Alert.alert('Erro ao acessar banco de dados')
+                setServices([editedService])
+                setFormOff(false)
 
             }
+
+            setHideTabBar(false)
 
         } else {
 

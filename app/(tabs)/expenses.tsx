@@ -10,7 +10,6 @@ import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
 import { filterExpenses } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
 import { orderServices } from '@/functions/services'
@@ -24,7 +23,7 @@ export default function Expenses() {
     const [expenseForDeletion, setExpenseForDeletion] = useState({} as Expense)
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
 
-    const deleteExpense = async (expense: Expense) => {
+    const deleteExpense = (expense: Expense) => {
 
         const remainingExpenses = expenses.filter(current => {
             return current._id !== expense._id
@@ -47,43 +46,16 @@ export default function Expenses() {
                 // Atualizando quantidade do produto
                 productForExpense.amount = productForExpense.amount - expense.amount
 
-
-
-                try {
-
-                    await AsyncStorage.setItem('services', JSON.stringify([...otherServicesAndProducts, productForExpense]))
-                    await AsyncStorage.setItem('expenses', JSON.stringify(remainingExpenses))
-
-                    setServices(orderServices([...otherServicesAndProducts, productForExpense]))
-                    setExpenses(orderExpenses(remainingExpenses))
-
-                    setDeleteExpenseForm(false)
-
-                } catch (error) {
-
-                    Alert.alert('Erro ao salvar no banco de dados')
-
-                }
+                setServices(orderServices([...otherServicesAndProducts, productForExpense]))
+                setExpenses(orderExpenses(remainingExpenses))
+                setDeleteExpenseForm(false)
 
             }
 
         }
-
-
-
-        try {
-
-            await AsyncStorage.setItem('expenses', JSON.stringify(remainingExpenses))
-
-            setExpenses(orderExpenses(remainingExpenses))
-
-            setDeleteExpenseForm(false)
-
-        } catch (error) {
-
-            Alert.alert('Erro ao salvar no banco de dados')
-
-        }
+        
+        setExpenses(orderExpenses(remainingExpenses))
+        setDeleteExpenseForm(false)
 
     }
 

@@ -3,7 +3,7 @@ import { MaskedTextInput } from 'react-native-mask-text'
 
 interface EditValueInputProps {
     setValue: React.Dispatch<React.SetStateAction<number>>
-    editValue: () => Promise<void>
+    editValue: () => void
 }
 
 export default function EditValueInput({ setValue, editValue }: EditValueInputProps) {

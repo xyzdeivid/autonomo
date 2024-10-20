@@ -15,37 +15,39 @@ export default function FinancePeriodButtons({ period, setPeriod, mgTop }: Finan
     }
 
     return (
-        <View style={{ ...styles.container, marginTop: mgTop ? mgTop : 0 }}>
-            <Pressable
-                style={{
-                    ...styles.button, backgroundColor: checkPeriod('monthly'),
-                    borderTopLeftRadius: 4,
-                    borderBottomLeftRadius: 4
-                }}
-                onPress={() => setPeriod('monthly')}
-            >
-                <Text style={{ color: 'white' }}>Mensal</Text>
-            </Pressable>
-            <Pressable
-                style={{
-                    ...styles.button, backgroundColor: checkPeriod('daily'),
-                    borderTopRightRadius: 4,
-                    borderBottomRightRadius: 4
-                }}
-                onPress={() => setPeriod('daily')}
-            >
-                <Text style={{ color: 'white' }}>Diária</Text>
-            </Pressable>
+        <View style={{ marginHorizontal: 'auto' }}>
+            <Text style={{ marginBottom: 4 }} >Período:</Text>
+            <View style={{ ...styles.buttonsContainer, marginTop: mgTop ? mgTop : 0 }}>
+                <Pressable
+                    style={{
+                        ...styles.button, backgroundColor: checkPeriod('monthly'),
+                        borderTopLeftRadius: 4,
+                        borderBottomLeftRadius: 4
+                    }}
+                    onPress={() => setPeriod('monthly')}
+                >
+                    <Text style={{ color: 'white' }}>Mensal</Text>
+                </Pressable>
+                <Pressable
+                    style={{
+                        ...styles.button, backgroundColor: checkPeriod('daily'),
+                        borderTopRightRadius: 4,
+                        borderBottomRightRadius: 4
+                    }}
+                    onPress={() => setPeriod('daily')}
+                >
+                    <Text style={{ color: 'white' }}>Diária</Text>
+                </Pressable>
+            </View>
         </View>
     )
 
 }
 
 const styles = StyleSheet.create({
-    container: {
+    buttonsContainer: {
         display: 'flex',
         flexDirection: 'row',
-        marginStart: 8,
     },
     button: {
         paddingHorizontal: 8,
