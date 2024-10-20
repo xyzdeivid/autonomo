@@ -15,9 +15,8 @@ export default function FinancePeriodButtons({ period, setPeriod, mgTop }: Finan
     }
 
     return (
-        <View style={{ marginHorizontal: 'auto' }}>
-            <Text style={{ marginBottom: 4 }} >Período:</Text>
             <View style={{ ...styles.buttonsContainer, marginTop: mgTop ? mgTop : 0 }}>
+            <Text style={{ marginEnd: 4 }} >Período:</Text>
                 <Pressable
                     style={{
                         ...styles.button, backgroundColor: checkPeriod('monthly'),
@@ -36,10 +35,9 @@ export default function FinancePeriodButtons({ period, setPeriod, mgTop }: Finan
                     }}
                     onPress={() => setPeriod('daily')}
                 >
-                    <Text style={{ color: 'white' }}>Diária</Text>
+                    <Text style={{ color: 'white' }}>Diário</Text>
                 </Pressable>
             </View>
-        </View>
     )
 
 }
@@ -48,6 +46,8 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         display: 'flex',
         flexDirection: 'row',
+        marginHorizontal: 'auto',
+        alignItems: 'center'
     },
     button: {
         paddingHorizontal: 8,

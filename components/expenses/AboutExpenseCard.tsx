@@ -26,7 +26,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff }
     }, [])
 
     return (
-        <FormContainer setFormOff={setFormOff}>
+        <FormContainer setFormOff={setFormOff} bgColor='rgba(139, 0, 0, 0.1)'>
             <FormBody>
                 <FormTitle text={expense.name}>
                     <Entypo name='info' size={18} color='darkgray' />

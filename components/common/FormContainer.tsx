@@ -5,9 +5,10 @@ import { Pressable, StyleSheet } from 'react-native'
 interface FormContainerProps {
     children: React.ReactNode
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
+    bgColor?: string
 }
 
-export default function FormContainer({ children, setFormOff }: FormContainerProps) {
+export default function FormContainer({ children, setFormOff, bgColor }: FormContainerProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
@@ -19,7 +20,13 @@ export default function FormContainer({ children, setFormOff }: FormContainerPro
     }
 
     return (
-        <Pressable onPress={() => closeForm('container')} style={style.container}>
+        <Pressable 
+        onPress={() => closeForm('container')} 
+        style={{
+            ...style.container,
+            backgroundColor: bgColor ? bgColor : 'rgba(17, 41, 53, 0.1)'
+        }}
+        >
             <Pressable onPress={() => closeForm('body')}>
                 {children}
             </Pressable>
@@ -35,8 +42,6 @@ const style = StyleSheet.create({
         position: 'absolute',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'gray',
-        opacity: 0.9,
+        alignItems: 'center'
     }
 })

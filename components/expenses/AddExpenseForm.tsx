@@ -151,7 +151,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     }
 
     return (
-        <FormContainer setFormOff={setAddExpenseForm}>
+        <FormContainer setFormOff={setAddExpenseForm} bgColor='rgba(139, 0, 0, 0.1)'>
             <FormBody>
                 <FormTitle text='Registrar Saída'>
                     <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
@@ -163,13 +163,6 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                         setTargetDate={setDate}
                         bgColor='#660000'
                     />
-                    <View style={{
-                            width: '95%',
-                            height: 1.5,
-                            backgroundColor: 'lightgray',
-                            marginHorizontal: 'auto',
-                            marginBottom: 20
-                        }} />
                     {choice === 'resale' && (
                         <ProductNameInput setProductName={setProductName} />
                     )}

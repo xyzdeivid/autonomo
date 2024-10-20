@@ -58,13 +58,6 @@ export default function Services({ schedulings }: ServicesProps) {
             {services[0] && (<View>
                 <InfoTitle text='Serviços mais prestados' />
                 <ServicesChart services={services} />
-                <View style={{
-                    borderBottomColor: '#E0E0E0',
-                    borderBottomWidth: 1,
-                    marginHorizontal: 10,
-                    marginBottom: 20
-                }}
-                />
                 <ServicesList services={services} />
             </View>)}
         </View>

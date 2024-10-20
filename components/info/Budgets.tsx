@@ -60,13 +60,6 @@ export default function Budgets({ schedulings }: BudgetsProps) {
             {budgets[0] && (<View>
                 <InfoTitle text='Orçamentários mais prestados' />
                 <BudgetsChart budgets={budgets} />
-                <View style={{
-                    borderBottomColor: '#E0E0E0',
-                    borderBottomWidth: 1,
-                    marginHorizontal: 10,
-                    marginBottom: 20
-                }}
-                />
                 <BudgetsList budgets={budgets} />
             </View>)}
         </View>

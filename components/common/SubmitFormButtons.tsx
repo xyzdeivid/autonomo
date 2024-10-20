@@ -9,7 +9,7 @@ interface SubmitFormButtonsProps {
 export default function SubmitFormButtons({ submit, submitButtonText, submitButtonColor }: SubmitFormButtonsProps) {
 
     return (
-        <View style={styles.buttonsContainer}>
+        <View style={styles.button}>
             <Button
                 color={submitButtonColor ? submitButtonColor : '#08819B'}
                 title={submitButtonText}
@@ -23,15 +23,7 @@ export default function SubmitFormButtons({ submit, submitButtonText, submitButt
 }
 
 const styles = StyleSheet.create({
-    buttonsContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 20
-    },
     button: {
-        padding: 8,
-        borderRadius: 3
+        alignSelf: 'center'
     }
 })
