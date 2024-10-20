@@ -29,7 +29,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff }
         <FormContainer setFormOff={setFormOff}>
             <FormBody>
                 <FormTitle text={expense.name}>
-                    <Entypo name='info' size={18} color='black' />
+                    <Entypo name='info' size={18} color='darkgray' />
                 </FormTitle>
                 <View>
                     {
