@@ -7,7 +7,6 @@ import { MonthContext } from '@/context/Month'
 import ServicesList from './ServicesList'
 import InfoTitle from '../common/InfoTitle'
 import { colors } from '@/constants/chartColors'
-import AnyItemWarning from '../common/AnyItemWarning'
 
 type ServicesT = {
     service: string
@@ -56,22 +55,18 @@ export default function Services({ schedulings }: ServicesProps) {
 
     return (
         <View style={{ zIndex: -1 }}>
-            {
-                services[0]
-                    ? <View>
-                        <InfoTitle text='Serviços mais prestados' />
-                        <ServicesChart services={services} />
-                        <View style={{
-                            borderBottomColor: '#E0E0E0',
-                            borderBottomWidth: 1,
-                            marginHorizontal: 10,
-                            marginBottom: 20
-                        }}
-                        />
-                        <ServicesList services={services} />
-                    </View>
-                    : <AnyItemWarning text='Nenhum serviço registrado' />
-            }
+            {services[0] && (<View>
+                <InfoTitle text='Serviços mais prestados' />
+                <ServicesChart services={services} />
+                <View style={{
+                    borderBottomColor: '#E0E0E0',
+                    borderBottomWidth: 1,
+                    marginHorizontal: 10,
+                    marginBottom: 20
+                }}
+                />
+                <ServicesList services={services} />
+            </View>)}
         </View>
     )
 

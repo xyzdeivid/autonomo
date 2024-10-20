@@ -5,7 +5,6 @@ import { View } from 'react-native'
 import InfoTitle from '../common/InfoTitle'
 import ProductsChart from './ProductsChart'
 import ProductsList from './ProductsList'
-import AnyItemWarning from '../common/AnyItemWarning'
 
 interface ProductsProps {
     schedulings: Scheduling[]
@@ -56,15 +55,13 @@ export default function Products({ schedulings }: ProductsProps) {
 
     return (
         <View style={{ zIndex: -1 }}>
-            {
-                products[0]
-                    ? <View>
-                        <InfoTitle text='Produtos mais vendidos' />
-                        <ProductsChart products={products} />
-                        <ProductsList products={products} />
-                    </View>
-                    : <AnyItemWarning text='Nenhum produto registrado' />
-            }
+            {products[0] && (
+                <View>
+                    <InfoTitle text='Produtos mais vendidos' />
+                    <ProductsChart products={products} />
+                    <ProductsList products={products} />
+                </View>
+            )}
         </View>
     )
 

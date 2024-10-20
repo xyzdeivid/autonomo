@@ -13,10 +13,11 @@ import ContentForm from '@/components/info/ContentForm'
 import Services from '@/components/info/Services'
 import Products from '@/components/info/Products'
 import Budgets from '@/components/info/Budgets'
+import { ContentContext } from '@/context/Content'
 
 export default function Info() {
 
-    const [content, setContent] = useState('financial')
+    const [content, setContent] = useContext(ContentContext)
     const [contentForm, setContentForm] = useState(false)
     const [schedulings] = useContext(DocsContext).schedulings
     const [selectedMonth] = useContext(MonthContext)
@@ -45,17 +46,23 @@ export default function Info() {
                 return (
                     <Revenue />
                 )
-            case 'services':
-                return (
-                    <Services schedulings={servicesSchedulings()} />
-                )
             case 'products':
                 return (
-                    <Products schedulings={productsSchedulings()} />
+                    <Products
+                        schedulings={productsSchedulings()}
+                    />
                 )
-                case 'budgets':
+            case 'services':
                 return (
-                    <Budgets schedulings={budgetsSchedulings()} />
+                    <Services
+                        schedulings={servicesSchedulings()}
+                    />
+                )
+            case 'budgets':
+                return (
+                    <Budgets
+                        schedulings={budgetsSchedulings()}
+                    />
                 )
         }
     }

@@ -12,6 +12,7 @@ import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 import { getServices, orderSchedulings } from '@/functions/schedulings'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
 import { orderServices } from '@/functions/services'
+import { ContentContext } from '@/context/Content'
 
 export default function Schedulings() {
 
@@ -21,6 +22,7 @@ export default function Schedulings() {
     const [selectedMonth] = useContext(MonthContext)
     const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Scheduling)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
+    const [, setContent] = useContext(ContentContext)
 
     const checkAmount = (scheduling: Scheduling) => {
 

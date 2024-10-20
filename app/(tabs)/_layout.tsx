@@ -4,10 +4,12 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import headerIcon from '@/assets/images/header-icon.png'
 import { Image } from 'react-native'
+import { ContentContext } from '@/context/Content'
 
 export default function TabLayout() {
 
     const [hideTabBar] = useContext(HideTabBarContext)
+    const [, setContent] = useContext(ContentContext)
 
     return (
         <Tabs
@@ -38,6 +40,11 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen name='schedulings'
+                listeners={() => ({
+                    tabPress: () => {
+                        setContent('financial')
+                    },
+                })}
                 options={{
                     title: 'Entradas',
                     tabBarIcon: ({ color }) => (
@@ -45,6 +52,11 @@ export default function TabLayout() {
                     )
                 }} />
             <Tabs.Screen name='expenses'
+                listeners={() => ({
+                    tabPress: () => {
+                        setContent('financial')
+                    },
+                })}
                 options={{
                     title: 'Saídas',
                     tabBarActiveBackgroundColor: 'darkred',
@@ -56,6 +68,11 @@ export default function TabLayout() {
                     )
                 }} />
             <Tabs.Screen name='services'
+                listeners={() => ({
+                    tabPress: () => {
+                        setContent('financial')
+                    },
+                })}
                 options={{
                     title: 'Items',
                     tabBarIcon: ({ color }) => (
