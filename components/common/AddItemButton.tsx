@@ -21,8 +21,7 @@ export default function AddItemButton({ setForm, bgColor }: AddItemButtonProps) 
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        alignSelf: 'flex-start',
-        marginTop: 16,
-        marginStart: 20
+        alignSelf: 'center',
+        marginTop: 16
     }
 })

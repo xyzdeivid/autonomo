@@ -57,7 +57,7 @@ export default function DailyRevenueChart() {
                 frontColor='#66B2FF'
                 barBorderTopLeftRadius={3}
                 barBorderTopRightRadius={3}
-                maxValue={findTheMostProfitableDay() + 10}
+                maxValue={findTheMostProfitableDay() + 15}
                 hideYAxisText
                 hideRules
                 yAxisThickness={0}

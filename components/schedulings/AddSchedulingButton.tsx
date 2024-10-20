@@ -32,8 +32,7 @@ export default function AddSchedulingButton({ setAddSchedulingForm }: AddSchedul
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        width: '50%',
-        marginHorizontal: 'auto',
+        alignSelf: 'center',
         marginTop: 16
     }
 })
