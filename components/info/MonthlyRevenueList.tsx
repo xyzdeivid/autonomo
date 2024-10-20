@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        marginTop: 16,
+        marginTop: 20,
     },
     infoContainer: {
         display: 'flex',

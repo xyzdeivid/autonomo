@@ -1,7 +1,7 @@
 import { Expense, Scheduling } from '@/context/DocsContext'
 import { findGreaterData } from '@/functions/info'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'
 
 interface RevenueChartProps {
@@ -47,7 +47,7 @@ export default function RevenueChart({ filteredSchedulings, filteredExpenses }: 
     }
 
     return (
-        <View style={{ marginHorizontal: 'auto', }}>
+        <View style={styles.container}>
             <BarChart
                 yAxisThickness={0}
                 xAxisThickness={2}
@@ -62,3 +62,12 @@ export default function RevenueChart({ filteredSchedulings, filteredExpenses }: 
     )
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginHorizontal: 'auto',
+        backgroundColor: 'rgba(17, 41, 53, 0.05)',
+        padding: 12,
+        borderRadius: 12
+    }
+})

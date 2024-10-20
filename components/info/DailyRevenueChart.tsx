@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { filterSchedulings, moneyFormat } from '@/functions/common'
 import { getDays } from '@/functions/info'
 
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'
 
 import { DocsContext } from '@/context/DocsContext'
@@ -21,8 +21,7 @@ export default function DailyRevenueChart() {
                 value: day.amount,
                 topLabelComponent: () => (
                     <Text style={{ fontSize: 10, marginBottom: 2, color: '#004C99' }} >{moneyFormat(day.amount)}</Text>
-                ),
-                barWidth: getBarWidth(day.amount)
+                )
             }
         })
     }
@@ -34,21 +33,8 @@ export default function DailyRevenueChart() {
         return values.sort((a, b) => b - a)[0]
     }
 
-    const getBarWidth = (number: number) => {
-        const basicWidth = 27
-        const numberOfDigits = number.toString().length
-        switch (numberOfDigits) {
-            case 4:
-                return basicWidth + 15
-            case 3:
-                return basicWidth + 6
-            default:
-                return basicWidth
-        }
-    }
-
     return (
-        <View>
+        <View style={styles.container}>
             <BarChart
                 data={data()}
                 cappedBars
@@ -57,15 +43,25 @@ export default function DailyRevenueChart() {
                 frontColor='#66B2FF'
                 barBorderTopLeftRadius={3}
                 barBorderTopRightRadius={3}
-                maxValue={findTheMostProfitableDay() + 15}
+                maxValue={findTheMostProfitableDay() + 20}
                 hideYAxisText
                 hideRules
                 yAxisThickness={0}
                 xAxisThickness={0}
                 xAxisColor='lightgray'
                 xAxisLabelTextStyle={{ color: '#000000' }}
+                barWidth={42}
             />
         </View>
     )
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'rgba(17, 41, 53, 0.05)',
+        padding: 12,
+        borderRadius: 12,
+        marginHorizontal: 20
+    }
+})
