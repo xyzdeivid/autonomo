@@ -8,6 +8,7 @@ import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect, useState } from 'react'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import ConfirmDelete from '../common/ConfirmDelete'
+import { Entypo } from '@expo/vector-icons'
 
 interface DeleteSchedulingFormProps {
     scheduling: Scheduling
@@ -34,7 +35,9 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     return (
         <FormContainer setFormOff={setFormOff}>
             <FormBody>
-                <FormTitle text={scheduling.service._id} />
+                <FormTitle text={scheduling.service._id}>
+                    <Entypo name='info' size={18} color='black' />
+                </FormTitle>
                 <View>
                     {
                         scheduling.service.category === 'product'

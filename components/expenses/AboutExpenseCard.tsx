@@ -8,6 +8,7 @@ import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect, useState } from 'react'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import ConfirmDelete from '../common/ConfirmDelete'
+import { Entypo } from '@expo/vector-icons'
 
 interface AboutExpenseCardProps {
     expense: Expense
@@ -27,7 +28,9 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff }
     return (
         <FormContainer setFormOff={setFormOff}>
             <FormBody>
-                <FormTitle text={expense.name} />
+                <FormTitle text={expense.name}>
+                    <Entypo name='info' size={18} color='black' />
+                </FormTitle>
                 <View>
                     {
                         expense.category === 'resale' && (

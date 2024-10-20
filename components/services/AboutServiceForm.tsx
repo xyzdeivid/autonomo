@@ -12,6 +12,7 @@ import ActualValue from './ActualValue'
 import ActualStock from './ActualStock'
 import EditStockInput from './EditStockInput'
 import ConfirmDelete from '../common/ConfirmDelete'
+import Entypo from '@expo/vector-icons/Entypo'
 
 interface DeleteServiceFormProps {
     service: Service
@@ -113,7 +114,10 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
     return (
         <FormContainer setFormOff={setFormOff}>
             <FormBody>
-                <FormTitle text={service._id} />
+                <FormTitle text={service._id}>
+                    <Entypo name='info' size={18} color='black' />
+                </FormTitle>
+
                 <View>
                     {service.category !== 'budget' && (
                         <View style={styles.inputContainer}>
