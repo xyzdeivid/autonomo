@@ -28,8 +28,16 @@ export default function FormContainer({ children, setFormOff, bgColor }: FormCon
 
     const closeForm = (key: string) => {
         if (key !== 'body') {
-            setFormOff(false)
-            setHideTabBar(false)
+            Animated.parallel([
+                Animated.timing(slideAnim, {
+                    toValue: -1000,
+                    duration: 250,
+                    useNativeDriver: true
+                }),
+            ]).start(() => {
+                setFormOff(false)
+                setHideTabBar(false)
+            })
         }
     }
 
