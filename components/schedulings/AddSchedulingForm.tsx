@@ -16,6 +16,7 @@ import AmountInput from '../common/AmountInput'
 import { orderServices } from '@/functions/services'
 import NumberInput from '../common/NumberInput'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import LoadingScreen from '../common/LoadingScreen'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -32,6 +33,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
     const [, setServices] = useContext(DocsContext).services
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
     const [amount, setAmount] = useState(0)
+    const [loadingScreen, setLoadingScreen] = useState(false)
 
     const checkAllInputs = (): boolean => {
 
@@ -45,9 +47,9 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
                 return true
 
             case 'budget':
-                if(value) return true
+                if (value) return true
                 return false
- 
+
             default:
                 return false
 
@@ -99,6 +101,8 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
 
         if (checkAllInputs()) {
 
+            setLoadingScreen(true)
+
             if (checkAmount(service.category)) {
 
                 const newScheduling: Scheduling = {
@@ -112,14 +116,16 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
                     date
                 }
 
-                updateStock()
-                setSchedulings(orderSchedulings([...schedulings, newScheduling]))
+                setTimeout(() => {
+                    updateStock()
+                    setSchedulings(orderSchedulings([...schedulings, newScheduling]))
+                }, 500)
 
             } else {
 
                 setTimeout(() => {
                     Alert.alert('Produto sem estoque')
-                }, 500)
+                }, 700)
 
             }
 
@@ -127,12 +133,14 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
 
             setTimeout(() => {
                 Alert.alert('Todos os campos precisam ser preenchidos')
-            }, 500)
+            }, 700)
 
         }
 
-        setAddSchedulingForm(false)
-        setHideTabBar(false)
+        setTimeout(() => {
+            setAddSchedulingForm(false)
+            setHideTabBar(false)
+        }, 500)
 
     }
 
@@ -141,38 +149,41 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
     }, [])
 
     return (
-        <FormContainer setFormOff={setAddSchedulingForm}>
-            <FormBody>
-                <FormTitle text='Registrar Entrada'>
-                    <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
-                </FormTitle>
-                <FormInputs>
-                    <SelectServiceInput
-                        service={service}
-                        setService={setService}
-                        services={services}
-                    />
-                    {service.category === 'product' && (
-                        <StockInfo amount={service.amount - amount} />
-                    )}
-                    <DateInput setTargetDate={setDate} />
-                    {service.category === 'product' && (
-                        <AmountInput
-                            text='Quantidade'
-                            setAmount={setAmount}
+        <>
+            {loadingScreen && <LoadingScreen />}
+            <FormContainer setFormOff={setAddSchedulingForm}>
+                <FormBody>
+                    <FormTitle text='Registrar Entrada'>
+                        <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
+                    </FormTitle>
+                    <FormInputs>
+                        <SelectServiceInput
+                            service={service}
+                            setService={setService}
+                            services={services}
                         />
-                    )}
-                    {
-                        service.category === 'budget' && (
-                            <NumberInput
-                                setValue={setValue}
+                        {service.category === 'product' && (
+                            <StockInfo amount={service.amount - amount} />
+                        )}
+                        <DateInput setTargetDate={setDate} />
+                        {service.category === 'product' && (
+                            <AmountInput
+                                text='Quantidade'
+                                setAmount={setAmount}
                             />
-                        )
-                    }
-                </FormInputs>
-                <SubmitFormButtons submit={addScheduling} submitButtonText='Registrar' />
-            </FormBody>
-        </FormContainer>
+                        )}
+                        {
+                            service.category === 'budget' && (
+                                <NumberInput
+                                    setValue={setValue}
+                                />
+                            )
+                        }
+                    </FormInputs>
+                    <SubmitFormButtons submit={addScheduling} submitButtonText='Registrar' />
+                </FormBody>
+            </FormContainer>
+        </>
     )
 
 }

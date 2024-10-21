@@ -64,7 +64,6 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                         : <ConfirmDelete
                             deleteFunction={() => {
                                 deleteFunction(scheduling)
-                                setHideTabBar(false)
                             }}
                             setConfirmDelete={setConfirmDelete}
                         />

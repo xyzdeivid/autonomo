@@ -14,6 +14,7 @@ import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import LoadingScreen from '../common/LoadingScreen'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -28,14 +29,17 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
     const [services, setServices] = useContext(DocsContext).services
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [choice, setChoice] = useState('product')
+    const [loadingScreen, setLoadingScreen] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
     }, [])
 
     const addService = () => {
-
+        
         if (checkAllInputs(choice, name, value, amount)) {
+
+            setLoadingScreen(true)
 
             // Criando serviço
             const service = createNewService(choice, name, value, amount)
@@ -52,11 +56,13 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
                     setTimeout(() => {
                         Alert.alert('Item existente', 'Um item com este nome já existe')
-                    }, 500)
+                    }, 700)
 
                 } else {
 
-                    setServices(orderServices([...services, service]))
+                    setTimeout(() => {
+                        setServices(orderServices([...services, service]))
+                    }, 500)
 
                 }
 
@@ -64,7 +70,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
 
                 setTimeout(() => {
                     Alert.alert('Você só pode registrar 8 items por categoria')
-                }, 500)
+                }, 700)
 
             }
 
@@ -75,40 +81,46 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
                     'Preencha todos os campos',
                     'Todos os campos do formulário precisam ser preenchidos'
                 )
-            }, 500)
+            }, 700)
 
         }
 
-        setAddServiceForm(false)
-        setHideTabBar(false)
+        // Simulation of db query
+        setTimeout(() => {
+            setAddServiceForm(false)
+            setHideTabBar(false)
+        }, 500)
 
     }
 
     return (
-        <FormContainer setFormOff={setAddServiceForm}>
-            <FormBody>
-                <FormTitle text={`Novo ${checkTitle(choice)}`}>
-                <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
-                </FormTitle>
-                <FormInputs>
-                    <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
-                    {choice === 'budget' && (
-                        <Text style={{ marginBottom: 20, color: 'gray' }} >O valor será definido ao registrar entrada.</Text>
-                    )}
-                    <NameInput setName={setName} />
-                    {choice !== 'budget' && (
-                        <NumberInput setValue={setValue} />
-                    )}
-                    {choice === 'product' && (
-                        <AmountInput
-                            text='Estoque'
-                            setAmount={setAmount}
-                        />
-                    )}
-                </FormInputs>
-                <SubmitFormButtons submit={addService} submitButtonText='Cadastrar' />
-            </FormBody>
-        </FormContainer>
+        <>
+            {loadingScreen && <LoadingScreen />}
+            <FormContainer setFormOff={setAddServiceForm}>
+                <FormBody>
+                    <FormTitle text={`Novo ${checkTitle(choice)}`}>
+                        <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
+                    </FormTitle>
+                    <FormInputs>
+                        <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
+                        {choice === 'budget' && (
+                            <Text style={{ marginBottom: 20, color: 'gray' }} >O valor será definido ao registrar entrada.</Text>
+                        )}
+                        <NameInput setName={setName} />
+                        {choice !== 'budget' && (
+                            <NumberInput setValue={setValue} />
+                        )}
+                        {choice === 'product' && (
+                            <AmountInput
+                                text='Estoque'
+                                setAmount={setAmount}
+                            />
+                        )}
+                    </FormInputs>
+                    <SubmitFormButtons submit={addService} submitButtonText='Cadastrar' />
+                </FormBody>
+            </FormContainer>
+        </>
     )
 
 }

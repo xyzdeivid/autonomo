@@ -13,6 +13,8 @@ import { orderExpenses } from '@/functions/expenses'
 import { Alert } from 'react-native'
 import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
 import { orderServices } from '@/functions/services'
+import { HideTabBarContext } from '@/context/HideTabBar'
+import LoadingScreen from '@/components/common/LoadingScreen'
 
 export default function Expenses() {
 
@@ -22,8 +24,12 @@ export default function Expenses() {
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [expenseForDeletion, setExpenseForDeletion] = useState({} as Expense)
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
+    const [loadingScreen, setLoadingScreen] = useState(false)
+    const [, setHideTabBar] = useContext(HideTabBarContext)
 
     const deleteExpense = (expense: Expense) => {
+
+        setLoadingScreen(true)
 
         const remainingExpenses = expenses.filter(current => {
             return current._id !== expense._id
@@ -46,49 +52,60 @@ export default function Expenses() {
                 // Atualizando quantidade do produto
                 productForExpense.amount = productForExpense.amount - expense.amount
 
-                setServices(orderServices([...otherServicesAndProducts, productForExpense]))
-                setExpenses(orderExpenses(remainingExpenses))
-                setDeleteExpenseForm(false)
+                setTimeout(() => {
+                    setServices(orderServices([...otherServicesAndProducts, productForExpense]))
+                    setExpenses(orderExpenses(remainingExpenses))
+                    setDeleteExpenseForm(false)
+                    setLoadingScreen(false)
+                    setHideTabBar(false)
+                }, 500)
 
             }
 
         }
-        
-        setExpenses(orderExpenses(remainingExpenses))
-        setDeleteExpenseForm(false)
+
+        setTimeout(() => {
+            setExpenses(orderExpenses(remainingExpenses))
+            setDeleteExpenseForm(false)
+            setLoadingScreen(false)
+            setHideTabBar(false)
+        }, 500)
 
     }
 
     return (
-        <Container>
-            {
-                expenses[0] && (
-                    <MonthInput />
-                )
-            }
-            {
-                filterExpenses(expenses, selectedMonth)[0]
-                    ? <ExpensesList
-                        filteredExpenses={filterExpenses(expenses, selectedMonth)}
-                        setExpenseForDeletion={setExpenseForDeletion}
-                        setDeleteExpenseForm={setDeleteExpenseForm}
-                    />
-                    : <AnyItemWarning text='Nenhuma saída cadastrada' />
-            }
-            {
-                addExpenseForm
-                    ? <AddExpenseForm setAddExpenseForm={setAddExpenseForm} />
-                    : <AddItemButton setForm={setAddExpenseForm} bgColor='darkred' />
-            }
-            {
-                deleteExpenseForm && (
-                    <AboutExpenseCard
-                        expense={expenseForDeletion}
-                        deleteFunction={deleteExpense}
-                        setFormOff={setDeleteExpenseForm}
-                    />
-                )
-            }
-        </Container>
+        <>
+            {loadingScreen && <LoadingScreen />}
+            <Container>
+                {
+                    expenses[0] && (
+                        <MonthInput />
+                    )
+                }
+                {
+                    filterExpenses(expenses, selectedMonth)[0]
+                        ? <ExpensesList
+                            filteredExpenses={filterExpenses(expenses, selectedMonth)}
+                            setExpenseForDeletion={setExpenseForDeletion}
+                            setDeleteExpenseForm={setDeleteExpenseForm}
+                        />
+                        : <AnyItemWarning text='Nenhuma saída cadastrada' />
+                }
+                {
+                    addExpenseForm
+                        ? <AddExpenseForm setAddExpenseForm={setAddExpenseForm} />
+                        : <AddItemButton setForm={setAddExpenseForm} bgColor='darkred' />
+                }
+                {
+                    deleteExpenseForm && (
+                        <AboutExpenseCard
+                            expense={expenseForDeletion}
+                            deleteFunction={deleteExpense}
+                            setFormOff={setDeleteExpenseForm}
+                        />
+                    )
+                }
+            </Container>
+        </>
     )
 }

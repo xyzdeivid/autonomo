@@ -17,6 +17,7 @@ import AmountInput from '../common/AmountInput'
 import { checkServicesAmount, orderServices } from '@/functions/services'
 import ProductNameInput from './ProductNameInput'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import LoadingScreen from '../common/LoadingScreen'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -34,6 +35,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const [expenses, setExpenses] = useContext(DocsContext).expenses
     const [services, setServices] = useContext(DocsContext).services
     const [choice, setChoice] = useState('expense')
+    const [loadingScreen, setLoadingScreen] = useState(false)
 
     const checkAllInputs = (): boolean => {
 
@@ -62,6 +64,8 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const addExpense = () => {
 
         if (checkAllInputs()) {
+
+            setLoadingScreen(true)
 
             // Criando nova despesa
             const newExpense = {} as Expense
@@ -103,21 +107,25 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
                     const newServices = [...remainingServices, existingService]
 
-                    setServices(orderServices(newServices))
-                    setExpenses(orderExpenses([...expenses, newExpense]))
+                    setTimeout(() => {
+                        setServices(orderServices(newServices))
+                        setExpenses(orderExpenses([...expenses, newExpense]))
+                    }, 500)
 
                 } else {
 
                     if (checkServicesAmount(services, newProduct)) {
 
-                        setServices(orderServices([...services, newProduct]))
-                        setExpenses(orderExpenses([...expenses, newExpense]))
+                        setTimeout(() => {
+                            setServices(orderServices([...services, newProduct]))
+                            setExpenses(orderExpenses([...expenses, newExpense]))
+                        }, 500)
 
                     } else {
 
                         setTimeout(() => {
                             Alert.alert('Você só pode registrar 8 items por categoria')
-                        }, 500)
+                        }, 700)
 
                     }
 
@@ -130,7 +138,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
                 newExpense.value = value
 
-                setExpenses(orderExpenses([...expenses, newExpense]))
+                setTimeout(() => 
+                    setExpenses(orderExpenses([...expenses, newExpense]))
+                , 500)
 
             }
 
@@ -141,16 +151,20 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     'Preencha todos os campos',
                     'Todos os campos do formulário precisam ser preenchidos'
                 )
-            }, 500)
+            }, 700)
 
         }
 
-        setAddExpenseForm(false)
+        setTimeout(() => {
+            setAddExpenseForm(false)
         setHideTabBar(false)
+        }, 500)
 
     }
 
     return (
+        <>
+        {loadingScreen && <LoadingScreen />}
         <FormContainer setFormOff={setAddExpenseForm} bgColor='rgba(139, 0, 0, 0.1)'>
             <FormBody>
                 <FormTitle text='Registrar Saída'>
@@ -193,6 +207,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 />
             </FormBody>
         </FormContainer>
+        </>
     )
 
 }

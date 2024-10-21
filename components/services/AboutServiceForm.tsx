@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Alert } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
@@ -13,6 +13,7 @@ import ActualStock from './ActualStock'
 import EditStockInput from './EditStockInput'
 import ConfirmDelete from '../common/ConfirmDelete'
 import Entypo from '@expo/vector-icons/Entypo'
+import LoadingScreen from '../common/LoadingScreen'
 
 interface DeleteServiceFormProps {
     service: Service
@@ -32,6 +33,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
     const [editStockInput, setEditStockInput] = useState(false)
     const [stock, setStock] = useState(0)
     const [confirmDelete, setConfirmDelete] = useState(false)
+    const [loadingScreen, setLoadingScreen] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -40,6 +42,8 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
     const editValue = () => {
 
         if (value) {
+
+            setLoadingScreen(true)
 
             const remainingServices = services.filter(current => {
                 return current._id !== service._id
@@ -54,17 +58,21 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
 
             if (remainingServices[0]) {
 
-                setServices(orderServices([...remainingServices, editedService]))
-                setFormOff(false)
+                setTimeout(() => {
+                    setServices(orderServices([...remainingServices, editedService]))
+                    setFormOff(false)
+                }, 500)
 
             } else {
 
-                setServices([editedService])
-                setFormOff(false)
+                setTimeout(() => {
+                    setServices([editedService])
+                    setFormOff(false)
+                }, 500)
 
             }
 
-            setHideTabBar(false)
+            setTimeout(() => setHideTabBar(false), 500)
 
         } else {
 
@@ -77,6 +85,8 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
     const editStock = () => {
 
         if (stock) {
+
+            setLoadingScreen(true)
 
             const remainingServices = services.filter(current => {
                 return current._id !== service._id
@@ -91,17 +101,21 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
 
             if (remainingServices[0]) {
 
-                setServices(orderServices([...remainingServices, editedService]))
-                setFormOff(false)
+                setTimeout(() => {
+                    setServices(orderServices([...remainingServices, editedService]))
+                    setFormOff(false)
+                }, 500)
 
             } else {
 
-                setServices([editedService])
-                setFormOff(false)
+                setTimeout(() => {
+                    setServices([editedService])
+                    setFormOff(false)
+                }, 500)
 
             }
 
-            setHideTabBar(false)
+            setTimeout(() => setHideTabBar(false), 500)
 
         } else {
 
@@ -112,56 +126,58 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
     }
 
     return (
-        <FormContainer setFormOff={setFormOff}>
-            <FormBody>
-                <FormTitle text={service._id}>
-                    <Entypo name='info' size={18} color='darkgray' />
-                </FormTitle>
+        <>
+            {loadingScreen && <LoadingScreen />}
+            <FormContainer setFormOff={setFormOff}>
+                <FormBody>
+                    <FormTitle text={service._id}>
+                        <Entypo name='info' size={18} color='darkgray' />
+                    </FormTitle>
 
-                <View>
-                    {service.category !== 'budget' && (
-                        <View style={styles.inputContainer}>
-                            <View style={styles.infoContainer}>
-                                <Text style={styles.label}>Valor:</Text>
-                                {
-                                    editValueInput
-                                        ? <EditValueInput setValue={setValue} editValue={editValue} />
-                                        : <ActualValue value={value || service.value} setEditValueInput={setEditValueInput} />
-                                }
-                            </View>
-                        </View>
-                    )}
-                    {
-                        service.category === 'product' && (
+                    <View>
+                        {service.category !== 'budget' && (
                             <View style={styles.inputContainer}>
                                 <View style={styles.infoContainer}>
+                                    <Text style={styles.label}>Valor:</Text>
                                     {
-                                        editStockInput
-                                            ? <EditStockInput setStock={setStock} editStock={editStock} />
-                                            : <ActualStock stock={stock || service.amount} setEditStockInput={setEditStockInput} />
+                                        editValueInput
+                                            ? <EditValueInput setValue={setValue} editValue={editValue} />
+                                            : <ActualValue value={value || service.value} setEditValueInput={setEditValueInput} />
                                     }
                                 </View>
                             </View>
-                        )
+                        )}
+                        {
+                            service.category === 'product' && (
+                                <View style={styles.inputContainer}>
+                                    <View style={styles.infoContainer}>
+                                        {
+                                            editStockInput
+                                                ? <EditStockInput setStock={setStock} editStock={editStock} />
+                                                : <ActualStock stock={stock || service.amount} setEditStockInput={setEditStockInput} />
+                                        }
+                                    </View>
+                                </View>
+                            )
+                        }
+                    </View>
+                    {
+                        !confirmDelete
+                            ? <SubmitFormButtons
+                                submit={() => setConfirmDelete(true)}
+                                submitButtonText='Excluir'
+                                submitButtonColor='darkred'
+                            />
+                            : <ConfirmDelete
+                                deleteFunction={() => {
+                                    deleteFunction(service._id)
+                                }}
+                                setConfirmDelete={setConfirmDelete}
+                            />
                     }
-                </View>
-                {
-                    !confirmDelete
-                        ? <SubmitFormButtons
-                            submit={() => setConfirmDelete(true)}
-                            submitButtonText='Excluir'
-                            submitButtonColor='darkred'
-                        />
-                        : <ConfirmDelete
-                            deleteFunction={() => {
-                                deleteFunction(service._id)
-                                setHideTabBar(false)
-                            }}
-                            setConfirmDelete={setConfirmDelete}
-                        />
-                }
-            </FormBody>
-        </FormContainer>
+                </FormBody>
+            </FormContainer>
+        </>
     )
 
 }

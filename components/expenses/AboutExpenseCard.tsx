@@ -53,7 +53,6 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff }
                         : <ConfirmDelete
                             deleteFunction={() => {
                                 deleteFunction(expense)
-                                setHideTabBar(false)
                             }}
                             setConfirmDelete={setConfirmDelete}
                         />

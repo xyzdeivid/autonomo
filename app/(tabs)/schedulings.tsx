@@ -12,7 +12,8 @@ import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 import { getServices, orderSchedulings } from '@/functions/schedulings'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
 import { orderServices } from '@/functions/services'
-import { ContentContext } from '@/context/Content'
+import { HideTabBarContext } from '@/context/HideTabBar'
+import LoadingScreen from '@/components/common/LoadingScreen'
 
 export default function Schedulings() {
 
@@ -22,7 +23,8 @@ export default function Schedulings() {
     const [selectedMonth] = useContext(MonthContext)
     const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Scheduling)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
-    const [, setContent] = useContext(ContentContext)
+    const [loadingScreen, setLoadingScreen] = useState(false)
+    const [, setHideTabBar] = useContext(HideTabBarContext)
 
     const checkAmount = (scheduling: Scheduling) => {
 
@@ -55,53 +57,62 @@ export default function Schedulings() {
 
     const deleteScheduling = (scheduling: Scheduling) => {
 
+        setLoadingScreen(true)
+
         if (scheduling.service.category === 'product')
-        checkAmount(scheduling)
+            checkAmount(scheduling)
         const remainingSchedulings = schedulings.filter(current => {
             return current._id !== scheduling._id
         })
 
-        setSchedulings(orderSchedulings(remainingSchedulings))
-        setDeleteSchedulingForm(false)
+        setTimeout(() => {
+            setSchedulings(orderSchedulings(remainingSchedulings))
+            setDeleteSchedulingForm(false)
+            setLoadingScreen(false)
+            setHideTabBar(false)
+        }, 500)
 
     }
 
     return (
-        <Container>
-            {
-                schedulings[0] && (
-                    <MonthInput />
-                )
-            }
-            {
-                filterSchedulings(schedulings, selectedMonth)[0]
-                    ? <SchedulingsList
-                        filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
-                        setSchedulingForDeletion={setSchedulingForDeletion}
-                        setDeleteSchedulingForm={setDeleteSchedulingForm}
-                    />
-                    : <AnyItemWarning text='Nenhuma entrada cadastrada' />
-            }
-            {
-                addSchedulingForm
-                    ? <AddSchedulingForm
-                        setAddSchedulingForm={setAddSchedulingForm}
-                        services={getServices(services)}
-                    />
-                    : <AddSchedulingButton
-                        setAddSchedulingForm={setAddSchedulingForm}
-                    />
-            }
-            {
-                deleteSchedulingForm
-                    ? <DeleteSchedulingForm
-                        scheduling={schedulingForDeletion}
-                        deleteFunction={deleteScheduling}
-                        setFormOff={setDeleteSchedulingForm}
-                    />
-                    : null
-            }
-        </Container>
+        <>
+            {loadingScreen && <LoadingScreen />}
+            <Container>
+                {
+                    schedulings[0] && (
+                        <MonthInput />
+                    )
+                }
+                {
+                    filterSchedulings(schedulings, selectedMonth)[0]
+                        ? <SchedulingsList
+                            filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
+                            setSchedulingForDeletion={setSchedulingForDeletion}
+                            setDeleteSchedulingForm={setDeleteSchedulingForm}
+                        />
+                        : <AnyItemWarning text='Nenhuma entrada cadastrada' />
+                }
+                {
+                    addSchedulingForm
+                        ? <AddSchedulingForm
+                            setAddSchedulingForm={setAddSchedulingForm}
+                            services={getServices(services)}
+                        />
+                        : <AddSchedulingButton
+                            setAddSchedulingForm={setAddSchedulingForm}
+                        />
+                }
+                {
+                    deleteSchedulingForm
+                        ? <DeleteSchedulingForm
+                            scheduling={schedulingForDeletion}
+                            deleteFunction={deleteScheduling}
+                            setFormOff={setDeleteSchedulingForm}
+                        />
+                        : null
+                }
+            </Container>
+        </>
     )
 
 }

@@ -7,6 +7,8 @@ import Container from '@/components/common/Container'
 import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/functions/services'
 import DeleteServiceForm from '@/components/services/AboutServiceForm'
 import ServicesContent from '@/components/services/ServicesContent'
+import LoadingScreen from '@/components/common/LoadingScreen'
+import { HideTabBarContext } from '@/context/HideTabBar'
 
 export default function Services() {
 
@@ -15,6 +17,8 @@ export default function Services() {
     const [serviceForDeletion, setServiceForDeletion] = useState({} as Service)
     const [services, setServices] = useContext(DocsContext).services
     const [category, setCategory] = useState('')
+    const [loadingScreen, setLoadingScreen] = useState(false)
+    const [, setHideTabBar] = useContext(HideTabBarContext)
 
     useEffect(() => {
         getCategoryAndSet(services, setCategory)
@@ -22,16 +26,24 @@ export default function Services() {
 
     const deleteService = (id: string) => {
 
+        setLoadingScreen(true)
+
         const remainingServices = services.filter(service => {
             return service._id !== id
         })
 
-        setServices(orderServices(remainingServices))
-        setDeleteServiceForm(false)
+        setTimeout(() => {
+            setServices(orderServices(remainingServices))
+            setDeleteServiceForm(false)
+            setLoadingScreen(false)
+            setHideTabBar(false)
+        }, 500)
 
     }
 
     return (
+        <>
+        {loadingScreen && <LoadingScreen />}
         <Container>
             {
                 services[0]
@@ -62,6 +74,7 @@ export default function Services() {
                     : null
             }
         </Container>
+        </>
     )
 
 }
