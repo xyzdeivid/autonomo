@@ -1,6 +1,6 @@
 import { HideTabBarContext } from '@/context/HideTabBar'
-import { useContext } from 'react'
-import { Pressable, StyleSheet } from 'react-native'
+import { useContext, useEffect, useRef } from 'react'
+import { Pressable, StyleSheet, Animated } from 'react-native'
 
 interface FormContainerProps {
     children: React.ReactNode
@@ -12,6 +12,20 @@ export default function FormContainer({ children, setFormOff, bgColor }: FormCon
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
+    const slideAnim = useRef(new Animated.Value(-1000)).current
+
+    useEffect(() => {
+
+        Animated.parallel([
+            Animated.timing(slideAnim, {
+                toValue: 0,
+                duration: 250,
+                useNativeDriver: true,
+            })
+        ]).start()
+
+    }, [])
+
     const closeForm = (key: string) => {
         if (key !== 'body') {
             setFormOff(false)
@@ -20,26 +34,34 @@ export default function FormContainer({ children, setFormOff, bgColor }: FormCon
     }
 
     return (
-        <Pressable 
-        onPress={() => closeForm('container')} 
-        style={{
-            ...style.container,
-            backgroundColor: bgColor ? bgColor : 'rgba(17, 41, 53, 0.1)'
-        }}
+        <Animated.View
+            style={{
+                ...styles.animation,
+                backgroundColor: bgColor ? bgColor : 'rgba(17, 41, 53, 0.1)',
+                transform: [{ translateY: slideAnim }]
+            }}
         >
-            <Pressable onPress={() => closeForm('body')}>
-                {children}
+            <Pressable
+                onPress={() => closeForm('container')}
+                style={styles.container}
+            >
+                <Pressable onPress={() => closeForm('body')}>
+                    {children}
+                </Pressable>
             </Pressable>
-        </Pressable>
+        </Animated.View>
     )
-
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
+    animation: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute'
+    },
     container: {
         width: '100%',
         height: '100%',
-        position: 'absolute',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
