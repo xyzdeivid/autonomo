@@ -2,8 +2,6 @@ import { Tabs } from 'expo-router'
 import React, { useContext } from 'react'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { HideTabBarContext } from '@/context/HideTabBar'
-import headerIcon from '@/assets/images/header-icon.png'
-import { Image } from 'react-native'
 import { ContentContext } from '@/context/Content'
 
 export default function TabLayout() {
@@ -45,7 +43,7 @@ export default function TabLayout() {
                 options={{
                     title: 'Entradas',
                     tabBarIcon: ({ color }) => (
-                        <FontAwesome6 name="arrow-trend-up" size={24} color={color} />
+                        <FontAwesome6 name='arrow-trend-up' size={24} color={color} />
                     )
                 }} />
             <Tabs.Screen name='expenses'

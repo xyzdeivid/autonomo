@@ -15,6 +15,7 @@ import Products from '@/components/info/Products'
 import Budgets from '@/components/info/Budgets'
 import { ContentContext } from '@/context/Content'
 import GeneralButton from '@/components/info/GeneralButton'
+import AddItemForm from '@/components/info/AddItemForm'
 
 export default function Info() {
 
@@ -22,6 +23,7 @@ export default function Info() {
     const [contentForm, setContentForm] = useState(false)
     const [schedulings] = useContext(DocsContext).schedulings
     const [selectedMonth] = useContext(MonthContext)
+    const [addItemsForm, setAddItemsForm] = useState(false)
 
     const servicesSchedulings = () => {
         return schedulings.filter(scheduling => {
@@ -89,7 +91,11 @@ export default function Info() {
                     </View>
                     : <AnyItemWarning text='Nenhuma informação disponível' />
             }
-            <GeneralButton />
+            {
+                addItemsForm
+                ? <AddItemForm setAddItemsForm={setAddItemsForm} />
+                : <GeneralButton setAddItemsForm={setAddItemsForm} />
+            }
         </Container>
     )
 
