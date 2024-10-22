@@ -117,7 +117,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
                             />
                         )}
                     </FormInputs>
-                    <SubmitFormButtons submit={addService} submitButtonText='Cadastrar' />
+                    <SubmitFormButtons submit={addService} submitButtonText='Cadastrar' submitButtonColor='#112935' />
                 </FormBody>
             </FormContainer>
         </>

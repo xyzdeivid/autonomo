@@ -3,7 +3,7 @@ import { View, StyleSheet, Button } from 'react-native'
 interface SubmitFormButtonsProps {
     submit: () => void
     submitButtonText: string
-    submitButtonColor?: string
+    submitButtonColor: string
 }
 
 export default function SubmitFormButtons({ submit, submitButtonText, submitButtonColor }: SubmitFormButtonsProps) {
@@ -11,7 +11,7 @@ export default function SubmitFormButtons({ submit, submitButtonText, submitButt
     return (
         <View style={styles.button}>
             <Button
-                color={submitButtonColor ? submitButtonColor : '#08819B'}
+                color={submitButtonColor}
                 title={submitButtonText}
                 onPress={() => {
                     submit()

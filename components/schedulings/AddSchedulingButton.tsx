@@ -1,4 +1,4 @@
-import { Alert, Button, Pressable, StyleSheet, View } from 'react-native'
+import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
 
 import { useContext } from 'react'
@@ -24,7 +24,7 @@ export default function AddSchedulingButton({ setAddSchedulingForm }: AddSchedul
             style={styles.buttonContainer}
             onPress={() => checkServices()}
         >
-            <Entypo name='add-to-list' size={28} color='#FFFFFF' />
+            <Text style={{ color: 'white' }}>Nova Entrada</Text>
         </Pressable>
     )
 

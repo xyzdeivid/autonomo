@@ -165,7 +165,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
                         {service.category === 'product' && (
                             <StockInfo amount={service.amount - amount} />
                         )}
-                        <DateInput setTargetDate={setDate} />
+                        <DateInput setTargetDate={setDate} bgColor='#006600' />
                         {service.category === 'product' && (
                             <AmountInput
                                 text='Quantidade'
@@ -180,7 +180,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
                             )
                         }
                     </FormInputs>
-                    <SubmitFormButtons submit={addScheduling} submitButtonText='Registrar' />
+                    <SubmitFormButtons submit={addScheduling} submitButtonText='Registrar' submitButtonColor='#006600' />
                 </FormBody>
             </FormContainer>
         </>

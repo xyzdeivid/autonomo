@@ -1,22 +1,22 @@
-import { Pressable, StyleSheet } from 'react-native'
-import Entypo from '@expo/vector-icons/Entypo'
+import { Pressable, StyleSheet, Text } from 'react-native'
 
 interface AddItemButtonProps {
     setForm: React.Dispatch<React.SetStateAction<boolean>>,
-    bgColor?: string
+    bgColor: string
+    text: string
 }
 
-export default function AddItemButton({ setForm, bgColor }: AddItemButtonProps) {
+export default function AddItemButton({ setForm, bgColor, text }: AddItemButtonProps) {
 
     return (
         <Pressable 
         style={{
             ...styles.buttonContainer,
-        backgroundColor: bgColor ? bgColor : '#08819B'
+        backgroundColor: bgColor
         }}
         onPress={() => setForm(true)}
         >
-            <Entypo name='add-to-list' size={28} color='#FFFFFF' />
+            <Text style={{ color: 'white' }}>{text}</Text>
         </Pressable>
     )
 

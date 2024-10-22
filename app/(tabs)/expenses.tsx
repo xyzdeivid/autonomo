@@ -93,7 +93,7 @@ export default function Expenses() {
                 {
                     addExpenseForm
                         ? <AddExpenseForm setAddExpenseForm={setAddExpenseForm} />
-                        : <AddItemButton setForm={setAddExpenseForm} bgColor='#660000' />
+                        : <AddItemButton setForm={setAddExpenseForm} bgColor='#660000' text='Nova Saída'/>
                 }
                 {
                     deleteExpenseForm && (

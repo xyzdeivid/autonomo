@@ -62,7 +62,7 @@ export default function Services() {
                         setAddServiceForm={setAddServiceForm}
                         setCategory={setCategory}
                     />
-                    : <AddItemButton setForm={setAddServiceForm} />
+                    : <AddItemButton setForm={setAddServiceForm} text='Novo Item' bgColor='#112935' />
             }
             {
                 deleteServiceForm
