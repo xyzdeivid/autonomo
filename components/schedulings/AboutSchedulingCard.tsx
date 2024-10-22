@@ -33,7 +33,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     }
 
     return (
-        <FormContainer setFormOff={setFormOff}>
+        <FormContainer setFormOff={setFormOff} bgColor='rgba(0, 102, 0, 0.1)'>
             <FormBody>
                 <FormTitle text={scheduling.service._id}>
                     <Entypo name='info' size={18} color='darkgray' />

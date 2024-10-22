@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import { ContentContext } from '@/context/Content'
+import { LinearGradient } from 'expo-linear-gradient'
 
 export default function TabLayout() {
 
@@ -16,10 +17,10 @@ export default function TabLayout() {
                 headerStyle: {
                     backgroundColor: '#112935'
                 },
-                tabBarActiveTintColor: 'white',
-                tabBarInactiveTintColor: 'black',
-                tabBarInactiveBackgroundColor: 'white',
-                tabBarActiveBackgroundColor: '#112935',
+                tabBarActiveTintColor: '#112935',
+                tabBarInactiveTintColor: 'white',
+                tabBarInactiveBackgroundColor: '#112935',
+                tabBarActiveBackgroundColor: 'white',
                 tabBarStyle: {
                     display: hideTabBar ? 'none' : 'flex',
                     borderTopWidth: 0
@@ -42,6 +43,15 @@ export default function TabLayout() {
                 })}
                 options={{
                     title: 'Entradas',
+                    tabBarActiveTintColor: '#006600',
+                    headerBackground: () => (
+                        <LinearGradient
+                            colors={['#112935', '#006600']}
+                            start={[0, 0]}
+                            end={[1, 0]}
+                            style={{ flex: 1 }}
+                        />
+                    ),
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='arrow-trend-up' size={24} color={color} />
                     )
@@ -54,7 +64,15 @@ export default function TabLayout() {
                 })}
                 options={{
                     title: 'Saídas',
-                    tabBarActiveBackgroundColor: 'darkred',
+                    tabBarActiveTintColor: '#660000',
+                    headerBackground: () => (
+                        <LinearGradient
+                            colors={['#112935', '#660000']}
+                            start={[0, 0]}
+                            end={[1, 0]}
+                            style={{ flex: 1 }}
+                        />
+                    ),
                     headerStyle: {
                         backgroundColor: 'darkred'
                     },

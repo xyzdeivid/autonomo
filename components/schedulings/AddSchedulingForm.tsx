@@ -151,7 +151,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer setFormOff={setAddSchedulingForm}>
+            <FormContainer setFormOff={setAddSchedulingForm} bgColor='rgba(0, 102, 0, 0.1)'>
                 <FormBody>
                     <FormTitle text='Registrar Entrada'>
                         <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />

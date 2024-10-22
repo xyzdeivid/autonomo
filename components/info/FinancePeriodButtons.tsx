@@ -16,7 +16,6 @@ export default function FinancePeriodButtons({ period, setPeriod, mgTop }: Finan
 
     return (
             <View style={{ ...styles.buttonsContainer, marginTop: mgTop ? mgTop : 0 }}>
-            <Text style={{ marginEnd: 4 }} >Período:</Text>
                 <Pressable
                     style={{
                         ...styles.button, backgroundColor: checkPeriod('monthly'),
@@ -46,8 +45,7 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         display: 'flex',
         flexDirection: 'row',
-        marginHorizontal: 'auto',
-        alignItems: 'center'
+        marginStart: 20
     },
     button: {
         paddingHorizontal: 8,

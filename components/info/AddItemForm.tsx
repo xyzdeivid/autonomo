@@ -49,17 +49,27 @@ export default function AddItemForm({ setAddItemsForm }: AddItemFormProps) {
                     style={styles.buttonsContainer}
                     onPress={() => closeForm('button-container')}
                 >
-                    <Pressable style={styles.button}>
+                    <Pressable style={{
+                        ...styles.button,
+                        backgroundColor: '#006600'
+                        }}>
                         <Text style={styles.text}>Nova Entrada</Text>
-                        <FontAwesome6 name='arrow-trend-up' size={16} color='#000000' />
+                        <FontAwesome6 name='arrow-trend-up' size={16} color='#FFFFFF' />
                     </Pressable>
-                    <Pressable style={{ ...styles.button, marginVertical: 8 }}>
+                    <Pressable style={{ 
+                        ...styles.button, 
+                        marginVertical: 8 ,
+                        backgroundColor: '#660000'
+                        }}>
                         <Text style={styles.text}>Nova Saída</Text>
-                        <FontAwesome6 name='arrow-trend-down' size={16} color='#000000' />
+                        <FontAwesome6 name='arrow-trend-down' size={16} color='#FFFFFF' />
                     </Pressable>
-                    <Pressable style={styles.button}>
+                    <Pressable style={{
+                        ...styles.button,
+                        backgroundColor: '#112935'
+                        }}>
                         <Text style={styles.text}>Novo Item</Text>
-                        <FontAwesome6 name='bag-shopping' size={16} color='#000000' />
+                        <FontAwesome6 name='bag-shopping' size={16} color='#FFFFFF' />
                     </Pressable>
                 </Pressable>
             </Pressable>
@@ -80,16 +90,11 @@ const styles = StyleSheet.create({
         end: 0,
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: 'rgba(17, 41, 53, 0.5)',
-        marginBottom: 10,
-        padding: 10,
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10
+        margin: 10
     },
     button: {
         padding: 10,
         borderRadius: 10,
-        backgroundColor: '#FFFFFF',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -97,5 +102,6 @@ const styles = StyleSheet.create({
     },
     text: {
         marginEnd: 8,
+        color: '#FFFFFF'
     }
 })

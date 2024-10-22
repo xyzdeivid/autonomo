@@ -10,7 +10,6 @@ import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
 import { filterExpenses } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
-import { Alert } from 'react-native'
 import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
 import { orderServices } from '@/functions/services'
 import { HideTabBarContext } from '@/context/HideTabBar'
@@ -94,7 +93,7 @@ export default function Expenses() {
                 {
                     addExpenseForm
                         ? <AddExpenseForm setAddExpenseForm={setAddExpenseForm} />
-                        : <AddItemButton setForm={setAddExpenseForm} bgColor='darkred' />
+                        : <AddItemButton setForm={setAddExpenseForm} bgColor='#660000' />
                 }
                 {
                     deleteExpenseForm && (
