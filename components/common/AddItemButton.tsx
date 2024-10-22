@@ -1,4 +1,4 @@
-import { Pressable, Button, StyleSheet } from 'react-native'
+import { Pressable, StyleSheet } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
 
 interface AddItemButtonProps {

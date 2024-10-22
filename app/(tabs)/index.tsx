@@ -14,6 +14,7 @@ import Services from '@/components/info/Services'
 import Products from '@/components/info/Products'
 import Budgets from '@/components/info/Budgets'
 import { ContentContext } from '@/context/Content'
+import GeneralButton from '@/components/info/GeneralButton'
 
 export default function Info() {
 
@@ -88,6 +89,7 @@ export default function Info() {
                     </View>
                     : <AnyItemWarning text='Nenhuma informação disponível' />
             }
+            <GeneralButton />
         </Container>
     )
 
