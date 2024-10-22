@@ -18,7 +18,7 @@ import LoadingScreen from '../common/LoadingScreen'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
-    setCategory: React.Dispatch<React.SetStateAction<string>>
+    setCategory?: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function AddServiceForm({ setAddServiceForm, setCategory }: AddServiceFormProps) {
@@ -45,7 +45,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
             const service = createNewService(choice, name, value, amount)
 
             // Configurando categoria para a lista de items
-            if (!services[0]) {
+            if (!services[0] && setCategory) {
                 setCategory(choice)
             }
 

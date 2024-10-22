@@ -1,12 +1,18 @@
+import { Service } from '@/context/DocsContext'
+import { getServices } from '@/functions/schedulings'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { useEffect, useRef } from 'react'
-import { StyleSheet, Pressable, Text, Animated } from 'react-native'
+import { StyleSheet, Pressable, Text, Animated, Alert } from 'react-native'
 
 interface AddItemFormProps {
     setAddItemsForm: React.Dispatch<React.SetStateAction<boolean>>
+    setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
+    setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
+    setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
+    services: Service[]
 }
 
-export default function AddItemForm({ setAddItemsForm }: AddItemFormProps) {
+export default function AddItemForm({ setAddItemsForm, setAddServiceForm, setAddExpenseForm, setAddSchedulingForm, services }: AddItemFormProps) {
 
     const slideAnim = useRef(new Animated.Value(1000)).current
 
@@ -35,6 +41,12 @@ export default function AddItemForm({ setAddItemsForm }: AddItemFormProps) {
             })
     }
 
+    const checkServices = () => {
+        getServices(services)[0]
+            ? setAddSchedulingForm(true)
+            : Alert.alert('Sem item disponível', 'Verifique se você tem algum item ou estoque disponível.')
+    }
+
     return (
         <Animated.View
             style={{
@@ -49,25 +61,42 @@ export default function AddItemForm({ setAddItemsForm }: AddItemFormProps) {
                     style={styles.buttonsContainer}
                     onPress={() => closeForm('button-container')}
                 >
-                    <Pressable style={{
-                        ...styles.button,
-                        backgroundColor: '#006600'
-                        }}>
+                    <Pressable
+                        style={{
+                            ...styles.button,
+                            backgroundColor: '#006600'
+                        }}
+                        onPress={() => {
+                            setAddItemsForm(false)
+                            checkServices()
+                        }}
+                    >
                         <Text style={styles.text}>Nova Entrada</Text>
                         <FontAwesome6 name='arrow-trend-up' size={16} color='#FFFFFF' />
                     </Pressable>
-                    <Pressable style={{ 
-                        ...styles.button, 
-                        marginVertical: 8 ,
-                        backgroundColor: '#660000'
-                        }}>
+                    <Pressable
+                        style={{
+                            ...styles.button,
+                            marginVertical: 8,
+                            backgroundColor: '#660000'
+                        }}
+                        onPress={() => {
+                            setAddItemsForm(false)
+                            setAddExpenseForm(true)
+                        }}
+                    >
                         <Text style={styles.text}>Nova Saída</Text>
                         <FontAwesome6 name='arrow-trend-down' size={16} color='#FFFFFF' />
                     </Pressable>
                     <Pressable style={{
                         ...styles.button,
                         backgroundColor: '#112935'
-                        }}>
+                    }}
+                        onPress={() => {
+                            setAddItemsForm(false)
+                            setAddServiceForm(true)
+                        }}
+                    >
                         <Text style={styles.text}>Novo Item</Text>
                         <FontAwesome6 name='bag-shopping' size={16} color='#FFFFFF' />
                     </Pressable>

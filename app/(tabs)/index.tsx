@@ -16,14 +16,22 @@ import Budgets from '@/components/info/Budgets'
 import { ContentContext } from '@/context/Content'
 import GeneralButton from '@/components/info/GeneralButton'
 import AddItemForm from '@/components/info/AddItemForm'
+import AddServiceForm from '@/components/services/AddServiceForm'
+import AddExpenseForm from '@/components/expenses/AddExpenseForm'
+import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
+import { getServices } from '@/functions/schedulings'
 
 export default function Info() {
 
     const [content, setContent] = useContext(ContentContext)
     const [contentForm, setContentForm] = useState(false)
     const [schedulings] = useContext(DocsContext).schedulings
+    const [services] = useContext(DocsContext).services
     const [selectedMonth] = useContext(MonthContext)
     const [addItemsForm, setAddItemsForm] = useState(false)
+    const [addServiceForm, setAddServiceForm] = useState(false)
+    const [addExpenseForm, setAddExpenseForm] = useState(false)
+    const [addSchedulingForm, setAddSchedulingForm] = useState(false)
 
     const servicesSchedulings = () => {
         return schedulings.filter(scheduling => {
@@ -93,8 +101,33 @@ export default function Info() {
             }
             {
                 addItemsForm
-                ? <AddItemForm setAddItemsForm={setAddItemsForm} />
-                : <GeneralButton setAddItemsForm={setAddItemsForm} />
+                    ? <AddItemForm
+                        setAddItemsForm={setAddItemsForm}
+                        setAddServiceForm={setAddServiceForm}
+                        setAddExpenseForm={setAddExpenseForm}
+                        setAddSchedulingForm={setAddSchedulingForm}
+                        services={services}
+                    />
+                    : <GeneralButton setAddItemsForm={setAddItemsForm} />
+            }
+            {
+                addServiceForm
+                && <AddServiceForm
+                    setAddServiceForm={setAddServiceForm}
+                />
+            }
+            {
+                addExpenseForm
+                && <AddExpenseForm
+                    setAddExpenseForm={setAddExpenseForm}
+                />
+            }
+            {
+                addSchedulingForm
+                && <AddSchedulingForm
+                    setAddSchedulingForm={setAddSchedulingForm}
+                    services={getServices(services)}
+                />
             }
         </Container>
     )
