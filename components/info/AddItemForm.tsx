@@ -1,5 +1,6 @@
 import { FontAwesome6 } from '@expo/vector-icons'
-import { StyleSheet, Pressable, Text } from 'react-native'
+import { useEffect, useRef } from 'react'
+import { StyleSheet, Pressable, Text, Animated } from 'react-native'
 
 interface AddItemFormProps {
     setAddItemsForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -7,34 +8,62 @@ interface AddItemFormProps {
 
 export default function AddItemForm({ setAddItemsForm }: AddItemFormProps) {
 
+    const slideAnim = useRef(new Animated.Value(1000)).current
+
+    useEffect(() => {
+
+        Animated.parallel([
+            Animated.timing(slideAnim, {
+                toValue: 0,
+                duration: 250,
+                useNativeDriver: true,
+            })
+        ]).start()
+
+    }, [])
+
     const closeForm = (element: string) => {
         if (element !== 'button-container')
-            setAddItemsForm(false)
+            Animated.parallel([
+                Animated.timing(slideAnim, {
+                    toValue: 1000,
+                    duration: 250,
+                    useNativeDriver: true
+                }),
+            ]).start(() => {
+                setAddItemsForm(false)
+            })
     }
 
     return (
-        <Pressable
-            style={styles.container}
-            onPress={() => closeForm('container')}
-        >
+        <Animated.View
+            style={{
+                ...styles.container,
+                transform: [{ translateX: slideAnim }]
+            }}>
             <Pressable
-                style={styles.buttonsContainer}
-                onPress={() => closeForm('button-container')}
+                style={styles.container}
+                onPress={() => closeForm('container')}
             >
-                <Pressable style={styles.button}>
-                    <Text style={styles.text}>Nova Entrada</Text>
-                    <FontAwesome6 name='arrow-trend-up' size={16} color='#000000' />
-                </Pressable>
-                <Pressable style={{ ...styles.button, marginVertical: 8 }}>
-                    <Text style={styles.text}>Nova Saída</Text>
-                    <FontAwesome6 name='arrow-trend-down' size={16} color='#000000' />
-                </Pressable>
-                <Pressable style={styles.button}>
-                    <Text style={styles.text}>Novo Item</Text>
-                    <FontAwesome6 name='bag-shopping' size={16} color='#000000' />
+                <Pressable
+                    style={styles.buttonsContainer}
+                    onPress={() => closeForm('button-container')}
+                >
+                    <Pressable style={styles.button}>
+                        <Text style={styles.text}>Nova Entrada</Text>
+                        <FontAwesome6 name='arrow-trend-up' size={16} color='#000000' />
+                    </Pressable>
+                    <Pressable style={{ ...styles.button, marginVertical: 8 }}>
+                        <Text style={styles.text}>Nova Saída</Text>
+                        <FontAwesome6 name='arrow-trend-down' size={16} color='#000000' />
+                    </Pressable>
+                    <Pressable style={styles.button}>
+                        <Text style={styles.text}>Novo Item</Text>
+                        <FontAwesome6 name='bag-shopping' size={16} color='#000000' />
+                    </Pressable>
                 </Pressable>
             </Pressable>
-        </Pressable>
+        </Animated.View>
     )
 
 }
@@ -51,10 +80,11 @@ const styles = StyleSheet.create({
         end: 0,
         display: 'flex',
         flexDirection: 'column',
-        margin: 10,
         backgroundColor: 'rgba(17, 41, 53, 0.5)',
+        marginBottom: 10,
         padding: 10,
-        borderRadius: 10
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10
     },
     button: {
         padding: 10,
