@@ -1,24 +1,44 @@
-import { Scheduling, Expense } from '@/context/DocsContext'
+import { Scheduling, Expense, Service } from '@/context/DocsContext'
 import { ScrollView, View } from 'react-native'
 
 interface ContainerHandlerProps {
-    filteredTargets: Scheduling[] | Expense[]
+    filteredTargets: Scheduling[] | Expense[] | Service[]
     children: React.ReactNode
 }
 
 export default function ContainerHandler({ filteredTargets, children }: ContainerHandlerProps) {
 
-    if (filteredTargets.length > 8) {
+    if (filteredTargets.length > 10) {
         return (
-            <ScrollView style={{ maxHeight: 450 }}>
-                {children}
-            </ScrollView>
+            <>
+                <ScrollView style={{ maxHeight: 450 }}>
+                    {children}
+                </ScrollView>
+                <View
+                    style={{
+                        height: 2,
+                        width: '80%',
+                        marginHorizontal: 'auto',
+                        backgroundColor: '#E0E0E0'
+                    }}
+                />
+            </>
         )
     } else {
         return (
-            <View>
-                {children}
-            </View>
+            <>
+                <View>
+                    {children}
+                </View>
+                <View
+                    style={{
+                        height: 2,
+                        width: '80%',
+                        marginHorizontal: 'auto',
+                        backgroundColor: '#E0E0E0'
+                    }}
+                />
+            </>
         )
     }
 }

@@ -14,9 +14,6 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
-                headerRight: () => (
-                    <Image source={headerIcon} style={{ width: 32, height: 32, marginEnd: 10, marginTop: 2 }} />
-                ),
                 tabBarShowLabel: false,
                 headerStyle: {
                     backgroundColor: '#112935'

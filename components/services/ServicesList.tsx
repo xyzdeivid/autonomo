@@ -1,7 +1,8 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
 import { Service } from '@/context/DocsContext'
 import MoreInfoWarning from '../common/MoreInfoWarning'
+import ContainerHandler from '../common/ContainerHandler'
 
 interface ServicesListProps {
     setServiceForDeletion: React.Dispatch<React.SetStateAction<Service>>
@@ -29,21 +30,23 @@ export default function ServicesList({ setServiceForDeletion, setDeleteServiceFo
     }
 
     return (
-        <View>
-            <DataTable>
-                <DataTable.Header>
-                    <DataTable.Title style={styles.text}>Item</DataTable.Title>
-                </DataTable.Header>
-                {services.map(service => {
-                    return (
-                        <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
-                            <DataTable.Cell style={styles.text}>{service._id}{checkIfIsBudget(service)}</DataTable.Cell>
-                        </DataTable.Row>
-                    )
-                })}
-            </DataTable>
+        <>
+            <ContainerHandler filteredTargets={services}>
+                <DataTable>
+                    <DataTable.Header>
+                        <DataTable.Title style={styles.text}>Item</DataTable.Title>
+                    </DataTable.Header>
+                    {services.map(service => {
+                        return (
+                            <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
+                                <DataTable.Cell style={styles.text}>{service._id}{checkIfIsBudget(service)}</DataTable.Cell>
+                            </DataTable.Row>
+                        )
+                    })}
+                </DataTable>
+            </ContainerHandler>
             <MoreInfoWarning />
-        </View>
+        </>
     )
 
 }
