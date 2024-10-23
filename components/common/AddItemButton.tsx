@@ -1,12 +1,13 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
 
 interface AddItemButtonProps {
-    setForm: React.Dispatch<React.SetStateAction<boolean>>,
+    setForm: React.Dispatch<React.SetStateAction<boolean>>
     bgColor: string
     text: string
+    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddItemButton({ setForm, bgColor, text }: AddItemButtonProps) {
+export default function AddItemButton({ setForm, bgColor, text, setButton }: AddItemButtonProps) {
 
     return (
         <Pressable 
@@ -14,7 +15,10 @@ export default function AddItemButton({ setForm, bgColor, text }: AddItemButtonP
             ...styles.buttonContainer,
         backgroundColor: bgColor
         }}
-        onPress={() => setForm(true)}
+        onPress={() => {
+            setForm(true)
+            setButton(false)
+        }}
         >
             <Text style={{ color: 'white' }}>{text}</Text>
         </Pressable>

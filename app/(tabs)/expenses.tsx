@@ -25,6 +25,7 @@ export default function Expenses() {
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [button, setButton] = useState(true)
 
     const deleteExpense = (expense: Expense) => {
 
@@ -68,6 +69,7 @@ export default function Expenses() {
             setDeleteExpenseForm(false)
             setLoadingScreen(false)
             setHideTabBar(false)
+            setButton(true)
         }, 500)
 
     }
@@ -91,9 +93,20 @@ export default function Expenses() {
                         : <AnyItemWarning text='Nenhuma saída cadastrada' />
                 }
                 {
+                    button
+                    && <AddItemButton
+                        setForm={setAddExpenseForm}
+                        bgColor='#660000'
+                        text='Nova Saída'
+                        setButton={setButton}
+                    />
+                }
+                {
                     addExpenseForm
-                        ? <AddExpenseForm setAddExpenseForm={setAddExpenseForm} />
-                        : <AddItemButton setForm={setAddExpenseForm} bgColor='#660000' text='Nova Saída'/>
+                    && <AddExpenseForm
+                        setAddExpenseForm={setAddExpenseForm}
+                        setButton={setButton}
+                    />
                 }
                 {
                     deleteExpenseForm && (
@@ -101,6 +114,7 @@ export default function Expenses() {
                             expense={expenseForDeletion}
                             deleteFunction={deleteExpense}
                             setFormOff={setDeleteExpenseForm}
+                            setButton={setButton}
                         />
                     )
                 }

@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 import { StyleSheet, Pressable, Text, Animated, Alert } from 'react-native'
 
 interface AddItemFormProps {
+    setGeneralButton: React.Dispatch<React.SetStateAction<boolean>> 
     setAddItemsForm: React.Dispatch<React.SetStateAction<boolean>>
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -12,7 +13,8 @@ interface AddItemFormProps {
     services: Service[]
 }
 
-export default function AddItemForm({ setAddItemsForm, setAddServiceForm, setAddExpenseForm, setAddSchedulingForm, services }: AddItemFormProps) {
+export default function AddItemForm({ setGeneralButton, setAddItemsForm, setAddServiceForm, 
+    setAddExpenseForm, setAddSchedulingForm, services }: AddItemFormProps) {
 
     const slideAnim = useRef(new Animated.Value(1000)).current
 
@@ -38,13 +40,19 @@ export default function AddItemForm({ setAddItemsForm, setAddServiceForm, setAdd
                 }),
             ]).start(() => {
                 setAddItemsForm(false)
+                setGeneralButton(true)
             })
+    }
+
+    const showAlert = () => {
+        Alert.alert('Sem item disponível', 'Verifique se você tem algum item ou estoque disponível.')
+        setGeneralButton(true)
     }
 
     const checkServices = () => {
         getServices(services)[0]
             ? setAddSchedulingForm(true)
-            : Alert.alert('Sem item disponível', 'Verifique se você tem algum item ou estoque disponível.')
+            : showAlert()
     }
 
     return (

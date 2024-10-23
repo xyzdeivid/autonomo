@@ -21,9 +21,10 @@ import LoadingScreen from '../common/LoadingScreen'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
+    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProps) {
+export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpenseFormProps) {
 
     const [name, setName] = useState('')
     const [productName, setProductName] = useState('')
@@ -46,10 +47,10 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 return false
 
             case 'resale':
-                if(name && productName &&
-                stock && value && resaleValue) return true
+                if (name && productName &&
+                    stock && value && resaleValue) return true
                 return false
-        
+
             default:
                 return false
 
@@ -138,9 +139,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
                 newExpense.value = value
 
-                setTimeout(() => 
+                setTimeout(() =>
                     setExpenses(orderExpenses([...expenses, newExpense]))
-                , 500)
+                    , 500)
 
             }
 
@@ -157,56 +158,61 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
         setTimeout(() => {
             setAddExpenseForm(false)
-        setHideTabBar(false)
+            setHideTabBar(false)
+            setButton(true)
         }, 500)
 
     }
 
     return (
         <>
-        {loadingScreen && <LoadingScreen />}
-        <FormContainer setFormOff={setAddExpenseForm} bgColor='rgba(139, 0, 0, 0.1)'>
-            <FormBody>
-                <FormTitle text='Registrar Saída'>
-                    <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
-                </FormTitle>
-                <FormInputs>
-                    <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
-                    <NameInput setName={setName} />
-                    <DateInput
-                        setTargetDate={setDate}
-                        bgColor='#660000'
-                    />
-                    {choice === 'resale' && (
-                        <ProductNameInput setProductName={setProductName} />
-                    )}
-                    {choice === 'resale' && (
+            {loadingScreen && <LoadingScreen />}
+            <FormContainer 
+            setFormOff={setAddExpenseForm} 
+            bgColor='rgba(139, 0, 0, 0.1)'
+            setButton={setButton}
+            >
+                <FormBody>
+                    <FormTitle text='Registrar Saída'>
+                        <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
+                    </FormTitle>
+                    <FormInputs>
+                        <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
+                        <NameInput setName={setName} />
+                        <DateInput
+                            setTargetDate={setDate}
+                            bgColor='#660000'
+                        />
+                        {choice === 'resale' && (
+                            <ProductNameInput setProductName={setProductName} />
+                        )}
+                        {choice === 'resale' && (
                             <AmountInput
                                 text='Quantidade (un)'
                                 setAmount={setStock}
                             />
-                    )}
-                    <NumberInput
-                        label={choice === 'resale'
-                            ? 'Valor de Compra (un)'
-                            : ''
-                        }
-                        setValue={setValue}
-                    />
-                    {choice === 'resale' && (
+                        )}
                         <NumberInput
-                        label='Valor de Venda (un)'
-                        setValue={setResaleValue}
+                            label={choice === 'resale'
+                                ? 'Valor de Compra (un)'
+                                : ''
+                            }
+                            setValue={setValue}
+                        />
+                        {choice === 'resale' && (
+                            <NumberInput
+                                label='Valor de Venda (un)'
+                                setValue={setResaleValue}
+                            />
+                        )}
+                    </FormInputs>
+                    <SubmitFormButtons
+                        submit={addExpense}
+                        submitButtonText='Registrar'
+                        submitButtonColor='darkred'
                     />
-                    )}
-                </FormInputs>
-                <SubmitFormButtons
-                    submit={addExpense}
-                    submitButtonText='Registrar'
-                    submitButtonColor='darkred'
-                />
-            </FormBody>
-        </FormContainer>
+                </FormBody>
+            </FormContainer>
         </>
     )
 

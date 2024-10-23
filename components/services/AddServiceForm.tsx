@@ -19,9 +19,10 @@ import LoadingScreen from '../common/LoadingScreen'
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
     setCategory?: React.Dispatch<React.SetStateAction<string>>
+    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddServiceForm({ setAddServiceForm, setCategory }: AddServiceFormProps) {
+export default function AddServiceForm({ setAddServiceForm, setCategory, setButton }: AddServiceFormProps) {
 
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
@@ -89,6 +90,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
         setTimeout(() => {
             setAddServiceForm(false)
             setHideTabBar(false)
+            setButton(true)
         }, 500)
 
     }
@@ -96,7 +98,10 @@ export default function AddServiceForm({ setAddServiceForm, setCategory }: AddSe
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer setFormOff={setAddServiceForm}>
+            <FormContainer 
+            setFormOff={setAddServiceForm}
+            setButton={setButton}
+            >
                 <FormBody>
                     <FormTitle text={`Novo ${checkTitle(choice)}`}>
                         <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />

@@ -19,9 +19,10 @@ interface DeleteServiceFormProps {
     service: Service
     deleteFunction: (id: string) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
+    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function DeleteServiceForm({ service, deleteFunction, setFormOff }: DeleteServiceFormProps) {
+export default function DeleteServiceForm({ service, deleteFunction, setFormOff, setButton }: DeleteServiceFormProps) {
 
     const [services, setServices] = useContext(DocsContext).services
 
@@ -37,6 +38,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
 
     useEffect(() => {
         setHideTabBar(true)
+        setButton(false)
     }, [])
 
     const editValue = () => {
@@ -61,6 +63,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                 setTimeout(() => {
                     setServices(orderServices([...remainingServices, editedService]))
                     setFormOff(false)
+                    setButton(true)
                 }, 500)
 
             } else {
@@ -68,6 +71,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                 setTimeout(() => {
                     setServices([editedService])
                     setFormOff(false)
+                    setButton(true)
                 }, 500)
 
             }
@@ -104,6 +108,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                 setTimeout(() => {
                     setServices(orderServices([...remainingServices, editedService]))
                     setFormOff(false)
+                    setButton(true)
                 }, 500)
 
             } else {
@@ -111,6 +116,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
                 setTimeout(() => {
                     setServices([editedService])
                     setFormOff(false)
+                    setButton(true)
                 }, 500)
 
             }
@@ -128,7 +134,10 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff 
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer setFormOff={setFormOff}>
+            <FormContainer 
+            setFormOff={setFormOff}
+            setButton={setButton}
+            >
                 <FormBody>
                     <FormTitle text={service._id}>
                         <Entypo name='info' size={18} color='darkgray' />

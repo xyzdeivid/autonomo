@@ -3,14 +3,18 @@ import Entypo from '@expo/vector-icons/Entypo'
 
 interface GeneralButtonProps {
     setAddItemsForm: React.Dispatch<React.SetStateAction<boolean>>
+    setGeneralButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function GeneralButton({ setAddItemsForm }: GeneralButtonProps) {
+export default function GeneralButton({ setAddItemsForm, setGeneralButton }: GeneralButtonProps) {
 
     return (
         <Pressable
             style={styles.buttonContainer}
-            onPress={() => setAddItemsForm(true)}
+            onPress={() => {
+                setAddItemsForm(true)
+                setGeneralButton(false)
+            }}
         >
             <Entypo name='add-to-list' size={28} color='#FFFFFF' />
         </Pressable>

@@ -25,6 +25,7 @@ export default function Schedulings() {
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [button, setButton] = useState(true)
 
     const checkAmount = (scheduling: Scheduling) => {
 
@@ -70,6 +71,7 @@ export default function Schedulings() {
             setDeleteSchedulingForm(false)
             setLoadingScreen(false)
             setHideTabBar(false)
+            setButton(true)
         }, 500)
 
     }
@@ -93,14 +95,19 @@ export default function Schedulings() {
                         : <AnyItemWarning text='Nenhuma entrada cadastrada' />
                 }
                 {
+                    button
+                    && <AddSchedulingButton
+                        setAddSchedulingForm={setAddSchedulingForm}
+                        setButton={setButton}
+                    />
+                }
+                {
                     addSchedulingForm
-                        ? <AddSchedulingForm
-                            setAddSchedulingForm={setAddSchedulingForm}
-                            services={getServices(services)}
-                        />
-                        : <AddSchedulingButton
-                            setAddSchedulingForm={setAddSchedulingForm}
-                        />
+                    && <AddSchedulingForm
+                        setAddSchedulingForm={setAddSchedulingForm}
+                        services={getServices(services)}
+                        setButton={setButton}
+                    />
                 }
                 {
                     deleteSchedulingForm
@@ -108,6 +115,7 @@ export default function Schedulings() {
                             scheduling={schedulingForDeletion}
                             deleteFunction={deleteScheduling}
                             setFormOff={setDeleteSchedulingForm}
+                            setButton={setButton}
                         />
                         : null
                 }

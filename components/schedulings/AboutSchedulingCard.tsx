@@ -14,15 +14,17 @@ interface DeleteSchedulingFormProps {
     scheduling: Scheduling
     deleteFunction: (scheduling: Scheduling) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
+    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFormOff }: DeleteSchedulingFormProps) {
+export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFormOff, setButton }: DeleteSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [confirmDelete, setConfirmDelete] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
+        setButton(false)
     }, [])
 
     const checkValueText = () => {
@@ -33,7 +35,11 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     }
 
     return (
-        <FormContainer setFormOff={setFormOff} bgColor='rgba(0, 102, 0, 0.1)'>
+        <FormContainer
+            setFormOff={setFormOff}
+            bgColor='rgba(0, 102, 0, 0.1)'
+            setButton={setButton}
+        >
             <FormBody>
                 <FormTitle text={scheduling.service._id}>
                     <Entypo name='info' size={18} color='darkgray' />

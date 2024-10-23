@@ -6,9 +6,10 @@ interface FormContainerProps {
     children: React.ReactNode
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
     bgColor?: string
+    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function FormContainer({ children, setFormOff, bgColor }: FormContainerProps) {
+export default function FormContainer({ children, setFormOff, bgColor, setButton }: FormContainerProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
@@ -37,6 +38,7 @@ export default function FormContainer({ children, setFormOff, bgColor }: FormCon
             ]).start(() => {
                 setFormOff(false)
                 setHideTabBar(false)
+                setButton(true)
             })
         }
     }

@@ -29,6 +29,7 @@ export default function Info() {
     const [services] = useContext(DocsContext).services
     const [selectedMonth] = useContext(MonthContext)
     const [addItemsForm, setAddItemsForm] = useContext(ContentContext).form
+    const [generalButton, setGeneralButton] = useState(true)
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
@@ -100,26 +101,35 @@ export default function Info() {
                     : <AnyItemWarning text='Nenhuma informação disponível' />
             }
             {
+                generalButton
+                && <GeneralButton
+                    setAddItemsForm={setAddItemsForm}
+                    setGeneralButton={setGeneralButton}
+                />
+            }
+            {
                 addItemsForm
-                    ? <AddItemForm
+                    && <AddItemForm
+                        setGeneralButton={setGeneralButton}
                         setAddItemsForm={setAddItemsForm}
                         setAddServiceForm={setAddServiceForm}
                         setAddExpenseForm={setAddExpenseForm}
                         setAddSchedulingForm={setAddSchedulingForm}
                         services={services}
                     />
-                    : <GeneralButton setAddItemsForm={setAddItemsForm} />
             }
             {
                 addServiceForm
                 && <AddServiceForm
                     setAddServiceForm={setAddServiceForm}
+                    setButton={setGeneralButton}
                 />
             }
             {
                 addExpenseForm
                 && <AddExpenseForm
                     setAddExpenseForm={setAddExpenseForm}
+                    setButton={setGeneralButton}
                 />
             }
             {
@@ -127,6 +137,7 @@ export default function Info() {
                 && <AddSchedulingForm
                     setAddSchedulingForm={setAddSchedulingForm}
                     services={getServices(services)}
+                    setButton={setGeneralButton}
                 />
             }
         </Container>

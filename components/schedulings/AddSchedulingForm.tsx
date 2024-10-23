@@ -21,9 +21,10 @@ import LoadingScreen from '../common/LoadingScreen'
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
     services: Service[]
+    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddSchedulingForm({ setAddSchedulingForm, services }: AddSchedulingFormProps) {
+export default function AddSchedulingForm({ setAddSchedulingForm, services, setButton }: AddSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [service, setService] = useState<Service>(services[0])
@@ -140,6 +141,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
         setTimeout(() => {
             setAddSchedulingForm(false)
             setHideTabBar(false)
+            setButton(true)
         }, 500)
 
     }
@@ -151,7 +153,11 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services }: Ad
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer setFormOff={setAddSchedulingForm} bgColor='rgba(0, 102, 0, 0.1)'>
+            <FormContainer 
+            setFormOff={setAddSchedulingForm} 
+            bgColor='rgba(0, 102, 0, 0.1)'
+            setButton={setButton}
+            >
                 <FormBody>
                     <FormTitle text='Registrar Entrada'>
                         <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />

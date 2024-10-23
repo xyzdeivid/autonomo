@@ -14,19 +14,25 @@ interface AboutExpenseCardProps {
     expense: Expense
     deleteFunction: (expense: Expense) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
+    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AboutExpenseCard({ expense, deleteFunction, setFormOff }: AboutExpenseCardProps) {
+export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, setButton }: AboutExpenseCardProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [confirmDelete, setConfirmDelete] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
+        setButton(false)
     }, [])
 
     return (
-        <FormContainer setFormOff={setFormOff} bgColor='rgba(139, 0, 0, 0.1)'>
+        <FormContainer
+            setFormOff={setFormOff}
+            bgColor='rgba(139, 0, 0, 0.1)'
+            setButton={setButton}
+        >
             <FormBody>
                 <FormTitle text={expense.name}>
                     <Entypo name='info' size={18} color='darkgray' />

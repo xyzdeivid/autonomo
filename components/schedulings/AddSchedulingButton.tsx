@@ -1,5 +1,4 @@
-import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native'
-import Entypo from '@expo/vector-icons/Entypo'
+import { Alert, Pressable, StyleSheet, Text } from 'react-native'
 
 import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
@@ -7,22 +6,30 @@ import { getServices } from '@/functions/schedulings'
 
 interface AddSchedulingButtonProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
+    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddSchedulingButton({ setAddSchedulingForm }: AddSchedulingButtonProps) {
+export default function AddSchedulingButton({ setAddSchedulingForm, setButton }: AddSchedulingButtonProps) {
 
     const [services] = useContext(DocsContext).services
 
+    const showForm = () => {
+        setAddSchedulingForm(true)
+        setButton(false)
+    }
+
     const checkServices = () => {
         getServices(services)[0]
-            ? setAddSchedulingForm(true)
+            ? showForm()
             : Alert.alert('Sem item disponível', 'Verifique se você tem algum item ou estoque disponível.')
     }
 
     return (
         <Pressable
             style={styles.buttonContainer}
-            onPress={() => checkServices()}
+            onPress={() => {
+                checkServices()
+            }}
         >
             <Text style={{ color: 'white' }}>Nova Entrada</Text>
         </Pressable>
