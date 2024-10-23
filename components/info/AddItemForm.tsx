@@ -98,7 +98,7 @@ export default function AddItemForm({ setGeneralButton, setAddItemsForm, setAddS
                     </Pressable>
                     <Pressable style={{
                         ...styles.button,
-                        backgroundColor: '#112935'
+                        backgroundColor: '#330066'
                     }}
                         onPress={() => {
                             setAddItemsForm(false)

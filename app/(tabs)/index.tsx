@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
@@ -29,7 +29,7 @@ export default function Info() {
     const [services] = useContext(DocsContext).services
     const [selectedMonth] = useContext(MonthContext)
     const [addItemsForm, setAddItemsForm] = useContext(ContentContext).form
-    const [generalButton, setGeneralButton] = useState(true)
+    const [generalButton, setGeneralButton] = useContext(ContentContext).button
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
@@ -109,14 +109,14 @@ export default function Info() {
             }
             {
                 addItemsForm
-                    && <AddItemForm
-                        setGeneralButton={setGeneralButton}
-                        setAddItemsForm={setAddItemsForm}
-                        setAddServiceForm={setAddServiceForm}
-                        setAddExpenseForm={setAddExpenseForm}
-                        setAddSchedulingForm={setAddSchedulingForm}
-                        services={services}
-                    />
+                && <AddItemForm
+                    setGeneralButton={setGeneralButton}
+                    setAddItemsForm={setAddItemsForm}
+                    setAddServiceForm={setAddServiceForm}
+                    setAddExpenseForm={setAddExpenseForm}
+                    setAddSchedulingForm={setAddSchedulingForm}
+                    services={services}
+                />
             }
             {
                 addServiceForm

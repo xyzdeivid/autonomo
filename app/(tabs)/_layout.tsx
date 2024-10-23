@@ -10,6 +10,7 @@ export default function TabLayout() {
     const [hideTabBar] = useContext(HideTabBarContext)
     const [, setContent] = useContext(ContentContext).content
     const [, setAddItemsForm] = useContext(ContentContext).form
+    const [, setGeneralButton] = useContext(ContentContext).button
 
     return (
         <Tabs
@@ -18,9 +19,8 @@ export default function TabLayout() {
                 headerStyle: {
                     backgroundColor: '#112935'
                 },
-                tabBarActiveTintColor: '#112935',
-                tabBarInactiveTintColor: 'white',
-                tabBarInactiveBackgroundColor: '#112935',
+                tabBarInactiveTintColor: 'gray',
+                tabBarInactiveBackgroundColor: 'white',
                 tabBarActiveBackgroundColor: 'white',
                 tabBarStyle: {
                     display: hideTabBar ? 'none' : 'flex',
@@ -31,6 +31,15 @@ export default function TabLayout() {
                 name='index'
                 options={{
                     title: 'Informações',
+                    tabBarActiveTintColor: '#08819B',
+                    headerBackground: () => (
+                        <LinearGradient
+                            colors={['#112935', '#08819B']}
+                            start={[0, 0]}
+                            end={[1, 0]}
+                            style={{ flex: 1 }}
+                        />
+                    ),
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='chart-simple' size={24} color={color} />
                     ),
@@ -41,6 +50,7 @@ export default function TabLayout() {
                     tabPress: () => {
                         setContent('financial')
                         setAddItemsForm(false)
+                        setGeneralButton(true)
                     },
                 })}
                 options={{
@@ -63,6 +73,7 @@ export default function TabLayout() {
                     tabPress: () => {
                         setContent('financial')
                         setAddItemsForm(false)
+                        setGeneralButton(true)
                     },
                 })}
                 options={{
@@ -76,9 +87,6 @@ export default function TabLayout() {
                             style={{ flex: 1 }}
                         />
                     ),
-                    headerStyle: {
-                        backgroundColor: 'darkred'
-                    },
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='arrow-trend-down' size={24} color={color} />
                     )
@@ -88,10 +96,20 @@ export default function TabLayout() {
                     tabPress: () => {
                         setContent('financial')
                         setAddItemsForm(false)
+                        setGeneralButton(true)
                     },
                 })}
                 options={{
                     title: 'Items',
+                    tabBarActiveTintColor: '#330066',
+                    headerBackground: () => (
+                        <LinearGradient
+                            colors={['#112935', '#330066']}
+                            start={[0, 0]}
+                            end={[1, 0]}
+                            style={{ flex: 1 }}
+                        />
+                    ),
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='bag-shopping' size={24} color={color} />
                     )

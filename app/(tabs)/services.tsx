@@ -63,7 +63,7 @@ export default function Services() {
                     && <AddItemButton
                         setForm={setAddServiceForm}
                         text='Novo Item'
-                        bgColor='#112935'
+                        bgColor='#330066'
                         setButton={setButton}
                     />
                 }
