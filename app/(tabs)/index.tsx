@@ -13,7 +13,7 @@ import ContentForm from '@/components/info/ContentForm'
 import Services from '@/components/info/Services'
 import Products from '@/components/info/Products'
 import Budgets from '@/components/info/Budgets'
-import { ContentContext } from '@/context/Content'
+import { ContentContext } from '@/context/InfoContent'
 import GeneralButton from '@/components/info/GeneralButton'
 import AddItemForm from '@/components/info/AddItemForm'
 import AddServiceForm from '@/components/services/AddServiceForm'
@@ -23,12 +23,12 @@ import { getServices } from '@/functions/schedulings'
 
 export default function Info() {
 
-    const [content, setContent] = useContext(ContentContext)
+    const [content, setContent] = useContext(ContentContext).content
     const [contentForm, setContentForm] = useState(false)
     const [schedulings] = useContext(DocsContext).schedulings
     const [services] = useContext(DocsContext).services
     const [selectedMonth] = useContext(MonthContext)
-    const [addItemsForm, setAddItemsForm] = useState(false)
+    const [addItemsForm, setAddItemsForm] = useContext(ContentContext).form
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)

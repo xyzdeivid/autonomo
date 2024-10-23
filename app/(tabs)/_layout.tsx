@@ -2,13 +2,14 @@ import { Tabs } from 'expo-router'
 import React, { useContext } from 'react'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { HideTabBarContext } from '@/context/HideTabBar'
-import { ContentContext } from '@/context/Content'
+import { ContentContext } from '@/context/InfoContent'
 import { LinearGradient } from 'expo-linear-gradient'
 
 export default function TabLayout() {
 
     const [hideTabBar] = useContext(HideTabBarContext)
-    const [, setContent] = useContext(ContentContext)
+    const [, setContent] = useContext(ContentContext).content
+    const [, setAddItemsForm] = useContext(ContentContext).form
 
     return (
         <Tabs
@@ -39,6 +40,7 @@ export default function TabLayout() {
                 listeners={() => ({
                     tabPress: () => {
                         setContent('financial')
+                        setAddItemsForm(false)
                     },
                 })}
                 options={{
@@ -60,6 +62,7 @@ export default function TabLayout() {
                 listeners={() => ({
                     tabPress: () => {
                         setContent('financial')
+                        setAddItemsForm(false)
                     },
                 })}
                 options={{
@@ -84,6 +87,7 @@ export default function TabLayout() {
                 listeners={() => ({
                     tabPress: () => {
                         setContent('financial')
+                        setAddItemsForm(false)
                     },
                 })}
                 options={{

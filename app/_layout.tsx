@@ -9,7 +9,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import DocsProvider from '@/context/DocsContext';
 import HideTabBarProvider from '@/context/HideTabBar';
 import MonthProvider from '@/context/Month';
-import ContentProvider from '@/context/Content';
+import ContentProvider from '@/context/InfoContent';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
