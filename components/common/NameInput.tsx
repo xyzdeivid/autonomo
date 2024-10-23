@@ -2,13 +2,20 @@ import { StyleSheet, View, Text, TextInput } from 'react-native'
 
 interface NameInputProps {
     setName: React.Dispatch<React.SetStateAction<string>>
+    bgColor?: string
 }
 
-export default function NameInput({ setName }: NameInputProps) {
+export default function NameInput({ setName, bgColor }: NameInputProps) {
     return (
         <View style={styles.inputContainer}>
             <Text style={{ color: 'black' }}>Nome:</Text>
-            <TextInput style={styles.input} onChangeText={text => setName(text.trim())} />
+            <TextInput
+                style={{
+                    ...styles.input,
+                    backgroundColor: bgColor ? bgColor : '#E0E0E0'
+                }}
+                onChangeText={text => setName(text.trim())}
+            />
         </View>
     )
 }
@@ -22,7 +29,6 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     input: {
-        backgroundColor: '#E0E0E0',
         color: 'black',
         padding: 0,
         margin: 0,

@@ -34,8 +34,8 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
             setButton={setButton}
         >
             <FormBody>
-                <FormTitle text={expense.name}>
-                    <Entypo name='info' size={18} color='darkgray' />
+                <FormTitle text={expense.name} textColor='#660000'>
+                    <Entypo name='info' size={18} color='rgba(139, 0, 0, 0.2)' />
                 </FormTitle>
                 <View>
                     {

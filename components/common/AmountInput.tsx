@@ -4,14 +4,23 @@ interface AmountInputProps {
     text: string
     setAmount: React.Dispatch<React.SetStateAction<number>>
     defaultValue?: number
+    bgColor?: string
 }
 
-export default function AmountInput({ text, setAmount, defaultValue }: AmountInputProps) {
+export default function AmountInput({ text, setAmount, defaultValue, bgColor }: AmountInputProps) {
 
     return (
         <View style={styles.inputContainer}>
             <Text>{text}:</Text>
-            <TextInput value={defaultValue ? String(defaultValue) : undefined} onChangeText={text => setAmount(Number(text))} style={styles.input} keyboardType='numeric' />
+            <TextInput
+                value={defaultValue ? String(defaultValue) : undefined}
+                onChangeText={text => setAmount(Number(text))}
+                style={{
+                    ...styles.input,
+                    backgroundColor: bgColor ? bgColor : '#E0E0E0'
+                }}
+                keyboardType='numeric'
+            />
         </View>
     )
 
@@ -26,7 +35,6 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '25%',
-        backgroundColor: '#E0E0E0',
         color: 'black',
         padding: 0,
         margin: 0,

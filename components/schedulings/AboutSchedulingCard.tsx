@@ -41,8 +41,8 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
             setButton={setButton}
         >
             <FormBody>
-                <FormTitle text={scheduling.service._id}>
-                    <Entypo name='info' size={18} color='darkgray' />
+                <FormTitle text={scheduling.service._id} textColor='#006600'>
+                    <Entypo name='info' size={18} color='rgba(0, 102, 0, 0.2)' />
                 </FormTitle>
                 <View>
                     {

@@ -137,12 +137,12 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff,
             <FormContainer 
             setFormOff={setFormOff}
             setButton={setButton}
+            bgColor='rgba(51, 0, 102, 0.1)'
             >
                 <FormBody>
-                    <FormTitle text={service._id}>
-                        <Entypo name='info' size={18} color='darkgray' />
+                    <FormTitle text={service._id} textColor='#330066'>
+                        <Entypo name='info' size={18} color='rgba(51, 0, 102, 0.2)' />
                     </FormTitle>
-
                     <View>
                         {service.category !== 'budget' && (
                             <View style={styles.inputContainer}>

@@ -37,7 +37,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     }, [])
 
     const addService = () => {
-        
+
         if (checkAllInputs(choice, name, value, amount)) {
 
             setLoadingScreen(true)
@@ -98,27 +98,37 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer 
-            setFormOff={setAddServiceForm}
-            setButton={setButton}
+            <FormContainer
+                setFormOff={setAddServiceForm}
+                setButton={setButton}
             >
                 <FormBody>
-                    <FormTitle text={`Novo ${checkTitle(choice)}`}>
-                        <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
+                    <FormTitle
+                        text={`Novo ${checkTitle(choice)}`}
+                        textColor='#330066'
+                    >
+                        <MaterialCommunityIcons name='format-float-right' size={24} color='rgba(51, 0, 102, 0.2)' />
                     </FormTitle>
                     <FormInputs>
                         <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                         {choice === 'budget' && (
                             <Text style={{ marginBottom: 20, color: 'gray' }} >O valor será definido ao registrar entrada.</Text>
                         )}
-                        <NameInput setName={setName} />
+                        <NameInput
+                            setName={setName}
+                            bgColor='rgba(51, 0, 102, 0.1)'
+                        />
                         {choice !== 'budget' && (
-                            <NumberInput setValue={setValue} />
+                            <NumberInput
+                                setValue={setValue}
+                                bgColor='rgba(51, 0, 102, 0.1)'
+                            />
                         )}
                         {choice === 'product' && (
                             <AmountInput
                                 text='Estoque'
                                 setAmount={setAmount}
+                                bgColor='rgba(51, 0, 102, 0.1)'
                             />
                         )}
                     </FormInputs>

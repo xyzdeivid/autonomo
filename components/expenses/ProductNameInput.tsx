@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     input: {
-        backgroundColor: '#E0E0E0',
+        backgroundColor: 'rgba(102, 0, 0, 0.1)',
         color: 'black',
         padding: 0,
         margin: 0,

@@ -153,14 +153,14 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services, setB
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer 
-            setFormOff={setAddSchedulingForm} 
-            bgColor='rgba(0, 102, 0, 0.1)'
-            setButton={setButton}
+            <FormContainer
+                setFormOff={setAddSchedulingForm}
+                bgColor='rgba(0, 102, 0, 0.1)'
+                setButton={setButton}
             >
                 <FormBody>
-                    <FormTitle text='Registrar Entrada'>
-                        <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
+                    <FormTitle text='Registrar Entrada' textColor='#006600'>
+                        <MaterialCommunityIcons name='format-float-right' size={24} color='rgba(0, 102, 0, 0.2)' />
                     </FormTitle>
                     <FormInputs>
                         <SelectServiceInput
@@ -176,12 +176,14 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services, setB
                             <AmountInput
                                 text='Quantidade'
                                 setAmount={setAmount}
+                                bgColor='rgba(0, 102, 0, 0.1)'
                             />
                         )}
                         {
                             service.category === 'budget' && (
                                 <NumberInput
                                     setValue={setValue}
+                                    bgColor='rgba(0, 102, 0, 0.1)'
                                 />
                             )
                         }

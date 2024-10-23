@@ -167,18 +167,21 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer 
-            setFormOff={setAddExpenseForm} 
-            bgColor='rgba(139, 0, 0, 0.1)'
-            setButton={setButton}
+            <FormContainer
+                setFormOff={setAddExpenseForm}
+                bgColor='rgba(139, 0, 0, 0.1)'
+                setButton={setButton}
             >
                 <FormBody>
-                    <FormTitle text='Registrar Saída'>
-                        <MaterialCommunityIcons name='format-float-right' size={24} color='darkgray' />
+                    <FormTitle text='Registrar Saída' textColor='#660000'>
+                        <MaterialCommunityIcons name='format-float-right' size={24} color='rgba(102, 0, 0, 0.2)' />
                     </FormTitle>
                     <FormInputs>
                         <ExpenseCategoryButtons choice={choice} setChoice={setChoice} />
-                        <NameInput setName={setName} />
+                        <NameInput
+                            setName={setName}
+                            bgColor='rgba(102, 0, 0, 0.1)'
+                        />
                         <DateInput
                             setTargetDate={setDate}
                             bgColor='#660000'
@@ -190,6 +193,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                             <AmountInput
                                 text='Quantidade (un)'
                                 setAmount={setStock}
+                                bgColor='rgba(102, 0, 0, 0.1)'
                             />
                         )}
                         <NumberInput
@@ -198,18 +202,20 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                                 : ''
                             }
                             setValue={setValue}
+                            bgColor='rgba(102, 0, 0, 0.1)'
                         />
                         {choice === 'resale' && (
                             <NumberInput
                                 label='Valor de Venda (un)'
                                 setValue={setResaleValue}
+                                bgColor='rgba(102, 0, 0, 0.1)'
                             />
                         )}
                     </FormInputs>
                     <SubmitFormButtons
                         submit={addExpense}
                         submitButtonText='Registrar'
-                        submitButtonColor='darkred'
+                        submitButtonColor='#660000'
                     />
                 </FormBody>
             </FormContainer>

@@ -4,9 +4,10 @@ import { MaskedTextInput } from 'react-native-mask-text'
 interface NumberInputProps {
     setValue: React.Dispatch<React.SetStateAction<number>>
     label?: string
+    bgColor?: string
 }
 
-export default function NumberInput({ setValue, label }: NumberInputProps) {
+export default function NumberInput({ setValue, label, bgColor }: NumberInputProps) {
 
     return (
         <View style={styles.inputContainer}>
@@ -18,12 +19,15 @@ export default function NumberInput({ setValue, label }: NumberInputProps) {
                     groupSeparator: '.',
                     precision: 2
                 }}
-                style={styles.input}
+                style={{
+                    ...styles.input,
+                    backgroundColor: bgColor ? bgColor : '#E0E0E0'
+                }}
                 keyboardType='numeric'
                 onChangeText={text => {
                     // Removendo pontos e vírgulas do valor
                     let value = text.replace(',', '.')
-                    .replace(/\.(?=.*\.)/g, '')
+                        .replace(/\.(?=.*\.)/g, '')
 
                     setValue(Number(value))
                 }}
@@ -42,7 +46,6 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '25%',
-        backgroundColor: '#E0E0E0',
         color: 'black',
         padding: 0,
         margin: 0,
