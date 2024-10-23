@@ -1,5 +1,5 @@
-import { Expense, Scheduling } from "@/context/DocsContext"
-import { format, parseISO } from "date-fns"
+import { Expense, Scheduling } from '@/context/DocsContext'
+import { format, parseISO } from 'date-fns'
 
 export const moneyFormat = (value: number) => {
     const formatedData = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -21,12 +21,15 @@ export const getCurrentMonth = () => {
 export const filterSchedulings = (schedulings: Scheduling[], selectedMonth: number) => {
     return schedulings.filter(current => {
         return Number(current.date.split('-')[1]) === selectedMonth + 1
+        && Number(current.date.split('-')[0]) === new Date().getFullYear()
+        
     })
 }
 
 export const filterExpenses = (expenses: Expense[], selectedMonth: number) => {
     return expenses.filter(current => {
         return Number(current.date.split('-')[1]) === selectedMonth + 1
+        && Number(current.date.split('-')[0]) === new Date().getFullYear()
     })
 }
 
