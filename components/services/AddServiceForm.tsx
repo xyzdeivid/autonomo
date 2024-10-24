@@ -32,6 +32,8 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [choice, setChoice] = useState('product')
     const [loadingScreen, setLoadingScreen] = useState(false)
+    const [resale, setResale] = useState(false)
+    const [purchaseValue, setPurchaseValue] = useState(0)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -113,7 +115,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                     <FormInputs>
                         <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                         {choice === 'product' && (
-                            <ResaleButton />
+                            <ResaleButton 
+                                setResale={setResale}
+                            />
                         )}
                         {choice === 'budget' && (
                             <Text style={{ marginBottom: 20, color: 'gray' }} >O valor será definido ao registrar entrada.</Text>
@@ -122,6 +126,13 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                             setName={setName}
                             bgColor='rgba(51, 0, 102, 0.1)'
                         />
+                        {resale && (
+                            <NumberInput
+                                setValue={setPurchaseValue}
+                                bgColor='rgba(51, 0, 102, 0.1)'
+                                label='Valor de Compra (un)'
+                            />
+                        )}
                         {choice !== 'budget' && (
                             <NumberInput
                                 setValue={setValue}
@@ -130,7 +141,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         )}
                         {choice === 'product' && (
                             <AmountInput
-                                text='Estoque'
+                                text='Quantidade'
                                 setAmount={setAmount}
                                 bgColor='rgba(51, 0, 102, 0.1)'
                             />

@@ -1,7 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useState } from 'react'
 
-export default function ResaleButton() {
+interface ResaleButtonProps {
+    setResale: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function ResaleButton({ setResale }: ResaleButtonProps) {
 
     const [active, setActive] = useState(false)
 
@@ -14,7 +18,10 @@ export default function ResaleButton() {
                         ...styles.box,
                         backgroundColor: active ? '#330066' : 'transparent'
                     }}
-                    onPress={() => setActive(!active)}
+                    onPress={() => {
+                        setActive(!active)
+                        setResale(resale => !resale)
+                    }}
                 />
             </View>
             <Text style={styles.text}>Preencha se o produto for uma revenda.</Text>
