@@ -8,7 +8,7 @@ import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { generateId } from '@/functions/common'
 import { HideTabBarContext } from '@/context/HideTabBar'
-import { getSchedulingValue, orderSchedulings } from '@/functions/schedulings'
+import { getSchedulingValue, getServices, orderSchedulings } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
 import { Alert } from 'react-native'
 import StockInfo from './StockInfo'
@@ -20,14 +20,14 @@ import LoadingScreen from '../common/LoadingScreen'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
-    services: Service[]
     setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddSchedulingForm({ setAddSchedulingForm, services, setButton }: AddSchedulingFormProps) {
+export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: AddSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
-    const [service, setService] = useState<Service>(services[0])
+    const [services] = useContext(DocsContext).services
+    const [service, setService] = useState<Service>(getServices(services)[0])
 
     const [date, setDate] = useState('')
     const [value, setValue] = useState(0)
@@ -166,7 +166,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, services, setB
                         <SelectServiceInput
                             service={service}
                             setService={setService}
-                            services={services}
+                            services={getServices(services)}
                         />
                         {service.category === 'product' && (
                             <StockInfo amount={service.amount - amount} />

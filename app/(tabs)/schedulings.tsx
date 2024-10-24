@@ -105,7 +105,6 @@ export default function Schedulings() {
                     addSchedulingForm
                     && <AddSchedulingForm
                         setAddSchedulingForm={setAddSchedulingForm}
-                        services={getServices(services)}
                         setButton={setButton}
                     />
                 }

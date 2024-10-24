@@ -136,7 +136,6 @@ export default function Info() {
                 addSchedulingForm
                 && <AddSchedulingForm
                     setAddSchedulingForm={setAddSchedulingForm}
-                    services={getServices(services)}
                     setButton={setGeneralButton}
                 />
             }
