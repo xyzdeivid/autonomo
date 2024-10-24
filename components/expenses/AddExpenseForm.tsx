@@ -17,6 +17,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import LoadingScreen from '../common/LoadingScreen'
 import NumberInput from '../common/NumberInput'
 import ProductOptionsInput from './ProductOptionsInput'
+import AmountInput from '../common/AmountInput'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -28,6 +29,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     const [name, setName] = useState('')
     const [date, setDate] = useState('')
     const [value, setValue] = useState(0)
+    const [amount, setAmount] = useState(0)
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [expenses, setExpenses] = useContext(DocsContext).expenses
     const [services] = useContext(DocsContext).services
@@ -43,7 +45,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
             return false
         }
 
-        if (value) return true
+        if (value && amount) return true
         return false
 
     }
@@ -63,7 +65,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 _id: generateId(),
                 name: !stockIntegrate ? name : product,
                 date,
-                value
+                value: !stockIntegrate ? value : value * amount
             } 
 
             setTimeout(() =>
@@ -125,7 +127,15 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                         <NumberInput
                             setValue={setValue}
                             bgColor='rgba(102, 0, 0, 0.1)'
+                            label={stockIntegrate ? 'Valor (un)' : ''}
                         />
+                        {stockIntegrate && (
+                            <AmountInput
+                                setAmount={setAmount}
+                                text='Quantidade'
+                                bgColor='rgba(102, 0, 0, 0.1)'
+                            />
+                        )}
                     </FormInputs>
                     <SubmitFormButtons
                         submit={addExpense}
