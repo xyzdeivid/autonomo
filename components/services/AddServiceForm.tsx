@@ -1,6 +1,6 @@
 import { Alert, Text } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
-import { DocsContext } from '@/context/DocsContext'
+import { DocsContext, Expense } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
 import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
@@ -17,6 +17,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import LoadingScreen from '../common/LoadingScreen'
 import ResaleButton from './ResaleButton'
 import DateInput from '../common/DateInput'
+import { generateId } from '@/functions/common'
+import { orderExpenses } from '@/functions/expenses'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -30,6 +32,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [value, setValue] = useState(0)
     const [amount, setAmount] = useState(0)
     const [services, setServices] = useContext(DocsContext).services
+    const [expenses, setExpenses] = useContext(DocsContext).expenses
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [choice, setChoice] = useState('product')
     const [loadingScreen, setLoadingScreen] = useState(false)
@@ -49,6 +52,20 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
 
             // Criando serviço
             const service = createNewService(choice, name, value, amount)
+
+            // Verificando se o produto é uma revenda
+            if (resale) {
+
+                const newExpense: Expense = {
+                    _id: generateId(),
+                    name: name,
+                    date: purchaseDate,
+                    value: purchaseValue * amount
+                }
+
+                setExpenses(orderExpenses([...expenses, newExpense]))
+
+            }
 
             // Configurando categoria para a lista de items
             if (!services[0] && setCategory) {

@@ -1,8 +1,4 @@
-import { orderExpenses } from '@/functions/expenses'
-import { orderSchedulings } from '@/functions/schedulings'
-import { orderServices } from '@/functions/services'
-import { createContext, useEffect, useState } from 'react'
-import { Alert } from 'react-native'
+import { createContext, useState } from 'react'
 
 export interface Service {
     category: string
@@ -23,13 +19,10 @@ const DEFAULT_SERVICE: Service = {
 }
 
 export interface Expense {
-    category: string
     _id: string
     name: string
     date: string
     value: number
-    amount: number
-    productName?: string
 }
 
 
@@ -37,12 +30,10 @@ type SetExpenses = React.Dispatch<React.SetStateAction<Expense[]>>
 type ExpensesState = [Expense[], SetExpenses]
 
 const DEFAULT_EXPENSE: Expense = {
-    category: '',
     _id: '',
     name: '',
     date: '',
-    value: 0,
-    amount: 0,
+    value: 0
 }
 
 export interface Scheduling {

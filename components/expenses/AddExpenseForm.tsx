@@ -85,11 +85,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                     amount: stock
                 }
 
-                // Aplicando categoria a despesa
-                newExpense.category = 'resale'
                 newExpense.value = value * stock
-                newExpense.amount = stock
-                newExpense.productName = productName
 
                 // Verificando se já existe um produto igual ao novo criado
                 const alreadyExist = isThereAnotherService(services, newProduct)
@@ -133,9 +129,6 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 }
 
             } else {
-
-                // Aplicando categoria a despesa
-                newExpense.category = 'expense'
 
                 newExpense.value = value
 
