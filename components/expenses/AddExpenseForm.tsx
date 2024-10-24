@@ -16,6 +16,7 @@ import { checkServicesAmount, orderServices } from '@/functions/services'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import LoadingScreen from '../common/LoadingScreen'
 import NumberInput from '../common/NumberInput'
+import ProductOptionsInput from './ProductOptionsInput'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,12 +30,20 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     const [value, setValue] = useState(0)
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [expenses, setExpenses] = useContext(DocsContext).expenses
+    const [services] = useContext(DocsContext).services
+    const products = services.filter(service => service.category === 'product')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [stockIntegrate, setStockIntegrate] = useState(false)
+    const [product, setProduct] = useState(products[0] ? products[0]._id : '')
 
     const checkAllInputs = (): boolean => {
 
-        if (name && value) return true
+        if (!stockIntegrate) {
+            if (name && value) return true
+            return false
+        }
+
+        if (value) return true
         return false
 
     }
@@ -50,9 +59,9 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
             setLoadingScreen(true)
 
             // Criando nova despesa
-            const newExpense = {
+            const newExpense: Expense = {
                 _id: generateId(),
-                name,
+                name: !stockIntegrate ? name : product,
                 date,
                 value
             } 
@@ -93,32 +102,30 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                         <MaterialCommunityIcons name='format-float-right' size={24} color='rgba(102, 0, 0, 0.2)' />
                     </FormTitle>
                     <FormInputs>
-                        <IntegrateStockButton 
-                            setStockIntegrate={setStockIntegrate}
-                        />
+                        {products[0] && (
+                            <IntegrateStockButton
+                                setStockIntegrate={setStockIntegrate}
+                            />
+                        )}
                         {
                             !stockIntegrate
                                 ? <NameInput
                                     setName={setName}
                                     bgColor='rgba(102, 0, 0, 0.1)'
                                 />
-                                : <Text>INPUT DE OPÇÕES DE PRODUTOS</Text>
+                                : <ProductOptionsInput
+                                    products={products}
+                                    setProduct={setProduct}
+                                />
                         }
                         <DateInput
                             setTargetDate={setDate}
                             bgColor='#660000'
                         />
-                        {
-                            !stockIntegrate
-                                ? <NumberInput
-                                    setValue={setValue}
-                                    bgColor='rgba(102, 0, 0, 0.1)'
-                                />
-                                : <Text>INPUT DE VALOR DE COMPRA</Text>
-                        }
-                        {stockIntegrate && (
-                            <Text>INPUT DE QUANTIDADE COMPRADA</Text>
-                        )}
+                        <NumberInput
+                            setValue={setValue}
+                            bgColor='rgba(102, 0, 0, 0.1)'
+                        />
                     </FormInputs>
                     <SubmitFormButtons
                         submit={addExpense}
