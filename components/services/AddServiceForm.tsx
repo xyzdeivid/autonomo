@@ -15,6 +15,7 @@ import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import LoadingScreen from '../common/LoadingScreen'
+import ResaleButton from './ResaleButton'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -111,6 +112,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                     </FormTitle>
                     <FormInputs>
                         <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
+                        {choice === 'product' && (
+                            <ResaleButton />
+                        )}
                         {choice === 'budget' && (
                             <Text style={{ marginBottom: 20, color: 'gray' }} >O valor será definido ao registrar entrada.</Text>
                         )}
