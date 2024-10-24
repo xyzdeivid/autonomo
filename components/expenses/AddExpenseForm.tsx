@@ -32,7 +32,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     const [amount, setAmount] = useState(0)
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [expenses, setExpenses] = useContext(DocsContext).expenses
-    const [services] = useContext(DocsContext).services
+    const [services, setServices] = useContext(DocsContext).services
     const products = services.filter(service => service.category === 'product')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [stockIntegrate, setStockIntegrate] = useState(false)
@@ -66,7 +66,27 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 name: !stockIntegrate ? name : product,
                 date,
                 value: !stockIntegrate ? value : value * amount
-            } 
+            }
+
+            if (stockIntegrate) {
+
+                // Atualizando estoque do produto selecionado
+                const productToUpdate = products.find(current => 
+                    current._id === product
+                )
+                if (productToUpdate) {
+
+                    productToUpdate.amount = productToUpdate.amount + amount
+
+                    const remainingItems = services.filter(current => {
+                        return current._id !== productToUpdate._id
+                    })
+
+                    setServices(orderServices([...remainingItems, productToUpdate]))
+
+                }
+
+            }
 
             setTimeout(() =>
                 setExpenses(orderExpenses([...expenses, newExpense]))
