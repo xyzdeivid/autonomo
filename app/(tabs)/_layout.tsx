@@ -8,7 +8,6 @@ import { LinearGradient } from 'expo-linear-gradient'
 export default function TabLayout() {
 
     const [hideTabBar] = useContext(HideTabBarContext)
-    const [, setContent] = useContext(ContentContext).content
     const [, setAddItemsForm] = useContext(ContentContext).form
     const [, setGeneralButton] = useContext(ContentContext).button
 
@@ -48,7 +47,6 @@ export default function TabLayout() {
             <Tabs.Screen name='schedulings'
                 listeners={() => ({
                     tabPress: () => {
-                        setContent('financial')
                         setAddItemsForm(false)
                         setGeneralButton(true)
                     },
@@ -71,7 +69,6 @@ export default function TabLayout() {
             <Tabs.Screen name='expenses'
                 listeners={() => ({
                     tabPress: () => {
-                        setContent('financial')
                         setAddItemsForm(false)
                         setGeneralButton(true)
                     },
@@ -94,7 +91,6 @@ export default function TabLayout() {
             <Tabs.Screen name='services'
                 listeners={() => ({
                     tabPress: () => {
-                        setContent('financial')
                         setAddItemsForm(false)
                         setGeneralButton(true)
                     },
