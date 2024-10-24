@@ -16,6 +16,7 @@ import AmountInput from '../common/AmountInput'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import LoadingScreen from '../common/LoadingScreen'
 import ResaleButton from './ResaleButton'
+import DateInput from '../common/DateInput'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -34,6 +35,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [resale, setResale] = useState(false)
     const [purchaseValue, setPurchaseValue] = useState(0)
+    const [purchaseDate, setPurchaseDate] = useState('')
 
     useEffect(() => {
         setHideTabBar(true)
@@ -127,11 +129,18 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                             bgColor='rgba(51, 0, 102, 0.1)'
                         />
                         {resale && (
-                            <NumberInput
-                                setValue={setPurchaseValue}
-                                bgColor='rgba(51, 0, 102, 0.1)'
-                                label='Valor de Compra (un)'
-                            />
+                            <>
+                                <NumberInput
+                                    setValue={setPurchaseValue}
+                                    bgColor='rgba(51, 0, 102, 0.1)'
+                                    label='Valor de Compra (un)'
+                                />
+                                <DateInput
+                                    setTargetDate={setPurchaseDate}
+                                    bgColor='#330066'
+                                    label='Data de Compra'
+                                />
+                            </>
                         )}
                         {choice !== 'budget' && (
                             <NumberInput
