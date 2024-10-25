@@ -17,6 +17,7 @@ import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
 import { orderSchedulings } from '@/functions/schedulings'
+import { orderExpenses } from '@/functions/expenses'
 
 interface AboutServiceCardProps {
     service: Service
@@ -29,6 +30,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     const [services, setServices] = useContext(DocsContext).services
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
+    const [expenses, setExpenses] = useContext(DocsContext).expenses
 
     const serviceName = service._id
 
@@ -62,6 +64,28 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             const editedItem = service
             editedItem._id = name
+
+            const expensesToEdit = expenses.filter(expense => {
+                return expense.name === serviceName
+            })
+
+            const remainingExpenses = expenses.filter(expense => {
+                return expense.name !== serviceName
+            })
+
+            expensesToEdit.forEach(expense =>
+                expense.name = name
+            )
+
+            const editedExpenses = [...expensesToEdit]
+
+            if (remainingExpenses[0]) {
+
+                editedExpenses.push(...remainingExpenses)
+
+            }
+
+            setExpenses(orderExpenses(editedExpenses))
 
             const schedulingsToEdit = schedulings.filter(current => {
                 return current.service._id === serviceName

@@ -33,10 +33,10 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [expenses, setExpenses] = useContext(DocsContext).expenses
     const [services, setServices] = useContext(DocsContext).services
-    const [products, setProducts] = useState([] as Service[])
+    const products = services.filter(service => service.category === 'product')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [stockIntegrate, setStockIntegrate] = useState(false)
-    const [product, setProduct] = useState(products[0] ? products[0] : {} as Service)
+    const [product, setProduct] = useState(products[0])
 
     const checkAllInputs = (): boolean => {
 
@@ -52,7 +52,6 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
     useEffect(() => {
         setHideTabBar(true)
-        setProducts(services.filter(service => service.category === 'product'))
     }, [])
 
     const addExpense = () => {
@@ -138,7 +137,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                                     textColor='#660000'
                                 />
                                 : <ProductOptionsInput
-                                product={product}
+                                    product={product}
                                     setProduct={setProduct}
                                 />
                         }
