@@ -14,6 +14,8 @@ import EditStockInput from './EditStockInput'
 import ConfirmDelete from '../common/ConfirmDelete'
 import Entypo from '@expo/vector-icons/Entypo'
 import LoadingScreen from '../common/LoadingScreen'
+import ActualName from './ActualName'
+import EditNameInput from './EditNameInput'
 
 interface DeleteServiceFormProps {
     service: Service
@@ -28,6 +30,9 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff,
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
+    const [editNameInput, setEditNameInput] = useState(false)
+    const [name, setName] = useState('')
+
     const [editValueInput, setEditValueInput] = useState(false)
     const [value, setValue] = useState(0)
 
@@ -40,6 +45,48 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff,
         setHideTabBar(true)
         setButton(false)
     }, [])
+
+    const editName = () => {
+
+        if (name) {
+
+            setLoadingScreen(true)
+
+            const remainingItems = services.filter(current => {
+                return current._id !== service._id
+            })
+
+            const editedItem = service
+            editedItem._id = name
+
+
+
+            if (remainingItems[0]) {
+
+                setTimeout(() => {
+                    setServices(orderServices([...remainingItems, editedItem]))
+                    setFormOff(false)
+                    setButton(true)
+                }, 500)
+
+            } else {
+
+                setTimeout(() => {
+                    setServices([editedItem])
+                    setFormOff(false)
+                    setButton(true)
+                }, 500)
+
+            }
+
+            setTimeout(() => setHideTabBar(false), 500)
+        } else {
+
+            setEditNameInput(false)
+
+        }
+
+    }
 
     const editValue = () => {
 
@@ -134,16 +181,21 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff,
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer 
-            setFormOff={setFormOff}
-            setButton={setButton}
-            bgColor='rgba(51, 0, 102, 0.1)'
+            <FormContainer
+                setFormOff={setFormOff}
+                setButton={setButton}
+                bgColor='rgba(51, 0, 102, 0.1)'
             >
                 <FormBody>
-                    <FormTitle text={service._id} textColor='#330066'>
+                    <FormTitle text='Informações do Item' textColor='#330066'>
                         <Entypo name='info' size={18} color='rgba(51, 0, 102, 0.2)' />
                     </FormTitle>
                     <View>
+                        {
+                            editNameInput
+                                ? <EditNameInput setName={setName} editName={editName} />
+                                : <ActualName name={name || service._id} setEditNameInput={setEditNameInput} />
+                        }
                         {service.category !== 'budget' && (
                             <View style={styles.inputContainer}>
                                 <View style={styles.infoContainer}>
