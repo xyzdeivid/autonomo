@@ -7,9 +7,10 @@ interface DateInputProps {
     setTargetDate: React.Dispatch<React.SetStateAction<string>>
     bgColor?: string
     label?: string
+    textColor?: string
 }
 
-export default function DateInput({ setTargetDate, bgColor, label }: DateInputProps) {
+export default function DateInput({ setTargetDate, bgColor, label, textColor }: DateInputProps) {
 
     const [date, setDate] = useState(new Date())
     const [show, setShow] = useState(false)
@@ -45,7 +46,7 @@ export default function DateInput({ setTargetDate, bgColor, label }: DateInputPr
     return (
         <View>
             <View style={styles.container}>
-                <Text style={{ marginEnd: 2 }}>
+                <Text style={{ marginEnd: 2, color: textColor ? textColor : 'black' }}>
                     {label ? label : 'Data'}:
                 </Text>
                 <Button color={bgColor ? bgColor : '#000000'} onPress={showDatepicker} title={dateFormat(getDate())} />

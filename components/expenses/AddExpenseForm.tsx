@@ -134,6 +134,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                                 ? <NameInput
                                     setName={setName}
                                     bgColor='rgba(102, 0, 0, 0.1)'
+                                    textColor='#660000'
                                 />
                                 : <ProductOptionsInput
                                     products={products}
@@ -143,10 +144,12 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                         <DateInput
                             setTargetDate={setDate}
                             bgColor='#660000'
+                            textColor='#660000'
                         />
                         <NumberInput
                             setValue={setValue}
                             bgColor='rgba(102, 0, 0, 0.1)'
+                            textColor='#660000'
                             label={stockIntegrate ? 'Valor (un)' : ''}
                         />
                         {stockIntegrate && (
@@ -154,6 +157,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                                 setAmount={setAmount}
                                 text='Quantidade'
                                 bgColor='rgba(102, 0, 0, 0.1)'
+                                textColor='#660000'
                             />
                         )}
                     </FormInputs>

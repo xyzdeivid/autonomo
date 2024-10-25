@@ -12,7 +12,7 @@ export default function ResaleButton({ setResale }: ResaleButtonProps) {
     return (
         <View style={{ marginBottom: 20 }}>
             <View style={styles.container}>
-                <Text>Revenda</Text>
+                <Text style={{ color: '#330066', fontWeight: 'bold' }}>Revenda</Text>
                 <Pressable
                     style={{
                         ...styles.box,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     text: {
-        color: 'gray',
+        color: 'rgba(51, 0, 102, 0.5)',
         fontSize: 12,
         marginTop: 2
     }

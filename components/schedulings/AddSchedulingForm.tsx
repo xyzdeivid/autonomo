@@ -171,12 +171,17 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                         {service.category === 'product' && (
                             <StockInfo amount={service.amount - amount} />
                         )}
-                        <DateInput setTargetDate={setDate} bgColor='#006600' />
+                        <DateInput 
+                        setTargetDate={setDate} 
+                        bgColor='#006600' 
+                        textColor='#006600'
+                        />
                         {service.category === 'product' && (
                             <AmountInput
                                 text='Quantidade'
                                 setAmount={setAmount}
                                 bgColor='rgba(0, 102, 0, 0.1)'
+                                textColor='#006600'
                             />
                         )}
                         {
@@ -184,6 +189,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                                 <NumberInput
                                     setValue={setValue}
                                     bgColor='rgba(0, 102, 0, 0.1)'
+                                    textColor='#006600'
                                 />
                             )
                         }

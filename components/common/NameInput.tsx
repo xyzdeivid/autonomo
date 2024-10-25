@@ -3,12 +3,13 @@ import { StyleSheet, View, Text, TextInput } from 'react-native'
 interface NameInputProps {
     setName: React.Dispatch<React.SetStateAction<string>>
     bgColor?: string
+    textColor?: string
 }
 
-export default function NameInput({ setName, bgColor }: NameInputProps) {
+export default function NameInput({ setName, bgColor, textColor }: NameInputProps) {
     return (
         <View style={styles.inputContainer}>
-            <Text style={{ color: 'black' }}>Nome:</Text>
+            <Text style={{ color: textColor ? textColor : 'black' }}>Nome:</Text>
             <TextInput
                 style={{
                     ...styles.input,

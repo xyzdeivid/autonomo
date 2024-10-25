@@ -12,7 +12,7 @@ export default function IntegrateStockButton({ setStockIntegrate }: IntegrateSto
     return (
         <View style={{ marginBottom: 20 }}>
             <View style={styles.container}>
-                <Text>Reposição de Estoque</Text>
+                <Text style={styles.buttonText}>Reposição de Estoque</Text>
                 <Pressable
                     style={{
                         ...styles.box,
@@ -24,7 +24,7 @@ export default function IntegrateStockButton({ setStockIntegrate }: IntegrateSto
                     }}
                 />
             </View>
-            <Text style={styles.text}>Preencha se a saída for a reposição do estoque de algum produto.</Text>
+            <Text style={styles.warningText}>Preencha se a saída for a reposição do estoque de algum produto.</Text>
         </View>
     )
 
@@ -39,12 +39,16 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         borderWidth: 1,
-        borderColor: '#330066',
+        borderColor: '#660000',
         marginStart: 4,
         borderRadius: 5
     },
-    text: {
-        color: 'gray',
+    buttonText: {
+        fontWeight: 'bold',
+        color: '#660000'
+    },
+    warningText: {
+        color: 'rgba(139, 0, 0, 0.5)',
         fontSize: 12,
         marginTop: 2
     }

@@ -8,7 +8,7 @@ export default function StockInfo({ amount }: StockInfoProps) {
 
     return (
         <View style={styles.container}>
-            <Text>Estoque: {amount}</Text>
+            <Text style={{ color: '#006600' }}>Estoque: {amount}</Text>
         </View>
     )
 

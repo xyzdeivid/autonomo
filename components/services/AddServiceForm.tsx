@@ -144,6 +144,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         <NameInput
                             setName={setName}
                             bgColor='rgba(51, 0, 102, 0.1)'
+                            textColor='#330066'
                         />
                         {resale && (
                             <>
@@ -151,11 +152,13 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                     setValue={setPurchaseValue}
                                     bgColor='rgba(51, 0, 102, 0.1)'
                                     label='Valor de Compra (un)'
+                                    textColor='#330066'
                                 />
                                 <DateInput
                                     setTargetDate={setPurchaseDate}
                                     bgColor='#330066'
                                     label='Data de Compra'
+                                    textColor='#330066'
                                 />
                             </>
                         )}
@@ -163,6 +166,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                             <NumberInput
                                 setValue={setValue}
                                 bgColor='rgba(51, 0, 102, 0.1)'
+                                textColor='#330066'
                             />
                         )}
                         {choice === 'product' && (
@@ -170,6 +174,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 text='Quantidade'
                                 setAmount={setAmount}
                                 bgColor='rgba(51, 0, 102, 0.1)'
+                                textColor='#330066'
                             />
                         )}
                     </FormInputs>

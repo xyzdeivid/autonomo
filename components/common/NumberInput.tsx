@@ -5,13 +5,16 @@ interface NumberInputProps {
     setValue: React.Dispatch<React.SetStateAction<number>>
     label?: string
     bgColor?: string
+    textColor?: string
 }
 
-export default function NumberInput({ setValue, label, bgColor }: NumberInputProps) {
+export default function NumberInput({ setValue, label, bgColor, textColor }: NumberInputProps) {
 
     return (
         <View style={styles.inputContainer}>
-            <Text style={{ color: 'black' }}>{label ? label : 'Valor'}:</Text>
+            <Text style={{ color: textColor ? textColor : 'black' }}>
+                {label ? label : 'Valor'}:
+            </Text>
             <MaskedTextInput
                 type='currency'
                 options={{

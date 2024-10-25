@@ -5,13 +5,14 @@ interface AmountInputProps {
     setAmount: React.Dispatch<React.SetStateAction<number>>
     defaultValue?: number
     bgColor?: string
+    textColor?: string
 }
 
-export default function AmountInput({ text, setAmount, defaultValue, bgColor }: AmountInputProps) {
+export default function AmountInput({ text, setAmount, defaultValue, bgColor, textColor }: AmountInputProps) {
 
     return (
         <View style={styles.inputContainer}>
-            <Text>{text}:</Text>
+            <Text style={{ color: textColor ? textColor : 'black' }}>{text}:</Text>
             <TextInput
                 value={defaultValue ? String(defaultValue) : undefined}
                 onChangeText={text => setAmount(Number(text))}
