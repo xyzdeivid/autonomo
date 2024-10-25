@@ -15,7 +15,8 @@ export default function FormTitle({ text, children, textColor }: FormTitleProps)
         }}>
             <Text style={{
                 ...styles.text,
-                color: textColor ? textColor : 'black'
+                color: textColor ? textColor : 'black',
+                maxWidth: children ? 300 : null
             }}
             >
                 {text}
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 24,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginEnd: 8
     }
 })

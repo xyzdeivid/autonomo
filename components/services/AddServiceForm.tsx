@@ -167,6 +167,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 setValue={setValue}
                                 bgColor='rgba(51, 0, 102, 0.1)'
                                 textColor='#330066'
+                                label={choice === 'product' ? 'Valor de Venda (un)' : ''}
                             />
                         )}
                         {choice === 'product' && (

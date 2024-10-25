@@ -203,6 +203,22 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     }
 
+    const getTitle = (item: Service) => {
+
+        switch (item.category) {
+
+            case 'product':
+                return 'Produto'
+            
+            case 'service':
+                return 'Serviço'
+            
+            case 'budget': 
+                return 'Orçamentário'
+
+        }
+    }
+
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -212,7 +228,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 bgColor='rgba(51, 0, 102, 0.1)'
             >
                 <FormBody>
-                    <FormTitle text='Informações do Item' textColor='#330066'>
+                    <FormTitle text={`Informações do ${getTitle(service)}`} textColor='#330066'>
                         <Entypo name='info' size={18} color='rgba(51, 0, 102, 0.2)' />
                     </FormTitle>
                     <View>

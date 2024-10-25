@@ -7,12 +7,12 @@ import DateInput from '../common/DateInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { HideTabBarContext } from '@/context/HideTabBar'
 import { DocsContext, Expense, Service } from '@/context/DocsContext'
-import { Alert, Text } from 'react-native'
+import { Alert } from 'react-native'
 import { generateId } from '@/functions/common'
-import { isThereAnotherService, orderExpenses, takeExistingService, takeRemainingServices } from '@/functions/expenses'
+import { orderExpenses } from '@/functions/expenses'
 import FormInputs from '../common/FormInputs'
 import IntegrateStockButton from './IntegrateStockButton'
-import { checkServicesAmount, orderServices } from '@/functions/services'
+import { orderServices } from '@/functions/services'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import LoadingScreen from '../common/LoadingScreen'
 import NumberInput from '../common/NumberInput'
@@ -33,10 +33,10 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     const [, setHideTabBar] = useContext(HideTabBarContext)
     const [expenses, setExpenses] = useContext(DocsContext).expenses
     const [services, setServices] = useContext(DocsContext).services
-    const products = services.filter(service => service.category === 'product')
+    const [products, setProducts] = useState([] as Service[])
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [stockIntegrate, setStockIntegrate] = useState(false)
-    const [product, setProduct] = useState(products[0] ? products[0]._id : '')
+    const [product, setProduct] = useState(products[0] ? products[0] : {} as Service)
 
     const checkAllInputs = (): boolean => {
 
@@ -52,6 +52,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
     useEffect(() => {
         setHideTabBar(true)
+        setProducts(services.filter(service => service.category === 'product'))
     }, [])
 
     const addExpense = () => {
@@ -63,7 +64,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
             // Criando nova despesa
             const newExpense: Expense = {
                 _id: generateId(),
-                name: !stockIntegrate ? name : product,
+                name: !stockIntegrate ? name : product._id,
                 date,
                 value: !stockIntegrate ? value : value * amount
             }
@@ -72,7 +73,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
                 // Atualizando estoque do produto selecionado
                 const productToUpdate = products.find(current => 
-                    current._id === product
+                    current._id === product._id
                 )
                 if (productToUpdate) {
 
@@ -137,7 +138,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                                     textColor='#660000'
                                 />
                                 : <ProductOptionsInput
-                                    products={products}
+                                product={product}
                                     setProduct={setProduct}
                                 />
                         }
