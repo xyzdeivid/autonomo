@@ -38,14 +38,6 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                     <Entypo name='info' size={18} color='rgba(139, 0, 0, 0.2)' />
                 </FormTitle>
                 <View>
-                    {
-                        expense.category === 'resale' && (
-                            <View>
-                                <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {expense.amount}</Text>
-                                <Text style={styles.labelContainer}><Text style={styles.label}>Valor Unitário:</Text>{moneyFormat(expense.value / expense.amount)}</Text>
-                            </View>
-                        )
-                    }
                     <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(expense.value)}</Text>
                     <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}</Text>
                 </View>
