@@ -10,7 +10,7 @@ export default function EditNameInput({ setName, editName }: EditNameInputProps)
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Nome:</Text>
-            <TextInput onChangeText={text => setName(text)} style={styles.editInput} />
+            <TextInput onChangeText={text => setName(text.trim())} style={styles.editInput} />
             <Pressable
                 style={styles.editButton}
                 onPress={() => editName()}

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
@@ -16,17 +16,21 @@ import Entypo from '@expo/vector-icons/Entypo'
 import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
+import { orderSchedulings } from '@/functions/schedulings'
 
-interface DeleteServiceFormProps {
+interface AboutServiceCardProps {
     service: Service
     deleteFunction: (id: string) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
     setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function DeleteServiceForm({ service, deleteFunction, setFormOff, setButton }: DeleteServiceFormProps) {
+export default function AboutServiceCard({ service, deleteFunction, setFormOff, setButton }: AboutServiceCardProps) {
 
     const [services, setServices] = useContext(DocsContext).services
+    const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
+
+    const serviceName = service._id
 
     const [, setHideTabBar] = useContext(HideTabBarContext)
 
@@ -59,7 +63,27 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff,
             const editedItem = service
             editedItem._id = name
 
+            const schedulingsToEdit = schedulings.filter(current => {
+                return current.service._id === serviceName
+            })
 
+            const remainingSchedulings = schedulings.filter(current => {
+                return current.service._id !== serviceName
+            })
+
+            schedulingsToEdit.forEach(current => 
+                current.service._id = name
+            )
+
+            if (remainingSchedulings[0]) {
+
+                setSchedulings(orderSchedulings([...remainingSchedulings, ...schedulingsToEdit]))
+
+            } else {
+
+                setSchedulings(orderSchedulings([...schedulingsToEdit]))
+                
+            }
 
             if (remainingItems[0]) {
 
@@ -80,6 +104,7 @@ export default function DeleteServiceForm({ service, deleteFunction, setFormOff,
             }
 
             setTimeout(() => setHideTabBar(false), 500)
+
         } else {
 
             setEditNameInput(false)
