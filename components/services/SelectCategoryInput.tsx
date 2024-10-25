@@ -32,6 +32,7 @@ export default function SelectCategoryInput({ category, setCategory }: SelectCat
         <Picker
             selectedValue={category}
             onValueChange={itemValue => setCategory(itemValue)}
+            dropdownIconColor='#330066'
         >
             {
                 categories.map((current) => (

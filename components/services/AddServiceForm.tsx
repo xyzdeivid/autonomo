@@ -139,7 +139,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                             />
                         )}
                         {choice === 'budget' && (
-                            <Text style={{ marginBottom: 20, color: 'gray' }} >O valor será definido ao registrar entrada.</Text>
+                            <Text style={{ marginBottom: 20, color: 'rgba(51, 0, 102, 0.5)' }} >O valor será definido ao registrar entrada.</Text>
                         )}
                         <NameInput
                             setName={setName}
@@ -148,16 +148,16 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         />
                         {resale && (
                             <>
-                                <NumberInput
-                                    setValue={setPurchaseValue}
-                                    bgColor='rgba(51, 0, 102, 0.1)'
-                                    label='Valor de Compra (un)'
-                                    textColor='#330066'
-                                />
                                 <DateInput
                                     setTargetDate={setPurchaseDate}
                                     bgColor='#330066'
                                     label='Data de Compra'
+                                    textColor='#330066'
+                                />
+                                <NumberInput
+                                    setValue={setPurchaseValue}
+                                    bgColor='rgba(51, 0, 102, 0.1)'
+                                    label='Valor de Compra (un)'
                                     textColor='#330066'
                                 />
                             </>

@@ -28,7 +28,7 @@ export default function Info() {
     return (
         <Container>
             {
-                schedulings[0] && (<MonthInput />)
+                schedulings[0] && (<MonthInput dropdownIconColor='#08819B' />)
             }
             {
                 filterSchedulings(schedulings, selectedMonth)[0]

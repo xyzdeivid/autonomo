@@ -82,7 +82,7 @@ export default function Schedulings() {
             <Container>
                 {
                     schedulings[0] && (
-                        <MonthInput />
+                        <MonthInput dropdownIconColor='#006600' />
                     )
                 }
                 {

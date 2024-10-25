@@ -2,7 +2,11 @@ import { useContext } from 'react'
 import { Picker } from '@react-native-picker/picker'
 import { MonthContext } from '@/context/Month'
 
-export default function MonthInput() {
+interface MonthInputProps {
+    dropdownIconColor?: string
+}
+
+export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
 
     const [selectedMonth, setSelectedMonth] = useContext(MonthContext)
 
@@ -25,7 +29,7 @@ export default function MonthInput() {
         <Picker
             selectedValue={selectedMonth}
             onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-            dropdownIconColor='lightgray'
+            dropdownIconColor={dropdownIconColor ? dropdownIconColor : 'lightgray'}
         >
             {months.map((month, index) => (
                 <Picker.Item key={index} label={month} value={index} />

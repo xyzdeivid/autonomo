@@ -24,7 +24,7 @@ export default function ResaleButton({ setResale }: ResaleButtonProps) {
                     }}
                 />
             </View>
-            <Text style={styles.text}>Preencha se o produto for uma revenda.</Text>
+            <Text style={styles.text}>Caso você esteja revendendo o produto.</Text>
         </View>
     )
 

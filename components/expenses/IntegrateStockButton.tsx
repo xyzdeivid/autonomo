@@ -24,7 +24,7 @@ export default function IntegrateStockButton({ setStockIntegrate }: IntegrateSto
                     }}
                 />
             </View>
-            <Text style={styles.warningText}>Preencha se a saída for a reposição do estoque de algum produto.</Text>
+            <Text style={styles.warningText}>Caso você esteja repondo o estoque de algum produto.</Text>
         </View>
     )
 

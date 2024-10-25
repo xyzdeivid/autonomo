@@ -50,7 +50,7 @@ export default function Expenses() {
             <Container>
                 {
                     expenses[0] && (
-                        <MonthInput />
+                        <MonthInput  dropdownIconColor='#660000'/>
                     )
                 }
                 {
