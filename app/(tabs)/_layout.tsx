@@ -1,19 +1,21 @@
 import { Tabs } from 'expo-router'
 import React, { useContext } from 'react'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 import { ContentContext } from '@/context/InfoContent'
 import { LinearGradient } from 'expo-linear-gradient'
 
 export default function TabLayout() {
 
-    const [hideTabBar] = useContext(HideTabBarContext)
+    const [hideHeader] = useContext(MainDisplaysContext).header
+    const [hideTabBar] = useContext(MainDisplaysContext).tabBar
     const [, setAddItemsForm] = useContext(ContentContext).form
     const [, setGeneralButton] = useContext(ContentContext).button
 
     return (
         <Tabs
             screenOptions={{
+                headerShown: hideHeader,
                 tabBarShowLabel: false,
                 headerStyle: {
                     backgroundColor: '#112935'

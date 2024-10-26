@@ -5,7 +5,7 @@ import FormTitle from '../common/FormTitle'
 import NameInput from '../common/NameInput'
 import DateInput from '../common/DateInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 import { DocsContext, Expense, Service } from '@/context/DocsContext'
 import { Alert } from 'react-native'
 import { generateId } from '@/functions/common'
@@ -30,7 +30,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     const [date, setDate] = useState('')
     const [value, setValue] = useState(0)
     const [amount, setAmount] = useState(0)
-    const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [expenses, setExpenses] = useContext(DocsContext).expenses
     const [services, setServices] = useContext(DocsContext).services
     const products = services.filter(service => service.category === 'product')

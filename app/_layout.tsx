@@ -7,7 +7,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import DocsProvider from '@/context/DocsContext';
-import HideTabBarProvider from '@/context/HideTabBar';
+import HideTabBarProvider from '@/context/MainDisplays';
 import MonthProvider from '@/context/Month';
 import ContentProvider from '@/context/InfoContent';
 

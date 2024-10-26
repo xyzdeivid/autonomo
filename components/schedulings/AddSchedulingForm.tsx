@@ -7,7 +7,7 @@ import DateInput from '../common/DateInput'
 import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { generateId } from '@/functions/common'
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 import { getSchedulingValue, getServices, orderSchedulings } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
 import { Alert } from 'react-native'
@@ -25,7 +25,7 @@ interface AddSchedulingFormProps {
 
 export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: AddSchedulingFormProps) {
 
-    const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [services] = useContext(DocsContext).services
     const [service, setService] = useState<Service>(getServices(services)[0])
 

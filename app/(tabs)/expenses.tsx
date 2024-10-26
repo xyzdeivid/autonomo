@@ -12,7 +12,7 @@ import { filterExpenses } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
 import { orderServices } from '@/functions/services'
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 import LoadingScreen from '@/components/common/LoadingScreen'
 
 export default function Expenses() {
@@ -23,7 +23,7 @@ export default function Expenses() {
     const [expenseForDeletion, setExpenseForDeletion] = useState({} as Expense)
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
-    const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
 
     const deleteExpense = (expense: Expense) => {

@@ -5,7 +5,7 @@ import FormTitle from '../common/FormTitle'
 import { DocsContext, Service } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useContext, useEffect, useState } from 'react'
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 import { orderServices } from '@/functions/services'
 import EditValueInput from './EditValueInput'
 import ActualValue from './ActualValue'
@@ -34,7 +34,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     const serviceName = service._id
 
-    const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
 
     const [editNameInput, setEditNameInput] = useState(false)
     const [name, setName] = useState('')

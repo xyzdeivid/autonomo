@@ -1,4 +1,4 @@
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 import { useContext, useEffect, useRef } from 'react'
 import { Pressable, StyleSheet, Animated } from 'react-native'
 
@@ -11,7 +11,7 @@ interface FormContainerProps {
 
 export default function FormContainer({ children, setFormOff, bgColor, setButton }: FormContainerProps) {
 
-    const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
 
     const slideAnim = useRef(new Animated.Value(-1000)).current
 

@@ -8,7 +8,7 @@ import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/funct
 import AboutServiceCard from '@/components/services/AboutServiceCard'
 import ServicesContent from '@/components/services/ServicesContent'
 import LoadingScreen from '@/components/common/LoadingScreen'
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 
 export default function Services() {
 
@@ -18,7 +18,7 @@ export default function Services() {
     const [services, setServices] = useContext(DocsContext).services
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
-    const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
 
     useEffect(() => {

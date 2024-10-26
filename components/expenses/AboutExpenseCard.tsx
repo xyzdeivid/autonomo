@@ -6,7 +6,7 @@ import { Expense } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect, useState } from 'react'
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 import ConfirmDelete from '../common/ConfirmDelete'
 import { Entypo } from '@expo/vector-icons'
 
@@ -19,7 +19,7 @@ interface AboutExpenseCardProps {
 
 export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, setButton }: AboutExpenseCardProps) {
 
-    const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
 
     useEffect(() => {

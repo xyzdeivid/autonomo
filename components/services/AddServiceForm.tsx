@@ -6,7 +6,7 @@ import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import FormTitle from '../common/FormTitle'
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 import NameInput from '../common/NameInput'
 
 import { checkAllInputs, checkIfThereIsAnotherService, checkServicesAmount, checkTitle, createNewService, orderServices } from '@/functions/services'
@@ -33,7 +33,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [amount, setAmount] = useState(0)
     const [services, setServices] = useContext(DocsContext).services
     const [expenses, setExpenses] = useContext(DocsContext).expenses
-    const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [choice, setChoice] = useState('product')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [resale, setResale] = useState(false)

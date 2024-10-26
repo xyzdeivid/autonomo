@@ -9,10 +9,10 @@ import { MonthContext } from '@/context/Month'
 import { filterSchedulings } from '@/functions/common'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 
-import { getServices, orderSchedulings } from '@/functions/schedulings'
+import { orderSchedulings } from '@/functions/schedulings'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
 import { orderServices } from '@/functions/services'
-import { HideTabBarContext } from '@/context/HideTabBar'
+import { MainDisplaysContext } from '@/context/MainDisplays'
 import LoadingScreen from '@/components/common/LoadingScreen'
 
 export default function Schedulings() {
@@ -24,7 +24,7 @@ export default function Schedulings() {
     const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Scheduling)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
-    const [, setHideTabBar] = useContext(HideTabBarContext)
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
 
     const checkAmount = (scheduling: Scheduling) => {

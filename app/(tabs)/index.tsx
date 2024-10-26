@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
@@ -13,6 +13,7 @@ import AddItemForm from '@/components/info/AddItemForm'
 import AddServiceForm from '@/components/services/AddServiceForm'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
+import WelcomeCard from '@/components/info/WelcomeCard'
 
 export default function Info() {
 
@@ -24,9 +25,22 @@ export default function Info() {
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
+    const [welcomeCard, setWelcomeCard] = useState(true)
+
+    const openFirstItem = () => {
+        setTimeout(() => {
+            setAddServiceForm(true)
+        }, 250)
+    }
 
     return (
         <Container>
+            {welcomeCard && (
+                <WelcomeCard
+                    setWelcomeCard={setWelcomeCard}
+                    openFirstItem={openFirstItem}
+                />
+            )}
             {
                 schedulings[0] && (<MonthInput dropdownIconColor='#08819B' />)
             }
