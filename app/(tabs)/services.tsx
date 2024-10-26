@@ -65,6 +65,7 @@ export default function Services() {
                         text='Novo Item'
                         bgColor='#330066'
                         setButton={setButton}
+                        infoButtonColor='rgba(51, 0, 102, 0.5)'
                     />
                 }
                 {

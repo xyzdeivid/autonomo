@@ -69,6 +69,7 @@ export default function Expenses() {
                         bgColor='#660000'
                         text='Nova Saída'
                         setButton={setButton}
+                        infoButtonColor='rgba(139, 0, 0, 0.5)'
                     />
                 }
                 {

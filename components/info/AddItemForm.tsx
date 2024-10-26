@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     },
     button: {
         padding: 10,
-        borderRadius: 10,
+        borderRadius: 5,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
