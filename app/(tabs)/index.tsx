@@ -30,6 +30,7 @@ export default function Info() {
     const openFirstItem = () => {
         setTimeout(() => {
             setAddServiceForm(true)
+            setGeneralButton(false)
         }, 250)
     }
 
