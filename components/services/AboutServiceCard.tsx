@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Alert } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
@@ -46,6 +46,8 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
     const [stock, setStock] = useState(0)
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
+
+    const [changedValue, setChangedValue] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -184,7 +186,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     const editStock = () => {
 
-        if (stock) {
+        if (changedValue) {
 
             setLoadingScreen(true)
 
@@ -279,7 +281,11 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                                     <View style={styles.infoContainer}>
                                         {
                                             editStockInput
-                                                ? <EditStockInput setStock={setStock} editStock={editStock} />
+                                                ? <EditStockInput
+                                                    setStock={setStock}
+                                                    editStock={editStock}
+                                                    setChangedValue={setChangedValue}
+                                                />
                                                 : <ActualStock stock={stock || service.amount} setEditStockInput={setEditStockInput} />
                                         }
                                     </View>
