@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Pressable, StyleSheet, View, Text, TextInput } from 'react-native'
 
 interface EditStockInputProps {
@@ -8,13 +9,35 @@ interface EditStockInputProps {
 
 export default function EditStockInput({ setStock, editStock, setChangedValue }: EditStockInputProps) {
 
+    const [textValue, setTextValue] = useState('')
+
+    const checkNumber = (text: string) => {
+        if (/^\d+$/.test(text)) {
+            setTextValue(text)
+            setStock(Number(text))
+        } else {
+            setTextValue(text.replace(/\D/g, ''))
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Estoque:</Text>
-            <TextInput onChangeText={text => {
-                setChangedValue(true)
-                setStock(Number(text))
-            }} style={styles.editInput} keyboardType='numeric' />
+            <TextInput
+                value={textValue}
+                onChangeText={text => {
+                    if (text.length > 0) {
+                        setChangedValue(true)
+                    } else {
+                        setChangedValue(false)
+                    }
+                    if (text) {
+                        checkNumber(text)
+                    } else {
+                        setTextValue('')
+                        setStock(0)
+                    }
+                }} style={styles.editInput} keyboardType='numeric' />
             <Pressable
                 style={styles.editButton}
                 onPress={() => editStock()}

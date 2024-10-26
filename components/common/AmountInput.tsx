@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 
 interface AmountInputProps {
@@ -10,12 +11,30 @@ interface AmountInputProps {
 
 export default function AmountInput({ text, setAmount, defaultValue, bgColor, textColor }: AmountInputProps) {
 
+    const [textValue, setTextValue] = useState('')
+
+    const checkNumber = (text: string) => {
+        if (/^\d+$/.test(text)) {
+            setTextValue(text)
+            setAmount(Number(text))
+        } else {
+            setTextValue(text.replace(/\D/g, ''))
+        }
+    }
+
     return (
         <View style={styles.inputContainer}>
             <Text style={{ color: textColor ? textColor : 'black' }}>{text}:</Text>
             <TextInput
-                value={defaultValue ? String(defaultValue) : undefined}
-                onChangeText={text => setAmount(Number(text))}
+                value={defaultValue ? String(defaultValue) : textValue}
+                onChangeText={text => {
+                    if (text) {
+                        checkNumber(text)
+                    } else {
+                        setTextValue('')
+                        setAmount(0)
+                    }
+                }}
                 style={{
                     ...styles.input,
                     backgroundColor: bgColor ? bgColor : '#E0E0E0'

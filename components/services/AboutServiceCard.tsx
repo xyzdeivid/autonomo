@@ -46,7 +46,6 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
     const [stock, setStock] = useState(0)
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
-
     const [changedValue, setChangedValue] = useState(false)
 
     useEffect(() => {
