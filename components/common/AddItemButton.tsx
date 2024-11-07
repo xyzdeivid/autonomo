@@ -7,25 +7,26 @@ interface AddItemButtonProps {
     text: string
     setButton: React.Dispatch<React.SetStateAction<boolean>>
     infoButtonColor: string
+    setInfoCard: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddItemButton({ setForm, bgColor, text, setButton, infoButtonColor }: AddItemButtonProps) {
+export default function AddItemButton({ setForm, bgColor, text, setButton, infoButtonColor, setInfoCard }: AddItemButtonProps) {
 
     return (
         <View style={styles.container}>
-            <AntDesign name='infocirlce' size={20} color={infoButtonColor} />
+            <AntDesign onPress={() => setInfoCard(true)} name='infocirlce' size={20} color={infoButtonColor} />
             <Pressable
-            style={{
-                ...styles.button,
-                backgroundColor: bgColor
-            }}
-            onPress={() => {
-                setForm(true)
-                setButton(false)
-            }}
-        >
-            <Text style={{ color: 'white' }}>{text}</Text>
-        </Pressable>
+                style={{
+                    ...styles.button,
+                    backgroundColor: bgColor
+                }}
+                onPress={() => {
+                    setForm(true)
+                    setButton(false)
+                }}
+            >
+                <Text style={{ color: 'white' }}>{text}</Text>
+            </Pressable>
         </View>
     )
 

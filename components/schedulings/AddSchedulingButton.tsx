@@ -8,9 +8,10 @@ import { AntDesign } from '@expo/vector-icons'
 interface AddSchedulingButtonProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
     setButton: React.Dispatch<React.SetStateAction<boolean>>
+    setWhatIsSchedulingCard: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddSchedulingButton({ setAddSchedulingForm, setButton }: AddSchedulingButtonProps) {
+export default function AddSchedulingButton({ setAddSchedulingForm, setButton, setWhatIsSchedulingCard }: AddSchedulingButtonProps) {
 
     const [services] = useContext(DocsContext).services
 
@@ -27,15 +28,15 @@ export default function AddSchedulingButton({ setAddSchedulingForm, setButton }:
 
     return (
         <View style={styles.container}>
-            <AntDesign name='infocirlce' size={20} color={'rgba(0, 102, 0, 0.5)'} />
+            <AntDesign onPress={() => setWhatIsSchedulingCard(true)} name='infocirlce' size={20} color={'rgba(0, 102, 0, 0.5)'} />
             <Pressable
-            style={styles.button}
-            onPress={() => {
-                checkServices()
-            }}
-        >
-            <Text style={{ color: 'white' }}>Nova Entrada</Text>
-        </Pressable>
+                style={styles.button}
+                onPress={() => {
+                    checkServices()
+                }}
+            >
+                <Text style={{ color: 'white' }}>Nova Entrada</Text>
+            </Pressable>
         </View>
     )
 

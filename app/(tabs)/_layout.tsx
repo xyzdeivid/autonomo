@@ -98,7 +98,7 @@ export default function TabLayout() {
                     },
                 })}
                 options={{
-                    title: 'Items',
+                    title: 'Itens',
                     tabBarActiveTintColor: '#330066',
                     headerBackground: () => (
                         <LinearGradient

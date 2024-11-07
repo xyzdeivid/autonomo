@@ -14,6 +14,7 @@ import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
 import { orderServices } from '@/functions/services'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import LoadingScreen from '@/components/common/LoadingScreen'
+import WhatIsSchedulingCard from '@/components/schedulings/WhatIsSchedulingCard'
 
 export default function Schedulings() {
 
@@ -26,6 +27,7 @@ export default function Schedulings() {
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
+    const [whatIsSchedulingCard, setWhatIsSchedulingCard] = useState(false)
 
     const checkAmount = (scheduling: Scheduling) => {
 
@@ -99,6 +101,7 @@ export default function Schedulings() {
                     && <AddSchedulingButton
                         setAddSchedulingForm={setAddSchedulingForm}
                         setButton={setButton}
+                        setWhatIsSchedulingCard={setWhatIsSchedulingCard}
                     />
                 }
                 {
@@ -117,6 +120,12 @@ export default function Schedulings() {
                             setButton={setButton}
                         />
                         : null
+                }
+                {whatIsSchedulingCard &&
+                    <WhatIsSchedulingCard
+                        setWhatIsSchedulingCard={setWhatIsSchedulingCard}
+                        setButton={setButton}
+                    />
                 }
             </Container>
         </>

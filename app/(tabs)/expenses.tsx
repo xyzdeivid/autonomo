@@ -11,9 +11,9 @@ import { MonthContext } from '@/context/Month'
 import { filterExpenses } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
-import { orderServices } from '@/functions/services'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import LoadingScreen from '@/components/common/LoadingScreen'
+import WhatIsExpenseCard from '@/components/expenses/WhatIsExpenseCard'
 
 export default function Expenses() {
 
@@ -25,6 +25,7 @@ export default function Expenses() {
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
+    const [whatIsExpenseCard, setWhatIsExpenseCard] = useState(false)
 
     const deleteExpense = (expense: Expense) => {
 
@@ -70,6 +71,7 @@ export default function Expenses() {
                         text='Nova Saída'
                         setButton={setButton}
                         infoButtonColor='rgba(139, 0, 0, 0.5)'
+                        setInfoCard={setWhatIsExpenseCard}
                     />
                 }
                 {
@@ -89,6 +91,10 @@ export default function Expenses() {
                         />
                     )
                 }
+                {whatIsExpenseCard && <WhatIsExpenseCard
+                    setWhatIsExpenseCard={setWhatIsExpenseCard}
+                    setButton={setButton}
+                />}
             </Container>
         </>
     )

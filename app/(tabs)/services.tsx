@@ -9,6 +9,7 @@ import AboutServiceCard from '@/components/services/AboutServiceCard'
 import ServicesContent from '@/components/services/ServicesContent'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import { MainDisplaysContext } from '@/context/MainDisplays'
+import WhatIsServiceCard from '@/components/services/WhatIsServiceCard'
 
 export default function Services() {
 
@@ -20,6 +21,7 @@ export default function Services() {
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
+    const [whatIsServiceCard, setWhatIsServiceCard] = useState(false)
 
     useEffect(() => {
         getCategoryAndSet(services, setCategory)
@@ -66,6 +68,7 @@ export default function Services() {
                         bgColor='#330066'
                         setButton={setButton}
                         infoButtonColor='rgba(51, 0, 102, 0.5)'
+                        setInfoCard={setWhatIsServiceCard}
                     />
                 }
                 {
@@ -86,6 +89,11 @@ export default function Services() {
                         />
                         : null
                 }
+                {whatIsServiceCard &&
+                    <WhatIsServiceCard
+                        setWhatIsServiceCard={setWhatIsServiceCard}
+                        setButton={setButton}
+                    />}
             </Container>
         </>
     )
