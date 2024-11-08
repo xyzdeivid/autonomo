@@ -111,9 +111,7 @@ export default function Schedulings() {
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            setWhatIsSchedulingCard(true)
-        }, 250)
+        setWhatIsSchedulingCard(true)
     }, [])
 
     return (

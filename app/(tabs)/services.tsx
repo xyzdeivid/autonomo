@@ -56,9 +56,7 @@ export default function Services() {
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            setWhatIsServiceCard(true)
-        }, 250)
+        setWhatIsServiceCard(true)
     }, [])
 
     return (

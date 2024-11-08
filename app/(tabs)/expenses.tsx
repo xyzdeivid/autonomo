@@ -56,9 +56,7 @@ export default function Expenses() {
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            setWhatIsExpenseCard(true)
-        }, 250)
+        setWhatIsExpenseCard(true)
     }, [])
 
     return (
