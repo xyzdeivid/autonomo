@@ -3,7 +3,6 @@ import FormContainer from '../common/FormContainer'
 import { useContext, useEffect } from 'react'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import FormBody from '../common/FormBody'
-import { EvilIcons } from '@expo/vector-icons'
 
 interface WhatIsSchedulingCardProps {
     setWhatIsSchedulingCard: React.Dispatch<React.SetStateAction<boolean>>
@@ -28,22 +27,15 @@ export default function WhatIsSchedulingCard({ setWhatIsSchedulingCard, setButto
             <FormBody>
                 <View>
                     <Text style={styles.titleText}>
-                        Sobre as Entradas
+                        Sobre Entradas
                     </Text>
                 </View>
                 <View>
-                    <View style={styles.infoContainer}>
-                        <EvilIcons name='sc-instagram' size={24} color='#006600' />
-                        <Text style={{ marginBottom: 8, color: '#006600' }}>
-                            Na aba Entradas, você pode registrar todas as receitas geradas pelos produtos vendidos ou serviços oferecidos.
-                        </Text>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <EvilIcons name='sc-instagram' size={24} color='#006600' />
-                        <Text style={{ color: '#006600' }}>
-                            Aqui, você pode registrar o agendamento de algum serviço, ou a venda de algum produto.
-                        </Text>
-                    </View>
+                    <Text style={{ marginBottom: 8, color: '#006600' }}>
+                        Nesta seção, você pode registrar todas as receitas do seu negócio, incluindo valores recebidos
+                        pela venda de produtos e pela prestação de serviços. Esse registro abrange, por exemplo, o
+                        pagamento de serviços agendados ou a venda de itens específicos.
+                    </Text>
                 </View>
             </FormBody>
         </FormContainer>

@@ -134,7 +134,8 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                     <FormInputs>
                         <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                         {choice === 'product' && (
-                            <ResaleButton 
+                            <ResaleButton
+                                resale={resale}
                                 setResale={setResale}
                             />
                         )}

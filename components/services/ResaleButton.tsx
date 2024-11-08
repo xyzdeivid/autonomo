@@ -2,12 +2,11 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useState } from 'react'
 
 interface ResaleButtonProps {
+    resale: boolean
     setResale: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ResaleButton({ setResale }: ResaleButtonProps) {
-
-    const [active, setActive] = useState(false)
+export default function ResaleButton({ resale, setResale }: ResaleButtonProps) {
 
     return (
         <View style={{ marginBottom: 20 }}>
@@ -16,10 +15,9 @@ export default function ResaleButton({ setResale }: ResaleButtonProps) {
                 <Pressable
                     style={{
                         ...styles.box,
-                        backgroundColor: active ? '#330066' : 'transparent'
+                        backgroundColor: resale ? '#330066' : 'transparent'
                     }}
                     onPress={() => {
-                        setActive(!active)
                         setResale(resale => !resale)
                     }}
                 />
