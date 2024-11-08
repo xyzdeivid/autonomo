@@ -14,6 +14,8 @@ import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import WhatIsExpenseCard from '@/components/expenses/WhatIsExpenseCard'
+import { Alert } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Expenses() {
 
@@ -27,7 +29,7 @@ export default function Expenses() {
     const [button, setButton] = useState(true)
     const [whatIsExpenseCard, setWhatIsExpenseCard] = useState(false)
 
-    const deleteExpense = (expense: Expense) => {
+    const deleteExpense = async (expense: Expense) => {
 
         setLoadingScreen(true)
 
@@ -35,13 +37,21 @@ export default function Expenses() {
             return current._id !== expense._id
         })
 
-        setTimeout(() => {
+        try {
+
+            await AsyncStorage.setItem('expenses', JSON.stringify(remainingExpenses))
             setExpenses(orderExpenses(remainingExpenses))
-            setDeleteExpenseForm(false)
-            setLoadingScreen(false)
-            setHideTabBar(false)
-            setButton(true)
-        }, 500)
+
+        } catch (err) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+
+        }
+
+        setDeleteExpenseForm(false)
+        setLoadingScreen(false)
+        setHideTabBar(false)
+        setButton(true)
 
     }
 
@@ -57,7 +67,7 @@ export default function Expenses() {
             <Container>
                 {
                     expenses[0] && (
-                        <MonthInput  dropdownIconColor='#660000'/>
+                        <MonthInput dropdownIconColor='#660000' />
                     )
                 }
                 {
