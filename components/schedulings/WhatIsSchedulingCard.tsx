@@ -31,10 +31,12 @@ export default function WhatIsSchedulingCard({ setWhatIsSchedulingCard, setButto
                     </Text>
                 </View>
                 <View>
-                    <Text style={{ marginBottom: 8, color: '#006600' }}>
+                    <Text style={{ color: '#006600', marginBottom: 4 }}>
                         Nesta seção, você pode registrar todas as receitas do seu negócio, incluindo valores recebidos
-                        pela venda de produtos e pela prestação de serviços. Esse registro abrange, por exemplo, o
-                        pagamento de serviços agendados ou a venda de itens específicos.
+                        pela venda de produtos e pela prestação de serviços.
+                    </Text>
+                    <Text style={{ color: '#006600' }}>
+                        Esse registro abrange, por exemplo, o pagamento de serviços agendados ou a venda de itens específicos.
                     </Text>
                 </View>
             </FormBody>

@@ -31,10 +31,12 @@ export default function WhatIsServiceCard({ setWhatIsServiceCard, setButton }: W
                     </Text>
                 </View>
                 <View>
+                    <Text style={{ color: '#330066', marginBottom: 4 }}>
+                        Nesta seção, você pode cadastrar todos os produtos e serviços que fazem parte do seu trabalho.
+                    </Text>
                     <Text style={{ color: '#330066' }}>
-                    Nesta seção, você pode cadastrar todos os produtos e serviços que fazem parte do seu trabalho. 
-                    Esses itens são fundamentais para o controle do seu fluxo de caixa, pois permitem registrar e 
-                    monitorar todas as entradas financeiras associadas.
+                        Esses itens são fundamentais para o controle do seu fluxo de caixa, pois permitem registrar e
+                        monitorar todas as entradas financeiras associadas.
                     </Text>
                 </View>
             </FormBody>

@@ -31,9 +31,9 @@ export default function WhatIsExpenseCard({ setWhatIsExpenseCard, setButton }: W
                     </Text>
                 </View>
                 <View>
-                    <Text style={{ marginBottom: 8, color: '#660000' }}>
-                    Nesta seção, você pode registrar todas as despesas do seu negócio, incluindo contas fixas, 
-                    custos operacionais e reposições de estoque para produtos destinados à venda.
+                    <Text style={{ color: '#660000' }}>
+                        Nesta seção, você pode registrar todas as despesas do seu negócio, incluindo contas fixas,
+                        custos operacionais e reposições de estoque para produtos destinados à venda.
                     </Text>
                 </View>
             </FormBody>
