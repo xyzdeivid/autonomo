@@ -1,4 +1,7 @@
-import { createContext, useState } from 'react'
+import { orderServices } from '@/functions/services'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { createContext, useEffect, useState } from 'react'
+import { Alert } from 'react-native'
 
 export interface Service {
     category: string
@@ -38,8 +41,8 @@ const DEFAULT_EXPENSE: Expense = {
 
 export interface Scheduling {
     _id: string
-	service: Service
-	date: string
+    service: Service
+    date: string
 }
 
 type SetSchedulings = React.Dispatch<React.SetStateAction<Scheduling[]>>
@@ -48,13 +51,13 @@ type SchedulingsState = [Scheduling[], SetSchedulings]
 
 const DEFAULT_SCHEDULING: Scheduling = {
     _id: '',
-	service: {
+    service: {
         category: '',
-		_id: '',
-		value: 0,
+        _id: '',
+        value: 0,
         amount: 0
-	},
-	date: '',
+    },
+    date: '',
 }
 
 interface TDocsContext {
@@ -82,11 +85,33 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [expenses, setExpenses] = useState<Expense[]>([])
     const [schedulings, setSchedulings] = useState<Scheduling[]>([])
 
+    const getItemsFromDb = async () => {
+
+        try {
+
+            const data = await AsyncStorage.getItem('items')
+
+            if (data) {
+                setServices(orderServices(JSON.parse(data)))
+            }
+
+        } catch (err) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+
+        }
+
+    }
+
     const docs: TDocsContext = {
         services: [services, setServices],
         expenses: [expenses, setExpenses],
         schedulings: [schedulings, setSchedulings]
     }
+
+    useEffect(() => {
+        getItemsFromDb()
+    }, [])
 
     return (
         <DocsContext.Provider value={docs}>

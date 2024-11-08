@@ -19,6 +19,7 @@ import ResaleButton from './ResaleButton'
 import DateInput from '../common/DateInput'
 import { generateId } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -44,7 +45,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         setHideTabBar(true)
     }, [])
 
-    const addService = () => {
+    const addService = async () => {
 
         if (checkAllInputs(choice, name, value, amount)) {
 
@@ -77,43 +78,41 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                 // Verificando se já existe um serviço com o nome igual
                 if (checkIfThereIsAnotherService(services, name)) {
 
-                    setTimeout(() => {
-                        Alert.alert('Item existente', 'Um item com este nome já existe')
-                    }, 700)
+                    Alert.alert('Item existente', 'Um item com este nome já existe')
 
                 } else {
 
-                    setTimeout(() => {
+                    try {
+
+                        await AsyncStorage.setItem('items', JSON.stringify([...services, service]))
                         setServices(orderServices([...services, service]))
-                    }, 500)
+
+                    } catch (err) {
+
+                        Alert.alert('Erro ao acessar banco de dados')
+
+                    }
 
                 }
 
             } else {
 
-                setTimeout(() => {
-                    Alert.alert('Você só pode registrar 8 items por categoria')
-                }, 700)
+                Alert.alert('Você só pode registrar 8 items por categoria')
 
             }
 
         } else {
 
-            setTimeout(() => {
-                Alert.alert(
-                    'Preencha todos os campos',
-                    'Todos os campos do formulário precisam ser preenchidos'
-                )
-            }, 700)
+            Alert.alert(
+                'Preencha todos os campos',
+                'Todos os campos do formulário precisam ser preenchidos'
+            )
 
         }
 
-        // Simulation of db query
-        setTimeout(() => {
-            setAddServiceForm(false)
-            setHideTabBar(false)
-            setButton(true)
-        }, 500)
+        setAddServiceForm(false)
+        setHideTabBar(false)
+        setButton(true)
 
     }
 
