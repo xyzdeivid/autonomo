@@ -17,6 +17,7 @@ import { orderServices } from '@/functions/services'
 import NumberInput from '../common/NumberInput'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import LoadingScreen from '../common/LoadingScreen'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -58,7 +59,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
     }
 
-    const updateStock = () => {
+    const updateStock = async () => {
 
         if (service.category === 'product') {
 
@@ -73,7 +74,17 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                 return service._id !== updatedService._id
             })
 
-            setServices(orderServices([...remainingServices, updatedService]))
+            try {
+
+                await AsyncStorage.setItem('items', JSON.stringify([...remainingServices, updatedService]))
+                setServices(orderServices([...remainingServices, updatedService]))
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
         }
 
     }
@@ -98,7 +109,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
     }
 
-    const addScheduling = () => {
+    const addScheduling = async () => {
 
         if (checkAllInputs()) {
 
@@ -117,32 +128,46 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                     date
                 }
 
-                setTimeout(() => {
-                    updateStock()
+                if (service.category === 'product') {
+
+                    try {
+
+                        await updateStock()
+
+                    } catch (err) {
+
+                        Alert.alert('Erro ao acessar banco de dados')
+
+                    }
+
+                }
+
+                try {
+
+                    await AsyncStorage.setItem('schedulings', JSON.stringify([...schedulings, newScheduling]))
                     setSchedulings(orderSchedulings([...schedulings, newScheduling]))
-                }, 500)
+
+                } catch (err) {
+
+                    Alert.alert('Erro ao acessar banco de dados')
+
+                }
 
             } else {
 
-                setTimeout(() => {
-                    Alert.alert('Produto sem estoque')
-                }, 700)
+                Alert.alert('Produto sem estoque')
 
             }
 
         } else {
 
-            setTimeout(() => {
-                Alert.alert('Todos os campos precisam ser preenchidos')
-            }, 700)
+            Alert.alert('Todos os campos precisam ser preenchidos')
 
         }
 
-        setTimeout(() => {
-            setAddSchedulingForm(false)
-            setHideTabBar(false)
-            setButton(true)
-        }, 500)
+        setAddSchedulingForm(false)
+        setHideTabBar(false)
+        setButton(true)
 
     }
 
@@ -171,10 +196,10 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                         {service.category === 'product' && (
                             <StockInfo amount={service.amount - amount} />
                         )}
-                        <DateInput 
-                        setTargetDate={setDate} 
-                        bgColor='#006600' 
-                        textColor='#006600'
+                        <DateInput
+                            setTargetDate={setDate}
+                            bgColor='#006600'
+                            textColor='#006600'
                         />
                         {service.category === 'product' && (
                             <AmountInput
