@@ -45,6 +45,12 @@ export default function Services() {
 
     }
 
+    useEffect(() => {
+        setTimeout(() => {
+            setWhatIsServiceCard(true)
+        }, 250)
+    }, [])
+
     return (
         <>
             {loadingScreen && <LoadingScreen />}

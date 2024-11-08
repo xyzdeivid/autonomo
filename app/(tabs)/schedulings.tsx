@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import Container from '@/components/common/Container'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
@@ -77,6 +77,12 @@ export default function Schedulings() {
         }, 500)
 
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setWhatIsSchedulingCard(true)
+        }, 250)
+    }, [])
 
     return (
         <>

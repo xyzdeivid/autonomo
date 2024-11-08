@@ -18,12 +18,12 @@ interface MainDisplaysProviderProps {
 
 export default function MainDisplaysProvider({ children }: MainDisplaysProviderProps) {
 
+    const [showHeader, setShowHeader] = useState(true)
     const [hideTabBar, setHideTabBar] = useState(false)
-    const [hideHeader, setHideHeader] = useState(false)
 
     const displays: MainDisplaysContextT = {
         tabBar: [hideTabBar, setHideTabBar],
-        header: [hideHeader, setHideHeader]
+        header: [showHeader, setShowHeader]
     }
 
     return (

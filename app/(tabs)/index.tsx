@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
@@ -28,10 +28,8 @@ export default function Info() {
     const [welcomeCard, setWelcomeCard] = useState(true)
 
     const openFirstItem = () => {
-        setTimeout(() => {
-            setAddServiceForm(true)
-            setGeneralButton(false)
-        }, 250)
+        setAddServiceForm(true)
+        setGeneralButton(false)
     }
 
     return (

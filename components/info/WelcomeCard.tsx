@@ -10,12 +10,12 @@ interface WelcomeCardProps {
 
 export default function WelcomeCard({ setWelcomeCard, openFirstItem }: WelcomeCardProps) {
 
-    const [, setHideHeader] = useContext(MainDisplaysContext).header
+    const [, setShowHeader] = useContext(MainDisplaysContext).header
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
 
     useEffect(() => {
         setHideTabBar(true)
-        setHideHeader(false)
+        setShowHeader(false)
     }, [])
 
     return (
@@ -57,7 +57,7 @@ export default function WelcomeCard({ setWelcomeCard, openFirstItem }: WelcomeCa
                     color='#112935'
                     onPress={() => {
                         setHideTabBar(false)
-                        setHideHeader(true)
+                        setShowHeader(true)
                         setWelcomeCard(false)
                         openFirstItem()
                     }}

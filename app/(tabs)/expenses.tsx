@@ -2,7 +2,7 @@ import Container from '@/components/common/Container'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 
 import { DocsContext, Expense } from '@/context/DocsContext'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
@@ -44,6 +44,12 @@ export default function Expenses() {
         }, 500)
 
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setWhatIsExpenseCard(true)
+        }, 250)
+    }, [])
 
     return (
         <>
