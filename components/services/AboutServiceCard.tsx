@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext, Service } from '@/context/DocsContext'
+import { DocsContext, Scheduling, Service } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useContext, useEffect, useState } from 'react'
 import { MainDisplaysContext } from '@/context/MainDisplays'
@@ -18,6 +18,7 @@ import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
 import { orderSchedulings } from '@/functions/schedulings'
 import { orderExpenses } from '@/functions/expenses'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface AboutServiceCardProps {
     service: Service
@@ -53,7 +54,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
         setButton(false)
     }, [])
 
-    const editName = () => {
+    const editName = async () => {
 
         if (name) {
 
@@ -86,7 +87,16 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             }
 
-            setExpenses(orderExpenses(editedExpenses))
+            try {
+
+                await AsyncStorage.setItem('expenses', JSON.stringify(editedExpenses))
+                setExpenses(orderExpenses(editedExpenses))
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
 
             const schedulingsToEdit = schedulings.filter(current => {
                 return current.service._id === serviceName
@@ -96,39 +106,62 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 return current.service._id !== serviceName
             })
 
-            schedulingsToEdit.forEach(current => 
+            schedulingsToEdit.forEach(current =>
                 current.service._id = name
             )
 
+            let editedSchedulings = [] as Scheduling[]
+
             if (remainingSchedulings[0]) {
 
-                setSchedulings(orderSchedulings([...remainingSchedulings, ...schedulingsToEdit]))
+                editedSchedulings = [...remainingSchedulings, ...schedulingsToEdit]
 
             } else {
 
-                setSchedulings(orderSchedulings([...schedulingsToEdit]))
-                
+                editedSchedulings = schedulingsToEdit
+
             }
+
+            try {
+
+                await AsyncStorage.setItem('schedulings', JSON.stringify(editedSchedulings))
+                setSchedulings(orderSchedulings(editedSchedulings))
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
+            let editedItems = [] as Service[]
 
             if (remainingItems[0]) {
 
-                setTimeout(() => {
-                    setServices(orderServices([...remainingItems, editedItem]))
-                    setFormOff(false)
-                    setButton(true)
-                }, 500)
+
+                editedItems = [...remainingItems, editedItem]
+
+
 
             } else {
 
-                setTimeout(() => {
-                    setServices([editedItem])
-                    setFormOff(false)
-                    setButton(true)
-                }, 500)
+                editedItems = [editedItem]
 
             }
 
-            setTimeout(() => setHideTabBar(false), 500)
+            try {
+
+                await AsyncStorage.setItem('items', JSON.stringify(editedItems))
+                setServices(orderServices(editedItems))
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
+            setFormOff(false)
+            setButton(true)
+            setHideTabBar(false)
 
         } else {
 
@@ -234,11 +267,11 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             case 'product':
                 return 'Produto'
-            
+
             case 'service':
                 return 'Serviço'
-            
-            case 'budget': 
+
+            case 'budget':
                 return 'Orçamentário'
 
         }
