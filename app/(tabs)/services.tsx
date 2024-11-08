@@ -56,7 +56,15 @@ export default function Services() {
     }
 
     useEffect(() => {
-        setWhatIsServiceCard(true)
+        AsyncStorage.getItem('items-experienced')
+        .then(experienced => {
+            if (!experienced) {
+                setWhatIsServiceCard(true)
+                AsyncStorage.setItem('items-experienced', 'experienced')
+                .catch(() => Alert.alert('Erro ao acessar banco de dados'))
+            }
+        })
+        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
     }, [])
 
     return (

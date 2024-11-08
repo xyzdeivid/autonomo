@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
@@ -14,6 +14,8 @@ import AddServiceForm from '@/components/services/AddServiceForm'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import WelcomeCard from '@/components/info/WelcomeCard'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Alert } from 'react-native'
 
 export default function Info() {
 
@@ -25,12 +27,33 @@ export default function Info() {
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
-    const [welcomeCard, setWelcomeCard] = useState(true)
+    const [welcomeCard, setWelcomeCard] = useState(false)
 
-    const openFirstItem = () => {
-        setAddServiceForm(true)
-        setGeneralButton(false)
+    const openFirstItem = async () => {
+
+        try {
+
+            await AsyncStorage.setItem('experienced', 'experienced')
+            setAddServiceForm(true)
+            setGeneralButton(false)
+
+        } catch (err) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+
+        }
+        
     }
+
+    useEffect(() => {
+        AsyncStorage.getItem('experienced')
+            .then(experienced => {
+                if (!experienced) {
+                    setWelcomeCard(true)
+                }
+            })
+            .catch(() => Alert.alert('Erro ao acessar banco de dados'))
+    }, [])
 
     return (
         <Container>

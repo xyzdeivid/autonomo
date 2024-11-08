@@ -56,7 +56,15 @@ export default function Expenses() {
     }
 
     useEffect(() => {
-        setWhatIsExpenseCard(true)
+        AsyncStorage.getItem('expenses-experienced')
+        .then(experienced => {
+            if (!experienced) {
+                setWhatIsExpenseCard(true)
+                AsyncStorage.setItem('expenses-experienced', 'experienced')
+                .catch(() => Alert.alert('Erro ao acessar banco de dados'))
+            }
+        })
+        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
     }, [])
 
     return (

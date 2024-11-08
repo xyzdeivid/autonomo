@@ -111,7 +111,15 @@ export default function Schedulings() {
     }
 
     useEffect(() => {
-        setWhatIsSchedulingCard(true)
+        AsyncStorage.getItem('schedulings-experienced')
+        .then(experienced => {
+            if (!experienced) {
+                setWhatIsSchedulingCard(true)
+                AsyncStorage.setItem('schedulings-experienced', 'experienced')
+                .catch(() => Alert.alert('Erro ao acessar banco de dados'))
+            }
+        })
+        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
     }, [])
 
     return (
