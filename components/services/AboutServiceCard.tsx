@@ -171,7 +171,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     }
 
-    const editValue = () => {
+    const editValue = async () => {
 
         if (value) {
 
@@ -188,25 +188,32 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 amount: service.amount
             }
 
+            let editedItems = [] as Service[]
+
             if (remainingServices[0]) {
 
-                setTimeout(() => {
-                    setServices(orderServices([...remainingServices, editedService]))
-                    setFormOff(false)
-                    setButton(true)
-                }, 500)
+                editedItems = orderServices([...remainingServices, editedService])
 
             } else {
 
-                setTimeout(() => {
-                    setServices([editedService])
-                    setFormOff(false)
-                    setButton(true)
-                }, 500)
+                editedItems = [editedService]
 
             }
 
-            setTimeout(() => setHideTabBar(false), 500)
+            try {
+
+                await AsyncStorage.setItem('items', JSON.stringify(editedItems))
+                setServices(editedItems)
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
+            setFormOff(false)
+            setButton(true)
+            setHideTabBar(false)
 
         } else {
 
