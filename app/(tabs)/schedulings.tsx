@@ -15,6 +15,8 @@ import { orderServices } from '@/functions/services'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import WhatIsSchedulingCard from '@/components/schedulings/WhatIsSchedulingCard'
+import { Alert } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Schedulings() {
 
@@ -29,7 +31,7 @@ export default function Schedulings() {
     const [button, setButton] = useState(true)
     const [whatIsSchedulingCard, setWhatIsSchedulingCard] = useState(false)
 
-    const checkAmount = (scheduling: Scheduling) => {
+    const checkAmount = async (scheduling: Scheduling) => {
 
         // Separando produto a ser atualizado
         const product = services.filter(current => {
@@ -52,29 +54,59 @@ export default function Schedulings() {
                 amount: product.amount + scheduling.service.amount
             }
 
-            setServices(orderServices([...remainingProducts, updatedProduct]))
+            try {
+
+                await AsyncStorage.setItem('items', JSON.stringify([...remainingProducts, updatedProduct]))
+                setServices(orderServices([...remainingProducts, updatedProduct]))
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
 
         }
 
     }
 
-    const deleteScheduling = (scheduling: Scheduling) => {
+    const deleteScheduling = async (scheduling: Scheduling) => {
 
         setLoadingScreen(true)
 
-        if (scheduling.service.category === 'product')
-            checkAmount(scheduling)
+        if (scheduling.service.category === 'product') {
+
+            try {
+
+                await checkAmount(scheduling)
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+            
+        }
+
+
         const remainingSchedulings = schedulings.filter(current => {
             return current._id !== scheduling._id
         })
 
-        setTimeout(() => {
+        try {
+
+            await AsyncStorage.setItem('schedulings', JSON.stringify(remainingSchedulings))
             setSchedulings(orderSchedulings(remainingSchedulings))
-            setDeleteSchedulingForm(false)
-            setLoadingScreen(false)
-            setHideTabBar(false)
-            setButton(true)
-        }, 500)
+
+        } catch (err) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+
+        }
+
+        setDeleteSchedulingForm(false)
+        setLoadingScreen(false)
+        setHideTabBar(false)
+        setButton(true)
 
     }
 
