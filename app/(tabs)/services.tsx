@@ -10,6 +10,8 @@ import ServicesContent from '@/components/services/ServicesContent'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import WhatIsServiceCard from '@/components/services/WhatIsServiceCard'
+import { Alert } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Services() {
 
@@ -27,7 +29,7 @@ export default function Services() {
         getCategoryAndSet(services, setCategory)
     }, [services])
 
-    const deleteService = (id: string) => {
+    const deleteService = async (id: string) => {
 
         setLoadingScreen(true)
 
@@ -35,13 +37,21 @@ export default function Services() {
             return service._id !== id
         })
 
-        setTimeout(() => {
+        try {
+
+            await AsyncStorage.setItem('items', JSON.stringify(remainingServices))
             setServices(orderServices(remainingServices))
-            setAboutServiceCard(false)
-            setLoadingScreen(false)
-            setHideTabBar(false)
-            setButton(true)
-        }, 500)
+
+        } catch (err) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+
+        }
+
+        setAboutServiceCard(false)
+        setLoadingScreen(false)
+        setHideTabBar(false)
+        setButton(true)
 
     }
 
