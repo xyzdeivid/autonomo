@@ -64,7 +64,16 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                     value: purchaseValue * amount
                 }
 
-                setExpenses(orderExpenses([...expenses, newExpense]))
+                try {
+
+                    await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
+                    setExpenses(orderExpenses([...expenses, newExpense]))
+                    
+                } catch (err) {
+                    
+                    Alert.alert('Erro ao acessar banco de dados')
+
+                }
 
             }
 

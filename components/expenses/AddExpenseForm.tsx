@@ -18,6 +18,7 @@ import LoadingScreen from '../common/LoadingScreen'
 import NumberInput from '../common/NumberInput'
 import ProductOptionsInput from './ProductOptionsInput'
 import AmountInput from '../common/AmountInput'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -54,7 +55,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
         setHideTabBar(true)
     }, [])
 
-    const addExpense = () => {
+    const addExpense = async () => {
 
         if (checkAllInputs()) {
 
@@ -82,32 +83,44 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                         return current._id !== productToUpdate._id
                     })
 
-                    setServices(orderServices([...remainingItems, productToUpdate]))
+                    try {
+
+                        await AsyncStorage.setItem('items', JSON.stringify([...remainingItems, productToUpdate]))
+                        setServices(orderServices([...remainingItems, productToUpdate]))
+                        
+                    } catch (err) {
+                        
+                        Alert.alert('Erro ao acessar banco de dados')
+
+                    }
 
                 }
 
             }
 
-            setTimeout(() =>
+            try {
+                
+                await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
                 setExpenses(orderExpenses([...expenses, newExpense]))
-            , 500)
+
+            } catch (err) {
+                
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
 
         } else {
 
-            setTimeout(() => {
                 Alert.alert(
                     'Preencha todos os campos',
                     'Todos os campos do formulário precisam ser preenchidos'
                 )
-            }, 700)
 
         }
 
-        setTimeout(() => {
             setAddExpenseForm(false)
             setHideTabBar(false)
             setButton(true)
-        }, 500)
 
     }
 
