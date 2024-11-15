@@ -10,7 +10,7 @@ export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
 
     const [selectedMonth, setSelectedMonth] = useContext(MonthContext)
 
-    const months: string[] = [
+    const months = [
         'Janeiro',
         'Fevereiro',
         'Março',
