@@ -9,7 +9,7 @@ interface SubmitFormButtonsProps {
 export default function SubmitFormButtons({ submit, submitButtonText, submitButtonColor }: SubmitFormButtonsProps) {
 
     return (
-        <View style={styles.button}>
+        <View style={{ marginTop: 20, marginHorizontal: 10 }}>
             <Button
                 color={submitButtonColor}
                 title={submitButtonText}
@@ -21,9 +21,3 @@ export default function SubmitFormButtons({ submit, submitButtonText, submitButt
     )
 
 }
-
-const styles = StyleSheet.create({
-    button: {
-        alignSelf: 'center'
-    }
-})

@@ -300,9 +300,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 bgColor='rgba(51, 0, 102, 0.1)'
             >
                 <FormBody>
-                    <FormTitle text={`Informações do ${getTitle(service)}`} textColor='#330066'>
-                        <Entypo name='info' size={18} color='rgba(51, 0, 102, 0.2)' />
-                    </FormTitle>
+                    <FormTitle text={`Informações do ${getTitle(service)}`} textColor='#330066' />
                     <View>
                         {
                             editNameInput

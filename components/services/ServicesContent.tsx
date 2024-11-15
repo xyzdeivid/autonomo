@@ -2,7 +2,8 @@ import { View } from 'react-native'
 import SelectCategoryInput from './SelectCategoryInput'
 import ServicesList from './ServicesList'
 
-import { Service } from '@/context/DocsContext'
+import { DocsContext, Service } from '@/context/DocsContext'
+import { useContext } from 'react'
 
 interface ServicesContentProps {
     category: string
@@ -15,9 +16,29 @@ interface ServicesContentProps {
 export default function ServicesContent({ category, setCategory,
     services, setServiceForDeletion, setDeleteServiceForm }: ServicesContentProps) {
 
+    const [allServices] = useContext(DocsContext).services
+
+    const categoriesNumber = () => {
+
+        const categories: string[] = []
+
+        allServices.forEach(service => {
+
+            if (!categories.find(category => category === service.category)) {
+                categories.push(service.category)
+            }
+
+        })
+
+        return categories.length
+
+    }
+
     return (
         <View>
-            <SelectCategoryInput category={category} setCategory={setCategory} />
+            {categoriesNumber() > 1 && (
+                <SelectCategoryInput category={category} setCategory={setCategory} />
+            )}
             {services[0] && (
                 <ServicesList
                     setServiceForDeletion={setServiceForDeletion}

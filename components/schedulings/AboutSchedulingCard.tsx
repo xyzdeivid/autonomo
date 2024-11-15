@@ -41,10 +41,9 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
             setButton={setButton}
         >
             <FormBody>
-                <FormTitle text={scheduling.service._id} textColor='#006600'>
-                    <Entypo name='info' size={18} color='rgba(0, 102, 0, 0.2)' />
-                </FormTitle>
+                <FormTitle text='Informações de Entrada' textColor='#006600' />
                 <View>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {scheduling.service._id}</Text>
                     {
                         scheduling.service.category === 'product'
                             ? <View>

@@ -16,6 +16,6 @@ export default function FormInputs({ children }: FormInputsProps) {
 
 const styles = StyleSheet.create({
     container: {
-        marginVertical: 20
+        marginTop: 20
     }
 })

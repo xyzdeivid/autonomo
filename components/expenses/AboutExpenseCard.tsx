@@ -34,10 +34,9 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
             setButton={setButton}
         >
             <FormBody>
-                <FormTitle text={expense.name} textColor='#660000'>
-                    <Entypo name='info' size={18} color='rgba(139, 0, 0, 0.2)' />
-                </FormTitle>
+                <FormTitle text='Informações de Saída' textColor='#660000' />
                 <View>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {expense.name}</Text>
                     <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(expense.value)}</Text>
                     <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}</Text>
                 </View>
