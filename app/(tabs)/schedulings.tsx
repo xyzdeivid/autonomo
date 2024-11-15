@@ -127,11 +127,6 @@ export default function Schedulings() {
             {loadingScreen && <LoadingScreen />}
             <Container>
                 {
-                    schedulings[0] && (
-                        <MonthInput dropdownIconColor='#006600' />
-                    )
-                }
-                {
                     filterSchedulings(schedulings, selectedMonth)[0]
                         ? <SchedulingsList
                             filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}

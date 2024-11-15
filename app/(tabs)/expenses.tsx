@@ -72,11 +72,6 @@ export default function Expenses() {
             {loadingScreen && <LoadingScreen />}
             <Container>
                 {
-                    expenses[0] && (
-                        <MonthInput dropdownIconColor='#660000' />
-                    )
-                }
-                {
                     filterExpenses(expenses, selectedMonth)[0]
                         ? <ExpensesList
                             filteredExpenses={filterExpenses(expenses, selectedMonth)}
