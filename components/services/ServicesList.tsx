@@ -23,23 +23,23 @@ export default function ServicesList({ setServiceForDeletion, setDeleteServiceFo
         return formatedData
     }
 
-    const checkIfIsBudget = (service: Service) => {
-        return service.category === 'budget'
-        ? ''
-        : ` (${moneyFormat(service.value).replace(/\s+/g, '')})`
-    }
-
     return (
         <>
             <ContainerHandler filteredTargets={services}>
                 <DataTable>
                     <DataTable.Header>
                         <DataTable.Title style={styles.text}>Item</DataTable.Title>
+                        {services[0].category !== 'budget' && (
+                            <DataTable.Title style={styles.text}>Valor</DataTable.Title>
+                        )}
                     </DataTable.Header>
                     {services.map(service => {
                         return (
                             <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
-                                <DataTable.Cell style={styles.text}>{service._id}{checkIfIsBudget(service)}</DataTable.Cell>
+                                <DataTable.Cell style={styles.text}>{service._id}</DataTable.Cell>
+                                {service.category !== 'budget' && (
+                                    <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
+                                )}
                             </DataTable.Row>
                         )
                     })}
