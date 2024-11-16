@@ -27,13 +27,6 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
         setButton(false)
     }, [])
 
-    const checkValueText = () => {
-        if (scheduling.service.category === 'product') {
-            return 'Valor Total'
-        }
-        return 'Valor'
-    }
-
     return (
         <FormContainer
             setFormOff={setFormOff}
@@ -44,6 +37,8 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                 <FormTitle text='Informações de Entrada' textColor='#006600' />
                 <View>
                     <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {scheduling.service._id}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
                     {
                         scheduling.service.category === 'product'
                             ? <View>
@@ -55,9 +50,6 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                             </View>
                             : null
                     }
-                    <Text style={styles.labelContainer}><Text style={styles.label}>{checkValueText()}:</Text>{moneyFormat(scheduling.service.value)}</Text>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
-
                 </View>
                 {
                     !confirmDelete

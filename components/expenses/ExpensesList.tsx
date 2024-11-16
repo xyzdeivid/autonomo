@@ -34,7 +34,7 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
             <ContainerHandler filteredTargets={filteredExpenses}>
                 <DataTable>
                     <DataTable.Header>
-                        <DataTable.Title style={styles.text}>Saída</DataTable.Title>
+                        <DataTable.Title style={styles.text}>Nome</DataTable.Title>
                         <DataTable.Title style={styles.text}>Data</DataTable.Title>
                         <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                     </DataTable.Header>

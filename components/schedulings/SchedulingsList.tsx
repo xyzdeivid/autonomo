@@ -34,7 +34,7 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
             <ContainerHandler filteredTargets={filteredSchedulings}>
                 <DataTable>
                     <DataTable.Header>
-                        <DataTable.Title style={styles.text}>Entrada</DataTable.Title>
+                        <DataTable.Title style={styles.text}>Nome</DataTable.Title>
                         <DataTable.Title style={styles.text}>Data</DataTable.Title>
                         <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                     </DataTable.Header>
