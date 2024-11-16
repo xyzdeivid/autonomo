@@ -28,6 +28,7 @@ export interface Expense {
     name: string
     date: string
     value: number
+    category: string
 }
 
 
@@ -38,7 +39,8 @@ const DEFAULT_EXPENSE: Expense = {
     _id: '',
     name: '',
     date: '',
-    value: 0
+    value: 0,
+    category: ''
 }
 
 export interface Scheduling {

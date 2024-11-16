@@ -61,7 +61,8 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                     _id: generateId(),
                     name: name,
                     date: purchaseDate,
-                    value: purchaseValue * amount
+                    value: purchaseValue * amount,
+                    category: 'resale'
                 }
 
                 try {
