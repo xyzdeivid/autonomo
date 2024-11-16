@@ -6,7 +6,6 @@ import { useContext, useEffect, useState } from 'react'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
-import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
 import { filterExpenses } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
@@ -20,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Expenses() {
 
     const [expenses, setExpenses] = useContext(DocsContext).expenses
+    const [items] = useContext(DocsContext).services
     const [selectedMonth] = useContext(MonthContext)
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [expenseForDeletion, setExpenseForDeletion] = useState({} as Expense)
@@ -36,6 +36,34 @@ export default function Expenses() {
         const remainingExpenses = expenses.filter(current => {
             return current._id !== expense._id
         })
+
+        if (expense.amount) {
+
+            const product = items.find(current =>
+                current._id === expense.name
+            )
+
+            if (product) {
+
+                product.amount = product.amount - expense.amount
+
+                const remainingItems = items.filter(current =>
+                    current !== product
+                )
+
+                try {
+
+                    await AsyncStorage.setItem('items', JSON.stringify([...remainingItems, product]))
+
+                } catch (err) {
+
+                    Alert.alert('Erro ao acessar banco de dados')
+
+                }
+
+            }
+
+        }
 
         try {
 
@@ -57,14 +85,14 @@ export default function Expenses() {
 
     useEffect(() => {
         AsyncStorage.getItem('expenses-experienced')
-        .then(experienced => {
-            if (!experienced) {
-                setWhatIsExpenseCard(true)
-                AsyncStorage.setItem('expenses-experienced', 'experienced')
-                .catch(() => Alert.alert('Erro ao acessar banco de dados'))
-            }
-        })
-        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
+            .then(experienced => {
+                if (!experienced) {
+                    setWhatIsExpenseCard(true)
+                    AsyncStorage.setItem('expenses-experienced', 'experienced')
+                        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
+                }
+            })
+            .catch(() => Alert.alert('Erro ao acessar banco de dados'))
     }, [])
 
     return (
