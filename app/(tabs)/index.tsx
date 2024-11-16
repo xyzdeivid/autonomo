@@ -16,6 +16,7 @@ import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import WelcomeCard from '@/components/info/WelcomeCard'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
+import LoadingScreen from '@/components/common/LoadingScreen'
 
 export default function Info() {
 
@@ -28,6 +29,7 @@ export default function Info() {
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [welcomeCard, setWelcomeCard] = useState(false)
+    const [loadingScreen, setLoadingScreen] = useState(true)
 
     const openFirstItem = async () => {
 
@@ -42,15 +44,18 @@ export default function Info() {
             Alert.alert('Erro ao acessar banco de dados')
 
         }
-        
+
     }
 
     useEffect(() => {
         AsyncStorage.getItem('experienced')
             .then(experienced => {
-                if (!experienced) {
-                    setWelcomeCard(true)
-                }
+                setTimeout(() => {
+                    setLoadingScreen(false)
+                    if (!experienced) {
+                        setWelcomeCard(true)
+                    }
+                }, 500)
             })
             .catch(() => Alert.alert('Erro ao acessar banco de dados'))
     }, [])
@@ -62,6 +67,9 @@ export default function Info() {
                     setWelcomeCard={setWelcomeCard}
                     openFirstItem={openFirstItem}
                 />
+            )}
+            {loadingScreen && (
+                <LoadingScreen />
             )}
             {
                 schedulings[0] && (<MonthInput dropdownIconColor='#08819B' />)
