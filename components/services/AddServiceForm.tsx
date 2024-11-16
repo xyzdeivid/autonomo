@@ -13,7 +13,6 @@ import { checkAllInputs, checkIfThereIsAnotherService, checkServicesAmount, chec
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import LoadingScreen from '../common/LoadingScreen'
 import ResaleButton from './ResaleButton'
 import DateInput from '../common/DateInput'
@@ -133,13 +132,11 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                 setFormOff={setAddServiceForm}
                 setButton={setButton}
             >
-                <FormBody>
+                <FormBody borderColor='rgba(51, 0, 102, 0.1)'>
                     <FormTitle
                         text={`Novo ${checkTitle(choice)}`}
                         textColor='#330066'
-                    >
-                        <MaterialCommunityIcons name='format-float-right' size={24} color='rgba(51, 0, 102, 0.2)' />
-                    </FormTitle>
+                    />
                     <FormInputs>
                         <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
                         {choice === 'product' && (
@@ -148,14 +145,14 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 setResale={setResale}
                             />
                         )}
-                        {choice === 'budget' && (
-                            <Text style={{ marginBottom: 20, color: 'rgba(51, 0, 102, 0.5)' }} >O valor será definido ao registrar entrada.</Text>
-                        )}
                         <NameInput
                             setName={setName}
                             bgColor='rgba(51, 0, 102, 0.1)'
                             textColor='#330066'
                         />
+                        {choice === 'budget' && (
+                            <Text style={{ marginBottom: 20, color: 'rgba(51, 0, 102, 0.5)' }} >O valor será definido ao registrar entrada.</Text>
+                        )}
                         {choice === 'product' && resale && (
                             <>
                                 <DateInput

@@ -183,10 +183,8 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                 bgColor='rgba(0, 102, 0, 0.1)'
                 setButton={setButton}
             >
-                <FormBody>
-                    <FormTitle text='Registrar Entrada' textColor='#006600'>
-                        <MaterialCommunityIcons name='format-float-right' size={24} color='rgba(0, 102, 0, 0.2)' />
-                    </FormTitle>
+                <FormBody borderColor='rgba(0, 102, 0, 0.1)'>
+                    <FormTitle text='Nova Entrada' textColor='#006600' />
                     <FormInputs>
                         <SelectServiceInput
                             service={service}

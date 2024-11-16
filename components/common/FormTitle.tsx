@@ -11,7 +11,7 @@ export default function FormTitle({ text, children, textColor }: FormTitleProps)
     return (
         <View style={{
             ...styles.container,
-            justifyContent: children ? 'space-between' : 'center'
+            justifyContent: children ? 'space-between' : 'flex-start'
         }}>
             <Text style={{
                 ...styles.text,
@@ -33,11 +33,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 16,
-        padding: 8
+        paddingVertical: 8
     },
     text: {
         fontSize: 24,
-        textAlign: 'center',
         marginEnd: 8
     }
 })

@@ -134,10 +134,8 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 bgColor='rgba(139, 0, 0, 0.1)'
                 setButton={setButton}
             >
-                <FormBody>
-                    <FormTitle text='Registrar Saída' textColor='#660000'>
-                        <MaterialCommunityIcons name='format-float-right' size={24} color='rgba(102, 0, 0, 0.2)' />
-                    </FormTitle>
+                <FormBody borderColor='#rgba(102, 0, 0, 0.1)'>
+                    <FormTitle text='Nova Saída' textColor='#660000' />
                     <FormInputs>
                         {products[0] && (
                             <IntegrateStockButton
