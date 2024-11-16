@@ -45,7 +45,15 @@ export default function Expenses() {
 
             if (product) {
 
-                product.amount = product.amount - expense.amount
+                if (product.amount > expense.amount) {
+
+                    product.amount = product.amount - expense.amount
+
+                } else {
+
+                    product.amount = 0
+
+                }
 
                 const remainingItems = items.filter(current =>
                     current !== product
