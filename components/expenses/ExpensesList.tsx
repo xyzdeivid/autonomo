@@ -5,6 +5,7 @@ import { DataTable } from 'react-native-paper'
 import ContainerHandler from '../common/ContainerHandler'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/functions/common'
+import ListInfoTitle from '../common/ListInfoTitle'
 
 interface ExpensesListProps {
     filteredExpenses: Expense[]
@@ -26,6 +27,10 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
 
     return (
         <View>
+            <ListInfoTitle
+                text='saídas'
+                color='#660000'
+            />
             <ContainerHandler filteredTargets={filteredExpenses}>
                 <DataTable>
                     <DataTable.Header>

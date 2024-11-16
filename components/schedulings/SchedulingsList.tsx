@@ -5,6 +5,7 @@ import { DataTable } from 'react-native-paper'
 import ContainerHandler from '../common/ContainerHandler'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/functions/common'
+import ListInfoTitle from '../common/ListInfoTitle'
 
 interface SchedulingsListProps {
     filteredSchedulings: Scheduling[]
@@ -26,6 +27,10 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
 
     return (
         <View>
+            <ListInfoTitle
+                text='entradas'
+                color='#006600'
+            />
             <ContainerHandler filteredTargets={filteredSchedulings}>
                 <DataTable>
                     <DataTable.Header>

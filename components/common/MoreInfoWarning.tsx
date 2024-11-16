@@ -6,7 +6,7 @@ export default function MoreInfoWarning() {
     return (
         <View style={styles.container}>
             <FontAwesome name='info-circle' size={10} color='#000000' />
-            <Text style={styles.text}>Para mais informações ou exclusão do item, basta clicar sobre ele!</Text>
+            <Text style={styles.text}>Para mais informações ou exclusão do registro, basta clicar sobre!</Text>
         </View>
     )
 
