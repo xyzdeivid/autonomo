@@ -8,7 +8,6 @@ import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect, useState } from 'react'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import ConfirmDelete from '../common/ConfirmDelete'
-import { Entypo } from '@expo/vector-icons'
 
 interface AboutExpenseCardProps {
     expense: Expense
@@ -27,20 +26,6 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
         setButton(false)
     }, [])
 
-    const category = () => {
-
-        switch (expense.category) {
-
-            case 'expense':
-                return 'Despesa'
-
-            case 'resale':
-                return 'Revenda'
-
-        }
-
-    }
-
     return (
         <FormContainer
             setFormOff={setFormOff}
@@ -53,7 +38,16 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                     <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {expense.name}</Text>
                     <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}</Text>
                     <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(expense.value)}</Text>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Categoria:</Text> {category()}</Text>
+                    {
+                        expense.amount && (
+                            <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(expense.value / expense.amount)}</Text>
+                        )
+                    }
+                    {
+                        expense.amount && (
+                            <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {expense.amount}</Text>
+                        )
+                    }
                 </View>
                 {
                     !confirmDelete

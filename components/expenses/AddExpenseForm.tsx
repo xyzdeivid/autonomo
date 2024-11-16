@@ -67,10 +67,11 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 name: !stockIntegrate ? name : product._id,
                 date,
                 value: !stockIntegrate ? value : value * amount,
-                category: !stockIntegrate ? 'expense' : 'resale'
             }
 
             if (stockIntegrate) {
+
+                newExpense.amount = amount
 
                 // Atualizando estoque do produto selecionado
                 const productToUpdate = products.find(current => 
