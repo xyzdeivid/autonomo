@@ -11,40 +11,48 @@ interface RevenueChartProps {
 
 export default function RevenueChart({ filteredSchedulings, filteredExpenses }: RevenueChartProps) {
 
-    const getData = () => {
-        if (getProfit(filteredSchedulings, filteredExpenses) > 0) {
-            return [
-                {
-                    value: getSchedulingsRevenue(filteredSchedulings),
-                    frontColor: '#009900',
-                    capColor: '#006600'
-                },
-                {
-                    value: getExpenses(filteredExpenses),
-                    frontColor: '#990000',
-                    capColor: '#660000'
-                },
-                {
-                    value: getProfit(filteredSchedulings, filteredExpenses),
-                    frontColor: '#000099',
-                    capColor: '#000066'
-                }
-            ]
-        } else {
-            return [
-                {
-                    value: getSchedulingsRevenue(filteredSchedulings),
-                    frontColor: '#009900',
-                    capColor: '#006600'
-                },
-                {
-                    value: getExpenses(filteredExpenses),
-                    frontColor: '#990000',
-                    capColor: '#660000'
-                }
-            ]
+    const column = (value: number, frontColor: string, capColor: string) => {
+
+        return {
+            value,
+            frontColor,
+            capColor
         }
+
     }
+
+    const getData = () => {
+
+        const data = []
+
+        if (getSchedulingsRevenue(filteredSchedulings) > 0) {
+
+            const revenueColumn = column(getSchedulingsRevenue(filteredSchedulings), '#009900', '#006600')
+
+            data.push(revenueColumn)
+
+        }
+
+        if (getExpenses(filteredExpenses) > 0) {
+
+            const expensesColumn = column(getExpenses(filteredExpenses), '#990000', '#660000')
+
+            data.push(expensesColumn)
+
+        }
+
+        if (getProfit(filteredSchedulings, filteredExpenses) > 0) {
+
+            const profitColumn = column(getProfit(filteredSchedulings, filteredExpenses), '#000099', '#000066')
+
+            data.push(profitColumn)
+
+        }
+
+        return data
+
+    }
+
 
     return (
         <View style={styles.container}>

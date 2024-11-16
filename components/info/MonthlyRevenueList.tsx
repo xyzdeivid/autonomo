@@ -26,19 +26,23 @@ export default function RevenueList({ filteredSchedulings, filteredExpenses }: R
                 </View>
                 <Text style={{ color: '#CCFFCC' }}>{moneyFormat(getSchedulingsRevenue(filteredSchedulings))}</Text>
             </View>
-            <View
-                style={{
-                    ...styles.infoContainer,
-                    backgroundColor: '#660000',
-                    borderColor: '#990000'
-                }}
-            >
-                <View style={styles.label}>
-                    <FontAwesome6 name='circle-dot' size={12} color='#FFCCCC' />
-                    <Text style={{ ...styles.title, color: '#FFCCCC' }}>Despesa</Text>
-                </View>
-                <Text style={{ color: '#FFCCCC' }}>{moneyFormat(getExpenses(filteredExpenses))}</Text>
-            </View>
+            {
+                getExpenses(filteredExpenses) > 0 && (
+                    <View
+                        style={{
+                            ...styles.infoContainer,
+                            backgroundColor: '#660000',
+                            borderColor: '#990000'
+                        }}
+                    >
+                        <View style={styles.label}>
+                            <FontAwesome6 name='circle-dot' size={12} color='#FFCCCC' />
+                            <Text style={{ ...styles.title, color: '#FFCCCC' }}>Despesa</Text>
+                        </View>
+                        <Text style={{ color: '#FFCCCC' }}>{moneyFormat(getExpenses(filteredExpenses))}</Text>
+                    </View>
+                )
+            }
             {getProfit(filteredSchedulings, filteredExpenses) > 0 && (
                 <View
                     style={{
