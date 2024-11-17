@@ -58,11 +58,16 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             // Verificando se o produto é uma revenda
             if (resale) {
 
+                const newExpenseValue = 
+                valueChoice === 'total'
+                ? purchaseValue
+                : purchaseValue * amount
+
                 const newExpense: Expense = {
                     _id: generateId(),
                     name: name,
                     date: purchaseDate,
-                    value: purchaseValue * amount,
+                    value: newExpenseValue,
                     amount: amount
                 }
 
@@ -166,7 +171,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 <NumberInput
                                     setValue={setPurchaseValue}
                                     bgColor='rgba(51, 0, 102, 0.1)'
-                                    label='Valor de Compra'
+                                    label={valueChoice === 'total' ? 'Valor de Compra (total)' : 'Valor de Compra (un)'}
                                     textColor='#330066'
                                 />
                                 <ValueOption

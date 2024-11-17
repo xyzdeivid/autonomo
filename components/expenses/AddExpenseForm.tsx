@@ -62,12 +62,17 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
             setLoadingScreen(true)
 
+            const resaleValue = 
+                valueChoice === 'total'
+                ? value
+                : value * amount
+
             // Criando nova despesa
             const newExpense: Expense = {
                 _id: generateId(),
                 name: !stockIntegrate ? name : product._id,
                 date,
-                value: !stockIntegrate ? value : value * amount,
+                value: !stockIntegrate ? value : resaleValue,
             }
 
             if (stockIntegrate) {
@@ -127,6 +132,12 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
     }
 
+    const checkResaleButtonText = () => {
+        return !stockIntegrate
+        ? ''
+        : valueChoice === 'total' ? 'Valor de Compra (total)' : 'Valor de Compra (un)'
+    }
+
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -164,6 +175,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                             setValue={setValue}
                             bgColor='rgba(102, 0, 0, 0.1)'
                             textColor='#660000'
+                            label={checkResaleButtonText()}
                         />
                         {stockIntegrate && (
                             <>
