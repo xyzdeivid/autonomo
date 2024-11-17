@@ -20,6 +20,7 @@ import { generateId } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ValueOption from '../common/ValueOption'
+import StockButton from './StockButton'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -41,6 +42,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [resale, setResale] = useState(false)
     const [purchaseValue, setPurchaseValue] = useState(0)
     const [purchaseDate, setPurchaseDate] = useState('')
+    const [stock, setStock] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -58,10 +60,10 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             // Verificando se o produto é uma revenda
             if (resale) {
 
-                const newExpenseValue = 
-                valueChoice === 'total'
-                ? purchaseValue
-                : purchaseValue * amount
+                const newExpenseValue =
+                    valueChoice === 'total'
+                        ? purchaseValue
+                        : purchaseValue * amount
 
                 const newExpense: Expense = {
                     _id: generateId(),
@@ -189,14 +191,20 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 label={choice === 'product' ? 'Valor de Venda (un)' : ''}
                             />
                         )}
-                        {choice === 'product' && (
+                        {choice === 'product' && !resale && (
+                            <StockButton
+                                stock={stock}
+                                setStock={setStock}
+                            />
+                        )}
+                        {resale || stock ? (
                             <AmountInput
                                 text='Quantidade'
                                 setAmount={setAmount}
                                 bgColor='rgba(51, 0, 102, 0.1)'
                                 textColor='#330066'
                             />
-                        )}
+                        ) : null}
                     </FormInputs>
                     <SubmitFormButtons submit={addService} submitButtonText='Cadastrar' submitButtonColor='#330066' />
                 </FormBody>

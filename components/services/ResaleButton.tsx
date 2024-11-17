@@ -1,5 +1,4 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { useState } from 'react'
 
 interface ResaleButtonProps {
     resale: boolean

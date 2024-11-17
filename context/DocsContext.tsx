@@ -9,7 +9,7 @@ export interface Service {
     category: string
     _id: string
     value: number
-    amount: number
+    amount?: number
 }
 
 type SetServices = React.Dispatch<React.SetStateAction<Service[]>>
@@ -19,8 +19,7 @@ type ServicesState = [Service[], SetServices]
 const DEFAULT_SERVICE: Service = {
     category: '',
     _id: '',
-    value: 0,
-    amount: 0
+    value: 0
 }
 
 export interface Expense {
