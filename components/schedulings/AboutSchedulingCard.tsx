@@ -33,7 +33,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
             bgColor='rgba(0, 102, 0, 0.1)'
             setButton={setButton}
         >
-            <FormBody>
+            <FormBody borderColor='rgba(0, 102, 0, 0.1)'>
                 <FormTitle text='Informações de Entrada' textColor='#006600' />
                 <View>
                     <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {scheduling.service._id}</Text>

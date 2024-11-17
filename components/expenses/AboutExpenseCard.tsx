@@ -32,7 +32,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
             bgColor='rgba(139, 0, 0, 0.1)'
             setButton={setButton}
         >
-            <FormBody>
+            <FormBody borderColor='rgba(102, 0, 0, 0.1)'>
                 <FormTitle text='Informações de Saída' textColor='#660000' />
                 <View>
                     <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {expense.name}</Text>

@@ -19,6 +19,7 @@ import DateInput from '../common/DateInput'
 import { generateId } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import ValueOption from '../common/ValueOption'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -35,6 +36,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [expenses, setExpenses] = useContext(DocsContext).expenses
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [choice, setChoice] = useState('product')
+    const [valueChoice, setValueChoice] = useState('total')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [resale, setResale] = useState(false)
     const [purchaseValue, setPurchaseValue] = useState(0)
@@ -68,9 +70,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
 
                     await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
                     setExpenses(orderExpenses([...expenses, newExpense]))
-                    
+
                 } catch (err) {
-                    
+
                     Alert.alert('Erro ao acessar banco de dados')
 
                 }
@@ -164,8 +166,13 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 <NumberInput
                                     setValue={setPurchaseValue}
                                     bgColor='rgba(51, 0, 102, 0.1)'
-                                    label='Valor de Compra (un)'
+                                    label='Valor de Compra'
                                     textColor='#330066'
+                                />
+                                <ValueOption
+                                    choice={valueChoice}
+                                    setChoice={setValueChoice}
+                                    buttonColors={['#330066', '#6600CC']}
                                 />
                             </>
                         )}

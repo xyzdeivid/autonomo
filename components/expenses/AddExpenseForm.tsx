@@ -6,19 +6,19 @@ import NameInput from '../common/NameInput'
 import DateInput from '../common/DateInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { MainDisplaysContext } from '@/context/MainDisplays'
-import { DocsContext, Expense, Service } from '@/context/DocsContext'
+import { DocsContext, Expense } from '@/context/DocsContext'
 import { Alert } from 'react-native'
 import { generateId } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import FormInputs from '../common/FormInputs'
 import IntegrateStockButton from './IntegrateStockButton'
 import { orderServices } from '@/functions/services'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import LoadingScreen from '../common/LoadingScreen'
 import NumberInput from '../common/NumberInput'
 import ProductOptionsInput from './ProductOptionsInput'
 import AmountInput from '../common/AmountInput'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import ValueOption from '../common/ValueOption'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -38,6 +38,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [stockIntegrate, setStockIntegrate] = useState(false)
     const [product, setProduct] = useState(products[0])
+    const [valueChoice, setValueChoice] = useState('total')
 
     const checkAllInputs = (): boolean => {
 
@@ -74,7 +75,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 newExpense.amount = amount
 
                 // Atualizando estoque do produto selecionado
-                const productToUpdate = products.find(current => 
+                const productToUpdate = products.find(current =>
                     current._id === product._id
                 )
                 if (productToUpdate) {
@@ -89,9 +90,9 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
                         await AsyncStorage.setItem('items', JSON.stringify([...remainingItems, productToUpdate]))
                         setServices(orderServices([...remainingItems, productToUpdate]))
-                        
+
                     } catch (err) {
-                        
+
                         Alert.alert('Erro ao acessar banco de dados')
 
                     }
@@ -101,28 +102,28 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
             }
 
             try {
-                
+
                 await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
                 setExpenses(orderExpenses([...expenses, newExpense]))
 
             } catch (err) {
-                
+
                 Alert.alert('Erro ao acessar banco de dados')
 
             }
 
         } else {
 
-                Alert.alert(
-                    'Preencha todos os campos',
-                    'Todos os campos do formulário precisam ser preenchidos'
-                )
+            Alert.alert(
+                'Preencha todos os campos',
+                'Todos os campos do formulário precisam ser preenchidos'
+            )
 
         }
 
-            setAddExpenseForm(false)
-            setHideTabBar(false)
-            setButton(true)
+        setAddExpenseForm(false)
+        setHideTabBar(false)
+        setButton(true)
 
     }
 
@@ -134,7 +135,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 bgColor='rgba(139, 0, 0, 0.1)'
                 setButton={setButton}
             >
-                <FormBody borderColor='#rgba(102, 0, 0, 0.1)'>
+                <FormBody borderColor='rgba(102, 0, 0, 0.1)'>
                     <FormTitle text='Nova Saída' textColor='#660000' />
                     <FormInputs>
                         {products[0] && (
@@ -163,15 +164,21 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                             setValue={setValue}
                             bgColor='rgba(102, 0, 0, 0.1)'
                             textColor='#660000'
-                            label={stockIntegrate ? 'Valor (un)' : ''}
                         />
                         {stockIntegrate && (
-                            <AmountInput
-                                setAmount={setAmount}
-                                text='Quantidade'
-                                bgColor='rgba(102, 0, 0, 0.1)'
-                                textColor='#660000'
-                            />
+                            <>
+                                <ValueOption
+                                    choice={valueChoice}
+                                    setChoice={setValueChoice}
+                                    buttonColors={['#660000', '#990000']}
+                                />
+                                <AmountInput
+                                    setAmount={setAmount}
+                                    text='Quantidade'
+                                    bgColor='rgba(102, 0, 0, 0.1)'
+                                    textColor='#660000'
+                                />
+                            </>
                         )}
                     </FormInputs>
                     <SubmitFormButtons

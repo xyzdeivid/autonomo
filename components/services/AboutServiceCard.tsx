@@ -299,7 +299,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 setButton={setButton}
                 bgColor='rgba(51, 0, 102, 0.1)'
             >
-                <FormBody>
+                <FormBody borderColor='rgba(51, 0, 102, 0.1)'>
                     <FormTitle text={`Informações do ${getTitle(service)}`} textColor='#330066' />
                     <View>
                         {
