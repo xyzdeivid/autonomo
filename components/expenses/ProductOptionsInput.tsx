@@ -10,7 +10,7 @@ interface ProductOptionsInputProps {
 export default function ProductOptionsInput({ product, setProduct }: ProductOptionsInputProps) {
 
     const [items] = useContext(DocsContext).services
-    const products = items.filter(item => item.category === 'product')
+    const products = items.filter(item => item.isThereAmount)
 
     return (
         <Picker
