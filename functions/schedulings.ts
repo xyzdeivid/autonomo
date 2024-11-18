@@ -7,8 +7,11 @@ export const orderSchedulings = (schedulings: Scheduling[]) => {
 }
 
 export const getSchedulingValue = (service: Service, amount: number, value: number) => {
-    if (service.category !== 'budget') {
-        return service.amount ? service.value * amount : service.value
+    if (service.category === 'product') {
+        return service.value * amount
+    }
+    if (service.category === 'service') {
+        return service.value
     }
     return value
 }

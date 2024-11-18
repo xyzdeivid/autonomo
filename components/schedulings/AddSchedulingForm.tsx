@@ -61,7 +61,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
     const updateStock = async () => {
 
-        if (service.category === 'product') {
+        if (service.isThereAmount) {
 
             const updatedService: Service = {
                 category: service.category,
@@ -92,9 +92,9 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
     }
 
-    const checkAmount = (category: string) => {
+    const checkAmount = (product: Service) => {
 
-        if (category === 'product') {
+        if (product.isThereAmount) {
 
             let actualServiceAmount = 0
             if (service.amount) {
@@ -121,7 +121,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
             setLoadingScreen(true)
 
-            if (checkAmount(service.category)) {
+            if (checkAmount(service)) {
 
                 const newScheduling: Scheduling = {
                     _id: generateId(),
@@ -134,8 +134,9 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                     date
                 }
 
-                if (service.isThereAmount)
-                newScheduling.service.amount = service.amount
+                service.isThereAmount
+                ? newScheduling.service.amount = service.amount
+                : newScheduling.service.amount = amount
 
                 if (service.category === 'product') {
 
