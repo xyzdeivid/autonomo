@@ -15,8 +15,16 @@ export const getSchedulingValue = (service: Service, amount: number, value: numb
 
 export const getServices = (services: Service[]) => {
 
-    const productsCategory = services.filter(service => (
-        service.category === 'product' && service.amount > 0
+    const products = services.filter(current => (
+        current.category === 'product'
+    ))
+
+    const productsWithoutStock = products.filter(current => (
+        !current.isThereAmount
+    ))
+
+    const productsWithStock = products.filter(current => (
+        current.isThereAmount
     ))
 
     const servicesCategory = services.filter(service => (
@@ -27,6 +35,15 @@ export const getServices = (services: Service[]) => {
         service.category === 'budget'
     ))
 
-    return [...productsCategory, ...servicesCategory, ...budgetCategory]
+    const items = [...productsWithoutStock, ...servicesCategory, ...budgetCategory]
+
+    productsWithStock.forEach(current => {
+        if (current.amount) {
+            items.push(current)
+        }
+    })
+
+    return items
+
 
 }

@@ -66,9 +66,12 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
             const updatedService: Service = {
                 category: service.category,
                 _id: service._id,
-                amount: service.amount - amount,
+                isThereAmount: service.isThereAmount,
                 value: service.value
             }
+
+            if (updatedService.isThereAmount && service.amount)
+            updatedService.amount = service.amount - amount
 
             const remainingServices = services.filter(service => {
                 return service._id !== updatedService._id
@@ -93,7 +96,10 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
         if (category === 'product') {
 
-            const actualServiceAmount = service.amount - amount
+            let actualServiceAmount = 0
+            if (service.amount) {
+            actualServiceAmount = service.amount - amount
+            }
 
             if (actualServiceAmount < 0) {
 
@@ -123,10 +129,13 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                         category: service.category,
                         _id: service._id,
                         value: getSchedulingValue(service, amount, value),
-                        amount: amount
+                        isThereAmount: service.isThereAmount
                     },
                     date
                 }
+
+                if (service.isThereAmount)
+                newScheduling.service.amount = service.amount
 
                 if (service.category === 'product') {
 
@@ -191,7 +200,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                             setService={setService}
                             services={getServices(services)}
                         />
-                        {service.category === 'product' && (
+                        {service.amount && (
                             <StockInfo amount={service.amount - amount} />
                         )}
                         <DateInput
