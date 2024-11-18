@@ -86,14 +86,17 @@ export const checkAllInputs = (
 
 export const createNewService = (
     choice: string, name: string,
-    value: number, amount: number
+    value: number, amount: number,
+    isThereAmount: boolean
 ) => {
-    return {
+    const service: Service = {
         category: choice,
         _id: name,
         value,
-        amount
+        isThereAmount: isThereAmount
     }
+    if (service.isThereAmount) service.amount = amount
+    return service
 }
 
 export const checkIfThereIsAnotherService = (services: Service[], name: string): boolean => {

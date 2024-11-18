@@ -9,6 +9,7 @@ export interface Service {
     category: string
     _id: string
     value: number
+    isThereAmount: boolean
     amount?: number
 }
 
@@ -19,7 +20,8 @@ type ServicesState = [Service[], SetServices]
 const DEFAULT_SERVICE: Service = {
     category: '',
     _id: '',
-    value: 0
+    value: 0,
+    isThereAmount: false
 }
 
 export interface Expense {
@@ -57,7 +59,7 @@ const DEFAULT_SCHEDULING: Scheduling = {
         category: '',
         _id: '',
         value: 0,
-        amount: 0
+        isThereAmount: false
     },
     date: '',
 }

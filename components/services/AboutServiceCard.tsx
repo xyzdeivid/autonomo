@@ -185,6 +185,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 category: service.category,
                 _id: service._id,
                 value: value,
+                isThereAmount: true,
                 amount: service.amount
             }
 
@@ -237,6 +238,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 category: service.category,
                 _id: service._id,
                 value: service.value,
+                isThereAmount: true,
                 amount: stock
             }
 
@@ -320,7 +322,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                             </View>
                         )}
                         {
-                            service.category === 'product' && (
+                            service.isThereAmount && (
                                 <View style={styles.inputContainer}>
                                     <View style={styles.infoContainer}>
                                         {
@@ -330,7 +332,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                                                     editStock={editStock}
                                                     setChangedValue={setChangedValue}
                                                 />
-                                                : <ActualStock stock={stock || service.amount} setEditStockInput={setEditStockInput} />
+                                                : <ActualStock stock={stock || service.amount || 0} setEditStockInput={setEditStockInput} />
                                         }
                                     </View>
                                 </View>

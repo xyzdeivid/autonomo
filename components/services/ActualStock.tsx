@@ -10,7 +10,11 @@ export default function ActualStock({ stock, setEditStockInput }: ActualStockPro
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Estoque: </Text>
-            <Text>{stock}</Text>
+            <Text>
+                {stock === 0
+                    ? 'Sem estoque'
+                    : stock}
+            </Text>
             <Pressable
                 style={styles.editButton}
                 onPress={() => setEditStockInput(true)}

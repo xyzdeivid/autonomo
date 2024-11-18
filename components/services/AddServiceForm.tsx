@@ -43,6 +43,15 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [purchaseValue, setPurchaseValue] = useState(0)
     const [purchaseDate, setPurchaseDate] = useState('')
     const [stock, setStock] = useState(false)
+    const [isThereAmount, setIsThereAmount] = useState(false)
+
+    useEffect(() => {
+        if (resale || stock) {
+            setIsThereAmount(true)
+        } else {
+            setIsThereAmount(false)
+        }
+    }, [resale, stock])
 
     useEffect(() => {
         setHideTabBar(true)
@@ -55,7 +64,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             setLoadingScreen(true)
 
             // Criando serviço
-            const service = createNewService(choice, name, value, amount)
+            const service = createNewService(choice, name, value, amount, isThereAmount)
 
             // Verificando se o produto é uma revenda
             if (resale) {
@@ -197,14 +206,14 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 setStock={setStock}
                             />
                         )}
-                        {resale || stock ? (
+                        {isThereAmount && (
                             <AmountInput
                                 text='Quantidade'
                                 setAmount={setAmount}
                                 bgColor='rgba(51, 0, 102, 0.1)'
                                 textColor='#330066'
                             />
-                        ) : null}
+                        )}
                     </FormInputs>
                     <SubmitFormButtons submit={addService} submitButtonText='Cadastrar' submitButtonColor='#330066' />
                 </FormBody>
