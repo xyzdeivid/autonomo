@@ -185,9 +185,11 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 category: service.category,
                 _id: service._id,
                 value: value,
-                isThereAmount: true,
-                amount: service.amount
+                isThereAmount: service.isThereAmount
             }
+
+            if (editedService.isThereAmount)
+            editedService.amount = service.amount
 
             let editedItems = [] as Service[]
 
