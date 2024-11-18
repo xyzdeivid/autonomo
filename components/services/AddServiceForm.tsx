@@ -42,7 +42,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [resale, setResale] = useState(false)
     const [purchaseValue, setPurchaseValue] = useState(0)
     const [purchaseDate, setPurchaseDate] = useState('')
-    const [stock, setStock] = useState(false)
+    const [stock, setStock] = useState(true)
     const [isThereAmount, setIsThereAmount] = useState(false)
 
     useEffect(() => {
@@ -206,7 +206,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 setStock={setStock}
                             />
                         )}
-                        {isThereAmount && (
+                        {choice === 'product' && isThereAmount && (
                             <AmountInput
                                 text='Quantidade'
                                 setAmount={setAmount}
