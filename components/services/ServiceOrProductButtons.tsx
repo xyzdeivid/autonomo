@@ -16,7 +16,7 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
     const getText = () => {
         switch (choice) {
             case 'product':
-                return 'produto com estoque'                
+                return 'produto com valor definido'                
             case 'service':
                 return 'serviço com valor definido'
             case 'budget':
