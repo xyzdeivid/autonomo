@@ -30,7 +30,10 @@ export default function ServicesList({ setServiceForDeletion, setDeleteServiceFo
                     <DataTable.Header>
                         <DataTable.Title style={styles.text}>Item</DataTable.Title>
                         {services[0].category !== 'budget' && (
-                            <DataTable.Title style={styles.text}>Valor</DataTable.Title>
+                            <DataTable.Title style={styles.text}>
+                                Valor 
+                                {services[0].category === 'product' ? ' (un)': null}
+                            </DataTable.Title>
                         )}
                     </DataTable.Header>
                     {services.map(service => {

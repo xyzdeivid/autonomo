@@ -134,9 +134,8 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                     date
                 }
 
-                service.isThereAmount
-                ? newScheduling.service.amount = service.amount
-                : newScheduling.service.amount = amount
+                if (service.category === 'product')
+                newScheduling.service.amount = amount
 
                 if (service.category === 'product') {
 

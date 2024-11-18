@@ -42,7 +42,14 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                     {
                         scheduling.service.category === 'product'
                             ? <View>
-                                <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(scheduling.service.value / scheduling.service.amount)}</Text>
+                                <Text style={styles.labelContainer}>
+                                    <Text style={styles.label}>
+                                        Valor (un):
+                                    </Text>
+                                    {scheduling.service.amount
+                                        ? moneyFormat(scheduling.service.value / scheduling.service.amount)
+                                        : null}
+                                </Text>
                                 <Text style={styles.labelContainer}>
                                     <Text style={styles.label}>Quantidade: </Text>
                                     {scheduling.service.amount}

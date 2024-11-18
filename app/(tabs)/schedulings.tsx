@@ -4,7 +4,6 @@ import Container from '@/components/common/Container'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import { DocsContext, Scheduling, Service } from '@/context/DocsContext'
 import SchedulingsList from '@/components/schedulings/SchedulingsList'
-import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
 import { filterSchedulings } from '@/functions/common'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
@@ -51,8 +50,13 @@ export default function Schedulings() {
                 category: product.category,
                 _id: product._id,
                 value: product.value,
-                amount: product.amount + scheduling.service.amount
+                isThereAmount: product.isThereAmount
             }
+
+            if (scheduling.service.amount && product.isThereAmount)
+                updatedProduct.amount = product.amount
+                    ? product.amount + scheduling.service.amount
+                    : 0 + scheduling.service.amount
 
             try {
 
@@ -73,7 +77,7 @@ export default function Schedulings() {
 
         setLoadingScreen(true)
 
-        if (scheduling.service.category === 'product') {
+        if (scheduling.service.isThereAmount) {
 
             try {
 
