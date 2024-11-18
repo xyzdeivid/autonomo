@@ -50,7 +50,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
 
     const addService = async () => {
 
-        if (checkAllInputs(choice, name, value, amount)) {
+        if (checkAllInputs(choice, name, value, amount, resale, stock)) {
 
             setLoadingScreen(true)
 
