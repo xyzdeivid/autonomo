@@ -72,7 +72,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
             }
 
             if (updatedService.isThereAmount && service.amount)
-            updatedService.amount = service.amount - amount
+                updatedService.amount = service.amount - amount
 
             const remainingServices = services.filter(service => {
                 return service._id !== updatedService._id
@@ -99,7 +99,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
             let actualServiceAmount = 0
             if (service.amount) {
-            actualServiceAmount = service.amount - amount
+                actualServiceAmount = service.amount - amount
             }
 
             if (actualServiceAmount < 0) {
@@ -137,7 +137,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                 }
 
                 if (service.category === 'product')
-                newScheduling.service.amount = amount
+                    newScheduling.service.amount = amount
 
                 if (service.category === 'product') {
 
@@ -202,9 +202,9 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                             setService={setService}
                             services={getServices(services)}
                         />
-                        {service.amount && (
+                        {service.amount ? (
                             <StockInfo amount={service.amount - amount} />
-                        )}
+                        ) : null}
                         <DateInput
                             setTargetDate={setDate}
                             bgColor='#006600'

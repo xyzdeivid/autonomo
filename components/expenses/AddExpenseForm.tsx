@@ -85,8 +85,11 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 )
                 if (productToUpdate) {
 
-                    if (productToUpdate.amount)
+                    if (productToUpdate.amount) {
                         productToUpdate.amount = productToUpdate.amount + amount
+                    } else {
+                        productToUpdate.amount = amount
+                    }
 
                     const remainingItems = services.filter(current => {
                         return current._id !== productToUpdate._id

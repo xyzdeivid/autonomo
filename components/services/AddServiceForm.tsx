@@ -43,15 +43,13 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [purchaseValue, setPurchaseValue] = useState(0)
     const [purchaseDate, setPurchaseDate] = useState('')
     const [stock, setStock] = useState(true)
-    const [isThereAmount, setIsThereAmount] = useState(false)
 
-    useEffect(() => {
-        if (resale || stock) {
-            setIsThereAmount(true)
-        } else {
-            setIsThereAmount(false)
+    const isThereAmount = () => {
+        if (choice === 'product') {
+            if (resale || stock) return true
         }
-    }, [resale, stock])
+        return false
+    }
 
     useEffect(() => {
         setHideTabBar(true)
@@ -64,7 +62,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             setLoadingScreen(true)
 
             // Criando serviço
-            const service = createNewService(choice, name, value, amount, isThereAmount, resale)
+            const service = createNewService(choice, name, value, amount, isThereAmount(), resale)
 
             // Verificando se o produto é uma revenda
             if (resale) {
@@ -206,7 +204,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 setStock={setStock}
                             />
                         )}
-                        {choice === 'product' && isThereAmount && (
+                        {choice === 'product' && isThereAmount() && (
                             <AmountInput
                                 text='Quantidade'
                                 setAmount={setAmount}
