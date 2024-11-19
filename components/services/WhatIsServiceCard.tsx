@@ -21,22 +21,18 @@ export default function WhatIsServiceCard({ setWhatIsServiceCard, setButton }: W
     return (
         <FormContainer
             setFormOff={setWhatIsServiceCard}
-            bgColor='rgba(51, 0, 102, 0.1)'
+            bgColor='transparent'
             setButton={setButton}
         >
-            <FormBody>
+            <FormBody bgColor='#330066'>
                 <View>
                     <Text style={styles.titleText}>
                         Sobre Itens
                     </Text>
                 </View>
                 <View>
-                    <Text style={{ color: '#330066', marginBottom: 4 }}>
+                    <Text style={{ color: '#FFFFFF' }}>
                         Nesta seção, você pode cadastrar todos os produtos e serviços que fazem parte do seu trabalho.
-                    </Text>
-                    <Text style={{ color: '#330066' }}>
-                        Esses itens são fundamentais para o controle do seu fluxo de caixa, pois permitem registrar e
-                        monitorar todas as entradas financeiras associadas.
                     </Text>
                 </View>
             </FormBody>
@@ -49,6 +45,6 @@ const styles = StyleSheet.create({
     titleText: {
         fontSize: 24,
         marginBottom: 20,
-        color: '#330066'
+        color: '#FFFFFF'
     }
 })

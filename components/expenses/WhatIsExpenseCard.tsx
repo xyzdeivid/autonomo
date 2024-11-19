@@ -21,17 +21,17 @@ export default function WhatIsExpenseCard({ setWhatIsExpenseCard, setButton }: W
     return (
         <FormContainer
             setFormOff={setWhatIsExpenseCard}
-            bgColor='rgba(139, 0, 0, 0.1)'
+            bgColor='transparent'
             setButton={setButton}
         >
-            <FormBody>
+            <FormBody bgColor='#660000'>
                 <View>
                     <Text style={styles.titleText}>
                         Sobre Saídas
                     </Text>
                 </View>
                 <View>
-                    <Text style={{ color: '#660000' }}>
+                    <Text style={{ color: '#FFFFFF' }}>
                         Nesta seção, você pode registrar todas as despesas do seu negócio, incluindo contas fixas,
                         custos operacionais e reposições de estoque para produtos destinados à venda.
                     </Text>
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     titleText: {
         fontSize: 24,
         marginBottom: 20,
-        color: '#660000'
+        color: '#FFFFFF'
     }
 })

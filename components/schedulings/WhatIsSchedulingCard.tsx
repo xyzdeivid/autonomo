@@ -21,22 +21,19 @@ export default function WhatIsSchedulingCard({ setWhatIsSchedulingCard, setButto
     return (
         <FormContainer
             setFormOff={setWhatIsSchedulingCard}
-            bgColor='rgba(0, 102, 0, 0.1)'
+            bgColor='transparent'
             setButton={setButton}
         >
-            <FormBody>
+            <FormBody bgColor='#006600'>
                 <View>
                     <Text style={styles.titleText}>
                         Sobre Entradas
                     </Text>
                 </View>
                 <View>
-                    <Text style={{ color: '#006600', marginBottom: 4 }}>
+                    <Text style={{ color: '#FFFFFF' }}>
                         Nesta seção, você pode registrar todas as receitas do seu negócio, incluindo valores recebidos
                         pela venda de produtos e pela prestação de serviços.
-                    </Text>
-                    <Text style={{ color: '#006600' }}>
-                        Esse registro abrange, por exemplo, o pagamento de serviços agendados ou a venda de itens específicos.
                     </Text>
                 </View>
             </FormBody>
@@ -49,7 +46,7 @@ const styles = StyleSheet.create({
     titleText: {
         fontSize: 24,
         marginBottom: 20,
-        color: '#006600'
+        color: '#FFFFFF'
     },
     infoContainer: {
         display: 'flex',

@@ -3,14 +3,16 @@ import { StyleSheet, View } from 'react-native'
 interface FormBodyProps {
     children: React.ReactNode
     borderColor?: string
+    bgColor?: string
 }
 
-export default function FormBody({ children, borderColor }: FormBodyProps) {
+export default function FormBody({ children, borderColor, bgColor }: FormBodyProps) {
 
     return (
         <View style={{
             ...style.body,
-            borderColor: borderColor ? borderColor : 'transparent'
+            borderColor: borderColor ? borderColor : 'transparent',
+            backgroundColor: bgColor ? bgColor : '#FFFFFF'
         }}
         >
             {children}
@@ -21,7 +23,6 @@ export default function FormBody({ children, borderColor }: FormBodyProps) {
 
 const style = StyleSheet.create({
     body: {
-        backgroundColor: '#FFFFFF',
         padding: 16,
         borderRadius: 16,
         minWidth: '80%',
