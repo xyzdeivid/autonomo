@@ -45,13 +45,17 @@ export default function Expenses() {
 
             if (product) {
 
-                if (product.amount > expense.amount) {
+                if (product.amount) {
 
-                    product.amount = product.amount - expense.amount
+                    if (product.amount > expense.amount) {
 
-                } else {
+                        product.amount = product.amount - expense.amount
 
-                    product.amount = 0
+                    } else {
+
+                        product.amount = 0
+
+                    }
 
                 }
 

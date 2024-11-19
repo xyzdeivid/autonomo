@@ -10,6 +10,7 @@ export interface Service {
     _id: string
     value: number
     isThereAmount: boolean
+    resale: boolean
     amount?: number
 }
 
@@ -21,7 +22,8 @@ const DEFAULT_SERVICE: Service = {
     category: '',
     _id: '',
     value: 0,
-    isThereAmount: false
+    isThereAmount: false,
+    resale: false
 }
 
 export interface Expense {
@@ -59,7 +61,8 @@ const DEFAULT_SCHEDULING: Scheduling = {
         category: '',
         _id: '',
         value: 0,
-        isThereAmount: false
+        isThereAmount: false,
+        resale: false
     },
     date: '',
 }

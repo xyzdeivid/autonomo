@@ -50,7 +50,8 @@ export default function Schedulings() {
                 category: product.category,
                 _id: product._id,
                 value: product.value,
-                isThereAmount: product.isThereAmount
+                isThereAmount: product.isThereAmount,
+                resale: product.resale
             }
 
             if (scheduling.service.amount && product.isThereAmount)

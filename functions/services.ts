@@ -87,13 +87,14 @@ export const checkAllInputs = (
 export const createNewService = (
     choice: string, name: string,
     value: number, amount: number,
-    isThereAmount: boolean
+    isThereAmount: boolean, resale: boolean
 ) => {
     const service: Service = {
         category: choice,
         _id: name,
         value,
-        isThereAmount: isThereAmount
+        isThereAmount,
+        resale
     }
     if (service.isThereAmount) service.amount = amount
     return service

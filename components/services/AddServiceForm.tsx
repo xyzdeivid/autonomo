@@ -1,6 +1,6 @@
 import { Alert, Text } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
-import { DocsContext, Expense } from '@/context/DocsContext'
+import { DocsContext, Expense, Service } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
 import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
@@ -64,7 +64,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             setLoadingScreen(true)
 
             // Criando serviço
-            const service = createNewService(choice, name, value, amount, isThereAmount)
+            const service = createNewService(choice, name, value, amount, isThereAmount, resale)
 
             // Verificando se o produto é uma revenda
             if (resale) {

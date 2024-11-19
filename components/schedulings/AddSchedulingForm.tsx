@@ -67,7 +67,8 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                 category: service.category,
                 _id: service._id,
                 isThereAmount: service.isThereAmount,
-                value: service.value
+                value: service.value,
+                resale: service.resale
             }
 
             if (updatedService.isThereAmount && service.amount)
@@ -129,7 +130,8 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                         category: service.category,
                         _id: service._id,
                         value: getSchedulingValue(service, amount, value),
-                        isThereAmount: service.isThereAmount
+                        isThereAmount: service.isThereAmount,
+                        resale: service.resale
                     },
                     date
                 }

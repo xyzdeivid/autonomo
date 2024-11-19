@@ -12,7 +12,6 @@ import ActualValue from './ActualValue'
 import ActualStock from './ActualStock'
 import EditStockInput from './EditStockInput'
 import ConfirmDelete from '../common/ConfirmDelete'
-import Entypo from '@expo/vector-icons/Entypo'
 import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
@@ -185,7 +184,8 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 category: service.category,
                 _id: service._id,
                 value: value,
-                isThereAmount: service.isThereAmount
+                isThereAmount: service.isThereAmount,
+                resale: service.resale
             }
 
             if (editedService.isThereAmount)
@@ -241,6 +241,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 _id: service._id,
                 value: service.value,
                 isThereAmount: true,
+                resale: service.resale,
                 amount: stock
             }
 
