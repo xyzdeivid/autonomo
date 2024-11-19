@@ -5,12 +5,12 @@ import { useContext } from 'react'
 interface ProductOptionsInputProps {
     product: Service
     setProduct: React.Dispatch<React.SetStateAction<Service>>
+    products: Service[]
 }
 
-export default function ProductOptionsInput({ product, setProduct }: ProductOptionsInputProps) {
+export default function ProductOptionsInput({ product, setProduct, products }: ProductOptionsInputProps) {
 
     const [items] = useContext(DocsContext).services
-    const products = items.filter(item => item.isThereAmount)
 
     return (
         <Picker

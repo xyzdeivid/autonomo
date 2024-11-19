@@ -34,7 +34,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [expenses, setExpenses] = useContext(DocsContext).expenses
     const [services, setServices] = useContext(DocsContext).services
-    const products = services.filter(service => service.category === 'product')
+    const products = services.filter(item => item.resale)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [stockIntegrate, setStockIntegrate] = useState(false)
     const [product, setProduct] = useState(products[0])
@@ -62,10 +62,10 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
             setLoadingScreen(true)
 
-            const resaleValue = 
+            const resaleValue =
                 valueChoice === 'total'
-                ? value
-                : value * amount
+                    ? value
+                    : value * amount
 
             // Criando nova despesa
             const newExpense: Expense = {
@@ -86,7 +86,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 if (productToUpdate) {
 
                     if (productToUpdate.amount)
-                    productToUpdate.amount = productToUpdate.amount + amount
+                        productToUpdate.amount = productToUpdate.amount + amount
 
                     const remainingItems = services.filter(current => {
                         return current._id !== productToUpdate._id
@@ -135,8 +135,8 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
     const checkResaleButtonText = () => {
         return !stockIntegrate
-        ? ''
-        : valueChoice === 'total' ? 'Valor de Compra (total)' : 'Valor de Compra (un)'
+            ? ''
+            : valueChoice === 'total' ? 'Valor de Compra (total)' : 'Valor de Compra (un)'
     }
 
     return (
@@ -165,6 +165,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                                 : <ProductOptionsInput
                                     product={product}
                                     setProduct={setProduct}
+                                    products={products}
                                 />
                         }
                         <DateInput
