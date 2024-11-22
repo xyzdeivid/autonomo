@@ -2,6 +2,7 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import { useContext, useEffect } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
+import { setStatusBarStyle } from 'expo-status-bar'
 
 interface WelcomeCardProps {
     setWelcomeCard: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,6 +17,7 @@ export default function WelcomeCard({ setWelcomeCard, openFirstItem }: WelcomeCa
     useEffect(() => {
         setHideTabBar(true)
         setShowHeader(false)
+        setStatusBarStyle('dark')
     }, [])
 
     return (
@@ -23,7 +25,7 @@ export default function WelcomeCard({ setWelcomeCard, openFirstItem }: WelcomeCa
             <View style={styles.card}>
                 <View style={styles.titleContainer}>
                     <Text style={styles.titleText}>
-                        Seja bem vindo ao app <Text style={{ fontWeight: 'bold', color: '#112935' }}>Autônomo</Text>
+                        Seja bem vindo!
                     </Text>
                     <EvilIcons name='spinner-2' size={24} color='#112935' />
                 </View>
@@ -60,6 +62,7 @@ export default function WelcomeCard({ setWelcomeCard, openFirstItem }: WelcomeCa
                         setShowHeader(true)
                         setWelcomeCard(false)
                         openFirstItem()
+                        setStatusBarStyle('light')
                     }}
                 />
                 </View>
@@ -77,11 +80,10 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#112935',
+        backgroundColor: '#FFFFFF',
         zIndex: 1
     },
     card: {
-        backgroundColor: 'white',
         maxWidth: '90%',
         padding: 20,
         borderRadius: 10
@@ -94,7 +96,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     titleText: {
-        fontSize: 24
+        fontSize: 28,
+        marginBottom: 10
     },
     aboutText: {
         fontSize: 16,
