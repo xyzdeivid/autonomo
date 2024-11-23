@@ -17,7 +17,6 @@ export default function TabLayout() {
             screenOptions={{
                 headerTintColor: 'white',
                 headerShown: hideHeader,
-                tabBarShowLabel: false,
                 headerStyle: {
                     backgroundColor: '#112935',
                 },
