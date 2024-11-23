@@ -2,7 +2,6 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import { useContext, useEffect } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
-import { setStatusBarStyle } from 'expo-status-bar'
 
 interface WelcomeCardProps {
     setWelcomeCard: React.Dispatch<React.SetStateAction<boolean>>
@@ -17,7 +16,6 @@ export default function WelcomeCard({ setWelcomeCard, openFirstItem }: WelcomeCa
     useEffect(() => {
         setHideTabBar(true)
         setShowHeader(false)
-        setStatusBarStyle('dark')
     }, [])
 
     return (
@@ -62,7 +60,6 @@ export default function WelcomeCard({ setWelcomeCard, openFirstItem }: WelcomeCa
                         setShowHeader(true)
                         setWelcomeCard(false)
                         openFirstItem()
-                        setStatusBarStyle('light')
                     }}
                 />
                 </View>

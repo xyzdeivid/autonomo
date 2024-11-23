@@ -23,8 +23,8 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      setStatusBarStyle('light')
-      setStatusBarBackgroundColor('transparent')
+      setStatusBarStyle('dark')
+      setStatusBarBackgroundColor('#FFFFFF')
       SplashScreen.hideAsync()
     }
   }, [loaded])

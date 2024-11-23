@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import { ContentContext } from '@/context/InfoContent'
-import { LinearGradient } from 'expo-linear-gradient'
 
 export default function TabLayout() {
 
@@ -15,10 +14,9 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
-                headerTintColor: 'white',
                 headerShown: hideHeader,
                 headerStyle: {
-                    backgroundColor: '#112935',
+                    backgroundColor: '#FFFFFF',
                 },
                 tabBarInactiveTintColor: 'gray',
                 tabBarInactiveBackgroundColor: 'white',
@@ -33,14 +31,6 @@ export default function TabLayout() {
                 options={{
                     title: 'Informações',
                     tabBarActiveTintColor: '#08819B',
-                    headerBackground: () => (
-                        <LinearGradient
-                            colors={['#112935', '#08819B']}
-                            start={[0, 0]}
-                            end={[1, 0]}
-                            style={{ flex: 1 }}
-                        />
-                    ),
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='chart-simple' size={24} color={color} />
                     ),
@@ -56,14 +46,6 @@ export default function TabLayout() {
                 options={{
                     title: 'Entradas',
                     tabBarActiveTintColor: '#006600',
-                    headerBackground: () => (
-                        <LinearGradient
-                            colors={['#112935', '#006600']}
-                            start={[0, 0]}
-                            end={[1, 0]}
-                            style={{ flex: 1 }}
-                        />
-                    ),
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='arrow-trend-up' size={24} color={color} />
                     )
@@ -78,14 +60,6 @@ export default function TabLayout() {
                 options={{
                     title: 'Saídas',
                     tabBarActiveTintColor: '#660000',
-                    headerBackground: () => (
-                        <LinearGradient
-                            colors={['#112935', '#660000']}
-                            start={[0, 0]}
-                            end={[1, 0]}
-                            style={{ flex: 1 }}
-                        />
-                    ),
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='arrow-trend-down' size={24} color={color} />
                     )
@@ -100,14 +74,6 @@ export default function TabLayout() {
                 options={{
                     title: 'Itens',
                     tabBarActiveTintColor: '#330066',
-                    headerBackground: () => (
-                        <LinearGradient
-                            colors={['#112935', '#330066']}
-                            start={[0, 0]}
-                            end={[1, 0]}
-                            style={{ flex: 1 }}
-                        />
-                    ),
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='bag-shopping' size={24} color={color} />
                     )
