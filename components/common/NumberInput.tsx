@@ -50,8 +50,7 @@ const styles = StyleSheet.create({
     input: {
         width: '25%',
         color: 'black',
-        padding: 0,
-        margin: 0,
+        padding: 4,
         textAlign: 'center',
         marginStart: 8,
         borderRadius: 3

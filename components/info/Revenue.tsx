@@ -18,7 +18,7 @@ export default function Revenue() {
     }
 
     return (
-        <View style={{ zIndex: -1 }}>
+        <View>
             {getContent()}
         </View>
     )
