@@ -53,7 +53,7 @@ export default function WelcomeCard({ setWelcomeCard, openFirstItem }: WelcomeCa
                 </View>
                 <View style={{ marginTop: 32 }}>
                 <Button
-                    title='Cadastrar Meu Primeiro Item'
+                    title='Entendi'
                     color='#112935'
                     onPress={() => {
                         setHideTabBar(false)

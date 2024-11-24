@@ -10,7 +10,7 @@ import DocsProvider from '@/context/DocsContext'
 import HideTabBarProvider from '@/context/MainDisplays'
 import MonthProvider from '@/context/Month'
 import ContentProvider from '@/context/InfoContent'
-import { setStatusBarBackgroundColor, setStatusBarStyle, setStatusBarTranslucent } from 'expo-status-bar'
+import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()

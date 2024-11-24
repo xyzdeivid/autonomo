@@ -31,13 +31,11 @@ export default function Info() {
     const [welcomeCard, setWelcomeCard] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(true)
 
-    const openFirstItem = async () => {
+    const openFirstItem = () => {
 
         try {
 
-            await AsyncStorage.setItem('experienced', 'experienced')
-            setAddServiceForm(true)
-            setGeneralButton(false)
+            AsyncStorage.setItem('experienced', 'experienced')
 
         } catch (err) {
 
