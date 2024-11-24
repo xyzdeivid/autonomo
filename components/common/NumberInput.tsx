@@ -12,7 +12,10 @@ export default function NumberInput({ setValue, label, bgColor, textColor }: Num
 
     return (
         <View style={styles.inputContainer}>
-            <Text style={{ color: textColor ? textColor : 'black' }}>
+            <Text style={{
+                color: textColor ? textColor : 'black',
+                fontWeight: 'bold'
+            }}>
                 {label ? label : 'Valor'}:
             </Text>
             <MaskedTextInput

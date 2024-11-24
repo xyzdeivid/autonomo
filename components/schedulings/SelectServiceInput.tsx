@@ -32,7 +32,8 @@ export default function SelectServiceInput({ service, setService, services }: Se
 const styles = StyleSheet.create({
     label: {
         marginBottom: 5,
-        color: '#006600'
+        color: '#006600',
+        fontWeight: 'bold'
     },
     inputContainer: {
         backgroundColor: 'rgba(0, 102, 0, 0.1)', 

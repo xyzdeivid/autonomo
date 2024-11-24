@@ -24,7 +24,14 @@ export default function AmountInput({ text, setAmount, defaultValue, bgColor, te
 
     return (
         <View style={styles.inputContainer}>
-            <Text style={{ color: textColor ? textColor : 'black' }}>{text}:</Text>
+            <Text
+                style={{
+                    color: textColor ? textColor : 'black',
+                    fontWeight: 'bold'
+                }}
+            >
+                {text}:
+            </Text>
             <TextInput
                 value={defaultValue ? String(defaultValue) : textValue}
                 onChangeText={text => {

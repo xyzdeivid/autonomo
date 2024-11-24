@@ -46,7 +46,10 @@ export default function DateInput({ setTargetDate, bgColor, label, textColor }: 
     return (
         <View>
             <View style={styles.container}>
-                <Text style={{ marginEnd: 2, color: textColor ? textColor : 'black' }}>
+                <Text style={{
+                    marginEnd: 2, color: textColor ? textColor : 'black',
+                    fontWeight: 'bold'
+                }}>
                     {label ? label : 'Data'}:
                 </Text>
                 <Button color={bgColor ? bgColor : '#000000'} onPress={showDatepicker} title={dateFormat(getDate())} />
@@ -65,8 +68,8 @@ export default function DateInput({ setTargetDate, bgColor, label, textColor }: 
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex', 
-        flexDirection: 'row', 
+        display: 'flex',
+        flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 20
     }

@@ -9,7 +9,13 @@ interface NameInputProps {
 export default function NameInput({ setName, bgColor, textColor }: NameInputProps) {
     return (
         <View style={styles.inputContainer}>
-            <Text style={{ color: textColor ? textColor : 'black' }}>Nome:</Text>
+            <Text style={{
+                color: textColor ? textColor : 'black',
+                fontWeight: 'bold'
+            }}
+            >
+                Nome:
+            </Text>
             <TextInput
                 style={{
                     ...styles.input,

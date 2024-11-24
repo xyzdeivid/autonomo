@@ -141,6 +141,15 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
 
     }
 
+    const getPurchaseValueText = () => {
+        switch (valueChoice) {
+            case 'total':
+                return 'Valor de todas as unidades somadas.'
+            default:
+                return 'Valor de cada unidade.'
+        }
+    }
+
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -169,6 +178,20 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         {choice === 'budget' && (
                             <Text style={{ marginBottom: 20, color: 'rgba(51, 0, 102, 0.5)' }} >O valor será definido ao registrar entrada.</Text>
                         )}
+                        {choice === 'product' && !resale && (
+                            <StockButton
+                                stock={stock}
+                                setStock={setStock}
+                            />
+                        )}
+                        {choice === 'product' && isThereAmount() && (
+                            <AmountInput
+                                text={resale ? 'Unidades' : 'Estoque Atual'}
+                                setAmount={setAmount}
+                                bgColor='rgba(51, 0, 102, 0.1)'
+                                textColor='#330066'
+                            />
+                        )}
                         {choice === 'product' && resale && (
                             <>
                                 <DateInput
@@ -188,6 +211,14 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                     setChoice={setValueChoice}
                                     buttonColors={['#330066', '#6600CC']}
                                 />
+                                <Text style={{
+                                    color: 'rgba(51, 0, 102, 0.5)',
+                                    fontSize: 12,
+                                    marginBottom: 20,
+                                    marginTop: -18 
+                                }}>
+                                    {getPurchaseValueText()}
+                                </Text>
                             </>
                         )}
                         {choice !== 'budget' && (
@@ -196,20 +227,6 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 bgColor='rgba(51, 0, 102, 0.1)'
                                 textColor='#330066'
                                 label={choice === 'product' ? 'Valor de Venda (un)' : ''}
-                            />
-                        )}
-                        {choice === 'product' && !resale && (
-                            <StockButton
-                                stock={stock}
-                                setStock={setStock}
-                            />
-                        )}
-                        {choice === 'product' && isThereAmount() && (
-                            <AmountInput
-                                text='Quantidade'
-                                setAmount={setAmount}
-                                bgColor='rgba(51, 0, 102, 0.1)'
-                                textColor='#330066'
                             />
                         )}
                     </FormInputs>
