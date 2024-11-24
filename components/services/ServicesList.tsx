@@ -23,12 +23,23 @@ export default function ServicesList({ setServiceForDeletion, setDeleteServiceFo
         return formatedData
     }
 
+    const getWhatIsItemColumn = () => {
+        switch (services[0].category) {
+            case 'product':
+                return 'Produto'
+            case 'service':
+                return 'Serviço'
+            case 'budget':
+                return 'Orçamentário'
+        }
+    }
+
     return (
         <>
             <ContainerHandler filteredTargets={services}>
                 <DataTable>
                     <DataTable.Header>
-                        <DataTable.Title style={styles.text}>Item</DataTable.Title>
+                        <DataTable.Title style={styles.text}>{getWhatIsItemColumn()}</DataTable.Title>
                         {services[0].category !== 'budget' && (
                             <DataTable.Title style={styles.text}>
                                 Valor 
