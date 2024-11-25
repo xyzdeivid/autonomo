@@ -30,6 +30,7 @@ export default function Info() {
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [welcomeCard, setWelcomeCard] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(true)
+    const [currentYear] = useContext(DocsContext).currentYear
 
     const openFirstItem = () => {
 
@@ -73,7 +74,7 @@ export default function Info() {
                 schedulings[0] && (<MonthInput dropdownIconColor='#08819B' />)
             }
             {
-                filterSchedulings(schedulings, selectedMonth)[0]
+                filterSchedulings(schedulings, selectedMonth, currentYear)[0]
                     ? <Revenue />
                     : <AnyItemWarning text='Nenhuma informação disponível' />
             }

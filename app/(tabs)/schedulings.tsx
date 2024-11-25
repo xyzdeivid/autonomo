@@ -29,6 +29,7 @@ export default function Schedulings() {
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
     const [whatIsSchedulingCard, setWhatIsSchedulingCard] = useState(false)
+    const [currentYear] = useContext(DocsContext).currentYear
 
     const checkAmount = async (scheduling: Scheduling) => {
 
@@ -132,9 +133,9 @@ export default function Schedulings() {
             {loadingScreen && <LoadingScreen />}
             <Container>
                 {
-                    filterSchedulings(schedulings, selectedMonth)[0]
+                    filterSchedulings(schedulings, selectedMonth, currentYear)[0]
                         ? <SchedulingsList
-                            filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
+                            filteredSchedulings={filterSchedulings(schedulings, selectedMonth, currentYear)}
                             setSchedulingForDeletion={setSchedulingForDeletion}
                             setDeleteSchedulingForm={setDeleteSchedulingForm}
                         />

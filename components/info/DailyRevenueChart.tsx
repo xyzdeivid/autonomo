@@ -11,8 +11,9 @@ import { MonthContext } from '@/context/Month'
 export default function DailyRevenueChart() {
 
     const [schedulings] = useContext(DocsContext).schedulings
+    const [currentYear] = useContext(DocsContext).currentYear
     const [selectedMonth] = useContext(MonthContext)
-    const filteredSchedulings = filterSchedulings(schedulings, selectedMonth)
+    const filteredSchedulings = filterSchedulings(schedulings, selectedMonth, currentYear)
 
     const data = () => {
         return getDays(filteredSchedulings).map(day => {

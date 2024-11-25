@@ -18,18 +18,18 @@ export const getCurrentMonth = () => {
     return `${currentYear}-${currentMonth}`
 }
 
-export const filterSchedulings = (schedulings: Scheduling[], selectedMonth: number) => {
+export const filterSchedulings = (schedulings: Scheduling[], selectedMonth: number, currentYear: string) => {
     return schedulings.filter(current => {
         return Number(current.date.split('-')[1]) === selectedMonth + 1
-        && Number(current.date.split('-')[0]) === new Date().getFullYear()
+        && current.date.split('-')[0] === currentYear
         
     })
 }
 
-export const filterExpenses = (expenses: Expense[], selectedMonth: number) => {
+export const filterExpenses = (expenses: Expense[], selectedMonth: number, currentYear: string) => {
     return expenses.filter(current => {
         return Number(current.date.split('-')[1]) === selectedMonth + 1
-        && Number(current.date.split('-')[0]) === new Date().getFullYear()
+        && current.date.split('-')[0] === currentYear
     })
 }
 

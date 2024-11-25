@@ -67,16 +67,20 @@ const DEFAULT_SCHEDULING: Scheduling = {
     date: '',
 }
 
+type CurrentYearState = [string, React.Dispatch<React.SetStateAction<string>>]
+
 interface TDocsContext {
     services: ServicesState
     expenses: ExpensesState
     schedulings: SchedulingsState
+    currentYear: CurrentYearState
 }
 
 const DEFAULT_CONTEXT: TDocsContext = {
     services: [[DEFAULT_SERVICE], () => { }],
     expenses: [[DEFAULT_EXPENSE], () => { }],
-    schedulings: [[DEFAULT_SCHEDULING], () => { }]
+    schedulings: [[DEFAULT_SCHEDULING], () => { }],
+    currentYear: ['', () => { }]
 }
 
 export const DocsContext = createContext<TDocsContext>(DEFAULT_CONTEXT)
@@ -91,6 +95,7 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [services, setServices] = useState<Service[]>([])
     const [expenses, setExpenses] = useState<Expense[]>([])
     const [schedulings, setSchedulings] = useState<Scheduling[]>([])
+    const [currentYear, setCurrentYear] = useState<string>('')
 
     const getItemsFromDb = async () => {
 
@@ -146,16 +151,23 @@ export default function DocsProvider({ children }: DocsProviderProps) {
 
     }
 
+    const getCurrentYear = () => {
+        const currentYear = String(new Date().getFullYear())
+        setCurrentYear(currentYear)
+    }
+
     const docs: TDocsContext = {
         services: [services, setServices],
         expenses: [expenses, setExpenses],
-        schedulings: [schedulings, setSchedulings]
+        schedulings: [schedulings, setSchedulings],
+        currentYear: [currentYear, setCurrentYear]
     }
 
     useEffect(() => {
         getItemsFromDb()
         getExpensesFromDb()
         getSchedulingsFromDb()
+        getCurrentYear()
     }, [])
 
     return (

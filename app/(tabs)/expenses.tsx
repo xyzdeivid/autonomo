@@ -28,6 +28,7 @@ export default function Expenses() {
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
     const [whatIsExpenseCard, setWhatIsExpenseCard] = useState(false)
+    const [currentYear] = useContext(DocsContext).currentYear
 
     const deleteExpense = async (expense: Expense) => {
 
@@ -112,9 +113,9 @@ export default function Expenses() {
             {loadingScreen && <LoadingScreen />}
             <Container>
                 {
-                    filterExpenses(expenses, selectedMonth)[0]
+                    filterExpenses(expenses, selectedMonth, currentYear)[0]
                         ? <ExpensesList
-                            filteredExpenses={filterExpenses(expenses, selectedMonth)}
+                            filteredExpenses={filterExpenses(expenses, selectedMonth, currentYear)}
                             setExpenseForDeletion={setExpenseForDeletion}
                             setDeleteExpenseForm={setDeleteExpenseForm}
                         />

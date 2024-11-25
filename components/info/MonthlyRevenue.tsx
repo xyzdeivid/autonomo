@@ -20,18 +20,19 @@ export default function MonthlyRevenue({ period, setPeriod }: MonthlyRevenueProp
 
     const [schedulings] = useContext(DocsContext).schedulings
     const [expenses] = useContext(DocsContext).expenses
+    const [currentYear] = useContext(DocsContext).currentYear
     const [selectedMonth] = useContext(MonthContext)
 
     return (
         <View>
             <InfoTitle text='Finanças Gerais' />
             <RevenueChart
-                filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
-                filteredExpenses={filterExpenses(expenses, selectedMonth)}
+                filteredSchedulings={filterSchedulings(schedulings, selectedMonth, currentYear)}
+                filteredExpenses={filterExpenses(expenses, selectedMonth, currentYear)}
             />
             <RevenueList
-                filteredSchedulings={filterSchedulings(schedulings, selectedMonth)}
-                filteredExpenses={filterExpenses(expenses, selectedMonth)}
+                filteredSchedulings={filterSchedulings(schedulings, selectedMonth, currentYear)}
+                filteredExpenses={filterExpenses(expenses, selectedMonth, currentYear)}
             />
             <View style={{
                 width: '85%',
