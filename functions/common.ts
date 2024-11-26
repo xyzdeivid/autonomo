@@ -20,7 +20,7 @@ export const getCurrentMonth = () => {
 
 export const filterSchedulings = (schedulings: Scheduling[], selectedMonth: number, currentYear: string) => {
     return schedulings.filter(current => {
-        return Number(current.date.split('-')[1]) === selectedMonth + 1
+        return Number(current.date.split('-')[1]) === selectedMonth
         && current.date.split('-')[0] === currentYear
         
     })
@@ -28,11 +28,21 @@ export const filterSchedulings = (schedulings: Scheduling[], selectedMonth: numb
 
 export const filterExpenses = (expenses: Expense[], selectedMonth: number, currentYear: string) => {
     return expenses.filter(current => {
-        return Number(current.date.split('-')[1]) === selectedMonth + 1
+        return Number(current.date.split('-')[1]) === selectedMonth
         && current.date.split('-')[0] === currentYear
     })
 }
 
 export const generateId = () => {
     return Math.random().toString(36).substr(2, 9)
+}
+
+export const getMonthName = (months: [string, number][], selectedMonth: number) => {
+
+    const month = months.find(month => month[1] === selectedMonth)
+
+    return month
+    ? month[0]
+    : ''
+
 }

@@ -2,6 +2,8 @@ import { View, Text, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { useContext } from 'react'
 import { MonthContext } from '@/context/Month'
+import { months } from '@/constants/common'
+import { getMonthName } from '@/functions/common'
 
 interface InfoTitleProps {
     text: string
@@ -11,25 +13,10 @@ export default function InfoTitle({ text }: InfoTitleProps) {
 
     const [selectedMonth] = useContext(MonthContext)
 
-    const months: [string, number][] = [
-        ['Janeiro', 0],
-        ['Fevereiro', 1],
-        ['Março', 2],
-        ['Abril', 3],
-        ['Maio', 4],
-        ['Junho', 5],
-        ['Julho', 6],
-        ['Agosto', 7],
-        ['Setembro', 8],
-        ['Outubro', 9],
-        ['Novembro', 10],
-        ['Dezembro', 11]
-    ]
-
     return (
         <View style={styles.titleContainer}>
             <FontAwesome name='info-circle' size={16} color='#FFFFFF' />
-            <Text style={styles.titleText}>{text} do mês de {months[selectedMonth][0]}</Text>
+            <Text style={styles.titleText}>{text} do mês de {getMonthName(months, selectedMonth)}</Text>
         </View>
     )
 

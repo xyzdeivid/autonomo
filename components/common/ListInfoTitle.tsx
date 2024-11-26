@@ -1,5 +1,7 @@
+import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
 import { MonthContext } from '@/context/Month'
+import { getMonthName } from '@/functions/common'
 import { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
@@ -14,17 +16,6 @@ export default function ListInfoTitle({ text, color }: ListInfoTitleProps) {
 
     const [selectedMonth] = useContext(MonthContext)
 
-    const monthName = () => {
-
-        const months = [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-        ]
-
-        return months[selectedMonth]
-
-    }
-
     return (
         <View style={styles.container}>
             <Text
@@ -33,7 +24,7 @@ export default function ListInfoTitle({ text, color }: ListInfoTitleProps) {
                     color: color
                 }}
             >
-                Suas {text} do mês de {monthName()}/{currentYear}
+                Suas {text} do mês de {getMonthName(months, selectedMonth)}/{currentYear}
             </Text>
         </View>
     )
