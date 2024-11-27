@@ -40,7 +40,7 @@ export default function GeneralButton({ setAddItemsForm, setGeneralButton }: Gen
                     setGeneralButton(false)
                 }}
             >
-                <Entypo name='add-to-list' size={28} color='#FFFFFF' />
+                <Entypo name='add-to-list' size={28} color='#08819B' />
             </Pressable>
         </View>
     )
@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         padding: 10,
         borderRadius: 5,
-        backgroundColor: '#08819B'
+        borderWidth: 1,
+        borderColor: '#08819B',
+        backgroundColor: 'rgba(8, 129, 155, 0.1)'
     }
 })

@@ -87,7 +87,8 @@ export default function Services() {
                     && <AddItemButton
                         setForm={setAddServiceForm}
                         text='Novo Item'
-                        bgColor='#330066'
+                        mainColor='#330066'
+                        bgColor='rgba(51, 0, 102, 0.1)'
                         setButton={setButton}
                         infoButtonColor='rgba(51, 0, 102, 0.5)'
                         setInfoCard={setWhatIsServiceCard}

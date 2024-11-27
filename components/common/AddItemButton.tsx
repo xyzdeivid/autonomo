@@ -3,6 +3,7 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 
 interface AddItemButtonProps {
     setForm: React.Dispatch<React.SetStateAction<boolean>>
+    mainColor: string
     bgColor: string
     text: string
     setButton: React.Dispatch<React.SetStateAction<boolean>>
@@ -10,7 +11,7 @@ interface AddItemButtonProps {
     setInfoCard: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddItemButton({ setForm, bgColor, text, setButton, infoButtonColor, setInfoCard }: AddItemButtonProps) {
+export default function AddItemButton({ setForm, mainColor, bgColor, text, setButton, infoButtonColor, setInfoCard }: AddItemButtonProps) {
 
     return (
         <View style={styles.container}>
@@ -18,6 +19,7 @@ export default function AddItemButton({ setForm, bgColor, text, setButton, infoB
             <Pressable
                 style={{
                     ...styles.button,
+                    borderColor: mainColor,
                     backgroundColor: bgColor
                 }}
                 onPress={() => {
@@ -25,7 +27,7 @@ export default function AddItemButton({ setForm, bgColor, text, setButton, infoB
                     setButton(false)
                 }}
             >
-                <Text style={{ color: 'white' }}>{text}</Text>
+                <Text style={{ color: mainColor }}>{text}</Text>
             </Pressable>
         </View>
     )
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
     },
     button: {
         padding: 10,
-        borderRadius: 5
+        borderRadius: 5,
+        borderWidth: 1
     }
 })

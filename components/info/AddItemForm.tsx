@@ -72,41 +72,41 @@ export default function AddItemForm({ setGeneralButton, setAddItemsForm, setAddS
                     <Pressable
                         style={{
                             ...styles.button,
-                            backgroundColor: '#006600'
+                            borderColor: '#006600',
+                            backgroundColor: 'rgba(0, 102, 0, 0.1)'
                         }}
                         onPress={() => {
                             setAddItemsForm(false)
                             checkServices()
                         }}
                     >
-                        <Text style={styles.text}>Nova Entrada</Text>
-                        <FontAwesome6 name='arrow-trend-up' size={16} color='#FFFFFF' />
+                        <Text style={{
+                            ...styles.text,
+                            color: '#006600'
+                        }}>
+                            Nova Entrada
+                        </Text>
+                        <FontAwesome6 name='arrow-trend-up' size={16} color='#006600' />
                     </Pressable>
                     <Pressable
                         style={{
                             ...styles.button,
                             marginVertical: 8,
-                            backgroundColor: '#660000'
+                            borderColor: '#660000',
+                            backgroundColor: 'rgba(102, 0, 0, 0.1)'
                         }}
                         onPress={() => {
                             setAddItemsForm(false)
                             setAddExpenseForm(true)
                         }}
                     >
-                        <Text style={styles.text}>Nova Saída</Text>
-                        <FontAwesome6 name='arrow-trend-down' size={16} color='#FFFFFF' />
-                    </Pressable>
-                    <Pressable style={{
-                        ...styles.button,
-                        backgroundColor: '#330066'
-                    }}
-                        onPress={() => {
-                            setAddItemsForm(false)
-                            setAddServiceForm(true)
-                        }}
-                    >
-                        <Text style={styles.text}>Novo Item</Text>
-                        <FontAwesome6 name='bag-shopping' size={16} color='#FFFFFF' />
+                        <Text style={{
+                            ...styles.text,
+                            color: '#660000'
+                        }}>
+                            Nova Saída
+                        </Text>
+                        <FontAwesome6 name='arrow-trend-down' size={16} color='#660000' />
                     </Pressable>
                 </Pressable>
             </Pressable>
@@ -135,10 +135,10 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        borderWidth: 1
     },
     text: {
-        marginEnd: 8,
-        color: '#FFFFFF'
+        marginEnd: 8
     }
 })

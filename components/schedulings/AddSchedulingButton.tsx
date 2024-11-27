@@ -35,7 +35,7 @@ export default function AddSchedulingButton({ setAddSchedulingForm, setButton, s
                     checkServices()
                 }}
             >
-                <Text style={{ color: 'white' }}>Nova Entrada</Text>
+                <Text style={{ color: '#006600' }}>Nova Entrada</Text>
             </Pressable>
         </View>
     )
@@ -57,6 +57,8 @@ const styles = StyleSheet.create({
     button: {
         padding: 10,
         borderRadius: 5,
-        backgroundColor: '#006600'
+        borderWidth: 1,
+        borderColor: '#006600',
+        backgroundColor: 'rgba(0, 102, 0, 0.1)'
     }
 })

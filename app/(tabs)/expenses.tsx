@@ -125,7 +125,8 @@ export default function Expenses() {
                     button
                     && <AddItemButton
                         setForm={setAddExpenseForm}
-                        bgColor='#660000'
+                        mainColor='#660000'
+                        bgColor='rgba(139, 0, 0, 0.1)'
                         text='Nova Saída'
                         setButton={setButton}
                         infoButtonColor='rgba(139, 0, 0, 0.5)'
