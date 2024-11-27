@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 import { StyleSheet, Pressable, Text, Animated, Alert } from 'react-native'
 
 interface AddItemFormProps {
-    setGeneralButton: React.Dispatch<React.SetStateAction<boolean>> 
+    setGeneralButton: React.Dispatch<React.SetStateAction<boolean>>
     setAddItemsForm: React.Dispatch<React.SetStateAction<boolean>>
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -13,7 +13,7 @@ interface AddItemFormProps {
     services: Service[]
 }
 
-export default function AddItemForm({ setGeneralButton, setAddItemsForm, setAddServiceForm, 
+export default function AddItemForm({ setGeneralButton, setAddItemsForm, setAddServiceForm,
     setAddExpenseForm, setAddSchedulingForm, services }: AddItemFormProps) {
 
     const slideAnim = useRef(new Animated.Value(1000)).current
