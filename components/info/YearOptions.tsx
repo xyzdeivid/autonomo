@@ -36,7 +36,10 @@ export default function YearOptions({ availableYears, setShowYearOptions }: Year
             <Picker
                 selectedValue={currentYear}
                 style={styles.select}
-                onValueChange={year => setCurrentYear(year)}
+                onValueChange={year => {
+                    setCurrentYear(year)
+                    setShowYearOptions(false)
+                }}
                 dropdownIconColor='gray'
             >
                 {availableYears.map(year => (
