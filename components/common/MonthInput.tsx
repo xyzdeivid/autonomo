@@ -19,7 +19,7 @@ export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
     useEffect(() => {
         const lastMonth = availableMonths.length - 1
         setSelectedMonth(availableMonths[lastMonth][1])
-    }, [])
+    }, [currentYear])
 
     return (
         <Picker
