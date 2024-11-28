@@ -1,8 +1,7 @@
 import { DocsContext } from '@/context/DocsContext'
-import { useContext, useEffect, useRef } from 'react'
+import { useContext } from 'react'
 import { Picker } from '@react-native-picker/picker'
-import { Animated, StyleSheet, View } from 'react-native'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
+import { StyleSheet } from 'react-native'
 
 interface YearOptionsProps {
     availableYears: string[]
@@ -11,19 +10,6 @@ interface YearOptionsProps {
 export default function YearOptions({ availableYears }: YearOptionsProps) {
 
     const [currentYear, setCurrentYear] = useContext(DocsContext).currentYear
-    const slideAnim = useRef(new Animated.Value(-1000)).current
-
-    useEffect(() => {
-
-        Animated.parallel([
-            Animated.timing(slideAnim, {
-                toValue: 0,
-                duration: 250,
-                useNativeDriver: true,
-            })
-        ]).start()
-
-    }, [])
 
     return (
         <Picker

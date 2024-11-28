@@ -71,9 +71,9 @@ export const thereIsBudget = (schedulings: Scheduling[]) => {
     return false
 }
 
-export const availableYears = (currentYear: string, entries: Scheduling[]) => {
+export const availableYears = (entries: Scheduling[]) => {
 
-    let years = [currentYear]
+    let years = [String(new Date().getFullYear())]
 
     years.push(...entries.map(entry => entry.date.split('-')[0]))
 
