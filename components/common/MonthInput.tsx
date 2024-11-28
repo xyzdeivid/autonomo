@@ -3,7 +3,6 @@ import { Picker } from '@react-native-picker/picker'
 import { MonthContext } from '@/context/Month'
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
-import { Alert } from 'react-native'
 import { getAvailableMonths } from '@/functions/common'
 
 interface MonthInputProps {
@@ -15,6 +14,12 @@ export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
     const [selectedMonth, setSelectedMonth] = useContext(MonthContext)
     const [currentYear] = useContext(DocsContext).currentYear
     const [entries] = useContext(DocsContext).schedulings
+    const availableMonths = getAvailableMonths(entries, currentYear, months)
+
+    useEffect(() => {
+        const lastMonth = availableMonths.length - 1
+        setSelectedMonth(availableMonths[lastMonth][1])
+    }, [])
 
     return (
         <Picker
@@ -22,7 +27,7 @@ export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
             onValueChange={(itemValue) => setSelectedMonth(itemValue)}
             dropdownIconColor={dropdownIconColor ? dropdownIconColor : 'lightgray'}
         >
-            {getAvailableMonths(entries, currentYear, months).map(month => (
+            {availableMonths.map(month => (
                 <Picker.Item key={month[0]} label={month[0]} value={month[1]} />
             ))}
         </Picker>

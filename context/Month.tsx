@@ -8,7 +8,7 @@ interface MonthProviderProps {
 
 export default function MonthProvider({ children }: MonthProviderProps) {
 
-    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1)
+    const [selectedMonth, setSelectedMonth] = useState(0)
 
     return (
         <MonthContext.Provider value={[selectedMonth, setSelectedMonth]}>
