@@ -70,6 +70,17 @@ export const getAvailableMonths = (
         }
     }
 
+    if (!monthsToGetAvailable[0]) {
+
+        const currentMonthIndex = new Date().getMonth() + 1
+        const currentMonth = months.find(month => month[1] === currentMonthIndex)
+
+        if (currentMonth) {
+            monthsToGetAvailable.push(currentMonth)
+        }
+
+    }
+
     return monthsToGetAvailable.sort((a, b) => Number(a[1]) - Number(b[1]))
 
 }

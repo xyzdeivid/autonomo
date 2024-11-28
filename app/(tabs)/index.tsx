@@ -59,6 +59,10 @@ export default function Info() {
             .catch(() => Alert.alert('Erro ao acessar banco de dados'))
     }, [])
 
+    const yearEntries = schedulings.filter(entry => (
+        entry.date.split('-')[0] === currentYear
+    ))
+
     return (
         <Container>
             {welcomeCard && (
@@ -71,7 +75,7 @@ export default function Info() {
                 <LoadingScreen />
             )}
             {
-                schedulings[0] && (<MonthInput dropdownIconColor='#08819B' />)
+                yearEntries[0] && (<MonthInput dropdownIconColor='#08819B' />)
             }
             {
                 filterSchedulings(schedulings, selectedMonth, currentYear)[0]
