@@ -6,10 +6,9 @@ import FontAwesome from '@expo/vector-icons/FontAwesome'
 
 interface YearOptionsProps {
     availableYears: string[]
-    setShowYearOptions: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function YearOptions({ availableYears, setShowYearOptions }: YearOptionsProps) {
+export default function YearOptions({ availableYears }: YearOptionsProps) {
 
     const [currentYear, setCurrentYear] = useContext(DocsContext).currentYear
     const slideAnim = useRef(new Animated.Value(-1000)).current
@@ -27,45 +26,25 @@ export default function YearOptions({ availableYears, setShowYearOptions }: Year
     }, [])
 
     return (
-        <Animated.View
-            style={{
-                ...styles.container,
-                transform: [{ translateX: slideAnim }]
+        <Picker
+            selectedValue={currentYear}
+            style={styles.select}
+            onValueChange={year => {
+                setCurrentYear(year)
             }}
+            dropdownIconColor='gray'
         >
-            <Picker
-                selectedValue={currentYear}
-                style={styles.select}
-                onValueChange={year => {
-                    setCurrentYear(year)
-                    setShowYearOptions(false)
-                }}
-                dropdownIconColor='gray'
-            >
-                {availableYears.map(year => (
-                    <Picker.Item value={year} label={year} key={year} />
-                ))}
-            </Picker>
-            <View style={styles.closeButton}>
-                <FontAwesome
-                    name='close'
-                    onPress={() => setShowYearOptions(false)}
-                    size={26}
-                    color='#08819B'
-                />
-            </View>
-        </Animated.View>
+            {availableYears.map(year => (
+                <Picker.Item value={year} label={year} key={year} />
+            ))}
+        </Picker>
     )
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
     select: {
-        width: '55%',
+        width: '30%',
         backgroundColor: 'rgba(0, 0, 0, 0.1)'
     },
     closeButton: {

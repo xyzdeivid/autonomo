@@ -1,10 +1,9 @@
 import { Pressable, StyleSheet, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import YearOptions from './YearOptions'
 import { availableYears } from '@/functions/info'
-import Ionicons from '@expo/vector-icons/Ionicons'
 
 interface GeneralButtonProps {
     setAddItemsForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,22 +15,18 @@ export default function GeneralButton({ setAddItemsForm, setGeneralButton }: Gen
     const [entries] = useContext(DocsContext).schedulings
     const [currentYear] = useContext(DocsContext).currentYear
     const years = availableYears(currentYear, entries)
-    const [showYearOptions, setShowYearOptions] = useState(false)
 
     return (
-        <View style={styles.container}>
+        <View style={{
+            ...styles.container,
+            justifyContent: years.length > 1 ? 'space-between' : 'flex-end'
+
+        }}>
             {
-                showYearOptions
-                    ? <YearOptions
-                        availableYears={years}
-                        setShowYearOptions={setShowYearOptions}
-                    />
-                    : <Ionicons onPress={() => {
-                        setShowYearOptions(true)
-                    }}
-                        name='calendar-clear'
-                        size={24} color='rgba(8, 129, 155, 0.5)'
-                    />
+                years.length > 1
+                && <YearOptions
+                    availableYears={years}
+                />
             }
             <Pressable
                 style={styles.buttonContainer}
@@ -53,7 +48,6 @@ const styles = StyleSheet.create({
         bottom: 0,
         width: '100%',
         display: 'flex',
-        justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'flex-end',
         padding: 10
