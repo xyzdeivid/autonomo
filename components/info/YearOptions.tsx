@@ -1,7 +1,6 @@
-import { DocsContext } from '@/context/DocsContext'
-import { useContext } from 'react'
-import { Picker } from '@react-native-picker/picker'
-import { StyleSheet } from 'react-native'
+import { useState } from 'react'
+import AntDesign from '@expo/vector-icons/AntDesign'
+import YearPicker from './YearOptions/YearPicker'
 
 interface YearOptionsProps {
     availableYears: string[]
@@ -9,31 +8,24 @@ interface YearOptionsProps {
 
 export default function YearOptions({ availableYears }: YearOptionsProps) {
 
-    const [currentYear, setCurrentYear] = useContext(DocsContext).currentYear
+    const [showPicker, setShowPicker] = useState(false)
 
     return (
-        <Picker
-            selectedValue={currentYear}
-            style={styles.select}
-            onValueChange={year => {
-                setCurrentYear(year)
-            }}
-            dropdownIconColor='gray'
-        >
-            {availableYears.map(year => (
-                <Picker.Item value={year} label={year} key={year} />
-            ))}
-        </Picker>
+        <>
+            {
+                showPicker
+                    ? <YearPicker
+                        availableYears={availableYears}
+                        setShowPicker={setShowPicker}
+                    />
+                    : <AntDesign
+                        name='caretright'
+                        size={24}
+                        color='#08819B'
+                        onPress={() => setShowPicker(true)}
+                    />
+            }
+        </>
     )
 
 }
-
-const styles = StyleSheet.create({
-    select: {
-        width: '30%',
-        backgroundColor: 'rgba(0, 0, 0, 0.1)'
-    },
-    closeButton: {
-        marginStart: 6
-    }
-})
