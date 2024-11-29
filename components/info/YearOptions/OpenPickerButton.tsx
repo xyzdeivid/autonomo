@@ -4,16 +4,20 @@ import { useContext } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface ClosePickerButtonProps {
+    availableYears: string[]
     setShowPicker: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ClosePickerButton({ setShowPicker }: ClosePickerButtonProps) {
+export default function ClosePickerButton({ availableYears, setShowPicker }: ClosePickerButtonProps) {
 
     const [currentYear] = useContext(DocsContext).currentYear
 
     return (
         <Pressable
-            onPress={() => setShowPicker(true)}
+            onPress={() => {
+                if (availableYears.length > 1)
+                    setShowPicker(true)
+            }}
             style={styles.container}
         >
             <View style={styles.currentYear}>
@@ -21,11 +25,14 @@ export default function ClosePickerButton({ setShowPicker }: ClosePickerButtonPr
                     {currentYear}
                 </Text>
             </View>
-            <AntDesign
-                name='caretright'
-                size={20}
-                color='#08819B'
-            />
+            {
+                availableYears.length > 1 &&
+                <AntDesign
+                    name='caretright'
+                    size={20}
+                    color='#08819B'
+                />
+            }
         </Pressable>
     )
 

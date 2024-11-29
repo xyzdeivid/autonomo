@@ -16,17 +16,10 @@ export default function GeneralButton({ setAddItemsForm, setGeneralButton }: Gen
     const years = availableYears(entries)
 
     return (
-        <View style={{
-            ...styles.container,
-            justifyContent: years.length > 1 ? 'space-between' : 'flex-end'
-
-        }}>
-            {
-                years.length > 1
-                && <YearOptions
-                    availableYears={years}
-                />
-            }
+        <View style={styles.container}>
+            <YearOptions
+                availableYears={years}
+            />
             <Pressable
                 style={styles.buttonContainer}
                 onPress={() => {
@@ -48,6 +41,7 @@ const styles = StyleSheet.create({
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'flex-end',
         padding: 10
     },

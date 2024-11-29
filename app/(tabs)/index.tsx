@@ -21,6 +21,7 @@ import LoadingScreen from '@/components/common/LoadingScreen'
 export default function Info() {
 
     const [schedulings] = useContext(DocsContext).schedulings
+    const [expenses] = useContext(DocsContext).expenses
     const [services] = useContext(DocsContext).services
     const [selectedMonth] = useContext(MonthContext)
     const [addItemsForm, setAddItemsForm] = useContext(ContentContext).form
@@ -30,7 +31,7 @@ export default function Info() {
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [welcomeCard, setWelcomeCard] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(true)
-    const [currentYear] = useContext(DocsContext).currentYear
+    const [currentYear, setCurrentYear] = useContext(DocsContext).currentYear
 
     const openFirstItem = () => {
 
@@ -62,6 +63,16 @@ export default function Info() {
     const yearEntries = schedulings.filter(entry => (
         entry.date.split('-')[0] === currentYear
     ))
+
+    const yearExpenses = expenses.filter(expense => (
+        expense.date.split('-')[0] === currentYear
+    ))
+
+    useEffect(() => {
+        if (!yearEntries[0] && !yearExpenses[0]) {
+            setCurrentYear(String(new Date().getFullYear()))
+        }
+    }, [schedulings, expenses])
 
     return (
         <Container>

@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import AntDesign from '@expo/vector-icons/AntDesign'
 import YearPicker from './YearOptions/YearPicker'
-import ClosePickerButton from './YearOptions/ClosePickerButton'
+import OpenPickerButton from './YearOptions/OpenPickerButton'
 
 interface YearOptionsProps {
     availableYears: string[]
@@ -19,7 +18,8 @@ export default function YearOptions({ availableYears }: YearOptionsProps) {
                         availableYears={availableYears}
                         setShowPicker={setShowPicker}
                     />
-                    : <ClosePickerButton
+                    : <OpenPickerButton
+                        availableYears={availableYears}
                         setShowPicker={setShowPicker}
                     />
             }
