@@ -5,7 +5,7 @@ import Container from '@/components/common/Container'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import MonthInput from '@/components/common/MonthInput'
 import { MonthContext } from '@/context/Month'
-import { filterSchedulings } from '@/functions/common'
+import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/functions/common'
 import Revenue from '@/components/info/Revenue'
 import { ContentContext } from '@/context/InfoContent'
 import GeneralButton from '@/components/info/GeneralButton'
@@ -17,13 +17,14 @@ import WelcomeCard from '@/components/info/WelcomeCard'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import LoadingScreen from '@/components/common/LoadingScreen'
+import { months } from '@/constants/common'
 
 export default function Info() {
 
     const [schedulings] = useContext(DocsContext).schedulings
     const [expenses] = useContext(DocsContext).expenses
     const [services] = useContext(DocsContext).services
-    const [selectedMonth] = useContext(MonthContext)
+    const [selectedMonth, setSelectedMonth] = useContext(MonthContext)
     const [addItemsForm, setAddItemsForm] = useContext(ContentContext).form
     const [generalButton, setGeneralButton] = useContext(ContentContext).button
     const [addServiceForm, setAddServiceForm] = useState(false)
@@ -32,6 +33,9 @@ export default function Info() {
     const [welcomeCard, setWelcomeCard] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(true)
     const [currentYear, setCurrentYear] = useContext(DocsContext).currentYear
+    const filteredEntries = filterSchedulings(schedulings, selectedMonth, currentYear)
+    const filteredExpenses = filterExpenses(expenses, selectedMonth, currentYear)
+    const availableMonths = getAvailableMonths(schedulings, currentYear, months)
 
     const openFirstItem = () => {
 
@@ -69,9 +73,16 @@ export default function Info() {
     ))
 
     useEffect(() => {
+
         if (!yearEntries[0] && !yearExpenses[0]) {
             setCurrentYear(String(new Date().getFullYear()))
         }
+
+        if (!filteredEntries[0] && !filteredExpenses[0]) {
+            const lastMonth = availableMonths.length - 1
+            setSelectedMonth(availableMonths[lastMonth][1])
+        }
+
     }, [schedulings, expenses])
 
     return (
