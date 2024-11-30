@@ -3,14 +3,15 @@ import { Pressable, StyleSheet, View, Text, TextInput } from 'react-native'
 interface EditNameInputProps {
     setName: React.Dispatch<React.SetStateAction<string>>
     editName: () => void
+    actualName: string
 }
 
-export default function EditNameInput({ setName, editName }: EditNameInputProps) {
+export default function EditNameInput({ setName, editName, actualName }: EditNameInputProps) {
 
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Nome:</Text>
-            <TextInput onChangeText={text => setName(text.trim())} style={styles.editInput} />
+            <TextInput defaultValue={actualName} onChangeText={text => setName(text.trim())} style={styles.editInput} />
             <Pressable
                 style={styles.editButton}
                 onPress={() => editName()}

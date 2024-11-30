@@ -18,6 +18,7 @@ import EditNameInput from './EditNameInput'
 import { orderSchedulings } from '@/functions/schedulings'
 import { orderExpenses } from '@/functions/expenses'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { moneyFormat } from '@/functions/common'
 
 interface AboutServiceCardProps {
     service: Service
@@ -189,7 +190,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
             }
 
             if (editedService.isThereAmount)
-            editedService.amount = service.amount
+                editedService.amount = service.amount
 
             let editedItems = [] as Service[]
 
@@ -309,7 +310,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                     <View>
                         {
                             editNameInput
-                                ? <EditNameInput setName={setName} editName={editName} />
+                                ? <EditNameInput setName={setName} editName={editName} actualName={service._id} />
                                 : <ActualName name={name || service._id} setEditNameInput={setEditNameInput} />
                         }
                         {service.category !== 'budget' && (
@@ -318,10 +319,24 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                                     <Text style={styles.label}>Valor:</Text>
                                     {
                                         editValueInput
-                                            ? <EditValueInput setValue={setValue} editValue={editValue} />
-                                            : <ActualValue value={value || service.value} setEditValueInput={setEditValueInput} />
+                                            ? <>
+                                                <EditValueInput
+                                                    setValue={setValue}
+                                                    editValue={editValue}
+                                                />
+                                            </>
+                                            : <ActualValue
+                                                value={value || service.value}
+                                                setEditValueInput={setEditValueInput}
+                                            />
                                     }
                                 </View>
+                                {
+                                    editValueInput &&
+                                    <Text style={styles.currentValueText}>
+                                        Valor atual: {moneyFormat(service.value)}
+                                    </Text>
+                                }
                             </View>
                         )}
                         {
@@ -334,6 +349,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                                                     setStock={setStock}
                                                     editStock={editStock}
                                                     setChangedValue={setChangedValue}
+                                                    currentStock={service.amount}
                                                 />
                                                 : <ActualStock stock={stock || service.amount || 0} setEditStockInput={setEditStockInput} />
                                         }
@@ -382,5 +398,10 @@ const styles = StyleSheet.create({
         padding: 4,
         borderRadius: 4,
         marginStart: 8
+    },
+    currentValueText: {
+        color: 'rgba(0, 0, 0, 0.5)',
+        fontSize: 12,
+        marginTop: 2
     }
 })

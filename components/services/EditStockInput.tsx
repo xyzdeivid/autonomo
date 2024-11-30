@@ -5,11 +5,12 @@ interface EditStockInputProps {
     setStock: React.Dispatch<React.SetStateAction<number>>
     editStock: () => void
     setChangedValue: React.Dispatch<React.SetStateAction<boolean>>
+    currentStock: number | undefined
 }
 
-export default function EditStockInput({ setStock, editStock, setChangedValue }: EditStockInputProps) {
+export default function EditStockInput({ setStock, editStock, setChangedValue, currentStock }: EditStockInputProps) {
 
-    const [textValue, setTextValue] = useState('')
+    const [textValue, setTextValue] = useState(String(currentStock))
 
     const checkNumber = (text: string) => {
         if (/^\d+$/.test(text)) {
