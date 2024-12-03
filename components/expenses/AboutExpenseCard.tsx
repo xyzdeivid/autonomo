@@ -1,13 +1,17 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { Expense } from '@/context/DocsContext'
+import { DocsContext, Expense } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect, useState } from 'react'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import ConfirmDelete from '../common/ConfirmDelete'
+import ActualName from './ActualName'
+import EditNameInput from './EditNameInput'
+import LoadingScreen from '../common/LoadingScreen'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface AboutExpenseCardProps {
     expense: Expense
@@ -20,51 +24,96 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
 
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
+    const [showEditNameInput, setShowEditNameInput] = useState(false)
+    const [newName, setNewName] = useState('')
+    const [expenses] = useContext(DocsContext).expenses
+    const [loadingScreen, setLoadingScreen] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
         setButton(false)
     }, [])
 
+    const editName = async () => {
+
+        if (newName) {
+
+            setLoadingScreen(true)
+
+            expense.name = newName
+
+            const remainingExpenses = expenses.filter(current => {
+                return current._id !== expense._id
+            })
+
+            try {
+
+                await AsyncStorage.setItem('expenses', JSON.stringify([...remainingExpenses, expense]))
+                setLoadingScreen(false)
+                setHideTabBar(false)
+                setButton(true)
+                setFormOff(false)
+                
+            } catch (error) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
+        } else {
+
+            setShowEditNameInput(false)
+
+        }
+
+    }
+
     return (
-        <FormContainer
-            setFormOff={setFormOff}
-            bgColor='rgba(139, 0, 0, 0.1)'
-            setButton={setButton}
-        >
-            <FormBody borderColor='rgba(102, 0, 0, 0.1)'>
-                <FormTitle text='Informações de Saída' textColor='#660000' />
-                <View>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {expense.name}</Text>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}</Text>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(expense.value)}</Text>
+        <>
+            {loadingScreen && <LoadingScreen />}
+            <FormContainer
+                setFormOff={setFormOff}
+                bgColor='rgba(139, 0, 0, 0.1)'
+                setButton={setButton}
+            >
+                <FormBody borderColor='rgba(102, 0, 0, 0.1)'>
+                    <FormTitle text='Informações de Saída' textColor='#660000' />
+                    <View>
+                        {
+                            showEditNameInput
+                                ? <EditNameInput actualName={expense.name} setName={setNewName} editName={editName} />
+                                : <ActualName name={expense.name} setShowEditNameInput={setShowEditNameInput} />
+                        }
+                        <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}</Text>
+                        <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(expense.value)}</Text>
+                        {
+                            expense.amount && (
+                                <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(expense.value / expense.amount)}</Text>
+                            )
+                        }
+                        {
+                            expense.amount && (
+                                <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {expense.amount}</Text>
+                            )
+                        }
+                    </View>
                     {
-                        expense.amount && (
-                            <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(expense.value / expense.amount)}</Text>
-                        )
+                        !confirmDelete
+                            ? <SubmitFormButtons
+                                submit={() => setConfirmDelete(true)}
+                                submitButtonText='Excluir'
+                                submitButtonColor='darkred'
+                            />
+                            : <ConfirmDelete
+                                deleteFunction={() => {
+                                    deleteFunction(expense)
+                                }}
+                                setConfirmDelete={setConfirmDelete}
+                            />
                     }
-                    {
-                        expense.amount && (
-                            <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {expense.amount}</Text>
-                        )
-                    }
-                </View>
-                {
-                    !confirmDelete
-                        ? <SubmitFormButtons
-                            submit={() => setConfirmDelete(true)}
-                            submitButtonText='Excluir'
-                            submitButtonColor='darkred'
-                        />
-                        : <ConfirmDelete
-                            deleteFunction={() => {
-                                deleteFunction(expense)
-                            }}
-                            setConfirmDelete={setConfirmDelete}
-                        />
-                }
-            </FormBody>
-        </FormContainer>
+                </FormBody>
+            </FormContainer>
+        </>
     )
 
 }
