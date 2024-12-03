@@ -381,7 +381,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
 const styles = StyleSheet.create({
     inputContainer: {
-        marginBottom: 20
+        marginBottom: 12
     },
     infoContainer: {
         display: 'flex',

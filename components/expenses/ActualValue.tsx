@@ -1,37 +1,37 @@
 import { DocsContext } from '@/context/DocsContext'
+import { moneyFormat } from '@/functions/common'
 import { useContext } from 'react'
-import { View, Text, Pressable, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 
-interface ActualNameProps {
+interface ActualValueProps {
     name: string
-    setShowEditNameInput: React.Dispatch<React.SetStateAction<boolean>>
+    value: number
+    setShowEditValueInput: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ActualName({ name, setShowEditNameInput }: ActualNameProps) {
+export default function ActualValue({ name, value, setShowEditValueInput }: ActualValueProps) {
 
     const [items] = useContext(DocsContext).services
 
     const checkIfIsResale = () => {
         const product = items.find(current => current._id === name)
         return product
-        ? false : true
+            ? false : true
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Nome: </Text>
-            <Text>{name}</Text>
+            <Text style={{ fontWeight: 'bold' }}>Valor:</Text>
+            <Text>{moneyFormat(value)}</Text>
             {
-                checkIfIsResale() ?
+                checkIfIsResale() &&
                 <Pressable
                     style={styles.editButton}
-                    onPress={() => setShowEditNameInput(true)}
+                    onPress={() => setShowEditValueInput(true)}
                 >
                     <Text>Editar</Text>
                 </Pressable>
-                : null
             }
-
         </View>
     )
 
@@ -43,9 +43,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 12
-    },
-    label: {
-        fontWeight: 'bold'
     },
     editButton: {
         backgroundColor: '#E0E0E0',

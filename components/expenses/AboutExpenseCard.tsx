@@ -12,6 +12,8 @@ import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
 import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import ActualValue from './ActualValue'
+import EditValueInput from './EditValueInput'
 
 interface AboutExpenseCardProps {
     expense: Expense
@@ -25,9 +27,11 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [showEditNameInput, setShowEditNameInput] = useState(false)
+    const [showEditValueInput, setShowEditValueInput] = useState(false)
     const [newName, setNewName] = useState('')
     const [expenses] = useContext(DocsContext).expenses
     const [loadingScreen, setLoadingScreen] = useState(false)
+    const [newValue, setNewValue] = useState(0)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -53,7 +57,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                 setHideTabBar(false)
                 setButton(true)
                 setFormOff(false)
-                
+
             } catch (error) {
 
                 Alert.alert('Erro ao acessar banco de dados')
@@ -63,6 +67,40 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
         } else {
 
             setShowEditNameInput(false)
+
+        }
+
+    }
+
+    const editValue = async () => {
+
+        if (newValue) {
+
+            setLoadingScreen(true)
+
+            expense.value = newValue
+
+            const remainingExpenses = expenses.filter(current => {
+                return current._id !== expense._id
+            })
+
+            try {
+
+                await AsyncStorage.setItem('expenses', JSON.stringify([...remainingExpenses, expense]))
+                setLoadingScreen(false)
+                setHideTabBar(false)
+                setButton(true)
+                setFormOff(false)
+
+            } catch (error) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
+        } else {
+
+            setShowEditValueInput(false)
 
         }
 
@@ -84,8 +122,21 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                                 ? <EditNameInput actualName={expense.name} setName={setNewName} editName={editName} />
                                 : <ActualName name={expense.name} setShowEditNameInput={setShowEditNameInput} />
                         }
-                        <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}</Text>
-                        <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(expense.value)}</Text>
+                        <Text style={styles.labelContainer}>
+                            <Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}
+                        </Text>
+                        {
+                            showEditValueInput
+                                ? <EditValueInput
+                                    setValue={setNewValue}
+                                    editValue={editValue}
+                                />
+                                : <ActualValue
+                                    name={expense.name}
+                                    value={expense.value}
+                                    setShowEditValueInput={setShowEditValueInput}
+                                />
+                        }
                         {
                             expense.amount && (
                                 <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(expense.value / expense.amount)}</Text>
@@ -120,7 +171,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
 
 const styles = StyleSheet.create({
     labelContainer: {
-        marginBottom: 4
+        marginBottom: 12
     },
     label: {
         fontWeight: 'bold'

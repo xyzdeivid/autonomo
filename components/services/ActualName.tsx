@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 20
+        marginBottom: 12
     },
     label: {
         fontWeight: 'bold'
