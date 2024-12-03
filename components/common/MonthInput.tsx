@@ -14,7 +14,8 @@ export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
     const [selectedMonth, setSelectedMonth] = useContext(MonthContext)
     const [currentYear] = useContext(DocsContext).currentYear
     const [entries] = useContext(DocsContext).schedulings
-    const availableMonths = getAvailableMonths(entries, currentYear, months)
+    const [expenses] = useContext(DocsContext).expenses
+    const availableMonths = getAvailableMonths(entries, expenses, currentYear, months)
 
     useEffect(() => {
         const lastMonth = availableMonths.length - 1

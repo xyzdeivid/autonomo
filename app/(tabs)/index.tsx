@@ -35,7 +35,7 @@ export default function Info() {
     const [currentYear, setCurrentYear] = useContext(DocsContext).currentYear
     const filteredEntries = filterSchedulings(schedulings, selectedMonth, currentYear)
     const filteredExpenses = filterExpenses(expenses, selectedMonth, currentYear)
-    const availableMonths = getAvailableMonths(schedulings, currentYear, months)
+    const availableMonths = getAvailableMonths(schedulings, expenses, currentYear, months)
 
     const openFirstItem = () => {
 
@@ -101,6 +101,7 @@ export default function Info() {
             }
             {
                 filterSchedulings(schedulings, selectedMonth, currentYear)[0]
+                || filterExpenses(expenses, selectedMonth, currentYear)[0]
                     ? <Revenue />
                     : <AnyItemWarning text='Nenhuma informação disponível' />
             }

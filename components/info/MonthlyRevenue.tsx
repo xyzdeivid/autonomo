@@ -42,7 +42,10 @@ export default function MonthlyRevenue({ period, setPeriod }: MonthlyRevenueProp
                 marginTop: 20,
                 marginBottom: 24
             }} />
-            <FinancePeriodButtons period={period} setPeriod={setPeriod} />
+            {
+                filterSchedulings(schedulings, selectedMonth, currentYear)[0] &&
+                <FinancePeriodButtons period={period} setPeriod={setPeriod} />
+            }
         </View>
     )
 

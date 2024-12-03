@@ -49,15 +49,26 @@ export const getMonthName = (months: [string, number][], selectedMonth: number) 
 
 export const getAvailableMonths = (
     entries: Scheduling[],
+    expenses: Expense[],
     currentYear: string,
     months: [string, number][]
 ) => {
 
-    const yearEntries = entries.filter(entry => (
+    const entriesAndExpenses: (Scheduling | Expense)[] = []
+
+    if (entries[0]) {
+        entriesAndExpenses.push(...entries)
+    }
+
+    if (expenses[0]) {
+        entriesAndExpenses.push(...expenses)
+    }
+
+    const yearEntriesAndExpenses = entriesAndExpenses.filter(entry => (
         entry.date.split('-')[0] === currentYear
     ))
 
-    const availableMonths = [...new Set(yearEntries.map(entry => (
+    const availableMonths = [...new Set(yearEntriesAndExpenses.map(entry => (
         entry.date.split('-')[1]
     )))]
 
