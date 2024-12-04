@@ -4,7 +4,6 @@ import { DocsContext } from '@/context/DocsContext'
 import Container from '@/components/common/Container'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import MonthInput from '@/components/common/MonthInput'
-import { MonthContext } from '@/context/Month'
 import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/functions/common'
 import Revenue from '@/components/info/Revenue'
 import { ContentContext } from '@/context/InfoContent'
@@ -21,10 +20,11 @@ import { months } from '@/constants/common'
 
 export default function Info() {
 
-    const [schedulings] = useContext(DocsContext).schedulings
-    const [expenses] = useContext(DocsContext).expenses
-    const [services] = useContext(DocsContext).services
-    const [selectedMonth, setSelectedMonth] = useContext(MonthContext)
+    const appDocs = useContext(DocsContext)
+    const [schedulings] = appDocs.schedulings
+    const [expenses] = appDocs.expenses
+    const [services] = appDocs.services
+    const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
     const [addItemsForm, setAddItemsForm] = useContext(ContentContext).form
     const [generalButton, setGeneralButton] = useContext(ContentContext).button
     const [addServiceForm, setAddServiceForm] = useState(false)
@@ -32,7 +32,7 @@ export default function Info() {
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [welcomeCard, setWelcomeCard] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(true)
-    const [currentYear, setCurrentYear] = useContext(DocsContext).currentYear
+    const [currentYear, setCurrentYear] = appDocs.currentYear
     const filteredEntries = filterSchedulings(schedulings, selectedMonth, currentYear)
     const filteredExpenses = filterExpenses(expenses, selectedMonth, currentYear)
     const availableMonths = getAvailableMonths(schedulings, expenses, currentYear, months)
@@ -101,7 +101,7 @@ export default function Info() {
             }
             {
                 filterSchedulings(schedulings, selectedMonth, currentYear)[0]
-                || filterExpenses(expenses, selectedMonth, currentYear)[0]
+                    || filterExpenses(expenses, selectedMonth, currentYear)[0]
                     ? <Revenue />
                     : <AnyItemWarning text='Nenhuma informação disponível' />
             }

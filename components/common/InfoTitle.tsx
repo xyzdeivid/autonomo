@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { useContext } from 'react'
-import { MonthContext } from '@/context/Month'
 import { months } from '@/constants/common'
 import { getMonthName } from '@/functions/common'
+import { DocsContext } from '@/context/DocsContext'
 
 interface InfoTitleProps {
     text: string
@@ -11,7 +11,7 @@ interface InfoTitleProps {
 
 export default function InfoTitle({ text }: InfoTitleProps) {
 
-    const [selectedMonth] = useContext(MonthContext)
+    const [selectedMonth] = useContext(DocsContext).selectedMonth
 
     return (
         <View style={styles.titleContainer}>

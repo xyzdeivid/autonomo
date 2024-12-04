@@ -4,7 +4,6 @@ import Container from '@/components/common/Container'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import { DocsContext, Scheduling, Service } from '@/context/DocsContext'
 import SchedulingsList from '@/components/schedulings/SchedulingsList'
-import { MonthContext } from '@/context/Month'
 import { filterSchedulings } from '@/functions/common'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 
@@ -20,16 +19,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Schedulings() {
 
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
-    const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
-    const [services, setServices] = useContext(DocsContext).services
-    const [selectedMonth] = useContext(MonthContext)
+    const appDocs = useContext(DocsContext)
+    const [schedulings, setSchedulings] = appDocs.schedulings
+    const [services, setServices] = appDocs.services
+    const [selectedMonth] = appDocs.selectedMonth
     const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Scheduling)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
     const [whatIsSchedulingCard, setWhatIsSchedulingCard] = useState(false)
-    const [currentYear] = useContext(DocsContext).currentYear
+    const [currentYear] = appDocs.currentYear
 
     const checkAmount = async (scheduling: Scheduling) => {
 
@@ -90,7 +90,7 @@ export default function Schedulings() {
                 Alert.alert('Erro ao acessar banco de dados')
 
             }
-            
+
         }
 
 
@@ -118,14 +118,14 @@ export default function Schedulings() {
 
     useEffect(() => {
         AsyncStorage.getItem('schedulings-experienced')
-        .then(experienced => {
-            if (!experienced) {
-                setWhatIsSchedulingCard(true)
-                AsyncStorage.setItem('schedulings-experienced', 'experienced')
-                .catch(() => Alert.alert('Erro ao acessar banco de dados'))
-            }
-        })
-        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
+            .then(experienced => {
+                if (!experienced) {
+                    setWhatIsSchedulingCard(true)
+                    AsyncStorage.setItem('schedulings-experienced', 'experienced')
+                        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
+                }
+            })
+            .catch(() => Alert.alert('Erro ao acessar banco de dados'))
     }, [])
 
     return (

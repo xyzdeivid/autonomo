@@ -1,6 +1,5 @@
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
-import { MonthContext } from '@/context/Month'
 import { getMonthName } from '@/functions/common'
 import { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
@@ -12,9 +11,11 @@ interface ListInfoTitleProps {
 
 export default function ListInfoTitle({ text, color }: ListInfoTitleProps) {
 
-    const [currentYear] = useContext(DocsContext).currentYear
+    const appDocs = useContext(DocsContext)
 
-    const [selectedMonth] = useContext(MonthContext)
+    const [currentYear] = appDocs.currentYear
+
+    const [selectedMonth] = appDocs.selectedMonth
 
     return (
         <View style={styles.container}>

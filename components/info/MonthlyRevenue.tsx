@@ -5,7 +5,6 @@ import RevenueChart from './MonthlyRevenueChart'
 import RevenueList from './MonthlyRevenueList'
 
 import { DocsContext } from '@/context/DocsContext'
-import { MonthContext } from '@/context/Month'
 
 import { filterSchedulings, filterExpenses } from '@/functions/common'
 import FinancePeriodButtons from './FinancePeriodButtons'
@@ -18,10 +17,11 @@ interface MonthlyRevenueProps {
 
 export default function MonthlyRevenue({ period, setPeriod }: MonthlyRevenueProps) {
 
-    const [schedulings] = useContext(DocsContext).schedulings
-    const [expenses] = useContext(DocsContext).expenses
-    const [currentYear] = useContext(DocsContext).currentYear
-    const [selectedMonth] = useContext(MonthContext)
+    const appDocs = useContext(DocsContext)
+    const [schedulings] = appDocs.schedulings
+    const [expenses] = appDocs.expenses
+    const [currentYear] = appDocs.currentYear
+    const [selectedMonth] = appDocs.selectedMonth
 
     return (
         <View>

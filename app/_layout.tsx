@@ -8,7 +8,6 @@ import 'react-native-reanimated'
 import { useColorScheme } from '@/hooks/useColorScheme'
 import DocsProvider from '@/context/DocsContext'
 import HideTabBarProvider from '@/context/MainDisplays'
-import MonthProvider from '@/context/Month'
 import ContentProvider from '@/context/InfoContent'
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 
@@ -36,16 +35,14 @@ export default function RootLayout() {
   return (
     <HideTabBarProvider>
       <DocsProvider>
-        <MonthProvider>
-          <ContentProvider>
-            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" />
-              </Stack>
-            </ThemeProvider>
-          </ContentProvider>
-        </MonthProvider>
+        <ContentProvider>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </ThemeProvider>
+        </ContentProvider>
       </DocsProvider>
     </HideTabBarProvider>
   )

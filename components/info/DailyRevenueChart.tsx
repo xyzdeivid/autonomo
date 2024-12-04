@@ -6,13 +6,13 @@ import { View, Text, StyleSheet } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'
 
 import { DocsContext } from '@/context/DocsContext'
-import { MonthContext } from '@/context/Month'
 
 export default function DailyRevenueChart() {
 
-    const [schedulings] = useContext(DocsContext).schedulings
-    const [currentYear] = useContext(DocsContext).currentYear
-    const [selectedMonth] = useContext(MonthContext)
+    const appDocs = useContext(DocsContext)
+    const [schedulings] = appDocs.schedulings
+    const [currentYear] = appDocs.currentYear
+    const [selectedMonth] = appDocs.selectedMonth
     const filteredSchedulings = filterSchedulings(schedulings, selectedMonth, currentYear)
 
     const data = () => {

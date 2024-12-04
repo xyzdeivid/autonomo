@@ -6,7 +6,6 @@ import { useContext, useEffect, useState } from 'react'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
-import { MonthContext } from '@/context/Month'
 import { filterExpenses } from '@/functions/common'
 import { orderExpenses } from '@/functions/expenses'
 import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
@@ -18,9 +17,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Expenses() {
 
-    const [expenses, setExpenses] = useContext(DocsContext).expenses
-    const [items] = useContext(DocsContext).services
-    const [selectedMonth] = useContext(MonthContext)
+    const appDocs = useContext(DocsContext)
+    const [expenses, setExpenses] = appDocs.expenses
+    const [items] = appDocs.services
+    const [selectedMonth] = appDocs.selectedMonth
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [expenseForDeletion, setExpenseForDeletion] = useState({} as Expense)
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
@@ -28,7 +28,7 @@ export default function Expenses() {
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
     const [whatIsExpenseCard, setWhatIsExpenseCard] = useState(false)
-    const [currentYear] = useContext(DocsContext).currentYear
+    const [currentYear] = appDocs.currentYear
 
     const deleteExpense = async (expense: Expense) => {
 
