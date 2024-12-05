@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import ConfirmDelete from '../common/ConfirmDelete'
 import { Entypo } from '@expo/vector-icons'
+import ActualAmount from './ActualAmount'
 
 interface DeleteSchedulingFormProps {
     scheduling: Scheduling
@@ -21,6 +22,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
 
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
+    const [showEditAmountInput, setShowEditAmountInput] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -50,10 +52,13 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                                         ? moneyFormat(scheduling.service.value / scheduling.service.amount)
                                         : null}
                                 </Text>
-                                <Text style={styles.labelContainer}>
-                                    <Text style={styles.label}>Quantidade: </Text>
-                                    {scheduling.service.amount}
-                                </Text>
+                                {
+                                    scheduling.service.amount &&
+                                    <ActualAmount
+                                        amount={scheduling.service.amount}
+                                        setShowEditAmountInput={setShowEditAmountInput}
+                                    />
+                                }
                             </View>
                             : null
                     }
@@ -80,7 +85,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
 
 const styles = StyleSheet.create({
     labelContainer: {
-        marginBottom: 4
+        marginBottom: 12
     },
     label: {
         fontWeight: 'bold'
