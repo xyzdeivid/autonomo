@@ -11,6 +11,12 @@ interface RevenueListProps {
 
 export default function RevenueList({ filteredSchedulings, filteredExpenses }: RevenueListProps) {
 
+    const checkProfit = () => {
+        return getProfit(filteredSchedulings, filteredExpenses) > 0
+            ? ['#000066', '#000099', '#CCCCFF']
+            : ['#CC0000', '#FF0000', '#FFCCCC']
+    }
+
     return (
         <View style={styles.container}>
             {
@@ -47,19 +53,19 @@ export default function RevenueList({ filteredSchedulings, filteredExpenses }: R
                     </View>
                 )
             }
-            {getProfit(filteredSchedulings, filteredExpenses) > 0 && (
+            {getProfit(filteredSchedulings, filteredExpenses) !== 0 && (
                 <View
                     style={{
                         ...styles.infoContainer,
-                        backgroundColor: '#000066',
-                        borderColor: '#000099'
+                        backgroundColor: checkProfit()[0],
+                        borderColor: checkProfit()[1]
                     }}
                 >
                     <View style={styles.label}>
-                        <FontAwesome6 name='circle-dot' size={12} color='#CCCCFF' />
-                        <Text style={{ ...styles.title, color: '#CCCCFF' }}>Lucro</Text>
+                        <FontAwesome6 name='circle-dot' size={12} color={checkProfit()[2]} />
+                        <Text style={{ ...styles.title, color: checkProfit()[2] }}>Saldo</Text>
                     </View>
-                    <Text style={{ color: '#CCCCFF' }}>{moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}</Text>
+                    <Text style={{ color: checkProfit()[2] }}>{moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}</Text>
                 </View>
 
             )}
