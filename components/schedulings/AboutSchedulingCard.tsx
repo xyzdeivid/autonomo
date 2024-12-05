@@ -10,6 +10,7 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import ConfirmDelete from '../common/ConfirmDelete'
 import { Entypo } from '@expo/vector-icons'
 import ActualAmount from './ActualAmount'
+import EditAmountInput from './EditAmountInput'
 
 interface DeleteSchedulingFormProps {
     scheduling: Scheduling
@@ -23,6 +24,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [showEditAmountInput, setShowEditAmountInput] = useState(false)
+    const [newAmount, setNewAmount] = useState(0)
 
     useEffect(() => {
         setHideTabBar(true)
@@ -53,11 +55,18 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                                         : null}
                                 </Text>
                                 {
-                                    scheduling.service.amount &&
-                                    <ActualAmount
-                                        amount={scheduling.service.amount}
-                                        setShowEditAmountInput={setShowEditAmountInput}
-                                    />
+                                    scheduling.service.amount && (
+                                        showEditAmountInput
+                                            ? <EditAmountInput
+                                                newAmount={newAmount}
+                                                setNewAmount={setNewAmount}
+                                                setShowEditAmountInput={setShowEditAmountInput}
+                                            />
+                                            : <ActualAmount
+                                                amount={scheduling.service.amount}
+                                                setShowEditAmountInput={setShowEditAmountInput}
+                                            />
+                                    )
                                 }
                             </View>
                             : null
