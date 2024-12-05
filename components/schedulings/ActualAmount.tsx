@@ -1,27 +1,22 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 
 interface ActualAmountProps {
-    isThereAmount: boolean
     amount: number
     setShowEditAmountInput: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ActualAmount({ isThereAmount, amount, setShowEditAmountInput }: ActualAmountProps) {
+export default function ActualAmount({ amount, setShowEditAmountInput }: ActualAmountProps) {
 
     return (
         <View style={styles.container}>
             <Text style={{ fontWeight: 'bold' }}>Quantidade:</Text>
             <Text> {amount}</Text>
-            {
-                !isThereAmount && (
-                    <Pressable
-                        style={styles.editButton}
-                        onPress={() => setShowEditAmountInput(true)}
-                    >
-                        <Text>Editar</Text>
-                    </Pressable>
-                )
-            }
+            <Pressable
+                style={styles.editButton}
+                onPress={() => setShowEditAmountInput(true)}
+            >
+                <Text>Editar</Text>
+            </Pressable>
         </View>
     )
 

@@ -13,6 +13,7 @@ import EditAmountInput from './EditAmountInput'
 import { orderSchedulings } from '@/functions/schedulings'
 import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { orderServices } from '@/functions/services'
 
 interface DeleteSchedulingFormProps {
     scheduling: Scheduling
@@ -28,7 +29,10 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     const [showEditAmountInput, setShowEditAmountInput] = useState(false)
     const [newAmount, setNewAmount] = useState(0)
     const isThereAmount = scheduling.service.isThereAmount
-    const [entries, setEntries] = useContext(DocsContext).schedulings
+    const appDocs = useContext(DocsContext)
+    const [entries, setEntries] = appDocs.schedulings
+    const [items, setItems] = appDocs.services
+    const product = items.find(current => current._id === scheduling.service._id)
     const [loadingPage, setLoadingPage] = useState(false)
 
     useEffect(() => {
@@ -42,10 +46,54 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
 
         if (scheduling.service.amount) {
 
-            scheduling.service.value =
-                (scheduling.service.value / scheduling.service.amount) * newAmount
+            let currentProductStock = product?.amount || 0
 
-            scheduling.service.amount = newAmount
+            // Atualizando estoque no itens
+            if (isThereAmount) {
+
+                currentProductStock += scheduling.service.amount
+                currentProductStock = currentProductStock - newAmount
+
+                if (currentProductStock >= 0) {
+
+                    if (product) {
+
+                        product.amount = currentProductStock
+                        const remainingItems = items.filter(current => current._id !== product._id)
+
+                        try {
+
+                            await AsyncStorage.setItem('items', JSON.stringify([...remainingItems, product]))
+                            setItems(orderServices([...remainingItems, product]))
+                            
+                        } catch (err) {
+
+                            Alert.alert('Erro ao acessar banco de dados')
+                            return
+
+                        }
+                        
+                        scheduling.service.value =
+                            (scheduling.service.value / scheduling.service.amount) * newAmount
+
+                        scheduling.service.amount = newAmount
+
+                    }
+
+                } else {
+
+                    Alert.alert('Estoque insuficiente')
+
+                }
+
+            } else {
+
+                scheduling.service.value =
+                    (scheduling.service.value / scheduling.service.amount) * newAmount
+
+                scheduling.service.amount = newAmount
+
+            }
 
             const remainingEntries = entries.filter(current => (
                 current._id !== scheduling._id
@@ -59,6 +107,7 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
             } catch (err) {
 
                 Alert.alert('Erro ao acessar banco de dados')
+                return
 
             }
 
@@ -106,7 +155,6 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
                                                     editAmount={editAmount}
                                                 />
                                                 : <ActualAmount
-                                                    isThereAmount={isThereAmount}
                                                     amount={scheduling.service.amount}
                                                     setShowEditAmountInput={setShowEditAmountInput}
                                                 />
