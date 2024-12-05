@@ -1,16 +1,18 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { Scheduling } from '@/context/DocsContext'
+import { DocsContext, Scheduling } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect, useState } from 'react'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import ConfirmDelete from '../common/ConfirmDelete'
-import { Entypo } from '@expo/vector-icons'
 import ActualAmount from './ActualAmount'
 import EditAmountInput from './EditAmountInput'
+import { orderSchedulings } from '@/functions/schedulings'
+import LoadingScreen from '../common/LoadingScreen'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface DeleteSchedulingFormProps {
     scheduling: Scheduling
@@ -25,69 +27,112 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [showEditAmountInput, setShowEditAmountInput] = useState(false)
     const [newAmount, setNewAmount] = useState(0)
+    const isThereAmount = scheduling.service.isThereAmount
+    const [entries, setEntries] = useContext(DocsContext).schedulings
+    const [loadingPage, setLoadingPage] = useState(false)
 
     useEffect(() => {
         setHideTabBar(true)
         setButton(false)
     }, [])
 
+    const editAmount = async () => {
+
+        setLoadingPage(true)
+
+        if (scheduling.service.amount) {
+
+            scheduling.service.value =
+                (scheduling.service.value / scheduling.service.amount) * newAmount
+
+            scheduling.service.amount = newAmount
+
+            const remainingEntries = entries.filter(current => (
+                current._id !== scheduling._id
+            ))
+
+            try {
+
+                await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
+                setEntries(orderSchedulings([...remainingEntries, scheduling]))
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
+            setLoadingPage(false)
+            setHideTabBar(false)
+            setButton(true)
+            setFormOff(false)
+
+        }
+
+    }
+
     return (
-        <FormContainer
-            setFormOff={setFormOff}
-            bgColor='rgba(0, 102, 0, 0.1)'
-            setButton={setButton}
-        >
-            <FormBody borderColor='rgba(0, 102, 0, 0.1)'>
-                <FormTitle text='Informações de Entrada' textColor='#006600' />
-                <View>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {scheduling.service._id}</Text>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
-                    {
-                        scheduling.service.category === 'product'
-                            ? <View>
-                                <Text style={styles.labelContainer}>
-                                    <Text style={styles.label}>
-                                        Valor (un):
+        <>
+            {loadingPage && <LoadingScreen />}
+            <FormContainer
+                setFormOff={setFormOff}
+                bgColor='rgba(0, 102, 0, 0.1)'
+                setButton={setButton}
+            >
+                <FormBody borderColor='rgba(0, 102, 0, 0.1)'>
+                    <FormTitle text='Informações de Entrada' textColor='#006600' />
+                    <View>
+                        <Text style={styles.labelContainer}><Text style={styles.label}>Nome:</Text> {scheduling.service._id}</Text>
+                        <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
+                        <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
+                        {
+                            scheduling.service.category === 'product'
+                                ? <View>
+                                    <Text style={styles.labelContainer}>
+                                        <Text style={styles.label}>
+                                            Valor (un):
+                                        </Text>
+                                        {scheduling.service.amount
+                                            ? moneyFormat(scheduling.service.value / scheduling.service.amount)
+                                            : null}
                                     </Text>
-                                    {scheduling.service.amount
-                                        ? moneyFormat(scheduling.service.value / scheduling.service.amount)
-                                        : null}
-                                </Text>
-                                {
-                                    scheduling.service.amount && (
-                                        showEditAmountInput
-                                            ? <EditAmountInput
-                                                newAmount={newAmount}
-                                                setNewAmount={setNewAmount}
-                                                setShowEditAmountInput={setShowEditAmountInput}
-                                            />
-                                            : <ActualAmount
-                                                amount={scheduling.service.amount}
-                                                setShowEditAmountInput={setShowEditAmountInput}
-                                            />
-                                    )
-                                }
-                            </View>
-                            : null
+                                    {
+                                        scheduling.service.amount && (
+                                            showEditAmountInput
+                                                ? <EditAmountInput
+                                                    newAmount={newAmount}
+                                                    setNewAmount={setNewAmount}
+                                                    setShowEditAmountInput={setShowEditAmountInput}
+                                                    editAmount={editAmount}
+                                                />
+                                                : <ActualAmount
+                                                    isThereAmount={isThereAmount}
+                                                    amount={scheduling.service.amount}
+                                                    setShowEditAmountInput={setShowEditAmountInput}
+                                                />
+                                        )
+                                    }
+                                </View>
+                                : null
+                        }
+                    </View>
+                    {
+                        !confirmDelete
+                            ? <SubmitFormButtons
+                                submit={() => setConfirmDelete(true)}
+                                submitButtonText='Excluir'
+                                submitButtonColor='darkred'
+                            />
+                            : <ConfirmDelete
+                                deleteFunction={() => {
+                                    deleteFunction(scheduling)
+                                }}
+                                setConfirmDelete={setConfirmDelete}
+                            />
                     }
-                </View>
-                {
-                    !confirmDelete
-                        ? <SubmitFormButtons
-                            submit={() => setConfirmDelete(true)}
-                            submitButtonText='Excluir'
-                            submitButtonColor='darkred'
-                        />
-                        : <ConfirmDelete
-                            deleteFunction={() => {
-                                deleteFunction(scheduling)
-                            }}
-                            setConfirmDelete={setConfirmDelete}
-                        />
-                }
-            </FormBody>
-        </FormContainer>
+                </FormBody>
+            </FormContainer>
+        </>
     )
 
 }

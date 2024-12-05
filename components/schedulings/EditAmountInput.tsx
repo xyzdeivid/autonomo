@@ -4,22 +4,28 @@ interface EditAmountInputProps {
     newAmount: number
     setNewAmount: React.Dispatch<React.SetStateAction<number>>
     setShowEditAmountInput: React.Dispatch<React.SetStateAction<boolean>>
+    editAmount: () => void
 }
 
-export default function EditAmountInput({ newAmount, setNewAmount, setShowEditAmountInput }: EditAmountInputProps) {
-
-
+export default function EditAmountInput({ newAmount, setNewAmount, setShowEditAmountInput, editAmount }: EditAmountInputProps) {
 
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Quantidade:</Text>
             <TextInput
-                style={styles.editInput} keyboardType='numeric' />
+                style={styles.editInput}
+                keyboardType='numeric'
+                onChangeText={text => {
+                    setNewAmount(Number(text))
+                }}
+            />
             <Pressable
                 style={styles.editButton}
                 onPress={() => {
                     if (!newAmount) {
                         setShowEditAmountInput(false)
+                    } else {
+                        editAmount()
                     }
                 }}
             >
