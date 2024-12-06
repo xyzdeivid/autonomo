@@ -14,6 +14,7 @@ import { orderSchedulings } from '@/functions/schedulings'
 import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { orderServices } from '@/functions/services'
+import AddClienteButton from './AddClienteButton'
 
 interface AboutSchedulingCardProps {
     scheduling: Scheduling
@@ -34,6 +35,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [items, setItems] = appDocs.services
     const product = items.find(current => current._id === scheduling.service._id)
     const [loadingPage, setLoadingPage] = useState(false)
+    const [customer, setCustomer] = useState('')
 
     useEffect(() => {
         setHideTabBar(true)
@@ -131,9 +133,16 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                     <FormTitle text='Informações de Entrada' textColor='#006600' />
                     <View>
                         <Text style={styles.labelContainer}><Text style={styles.label}>Produto/Serviço:</Text> {scheduling.service._id}</Text>
-                        {scheduling.customer && (
-                            <Text style={styles.labelContainer}><Text style={styles.label}>Cliente:</Text> {scheduling.customer}</Text>
-                        )}
+                        {
+                        scheduling.customer
+                            ? <Text style={styles.labelContainer}>
+                                <Text style={styles.label}>Cliente:</Text> {scheduling.customer}
+                            </Text>
+                                : <AddClienteButton
+                                    setCustomer={setCustomer}
+                                    customer={customer}
+                                />
+                        }
                         <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
                         <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
                         {
