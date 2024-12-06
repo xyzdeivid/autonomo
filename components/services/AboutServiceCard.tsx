@@ -95,6 +95,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
             } catch (err) {
 
                 Alert.alert('Erro ao acessar banco de dados')
+                return
 
             }
 
@@ -130,6 +131,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
             } catch (err) {
 
                 Alert.alert('Erro ao acessar banco de dados')
+                return
 
             }
 

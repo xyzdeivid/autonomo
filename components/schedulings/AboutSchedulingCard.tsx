@@ -107,7 +107,6 @@ export default function DeleteSchedulingForm({ scheduling, deleteFunction, setFo
             } catch (err) {
 
                 Alert.alert('Erro ao acessar banco de dados')
-                return
 
             }
 

@@ -88,6 +88,7 @@ export default function Schedulings() {
             } catch (err) {
 
                 Alert.alert('Erro ao acessar banco de dados')
+                return
 
             }
 

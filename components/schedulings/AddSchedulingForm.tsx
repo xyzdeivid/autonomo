@@ -159,6 +159,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                         } catch (err) {
 
                             Alert.alert('Erro ao acessar banco de dados')
+                            return
 
                         }
 
