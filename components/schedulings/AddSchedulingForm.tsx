@@ -17,6 +17,7 @@ import { orderServices } from '@/functions/services'
 import NumberInput from '../common/NumberInput'
 import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import NameInput from '../common/NameInput'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -35,6 +36,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
     const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
     const [amount, setAmount] = useState(0)
     const [loadingScreen, setLoadingScreen] = useState(false)
+    const [costumerName, setCustomerName] = useState('')
 
     const checkAllInputs = (): boolean => {
 
@@ -224,6 +226,12 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                         {service.amount ? (
                             <StockInfo amount={service.amount - amount} />
                         ) : null}
+                        <NameInput 
+                            setName={setCustomerName}
+                            label='Cliente'
+                            bgColor='rgba(0, 102, 0, 0.1)'
+                            textColor='#006600'
+                        />
                         <DateInput
                             setTargetDate={setDate}
                             bgColor='#006600'

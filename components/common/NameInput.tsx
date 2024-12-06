@@ -2,11 +2,12 @@ import { StyleSheet, View, Text, TextInput } from 'react-native'
 
 interface NameInputProps {
     setName: React.Dispatch<React.SetStateAction<string>>
+    label?: string
     bgColor?: string
     textColor?: string
 }
 
-export default function NameInput({ setName, bgColor, textColor }: NameInputProps) {
+export default function NameInput({ setName, label, bgColor, textColor }: NameInputProps) {
     return (
         <View style={styles.inputContainer}>
             <Text style={{
@@ -14,7 +15,7 @@ export default function NameInput({ setName, bgColor, textColor }: NameInputProp
                 fontWeight: 'bold'
             }}
             >
-                Nome:
+                {label ? label : 'Nome:'}
             </Text>
             <TextInput
                 style={{

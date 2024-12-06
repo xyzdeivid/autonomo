@@ -49,6 +49,7 @@ export interface Scheduling {
     _id: string
     service: Service
     date: string
+    customer?: string
 }
 
 type SetSchedulings = React.Dispatch<React.SetStateAction<Scheduling[]>>
