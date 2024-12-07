@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react'
+import { StyleSheet, Text } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
@@ -23,14 +24,28 @@ export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
     }, [currentYear])
 
     return (
-        <Picker
-            selectedValue={selectedMonth}
-            onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-            dropdownIconColor={dropdownIconColor ? dropdownIconColor : 'lightgray'}
-        >
-            {availableMonths.map(month => (
-                <Picker.Item key={month[0]} label={month[0]} value={month[1]} />
-            ))}
-        </Picker>
+        <>
+            {
+                availableMonths.length > 1
+                    ? <Picker
+                        selectedValue={selectedMonth}
+                        onValueChange={(itemValue) => setSelectedMonth(itemValue)}
+                        dropdownIconColor={dropdownIconColor ? dropdownIconColor : 'lightgray'}
+                    >
+                        {availableMonths.map(month => (
+                            <Picker.Item key={month[0]} label={month[0]} value={month[1]} />
+                        ))}
+                    </Picker>
+                    : <Text style={styles.text}>{availableMonths[0][0]}</Text>
+            }
+        </>
+
     )
 }
+
+const styles = StyleSheet.create({
+    text: {
+        fontSize: 16,
+        padding: 12
+    }
+})
