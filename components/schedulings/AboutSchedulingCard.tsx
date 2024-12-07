@@ -154,7 +154,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                 <FormBody borderColor='rgba(0, 102, 0, 0.1)'>
                     <FormTitle text='Informações de Entrada' textColor='#006600' />
                     <View>
-                        <Text style={styles.labelContainer}><Text style={styles.label}>Produto/Serviço:</Text> {scheduling.service._id}</Text>
                         {
                         scheduling.customer
                             ? <Text style={styles.labelContainer}>
@@ -166,6 +165,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                     addCustomer={addCustomer}
                                 />
                         }
+                        <Text style={styles.labelContainer}><Text style={styles.label}>Produto/Serviço:</Text> {scheduling.service._id}</Text>
                         <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
                         <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
                         {

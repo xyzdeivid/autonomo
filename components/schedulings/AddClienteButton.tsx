@@ -19,13 +19,18 @@ export default function AddCustomerButton({ setCustomer, customer, addCustomer }
             {
                 !active
                     ? <Pressable onPress={() => setActive(true)}>
-                        <Text style={styles.text}>Registrar Cliente</Text>
+                        <Text style={{
+                            ...styles.text,
+                            borderWidth: 1,
+                            borderColor: '#006600',
+                            color: '#006600',
+                        }}>Registrar Cliente</Text>
                     </Pressable>
                     : 
                     <View>
                         <NameInput setName={setCustomer} />
                         <Pressable 
-                        style={{ marginTop: -16 }}
+                        style={{ marginTop: -12 }}
                         onPress={() => {
                             if (!customer) {
                                 setActive(false)
@@ -36,7 +41,9 @@ export default function AddCustomerButton({ setCustomer, customer, addCustomer }
                         >
                             <Text style={{
                                 ...styles.text,
-                                marginBottom: 12
+                                marginBottom: 12,
+                                backgroundColor: '#006600',
+        color: 'white',
                                 }}>
                                 Confirmar
                             </Text>
@@ -50,8 +57,8 @@ export default function AddCustomerButton({ setCustomer, customer, addCustomer }
 
 const styles = StyleSheet.create({
     text: {
-        color: '#006600',
-        fontWeight: 'bold',
-        textDecorationLine: 'underline'
+        alignSelf: 'flex-start',
+        padding: 4,
+        borderRadius: 4
     }
 })
