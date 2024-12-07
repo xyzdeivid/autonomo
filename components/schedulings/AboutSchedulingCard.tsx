@@ -100,10 +100,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
             }
 
-            const remainingEntries = entries.filter(current => (
-                current._id !== scheduling._id
-            ))
-
             try {
 
                 await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
@@ -126,9 +122,20 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     const addCustomer = async () => {
 
+        setLoadingPage(true)
+
         scheduling.customer = customer
 
-        setEntries(orderSchedulings([...remainingEntries, scheduling]))
+        try {
+
+            await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
+            setEntries(orderSchedulings([...remainingEntries, scheduling]))
+            
+        } catch (err) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+            
+        }
 
         setLoadingPage(false)
         setHideTabBar(false)

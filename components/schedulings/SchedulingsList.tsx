@@ -44,7 +44,7 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
                                 <DataTable.Cell style={styles.text}>
                                     {
                                         scheduling.customer
-                                            ? scheduling.customer
+                                            ? `${scheduling.customer}/${scheduling.service._id}`
                                             : scheduling.service._id
                                     }
                                 </DataTable.Cell>
