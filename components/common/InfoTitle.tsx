@@ -11,12 +11,16 @@ interface InfoTitleProps {
 
 export default function InfoTitle({ text }: InfoTitleProps) {
 
-    const [selectedMonth] = useContext(DocsContext).selectedMonth
+    const appDocs = useContext(DocsContext)
+    const [selectedMonth] = appDocs.selectedMonth
+    const [currentYear] = appDocs.currentYear
 
     return (
         <View style={styles.titleContainer}>
             <FontAwesome name='info-circle' size={16} color='#FFFFFF' />
-            <Text style={styles.titleText}>{text} do mês de {getMonthName(months, selectedMonth)}</Text>
+            <Text style={styles.titleText}>
+                {text} do mês de {getMonthName(months, selectedMonth)}/{currentYear}
+            </Text>
         </View>
     )
 

@@ -27,25 +27,17 @@ export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
         <>
             {
                 availableMonths.length > 1
-                    ? <Picker
-                        selectedValue={selectedMonth}
-                        onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-                        dropdownIconColor={dropdownIconColor ? dropdownIconColor : 'lightgray'}
-                    >
-                        {availableMonths.map(month => (
-                            <Picker.Item key={month[0]} label={month[0]} value={month[1]} />
-                        ))}
-                    </Picker>
-                    : <Text style={styles.text}>{availableMonths[0][0]}</Text>
+                && <Picker
+                    selectedValue={selectedMonth}
+                    onValueChange={(itemValue) => setSelectedMonth(itemValue)}
+                    dropdownIconColor={dropdownIconColor ? dropdownIconColor : 'lightgray'}
+                >
+                    {availableMonths.map(month => (
+                        <Picker.Item key={month[0]} label={month[0]} value={month[1]} />
+                    ))}
+                </Picker>
             }
         </>
 
     )
 }
-
-const styles = StyleSheet.create({
-    text: {
-        fontSize: 16,
-        padding: 12
-    }
-})

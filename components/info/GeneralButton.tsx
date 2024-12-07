@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import YearOptions from './YearOptions'
 import { availableYears } from '@/functions/info'
@@ -16,10 +16,18 @@ export default function GeneralButton({ setAddItemsForm, setGeneralButton }: Gen
     const years = availableYears(entries)
 
     return (
-        <View style={styles.container}>
-            <YearOptions
-                availableYears={years}
-            />
+        <View style={{
+            ...styles.container,
+            justifyContent: years.length > 1 ? 'space-between' : 'flex-end'
+        }}>
+            {
+                years.length === 1
+                    && Number(years[0]) === new Date().getFullYear()
+                    ? null
+                    : <YearOptions
+                        availableYears={years}
+                    />
+            }
             <Pressable
                 style={styles.buttonContainer}
                 onPress={() => {
@@ -41,7 +49,6 @@ const styles = StyleSheet.create({
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'flex-end',
         padding: 10
     },
