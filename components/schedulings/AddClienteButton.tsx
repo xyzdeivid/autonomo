@@ -5,9 +5,10 @@ import NameInput from '../common/NameInput'
 interface AddCustomerButtonProps {
     setCustomer: React.Dispatch<React.SetStateAction<string>>
     customer: string
+    addCustomer: () => Promise<void>
 }
 
-export default function AddCustomerButton({ setCustomer, customer }: AddCustomerButtonProps) {
+export default function AddCustomerButton({ setCustomer, customer, addCustomer }: AddCustomerButtonProps) {
 
     const [active, setActive] = useState(false)
 
@@ -28,6 +29,8 @@ export default function AddCustomerButton({ setCustomer, customer }: AddCustomer
                         onPress={() => {
                             if (!customer) {
                                 setActive(false)
+                            } else {
+                                addCustomer()
                             }
                         }}
                         >

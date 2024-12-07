@@ -34,6 +34,9 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [entries, setEntries] = appDocs.schedulings
     const [items, setItems] = appDocs.services
     const product = items.find(current => current._id === scheduling.service._id)
+    const remainingEntries = entries.filter(current => (
+        current._id !== scheduling._id
+    ))
     const [loadingPage, setLoadingPage] = useState(false)
     const [customer, setCustomer] = useState('')
 
@@ -121,6 +124,19 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     }
 
+    const addCustomer = async () => {
+
+        scheduling.customer = customer
+
+        setEntries(orderSchedulings([...remainingEntries, scheduling]))
+
+        setLoadingPage(false)
+        setHideTabBar(false)
+        setButton(true)
+        setFormOff(false)
+
+    }
+
     return (
         <>
             {loadingPage && <LoadingScreen />}
@@ -141,6 +157,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                 : <AddClienteButton
                                     setCustomer={setCustomer}
                                     customer={customer}
+                                    addCustomer={addCustomer}
                                 />
                         }
                         <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
