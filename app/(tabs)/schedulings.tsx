@@ -14,6 +14,7 @@ import LoadingScreen from '@/components/common/LoadingScreen'
 import WhatIsSchedulingCard from '@/components/schedulings/WhatIsSchedulingCard'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { orderSchedulings } from '@/functions/schedulings'
 
 export default function Schedulings() {
 
@@ -126,6 +127,7 @@ export default function Schedulings() {
                 }
             })
             .catch(() => Alert.alert('Erro ao acessar banco de dados'))
+        orderSchedulings(schedulings)
     }, [])
 
     return (

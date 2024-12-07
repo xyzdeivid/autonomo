@@ -6,6 +6,7 @@ import ContainerHandler from '../common/ContainerHandler'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/functions/common'
 import ListInfoTitle from '../common/ListInfoTitle'
+import { orderSchedulings } from '@/functions/schedulings'
 
 interface SchedulingsListProps {
     filteredSchedulings: Scheduling[]
@@ -38,7 +39,7 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
                         <DataTable.Title style={styles.text}>Data</DataTable.Title>
                         <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                     </DataTable.Header>
-                    {filteredSchedulings.map(scheduling => {
+                    {orderSchedulings(filteredSchedulings).map(scheduling => {
                         return (
                             <DataTable.Row onPress={() => deleteScheduling(scheduling)} key={scheduling._id}>
                                 <DataTable.Cell style={styles.text}>

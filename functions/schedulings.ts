@@ -1,8 +1,54 @@
 import { Scheduling, Service } from '@/context/DocsContext'
 
-export const orderSchedulings = (schedulings: Scheduling[]) => {
+export const orderSchedulings = (entries: Scheduling[]) => {
 
-    return schedulings.sort((a, b) => a.date.localeCompare(b.date)).reverse()
+    const days: Scheduling[][] = []
+
+    const entriesWithCustomer = entries.filter(current => 
+        current.customer
+    )
+
+    const entriesWithoutCustomer = entries.filter(current => 
+        !current.customer
+    )
+
+    // Inserindo entradas no dia correspondente
+    const findDays = (current: Scheduling) => {
+        const day = days.find((day) =>
+            day.some((scheduling) => scheduling.date === current.date)
+        )
+
+        if (day) {
+
+            day.push(current)
+
+        } else {
+
+            days.push([current])
+
+        }
+    }
+    for (const entry of entriesWithCustomer) {
+        findDays(entry)
+    }
+    for (const entry of entriesWithoutCustomer) {
+        findDays(entry)
+    }
+
+    // Organizando dias por ordem alfabética
+    days.forEach(day => {
+        day.sort((a, b) => {
+            if (a.customer && b.customer) {
+                return a.customer.localeCompare(b.customer)
+            }
+            return 0
+        })
+    })
+
+    // Organizando os dias de forma decrescente
+    days.sort((a, b) => b[0].date.localeCompare(a[0].date))
+
+    return days.flat()
 
 }
 
