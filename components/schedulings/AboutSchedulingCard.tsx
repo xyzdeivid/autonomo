@@ -10,7 +10,6 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import ConfirmDelete from '../common/ConfirmDelete'
 import ActualAmount from './ActualAmount'
 import EditAmountInput from './EditAmountInput'
-import { orderSchedulings } from '@/functions/schedulings'
 import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { orderServices } from '@/functions/services'
@@ -103,7 +102,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
             try {
 
                 await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
-                setEntries(orderSchedulings([...remainingEntries, scheduling]))
+                setEntries([...remainingEntries, scheduling])
 
             } catch (err) {
 
@@ -129,7 +128,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         try {
 
             await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
-            setEntries(orderSchedulings([...remainingEntries, scheduling]))
+            setEntries([...remainingEntries, scheduling])
             
         } catch (err) {
 

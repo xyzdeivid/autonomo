@@ -9,7 +9,7 @@ import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { generateId } from '@/functions/common'
 import { MainDisplaysContext } from '@/context/MainDisplays'
-import { getSchedulingValue, getServices, orderSchedulings } from '@/functions/schedulings'
+import { getSchedulingValue, getServices } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
 import { Alert } from 'react-native'
 import StockInfo from './StockInfo'
@@ -175,7 +175,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                     try {
 
                         await AsyncStorage.setItem('schedulings', JSON.stringify([...schedulings, newScheduling]))
-                        setSchedulings(orderSchedulings([...schedulings, newScheduling]))
+                        setSchedulings([...schedulings, newScheduling])
 
                     } catch (err) {
 

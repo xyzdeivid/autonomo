@@ -7,7 +7,6 @@ import SchedulingsList from '@/components/schedulings/SchedulingsList'
 import { filterSchedulings } from '@/functions/common'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 
-import { orderSchedulings } from '@/functions/schedulings'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
 import { orderServices } from '@/functions/services'
 import { MainDisplaysContext } from '@/context/MainDisplays'
@@ -102,7 +101,7 @@ export default function Schedulings() {
         try {
 
             await AsyncStorage.setItem('schedulings', JSON.stringify(remainingSchedulings))
-            setSchedulings(orderSchedulings(remainingSchedulings))
+            setSchedulings(remainingSchedulings)
 
         } catch (err) {
 

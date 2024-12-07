@@ -3,13 +3,7 @@ import { Scheduling, Service } from '@/context/DocsContext'
 export const orderSchedulings = (schedulings: Scheduling[]) => {
 
     return schedulings.sort((a, b) => a.date.localeCompare(b.date)).reverse()
-    .sort((a, b) => {
-        if (a.customer && b.customer) {
-            return a.customer.localeCompare(b.customer)
-        }
-        return 0
-    })
-    
+
 }
 
 export const getSchedulingValue = (service: Service, amount: number, value: number) => {
