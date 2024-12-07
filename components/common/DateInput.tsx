@@ -47,7 +47,7 @@ export default function DateInput({ setTargetDate, bgColor, label, textColor }: 
         <View>
             <View style={styles.container}>
                 <Text style={{
-                    marginEnd: 2, color: textColor ? textColor : 'black',
+                    marginEnd: 8, color: textColor ? textColor : 'black',
                     fontWeight: 'bold'
                 }}>
                     {label ? label : 'Data'}:

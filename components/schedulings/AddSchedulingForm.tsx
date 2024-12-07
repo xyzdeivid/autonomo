@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { StyleSheet, Text } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
@@ -243,7 +244,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                         />
                         {service.category === 'product' && (
                             <AmountInput
-                                text='Quantidade'
+                                text='* Quantidade'
                                 setAmount={setAmount}
                                 bgColor='rgba(0, 102, 0, 0.1)'
                                 textColor='#006600'
@@ -252,10 +253,16 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                         {
                             service.category === 'budget' && (
                                 <NumberInput
+                                label='* Valor'
                                     setValue={setValue}
                                     bgColor='rgba(0, 102, 0, 0.1)'
                                     textColor='#006600'
                                 />
+                            )
+                        }
+                        {
+                            service.category !== 'service' && (
+                                <Text style={styles.infoText}>* campo obrigatório</Text>
                             )
                         }
                     </FormInputs>
@@ -266,3 +273,11 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
     )
 
 }
+
+const styles = StyleSheet.create({
+    infoText: {
+        color: 'rgba(0, 102, 0, 0.5)',
+        fontSize: 12,
+        marginBottom: 20
+    }
+})
