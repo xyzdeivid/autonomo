@@ -132,6 +132,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                                 ? <EditValueInput
                                     setValue={setNewValue}
                                     editValue={editValue}
+                                    actualValue={expense.value}
                                 />
                                 : <ActualValue
                                     name={expense.name}
