@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { orderServices } from '@/functions/services'
 import AddClienteButton from './AddClienteButton'
 import ActualCustomer from './ActualCustomer'
+import ActualDate from './ActualDate'
 
 interface AboutSchedulingCardProps {
     scheduling: Scheduling
@@ -39,6 +40,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     ))
     const [loadingPage, setLoadingPage] = useState(false)
     const [customer, setCustomer] = useState('')
+    const [newDate, setNewDate] = useState('')
 
     useEffect(() => {
         setHideTabBar(true)
@@ -168,6 +170,48 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     }
 
+    const getCurrentDate = () => {
+        const year = new Date().getFullYear()
+        const month = String(new Date().getMonth() + 1).padStart(2, '0')
+        const day = String(new Date().getDate()).padStart(2, '0')
+        return `${year}-${month}-${day}`
+    }
+
+    const editDate = async () => {
+
+        const currentDate = new Date(getCurrentDate())
+        const entryDate = new Date(newDate)
+
+        if (entryDate <= currentDate) {
+
+            setLoadingPage(true)
+
+            scheduling.date = newDate
+
+            try {
+
+                await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
+                setEntries([...remainingEntries, scheduling])
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
+        } else {
+
+            Alert.alert('Não é possivel registrar entradas em datas futuras')
+
+        }
+
+        setLoadingPage(false)
+        setHideTabBar(false)
+        setButton(true)
+        setFormOff(false)
+
+    }
+
     return (
         <>
             {loadingPage && <LoadingScreen />}
@@ -194,7 +238,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                 />
                         }
                         <Text style={styles.labelContainer}><Text style={styles.label}>Produto/Serviço:</Text> {scheduling.service._id}</Text>
-                        <Text style={styles.labelContainer}><Text style={styles.label}>Data:</Text> {dateFormat(scheduling.date)}</Text>
+                        <ActualDate
+                            date={dateFormat(scheduling.date)}
+                            setNewDate={setNewDate}
+                            editDate={editDate}
+                        />
                         <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
                         {
                             scheduling.service.category === 'product'
