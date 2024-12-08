@@ -15,7 +15,6 @@ import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
-import { orderExpenses } from '@/functions/expenses'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { moneyFormat } from '@/functions/common'
 
@@ -89,7 +88,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
             try {
 
                 await AsyncStorage.setItem('expenses', JSON.stringify(editedExpenses))
-                setExpenses(orderExpenses(editedExpenses))
+                setExpenses(editedExpenses)
 
             } catch (err) {
 

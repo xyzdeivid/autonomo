@@ -14,7 +14,6 @@ import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ActualValue from './ActualValue'
 import EditValueInput from './EditValueInput'
-import { orderExpenses } from '@/functions/expenses'
 
 interface AboutExpenseCardProps {
     expense: Expense
@@ -54,7 +53,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
             try {
 
                 await AsyncStorage.setItem('expenses', JSON.stringify([...remainingExpenses, expense]))
-                setExpenses(orderExpenses([...remainingExpenses, expense]))
+                setExpenses([...remainingExpenses, expense])
                 setLoadingScreen(false)
                 setHideTabBar(false)
                 setButton(true)
@@ -89,7 +88,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
             try {
 
                 await AsyncStorage.setItem('expenses', JSON.stringify([...remainingExpenses, expense]))
-                setExpenses(orderExpenses([...remainingExpenses, expense]))
+                setExpenses([...remainingExpenses, expense])
                 setLoadingScreen(false)
                 setHideTabBar(false)
                 setButton(true)

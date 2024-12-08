@@ -7,7 +7,6 @@ import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
 import { filterExpenses } from '@/functions/common'
-import { orderExpenses } from '@/functions/expenses'
 import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import LoadingScreen from '@/components/common/LoadingScreen'
@@ -81,7 +80,7 @@ export default function Expenses() {
         try {
 
             await AsyncStorage.setItem('expenses', JSON.stringify(remainingExpenses))
-            setExpenses(orderExpenses(remainingExpenses))
+            setExpenses(remainingExpenses)
 
         } catch (err) {
 

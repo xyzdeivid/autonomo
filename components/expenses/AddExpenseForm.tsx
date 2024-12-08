@@ -9,7 +9,6 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import { DocsContext, Expense } from '@/context/DocsContext'
 import { Alert } from 'react-native'
 import { generateId } from '@/functions/common'
-import { orderExpenses } from '@/functions/expenses'
 import FormInputs from '../common/FormInputs'
 import IntegrateStockButton from './IntegrateStockButton'
 import { orderServices } from '@/functions/services'
@@ -113,7 +112,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
             try {
 
                 await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
-                setExpenses(orderExpenses([...expenses, newExpense]))
+                setExpenses([...expenses, newExpense])
 
             } catch (err) {
 

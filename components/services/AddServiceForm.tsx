@@ -17,7 +17,6 @@ import LoadingScreen from '../common/LoadingScreen'
 import ResaleButton from './ResaleButton'
 import DateInput from '../common/DateInput'
 import { generateId } from '@/functions/common'
-import { orderExpenses } from '@/functions/expenses'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ValueOption from '../common/ValueOption'
 import StockButton from './StockButton'
@@ -83,7 +82,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                 try {
 
                     await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
-                    setExpenses(orderExpenses([...expenses, newExpense]))
+                    setExpenses([...expenses, newExpense])
 
                 } catch (err) {
 

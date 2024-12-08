@@ -6,6 +6,7 @@ import ContainerHandler from '../common/ContainerHandler'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/functions/common'
 import ListInfoTitle from '../common/ListInfoTitle'
+import { orderExpenses } from '@/functions/expenses'
 
 interface ExpensesListProps {
     filteredExpenses: Expense[]
@@ -38,7 +39,7 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
                         <DataTable.Title style={styles.text}>Data</DataTable.Title>
                         <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                     </DataTable.Header>
-                    {filteredExpenses.map(expense => {
+                    {orderExpenses(filteredExpenses).map(expense => {
                         return (
                             <DataTable.Row onPress={() => deleteExpense(expense)} key={expense._id}>
                                 <DataTable.Cell style={styles.text}>{expense.name}</DataTable.Cell>
