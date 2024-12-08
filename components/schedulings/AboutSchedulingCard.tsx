@@ -144,6 +144,30 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     }
 
+    const editCustomerName = async () => {
+
+        setLoadingPage(true)
+
+        scheduling.customer = customer
+
+        try {
+
+            await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
+            setEntries([...remainingEntries, scheduling])
+            
+        } catch (err) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+            
+        }
+        
+        setLoadingPage(false)
+        setHideTabBar(false)
+        setButton(true)
+        setFormOff(false)
+
+    }
+
     return (
         <>
             {loadingPage && <LoadingScreen />}
@@ -157,7 +181,12 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                     <View>
                         {
                             scheduling.customer
-                                ? <ActualCustomer customer={scheduling.customer} />
+                                ? <ActualCustomer
+                                    customer={scheduling.customer}
+                                    setNewCustomerName={setCustomer}
+                                    newCustomerName={customer}
+                                    editCustomerName={editCustomerName}
+                                />
                                 : <AddClienteButton
                                     setCustomer={setCustomer}
                                     customer={customer}

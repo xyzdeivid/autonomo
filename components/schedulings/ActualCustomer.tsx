@@ -3,9 +3,12 @@ import { View, Text, StyleSheet, Pressable, TextInput } from 'react-native'
 
 interface ActualCustomerProps {
     customer: string
+    setNewCustomerName: React.Dispatch<React.SetStateAction<string>>
+    newCustomerName: string
+    editCustomerName: () => Promise<void>
 }
 
-export default function ActualCustomer({ customer }: ActualCustomerProps) {
+export default function ActualCustomer({ customer, setNewCustomerName, newCustomerName, editCustomerName }: ActualCustomerProps) {
 
     const [editInput, setEditInput] = useState(false)
 
@@ -25,11 +28,19 @@ export default function ActualCustomer({ customer }: ActualCustomerProps) {
                     </View>
                     : <View style={styles.container}>
                         <Text style={styles.label}>Cliente:</Text>
-                        <TextInput defaultValue={customer} style={styles.editInput} />
+                        <TextInput
+                            defaultValue={customer}
+                            onChangeText={text => setNewCustomerName(text.trim())}
+                            style={styles.editInput}
+                        />
                         <Pressable
                             style={styles.confirmButton}
                             onPress={() => {
-                                setEditInput(false)
+                                if (!newCustomerName) {
+                                    setEditInput(false)
+                                } else {
+                                    editCustomerName()
+                                }
                             }}
                         >
                             <Text style={{ color: 'white' }}>Ok</Text>
