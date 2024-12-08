@@ -14,6 +14,7 @@ import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { orderServices } from '@/functions/services'
 import AddClienteButton from './AddClienteButton'
+import ActualCustomer from './ActualCustomer'
 
 interface AboutSchedulingCardProps {
     scheduling: Scheduling
@@ -155,10 +156,8 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                     <FormTitle text='Informações de Entrada' textColor='#006600' />
                     <View>
                         {
-                        scheduling.customer
-                            ? <Text style={styles.labelContainer}>
-                                <Text style={styles.label}>Cliente:</Text> {scheduling.customer}
-                            </Text>
+                            scheduling.customer
+                                ? <ActualCustomer customer={scheduling.customer} />
                                 : <AddClienteButton
                                     setCustomer={setCustomer}
                                     customer={customer}
