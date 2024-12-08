@@ -1,18 +1,20 @@
 import { Pressable, StyleSheet, View, Text, TextInput } from 'react-native'
 
 interface EditAmountInputProps {
+    actualAmount: number
     newAmount: number
     setNewAmount: React.Dispatch<React.SetStateAction<number>>
     setShowEditAmountInput: React.Dispatch<React.SetStateAction<boolean>>
     editAmount: () => void
 }
 
-export default function EditAmountInput({ newAmount, setNewAmount, setShowEditAmountInput, editAmount }: EditAmountInputProps) {
+export default function EditAmountInput({ actualAmount, newAmount, setNewAmount, setShowEditAmountInput, editAmount }: EditAmountInputProps) {
 
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Quantidade:</Text>
             <TextInput
+                defaultValue={String(actualAmount)}
                 style={styles.editInput}
                 keyboardType='numeric'
                 onChangeText={text => {
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     editInput: {
-        width: '25%',
+        width: '20%',
         backgroundColor: '#E0E0E0',
         color: 'black',
         padding: 4,

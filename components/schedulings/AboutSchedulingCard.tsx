@@ -259,6 +259,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                         scheduling.service.amount && (
                                             showEditAmountInput
                                                 ? <EditAmountInput
+                                                    actualAmount={scheduling.service.amount}
                                                     newAmount={newAmount}
                                                     setNewAmount={setNewAmount}
                                                     setShowEditAmountInput={setShowEditAmountInput}
