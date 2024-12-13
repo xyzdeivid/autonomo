@@ -50,7 +50,7 @@ export default function DateInput({ setTargetDate, bgColor, label, textColor }: 
                     marginEnd: 8, color: textColor ? textColor : 'black',
                     fontWeight: 'bold'
                 }}>
-                    {label ? label : 'Data'}:
+                    {label ? label : 'Data'}
                 </Text>
                 <Button color={bgColor ? bgColor : '#000000'} onPress={showDatepicker} title={dateFormat(getDate())} />
             </View>

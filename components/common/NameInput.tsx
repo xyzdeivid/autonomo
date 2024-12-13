@@ -15,7 +15,7 @@ export default function NameInput({ setName, label, bgColor, textColor }: NameIn
                 fontWeight: 'bold'
             }}
             >
-                {label ? label : 'Nome:'}
+                {label ? label : 'Nome'}
             </Text>
             <TextInput
                 style={{

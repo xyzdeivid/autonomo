@@ -30,7 +30,7 @@ export default function AmountInput({ text, setAmount, defaultValue, bgColor, te
                     fontWeight: 'bold'
                 }}
             >
-                {text}:
+                {text}
             </Text>
             <TextInput
                 value={defaultValue ? String(defaultValue) : textValue}

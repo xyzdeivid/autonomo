@@ -16,7 +16,7 @@ export default function NumberInput({ setValue, label, bgColor, textColor }: Num
                 color: textColor ? textColor : 'black',
                 fontWeight: 'bold'
             }}>
-                {label ? label : 'Valor'}:
+                {label ? label : 'Valor'}
             </Text>
             <MaskedTextInput
                 type='currency'
