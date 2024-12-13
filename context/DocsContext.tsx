@@ -100,55 +100,23 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [currentYear, setCurrentYear] = useState<string>('')
     const [selectedMonth, setSelectedMonth] = useState(0)
 
-    const getItemsFromDb = async () => {
+    type SetterT = React.Dispatch<React.SetStateAction<Service[]>> 
+    | React.Dispatch<React.SetStateAction<Expense[]>>
+    | React.Dispatch<React.SetStateAction<Scheduling[]>>
+
+    const fetchData = async (storageKey: string, setter: SetterT) => {
 
         try {
 
-            const data = await AsyncStorage.getItem('items')
+            const data = await AsyncStorage.getItem(storageKey)
 
             if (data) {
-                setServices(orderServices(JSON.parse(data)))
+                setter(JSON.parse(data))
             }
 
         } catch (err) {
 
-            Alert.alert('Erro ao acessar banco de dados')
-
-        }
-
-    }
-
-    const getExpensesFromDb = async () => {
-
-        try {
-
-            const data = await AsyncStorage.getItem('expenses')
-
-            if (data) {
-                setExpenses(JSON.parse(data))
-            }
-
-        } catch (err) {
-
-            Alert.alert('Erro ao acessar banco de dados')
-
-        }
-
-    }
-
-    const getSchedulingsFromDb = async () => {
-
-        try {
-
-            const data = await AsyncStorage.getItem('schedulings')
-
-            if (data) {
-                setSchedulings(JSON.parse(data))
-            }
-
-        } catch (err) {
-
-            Alert.alert('Erro ao acessar banco de dados')
+            throw err
 
         }
 
@@ -174,10 +142,27 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     }
 
     useEffect(() => {
-        getItemsFromDb()
-        getExpensesFromDb()
-        getSchedulingsFromDb()
+
+        const initializeData = async () => {
+
+            try {
+
+                await fetchData('items', setServices)
+                await fetchData('expenses', setExpenses)
+                await fetchData('schedulings', setSchedulings)
+
+            } catch (err) {
+
+                Alert.alert('Erro ao acessar banco de dados')
+
+            }
+
+        }
+
+        
         getCurrentYear()
+        initializeData()
+
     }, [])
 
     return (

@@ -1,8 +1,9 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { DataTable } from 'react-native-paper'
 import { Service } from '@/context/DocsContext'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import ContainerHandler from '../common/ContainerHandler'
+import { orderServices } from '@/functions/services'
 
 interface ServicesListProps {
     setServiceForDeletion: React.Dispatch<React.SetStateAction<Service>>
@@ -35,7 +36,7 @@ export default function ServicesList({ setServiceForDeletion, setDeleteServiceFo
     }
 
     return (
-        <>
+        <View>
             <ContainerHandler filteredTargets={services}>
                 <DataTable>
                     <DataTable.Header>
@@ -47,7 +48,7 @@ export default function ServicesList({ setServiceForDeletion, setDeleteServiceFo
                             </DataTable.Title>
                         )}
                     </DataTable.Header>
-                    {services.map(service => {
+                    {orderServices(services).map(service => {
                         return (
                             <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
                                 <DataTable.Cell style={styles.text}>{service._id}</DataTable.Cell>
@@ -60,7 +61,7 @@ export default function ServicesList({ setServiceForDeletion, setDeleteServiceFo
                 </DataTable>
             </ContainerHandler>
             <MoreInfoWarning />
-        </>
+        </View>
     )
 
 }
