@@ -1,12 +1,14 @@
-import { Service } from '@/context/DocsContext'
+import { Item, Outflow } from '@/context/DocsContext'
+import { generateId } from './common'
+import { Alert } from 'react-native'
 
-export const orderServices = (services: Service[]) => {
+export const orderServices = (services: Item[]) => {
 
     return services.sort((a, b) => b.value - a.value)
 
 }
 
-export const checkServicesAmount = (services: Service[], service: Service) => {
+export const checkServicesAmount = (services: Item[], service: Item) => {
 
     const servicesAmount = services.filter(current => {
         return current.category === service.category
@@ -20,7 +22,7 @@ export const checkServicesAmount = (services: Service[], service: Service) => {
 
 }
 
-export const getServicesByCategory = (services: Service[], category: string) => {
+export const getServicesByCategory = (services: Item[], category: string) => {
 
     switch (category) {
         case 'product':
@@ -42,7 +44,7 @@ export const getServicesByCategory = (services: Service[], category: string) => 
 }
 
 export const getCategoryAndSet = (
-    items: Service[],
+    items: Item[],
     setCategory: React.Dispatch<React.SetStateAction<string>>
 ) => {
     if (items[0]) {
@@ -89,7 +91,7 @@ export const createNewService = (
     value: number, amount: number,
     isThereAmount: boolean, resale: boolean
 ) => {
-    const service: Service = {
+    const service: Item = {
         category: choice,
         _id: name,
         value,
@@ -100,7 +102,7 @@ export const createNewService = (
     return service
 }
 
-export const checkIfThereIsAnotherService = (services: Service[], name: string): boolean => {
+export const checkIfThereIsAnotherService = (services: Item[], name: string): boolean => {
 
     const isThereAnotherService = services.filter(service => {
         const serviceName = service._id.toLocaleLowerCase()
@@ -123,4 +125,37 @@ export const checkTitle = (item: string) => {
         case 'budget':
             return 'Orçamentário'
     }
+}
+
+export const createNewOutflow = (
+    valueChoice: string,
+    purchaseValue: number,
+    amount: number,
+    name: string,
+    purchaseDate: string
+) => {
+
+    const newExpenseValue =
+        valueChoice === 'total' ? purchaseValue : purchaseValue * amount
+
+    const newExpense: Outflow = {
+        _id: generateId(),
+        name,
+        date: purchaseDate,
+        value: newExpenseValue,
+        amount
+    }
+
+    return newExpense
+
+}
+
+export const warning = (
+    warningText: string, 
+    setLoadingScreen: (value: React.SetStateAction<boolean>) => void
+) => {
+
+    Alert.alert(warningText)
+    setLoadingScreen(false)
+
 }

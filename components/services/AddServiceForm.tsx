@@ -9,14 +9,16 @@ import FormTitle from '../common/FormTitle'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import NameInput from '../common/NameInput'
 
-import { checkAllInputs, checkIfThereIsAnotherService, checkServicesAmount, checkTitle, createNewService, orderServices } from '@/functions/services'
+import { checkAllInputs, checkIfThereIsAnotherService, 
+    checkServicesAmount, checkTitle, createNewOutflow, 
+    createNewService, orderServices, warning 
+} from '@/functions/services'
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
 import LoadingScreen from '../common/LoadingScreen'
 import ResaleButton from './ResaleButton'
 import DateInput from '../common/DateInput'
-import { generateId } from '@/functions/common'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ValueOption from '../common/ValueOption'
 import StockButton from './StockButton'
@@ -57,90 +59,73 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
 
     const addService = async () => {
 
-        if (checkAllInputs(choice, name, value, amount, resale, stock)) {
-
-            setLoadingScreen(true)
-
-            // Criando serviço
-            const service = createNewService(choice, name, value, amount, isThereAmount(), resale)
-
-            // Verificando se o produto é uma revenda
-            if (resale) {
-
-                const newExpenseValue =
-                    valueChoice === 'total'
-                        ? purchaseValue
-                        : purchaseValue * amount
-
-                const newExpense: Outflow = {
-                    _id: generateId(),
-                    name: name,
-                    date: purchaseDate,
-                    value: newExpenseValue,
-                    amount: amount
-                }
-
-                try {
-
-                    await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
-                    setExpenses([...expenses, newExpense])
-
-                } catch (err) {
-
-                    Alert.alert('Erro ao acessar banco de dados')
-                    return
-
-                }
-
-            }
-
-            // Configurando categoria para a lista de items
-            if (!services[0] && setCategory) {
-                setCategory(choice)
-            }
-
-            if (checkServicesAmount(services, service)) {
-
-                // Verificando se já existe um serviço com o nome igual
-                if (checkIfThereIsAnotherService(services, name)) {
-
-                    Alert.alert('Item existente', 'Um item com este nome já existe')
-
-                } else {
-
-                    try {
-
-                        await AsyncStorage.setItem('items', JSON.stringify([...services, service]))
-                        setServices(orderServices([...services, service]))
-
-                    } catch (err) {
-
-                        Alert.alert('Erro ao acessar banco de dados')
-
-                    }
-
-                }
-
-            } else {
-
-                Alert.alert('Você só pode registrar 8 items por categoria')
-
-            }
-
-        } else {
+        if (!checkAllInputs(choice, name, value, amount, resale, stock)) {
 
             Alert.alert(
                 'Preencha todos os campos',
                 'Todos os campos do formulário precisam ser preenchidos'
             )
 
+            return
+
+        }
+
+        setLoadingScreen(true)
+
+        const service = createNewService(choice, name, value, amount, isThereAmount(), resale)
+
+        if (resale) {
+
+            const newExpense = createNewOutflow(valueChoice, purchaseValue, amount, name, purchaseDate)
+
+            try {
+
+                const updatedExpenses = [...expenses, newExpense]
+                await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses))
+                setExpenses(updatedExpenses)
+
+            } catch (err) {
+
+                warning('Erro ao acessar banco de dados', setLoadingScreen)
+                return
+
+            }
+        }
+
+        if (!services[0] && setCategory) {
+            setCategory(choice)
+        }
+
+        if (!checkServicesAmount(services, service)) {
+            warning('Você só pode registrar 8 items por categoria', setLoadingScreen)
+            return
+        }
+
+        if (checkIfThereIsAnotherService(services, name)) {
+            warning('Um item com este nome já existe', setLoadingScreen)
+            return
+        }
+
+        try {
+
+            const updatedServices = orderServices([...services, service])
+            await AsyncStorage.setItem('items', JSON.stringify(updatedServices))
+            setServices(updatedServices)
+
+        } catch (err) {
+
+            warning('Erro ao acessar banco de dados', setLoadingScreen)
+            return
+
         }
 
         setAddServiceForm(false)
         setHideTabBar(false)
         setButton(true)
+        setLoadingScreen(false)
 
     }
+    
 
     const getPurchaseValueText = () => {
         switch (valueChoice) {
