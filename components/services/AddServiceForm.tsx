@@ -11,7 +11,7 @@ import NameInput from '../common/NameInput'
 
 import { checkAllInputs, checkIfThereIsAnotherService, 
     checkServicesAmount, checkTitle, createNewOutflow, 
-    createNewService, orderServices, warning 
+    createNewService, orderServices 
 } from '@/functions/services'
 import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
@@ -23,6 +23,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import ValueOption from '../common/ValueOption'
 import StockButton from './StockButton'
 import React from 'react'
+import { warning } from '@/functions/common'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>

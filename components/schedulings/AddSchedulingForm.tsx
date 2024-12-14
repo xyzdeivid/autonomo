@@ -7,9 +7,9 @@ import { DocsContext, Entry, Item } from '@/context/DocsContext'
 import DateInput from '../common/DateInput'
 import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
-import { generateId } from '@/functions/common'
+import { generateId, warning } from '@/functions/common'
 import { MainDisplaysContext } from '@/context/MainDisplays'
-import { getSchedulingValue, getServices } from '@/functions/schedulings'
+import { createNewEntry, getSchedulingValue, getServices } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
 import { Alert } from 'react-native'
 import StockInfo from './StockInfo'
@@ -127,86 +127,68 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
     const addScheduling = async () => {
 
-        if (checkAllInputs()) {
-
-            setLoadingScreen(true)
-
-            const currentDate = new Date(getCurrentDate())
-            const entryDate = new Date(date)
-
-            if (entryDate <= currentDate) {
-
-                if (checkAmount(service)) {
-
-                    const newScheduling: Entry = {
-                        _id: generateId(),
-                        service: {
-                            category: service.category,
-                            _id: service._id,
-                            value: getSchedulingValue(service, amount, value),
-                            isThereAmount: service.isThereAmount,
-                            resale: service.resale
-                        },
-                        date
-                    }
-
-                    if (costumerName) {
-                        newScheduling.customer = costumerName
-                    }
-
-                    if (service.category === 'product')
-                        newScheduling.service.amount = amount
-
-                    if (service.category === 'product') {
-
-                        try {
-
-                            await updateStock()
-
-                        } catch (err) {
-
-                            Alert.alert('Erro ao acessar banco de dados')
-                            return
-
-                        }
-
-                    }
-
-                    try {
-
-                        await AsyncStorage.setItem('schedulings', JSON.stringify([...schedulings, newScheduling]))
-                        setSchedulings([...schedulings, newScheduling])
-
-                    } catch (err) {
-
-                        Alert.alert('Erro ao acessar banco de dados')
-
-                    }
-
-                } else {
-
-                    Alert.alert('Produto sem estoque')
-
-                }
-
-            } else {
-
-                Alert.alert('Não é possivel registrar entradas em datas futuras')
-
-            }
-
-
-        } else {
+        if (!checkAllInputs()) {
 
             Alert.alert('Todos os campos precisam ser preenchidos')
+            return
 
         }
 
-        setAddSchedulingForm(false)
-        setHideTabBar(false)
-        setButton(true)
+        setLoadingScreen(true)
+
+        const currentDate = new Date(getCurrentDate())
+        const entryDate = new Date(date)
+
+        if (entryDate > currentDate) {
+
+            warning('Não é possível registrar entradas em datas futuras', setLoadingScreen)
+            return
+
+        }
+
+        if (!checkAmount(service)) {
+
+            warning('Produto sem estoque', setLoadingScreen)
+            return
+        }
+
+        const newScheduling: Entry = createNewEntry(service, amount, value, date, costumerName)
+
+        if (service.category === 'product') {
+
+            try {
+
+                await updateStock()
+
+            } catch (err) {
+
+                warning('Erro ao acessar banco de dados', setLoadingScreen)
+                return
+            }
+
+        }
+
+        try {
+
+            const updatedSchedulings = [...schedulings, newScheduling]
+            await AsyncStorage.setItem('schedulings', JSON.stringify(updatedSchedulings))
+            setSchedulings(updatedSchedulings)
+
+        } catch (err) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+
+        } finally {
+
+            setAddSchedulingForm(false)
+            setHideTabBar(false)
+            setButton(true)
+            setLoadingScreen(false)
+
+        }
 
     }
+    
 
     useEffect(() => {
         setHideTabBar(true)

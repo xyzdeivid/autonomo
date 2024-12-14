@@ -1,5 +1,6 @@
-import { Expense, Scheduling } from '@/context/DocsContext'
+import { Outflow, Entry } from '@/context/DocsContext'
 import { format, parseISO } from 'date-fns'
+import { Alert } from 'react-native'
 
 export const moneyFormat = (value: number) => {
     const formatedData = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
@@ -18,7 +19,7 @@ export const getCurrentMonth = () => {
     return `${currentYear}-${currentMonth}`
 }
 
-export const filterSchedulings = (schedulings: Scheduling[], selectedMonth: number, currentYear: string) => {
+export const filterSchedulings = (schedulings: Entry[], selectedMonth: number, currentYear: string) => {
     return schedulings.filter(current => {
         return Number(current.date.split('-')[1]) === selectedMonth
             && current.date.split('-')[0] === currentYear
@@ -26,7 +27,7 @@ export const filterSchedulings = (schedulings: Scheduling[], selectedMonth: numb
     })
 }
 
-export const filterExpenses = (expenses: Expense[], selectedMonth: number, currentYear: string) => {
+export const filterExpenses = (expenses: Outflow[], selectedMonth: number, currentYear: string) => {
     return expenses.filter(current => {
         return Number(current.date.split('-')[1]) === selectedMonth
             && current.date.split('-')[0] === currentYear
@@ -48,13 +49,13 @@ export const getMonthName = (months: [string, number][], selectedMonth: number) 
 }
 
 export const getAvailableMonths = (
-    entries: Scheduling[],
-    expenses: Expense[],
+    entries: Entry[],
+    expenses: Outflow[],
     currentYear: string,
     months: [string, number][]
 ) => {
 
-    const entriesAndExpenses: (Scheduling | Expense)[] = []
+    const entriesAndExpenses: (Entry | Outflow)[] = []
 
     if (entries[0]) {
         entriesAndExpenses.push(...entries)
@@ -93,5 +94,15 @@ export const getAvailableMonths = (
     }
 
     return monthsToGetAvailable.sort((a, b) => Number(a[1]) - Number(b[1]))
+
+}
+
+export const warning = (
+    warningText: string, 
+    setLoadingScreen: (value: React.SetStateAction<boolean>) => void
+) => {
+
+    Alert.alert(warningText)
+    setLoadingScreen(false)
 
 }

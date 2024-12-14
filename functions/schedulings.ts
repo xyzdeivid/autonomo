@@ -1,8 +1,9 @@
-import { Scheduling, Service } from '@/context/DocsContext'
+import { Entry, Item } from '@/context/DocsContext'
+import { generateId } from './common'
 
-export const orderSchedulings = (entries: Scheduling[]) => {
+export const orderSchedulings = (entries: Entry[]) => {
 
-    const days: Scheduling[][] = []
+    const days: Entry[][] = []
 
     const entriesWithCustomer = entries.filter(current => 
         current.customer
@@ -13,7 +14,7 @@ export const orderSchedulings = (entries: Scheduling[]) => {
     )
 
     // Inserindo entradas no dia correspondente
-    const findDays = (current: Scheduling) => {
+    const findDays = (current: Entry) => {
         const day = days.find((day) =>
             day.some((scheduling) => scheduling.date === current.date)
         )
@@ -52,7 +53,7 @@ export const orderSchedulings = (entries: Scheduling[]) => {
 
 }
 
-export const getSchedulingValue = (service: Service, amount: number, value: number) => {
+export const getSchedulingValue = (service: Item, amount: number, value: number) => {
     if (service.category === 'product') {
         return service.value * amount
     }
@@ -62,7 +63,7 @@ export const getSchedulingValue = (service: Service, amount: number, value: numb
     return value
 }
 
-export const getServices = (services: Service[]) => {
+export const getServices = (services: Item[]) => {
 
     const products = services.filter(current => (
         current.category === 'product'
@@ -94,5 +95,28 @@ export const getServices = (services: Service[]) => {
 
     return items
 
+
+}
+
+export const createNewEntry = (
+    service: Item, amount: number,
+    value: number, date: string, costumerName: string
+) => {
+
+    const newScheduling: Entry = {
+        _id: generateId(),
+        service: {
+            category: service.category,
+            _id: service._id,
+            value: getSchedulingValue(service, amount, value),
+            isThereAmount: service.isThereAmount,
+            resale: service.resale,
+            ...(service.category === 'product' && { amount })
+        },
+        date,
+        ...(costumerName && { customer: costumerName })
+    }
+
+    return newScheduling
 
 }

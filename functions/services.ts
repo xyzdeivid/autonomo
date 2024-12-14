@@ -149,13 +149,3 @@ export const createNewOutflow = (
     return newExpense
 
 }
-
-export const warning = (
-    warningText: string, 
-    setLoadingScreen: (value: React.SetStateAction<boolean>) => void
-) => {
-
-    Alert.alert(warningText)
-    setLoadingScreen(false)
-
-}
