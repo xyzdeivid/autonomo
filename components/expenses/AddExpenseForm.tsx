@@ -6,7 +6,7 @@ import NameInput from '../common/NameInput'
 import DateInput from '../common/DateInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { MainDisplaysContext } from '@/context/MainDisplays'
-import { DocsContext, Expense } from '@/context/DocsContext'
+import { DocsContext, Outflow } from '@/context/DocsContext'
 import { Alert } from 'react-native'
 import { generateId } from '@/functions/common'
 import FormInputs from '../common/FormInputs'
@@ -18,6 +18,7 @@ import ProductOptionsInput from './ProductOptionsInput'
 import AmountInput from '../common/AmountInput'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ValueOption from '../common/ValueOption'
+import React from 'react'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -31,8 +32,8 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
     const [value, setValue] = useState(0)
     const [amount, setAmount] = useState(0)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
-    const [expenses, setExpenses] = useContext(DocsContext).expenses
-    const [services, setServices] = useContext(DocsContext).services
+    const [expenses, setExpenses] = useContext(DocsContext).outflows
+    const [services, setServices] = useContext(DocsContext).items
     const products = services.filter(item => item.resale)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [stockIntegrate, setStockIntegrate] = useState(false)
@@ -67,7 +68,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                     : value * amount
 
             // Criando nova despesa
-            const newExpense: Expense = {
+            const newExpense: Outflow = {
                 _id: generateId(),
                 name: !stockIntegrate ? name : product._id,
                 date,

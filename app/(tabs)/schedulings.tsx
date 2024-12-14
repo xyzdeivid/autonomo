@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import Container from '@/components/common/Container'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
-import { DocsContext, Scheduling, Service } from '@/context/DocsContext'
+import { DocsContext, Entry, Item } from '@/context/DocsContext'
 import SchedulingsList from '@/components/schedulings/SchedulingsList'
 import { filterSchedulings } from '@/functions/common'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
@@ -15,15 +15,16 @@ import WhatIsSchedulingCard from '@/components/schedulings/WhatIsSchedulingCard'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { orderSchedulings } from '@/functions/schedulings'
+import React from 'react'
 
 export default function Schedulings() {
 
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const appDocs = useContext(DocsContext)
-    const [schedulings, setSchedulings] = appDocs.schedulings
-    const [services, setServices] = appDocs.services
+    const [schedulings, setSchedulings] = appDocs.entries
+    const [services, setServices] = appDocs.items
     const [selectedMonth] = appDocs.selectedMonth
-    const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Scheduling)
+    const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Entry)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
@@ -31,7 +32,7 @@ export default function Schedulings() {
     const [whatIsSchedulingCard, setWhatIsSchedulingCard] = useState(false)
     const [currentYear] = appDocs.currentYear
 
-    const checkAmount = async (scheduling: Scheduling) => {
+    const checkAmount = async (scheduling: Entry) => {
 
         // Separando produto a ser atualizado
         const product = services.filter(current => {
@@ -47,7 +48,7 @@ export default function Schedulings() {
             })
 
             // Atualizando estoque do produto
-            const updatedProduct: Service = {
+            const updatedProduct: Item = {
                 category: product.category,
                 _id: product._id,
                 value: product.value,
@@ -75,7 +76,7 @@ export default function Schedulings() {
 
     }
 
-    const deleteScheduling = async (scheduling: Scheduling) => {
+    const deleteScheduling = async (scheduling: Entry) => {
 
         setLoadingScreen(true)
 

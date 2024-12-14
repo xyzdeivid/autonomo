@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Alert } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext, Expense } from '@/context/DocsContext'
+import { DocsContext, Outflow } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect, useState } from 'react'
@@ -14,10 +14,11 @@ import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ActualValue from './ActualValue'
 import EditValueInput from './EditValueInput'
+import React from 'react'
 
 interface AboutExpenseCardProps {
-    expense: Expense
-    deleteFunction: (expense: Expense) => void
+    expense: Outflow
+    deleteFunction: (expense: Outflow) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
     setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -29,7 +30,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
     const [showEditNameInput, setShowEditNameInput] = useState(false)
     const [showEditValueInput, setShowEditValueInput] = useState(false)
     const [newName, setNewName] = useState('')
-    const [expenses, setExpenses] = useContext(DocsContext).expenses
+    const [expenses, setExpenses] = useContext(DocsContext).outflows
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [newValue, setNewValue] = useState(0)
 

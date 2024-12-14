@@ -1,16 +1,16 @@
-import { DocsContext, Service } from '@/context/DocsContext'
+import { DocsContext, Item } from '@/context/DocsContext'
 import { Picker } from '@react-native-picker/picker'
 import { useContext } from 'react'
 
 interface ProductOptionsInputProps {
-    product: Service
-    setProduct: React.Dispatch<React.SetStateAction<Service>>
-    products: Service[]
+    product: Item
+    setProduct: React.Dispatch<React.SetStateAction<Item>>
+    products: Item[]
 }
 
 export default function ProductOptionsInput({ product, setProduct, products }: ProductOptionsInputProps) {
 
-    const [items] = useContext(DocsContext).services
+    const [items] = useContext(DocsContext).items
 
     return (
         <Picker

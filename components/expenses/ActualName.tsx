@@ -9,7 +9,7 @@ interface ActualNameProps {
 
 export default function ActualName({ name, setShowEditNameInput }: ActualNameProps) {
 
-    const [items] = useContext(DocsContext).services
+    const [items] = useContext(DocsContext).items
 
     const checkIfIsResale = () => {
         const product = items.find(current => current._id === name)

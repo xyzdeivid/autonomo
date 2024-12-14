@@ -7,9 +7,7 @@ interface AnyItemWarningProps {
 export default function AnyItemWarning({ text }: AnyItemWarningProps) {
 
     return (
-        <>
-            <Text style={styles.text}>{text}</Text>
-        </>
+        <Text style={styles.text}>{text}</Text>
     )
 
 }

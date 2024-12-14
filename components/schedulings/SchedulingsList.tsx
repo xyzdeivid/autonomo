@@ -1,4 +1,4 @@
-import { Scheduling } from '@/context/DocsContext'
+import { Entry } from '@/context/DocsContext'
 import { format, parseISO } from 'date-fns'
 import { View, StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
@@ -9,8 +9,8 @@ import ListInfoTitle from '../common/ListInfoTitle'
 import { orderSchedulings } from '@/functions/schedulings'
 
 interface SchedulingsListProps {
-    filteredSchedulings: Scheduling[]
-    setSchedulingForDeletion: React.Dispatch<React.SetStateAction<Scheduling>>
+    filteredSchedulings: Entry[]
+    setSchedulingForDeletion: React.Dispatch<React.SetStateAction<Entry>>
     setDeleteSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -21,7 +21,7 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
         return formatedDate
     }
 
-    const deleteScheduling = (scheduling: Scheduling) => {
+    const deleteScheduling = (scheduling: Entry) => {
         setSchedulingForDeletion(scheduling)
         setDeleteSchedulingForm(true)
     }

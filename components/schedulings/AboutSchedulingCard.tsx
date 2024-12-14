@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Alert } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext, Scheduling } from '@/context/DocsContext'
+import { DocsContext, Entry } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect, useState } from 'react'
@@ -16,10 +16,11 @@ import { orderServices } from '@/functions/services'
 import AddClienteButton from './AddClienteButton'
 import ActualCustomer from './ActualCustomer'
 import ActualDate from './ActualDate'
+import React from 'react'
 
 interface AboutSchedulingCardProps {
-    scheduling: Scheduling
-    deleteFunction: (scheduling: Scheduling) => void
+    scheduling: Entry
+    deleteFunction: (scheduling: Entry) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
     setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -32,8 +33,8 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [newAmount, setNewAmount] = useState(0)
     const isThereAmount = scheduling.service.isThereAmount
     const appDocs = useContext(DocsContext)
-    const [entries, setEntries] = appDocs.schedulings
-    const [items, setItems] = appDocs.services
+    const [entries, setEntries] = appDocs.entries
+    const [items, setItems] = appDocs.items
     const product = items.find(current => current._id === scheduling.service._id)
     const remainingEntries = entries.filter(current => (
         current._id !== scheduling._id

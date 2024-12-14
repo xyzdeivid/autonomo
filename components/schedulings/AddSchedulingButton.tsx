@@ -13,7 +13,7 @@ interface AddSchedulingButtonProps {
 
 export default function AddSchedulingButton({ setAddSchedulingForm, setButton, setWhatIsSchedulingCard }: AddSchedulingButtonProps) {
 
-    const [services] = useContext(DocsContext).services
+    const [services] = useContext(DocsContext).items
 
     const showForm = () => {
         setAddSchedulingForm(true)

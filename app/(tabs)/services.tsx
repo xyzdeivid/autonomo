@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddServiceForm from '@/components/services/AddServiceForm'
-import { DocsContext, Service } from '@/context/DocsContext'
+import { DocsContext, Item } from '@/context/DocsContext'
 import Container from '@/components/common/Container'
 import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/functions/services'
 import AboutServiceCard from '@/components/services/AboutServiceCard'
@@ -12,13 +12,14 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import WhatIsServiceCard from '@/components/services/WhatIsServiceCard'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import React from 'react'
 
 export default function Services() {
 
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [aboutServiceCard, setAboutServiceCard] = useState(false)
-    const [serviceForDeletion, setServiceForDeletion] = useState({} as Service)
-    const [services, setServices] = useContext(DocsContext).services
+    const [serviceForDeletion, setServiceForDeletion] = useState({} as Item)
+    const [services, setServices] = useContext(DocsContext).items
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar

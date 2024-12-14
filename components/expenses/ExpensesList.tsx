@@ -1,4 +1,4 @@
-import { Expense } from '@/context/DocsContext'
+import { Outflow } from '@/context/DocsContext'
 import { format, parseISO } from 'date-fns'
 import { View, StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
@@ -9,14 +9,14 @@ import ListInfoTitle from '../common/ListInfoTitle'
 import { orderExpenses } from '@/functions/expenses'
 
 interface ExpensesListProps {
-    filteredExpenses: Expense[]
-    setExpenseForDeletion: React.Dispatch<React.SetStateAction<Expense>>
+    filteredExpenses: Outflow[]
+    setExpenseForDeletion: React.Dispatch<React.SetStateAction<Outflow>>
     setDeleteExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, setDeleteExpenseForm }: ExpensesListProps) {
 
-    const deleteExpense = (expense: Expense) => {
+    const deleteExpense = (expense: Outflow) => {
         setExpenseForDeletion(expense)
         setDeleteExpenseForm(true)
     }

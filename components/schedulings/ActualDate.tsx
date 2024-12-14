@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import DateInput from '../common/DateInput'
+import React from 'react'
 
 interface ActualDateProps {
     date: string

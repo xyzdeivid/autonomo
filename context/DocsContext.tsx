@@ -1,9 +1,8 @@
-import { orderServices } from '@/functions/services'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createContext, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 
-export interface Service {
+export interface Item {
     category: string
     _id: string
     value: number
@@ -12,11 +11,11 @@ export interface Service {
     amount?: number
 }
 
-type SetServices = React.Dispatch<React.SetStateAction<Service[]>>
+type SetItems = React.Dispatch<React.SetStateAction<Item[]>>
 
-type ServicesState = [Service[], SetServices]
+type ItemsState = [Item[], SetItems]
 
-const DEFAULT_SERVICE: Service = {
+const DEFAULT_ITEM: Item = {
     category: '',
     _id: '',
     value: 0,
@@ -24,7 +23,7 @@ const DEFAULT_SERVICE: Service = {
     resale: false
 }
 
-export interface Expense {
+export interface Outflow {
     _id: string
     name: string
     date: string
@@ -33,28 +32,28 @@ export interface Expense {
 }
 
 
-type SetExpenses = React.Dispatch<React.SetStateAction<Expense[]>>
-type ExpensesState = [Expense[], SetExpenses]
+type SetOutflows = React.Dispatch<React.SetStateAction<Outflow[]>>
+type OutflowsState = [Outflow[], SetOutflows]
 
-const DEFAULT_EXPENSE: Expense = {
+const DEFAULT_OUTFLOW: Outflow = {
     _id: '',
     name: '',
     date: '',
     value: 0,
 }
 
-export interface Scheduling {
+export interface Entry {
     _id: string
-    service: Service
+    service: Item
     date: string
     customer?: string
 }
 
-type SetSchedulings = React.Dispatch<React.SetStateAction<Scheduling[]>>
+type SetEntries = React.Dispatch<React.SetStateAction<Entry[]>>
 
-type SchedulingsState = [Scheduling[], SetSchedulings]
+type EntriesState = [Entry[], SetEntries]
 
-const DEFAULT_SCHEDULING: Scheduling = {
+const DEFAULT_ENTRY: Entry = {
     _id: '',
     service: {
         category: '',
@@ -70,17 +69,17 @@ type CurrentYearState = [string, React.Dispatch<React.SetStateAction<string>>]
 type CurrentMonthState = [number, React.Dispatch<React.SetStateAction<number>>]
 
 interface TDocsContext {
-    services: ServicesState
-    expenses: ExpensesState
-    schedulings: SchedulingsState
+    items: ItemsState
+    outflows: OutflowsState
+    entries: EntriesState
     currentYear: CurrentYearState
     selectedMonth: CurrentMonthState
 }
 
 const DEFAULT_CONTEXT: TDocsContext = {
-    services: [[DEFAULT_SERVICE], () => { }],
-    expenses: [[DEFAULT_EXPENSE], () => { }],
-    schedulings: [[DEFAULT_SCHEDULING], () => { }],
+    items: [[DEFAULT_ITEM], () => { }],
+    outflows: [[DEFAULT_OUTFLOW], () => { }],
+    entries: [[DEFAULT_ENTRY], () => { }],
     currentYear: ['', () => { }],
     selectedMonth: [0, () => { }]
 }
@@ -94,15 +93,15 @@ interface DocsProviderProps {
 export default function DocsProvider({ children }: DocsProviderProps) {
 
     // Documentos usados na aplicação
-    const [services, setServices] = useState<Service[]>([])
-    const [expenses, setExpenses] = useState<Expense[]>([])
-    const [schedulings, setSchedulings] = useState<Scheduling[]>([])
+    const [items, setItems] = useState<Item[]>([])
+    const [outflows, setOutflows] = useState<Outflow[]>([])
+    const [entries, setEntries] = useState<Entry[]>([])
     const [currentYear, setCurrentYear] = useState<string>('')
     const [selectedMonth, setSelectedMonth] = useState(0)
 
-    type SetterT = React.Dispatch<React.SetStateAction<Service[]>> 
-    | React.Dispatch<React.SetStateAction<Expense[]>>
-    | React.Dispatch<React.SetStateAction<Scheduling[]>>
+    type SetterT = React.Dispatch<React.SetStateAction<Item[]>> 
+    | React.Dispatch<React.SetStateAction<Outflow[]>>
+    | React.Dispatch<React.SetStateAction<Entry[]>>
 
     const fetchData = async (storageKey: string, setter: SetterT) => {
 
@@ -134,9 +133,9 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     }
 
     const docs: TDocsContext = {
-        services: [services, setServices],
-        expenses: [expenses, setExpenses],
-        schedulings: [schedulings, setSchedulings],
+        items: [items, setItems],
+        outflows: [outflows, setOutflows],
+        entries: [entries, setEntries],
         currentYear: [currentYear, setCurrentYear],
         selectedMonth: [selectedMonth, setSelectedMonth]
     }
@@ -147,9 +146,9 @@ export default function DocsProvider({ children }: DocsProviderProps) {
 
             try {
 
-                await fetchData('items', setServices)
-                await fetchData('expenses', setExpenses)
-                await fetchData('schedulings', setSchedulings)
+                await fetchData('items', setItems)
+                await fetchData('expenses', setOutflows)
+                await fetchData('schedulings', setEntries)
 
             } catch (err) {
 

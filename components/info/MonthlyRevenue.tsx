@@ -18,8 +18,8 @@ interface MonthlyRevenueProps {
 export default function MonthlyRevenue({ period, setPeriod }: MonthlyRevenueProps) {
 
     const appDocs = useContext(DocsContext)
-    const [schedulings] = appDocs.schedulings
-    const [expenses] = appDocs.expenses
+    const [schedulings] = appDocs.entries
+    const [expenses] = appDocs.outflows
     const [currentYear] = appDocs.currentYear
     const [selectedMonth] = appDocs.selectedMonth
 

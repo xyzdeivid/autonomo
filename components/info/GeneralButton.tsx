@@ -12,7 +12,7 @@ interface GeneralButtonProps {
 
 export default function GeneralButton({ setAddItemsForm, setGeneralButton }: GeneralButtonProps) {
 
-    const [entries] = useContext(DocsContext).schedulings
+    const [entries] = useContext(DocsContext).entries
     const years = availableYears(entries)
 
     return (

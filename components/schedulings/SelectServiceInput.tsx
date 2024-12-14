@@ -1,11 +1,11 @@
-import { Service } from '@/context/DocsContext'
+import { Item } from '@/context/DocsContext'
 import { Picker } from '@react-native-picker/picker'
 import { StyleSheet, Text, View } from 'react-native'
 
 interface SelectServiceInputProps {
-    service: Service
-    setService: React.Dispatch<React.SetStateAction<Service>>
-    services: Service[]
+    service: Item
+    setService: React.Dispatch<React.SetStateAction<Item>>
+    services: Item[]
 }
 
 export default function SelectServiceInput({ service, setService, services }: SelectServiceInputProps) {

@@ -9,7 +9,7 @@ interface SelectCategoryInputProps {
 
 export default function SelectCategoryInput({ category, setCategory }: SelectCategoryInputProps) {
 
-    const [services] = useContext(DocsContext).services
+    const [services] = useContext(DocsContext).items
 
     const categories = [
         ['Produtos', 'product'],

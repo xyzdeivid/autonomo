@@ -2,21 +2,21 @@ import { View } from 'react-native'
 import SelectCategoryInput from './SelectCategoryInput'
 import ServicesList from './ServicesList'
 
-import { DocsContext, Service } from '@/context/DocsContext'
+import { DocsContext, Item } from '@/context/DocsContext'
 import { useContext } from 'react'
 
 interface ServicesContentProps {
     category: string
     setCategory: React.Dispatch<React.SetStateAction<string>>
-    services: Service[]
-    setServiceForDeletion: React.Dispatch<React.SetStateAction<Service>>
+    services: Item[]
+    setServiceForDeletion: React.Dispatch<React.SetStateAction<Item>>
     setDeleteServiceForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function ServicesContent({ category, setCategory,
     services, setServiceForDeletion, setDeleteServiceForm }: ServicesContentProps) {
 
-    const [allServices] = useContext(DocsContext).services
+    const [allServices] = useContext(DocsContext).items
 
     const categoriesNumber = () => {
 

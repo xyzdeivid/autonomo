@@ -21,9 +21,9 @@ import { months } from '@/constants/common'
 export default function Info() {
 
     const appDocs = useContext(DocsContext)
-    const [schedulings] = appDocs.schedulings
-    const [expenses] = appDocs.expenses
-    const [services] = appDocs.services
+    const [schedulings] = appDocs.entries
+    const [expenses] = appDocs.outflows
+    const [services] = appDocs.items
     const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
     const [addItemsForm, setAddItemsForm] = useContext(ContentContext).form
     const [generalButton, setGeneralButton] = useContext(ContentContext).button

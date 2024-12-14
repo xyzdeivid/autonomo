@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker'
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
 import { getAvailableMonths } from '@/functions/common'
+import React from 'react'
 
 interface MonthInputProps {
     dropdownIconColor?: string
@@ -13,8 +14,8 @@ export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
 
     const appDocs = useContext(DocsContext)
     const [currentYear] = appDocs.currentYear
-    const [entries] = appDocs.schedulings
-    const [expenses] = appDocs.expenses
+    const [entries] = appDocs.entries
+    const [expenses] = appDocs.outflows
     const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
     const availableMonths = getAvailableMonths(entries, expenses, currentYear, months)
 

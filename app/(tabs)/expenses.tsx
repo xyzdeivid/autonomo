@@ -1,7 +1,7 @@
 import Container from '@/components/common/Container'
 import AnyItemWarning from '@/components/common/AnyItemWarning'
 
-import { DocsContext, Expense } from '@/context/DocsContext'
+import { DocsContext, Outflow } from '@/context/DocsContext'
 import { useContext, useEffect, useState } from 'react'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
@@ -13,15 +13,16 @@ import LoadingScreen from '@/components/common/LoadingScreen'
 import WhatIsExpenseCard from '@/components/expenses/WhatIsExpenseCard'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import React from 'react'
 
 export default function Expenses() {
 
     const appDocs = useContext(DocsContext)
-    const [expenses, setExpenses] = appDocs.expenses
-    const [items] = appDocs.services
+    const [expenses, setExpenses] = appDocs.outflows
+    const [items] = appDocs.items
     const [selectedMonth] = appDocs.selectedMonth
     const [addExpenseForm, setAddExpenseForm] = useState(false)
-    const [expenseForDeletion, setExpenseForDeletion] = useState({} as Expense)
+    const [expenseForDeletion, setExpenseForDeletion] = useState({} as Outflow)
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
@@ -29,7 +30,7 @@ export default function Expenses() {
     const [whatIsExpenseCard, setWhatIsExpenseCard] = useState(false)
     const [currentYear] = appDocs.currentYear
 
-    const deleteExpense = async (expense: Expense) => {
+    const deleteExpense = async (expense: Outflow) => {
 
         setLoadingScreen(true)
 

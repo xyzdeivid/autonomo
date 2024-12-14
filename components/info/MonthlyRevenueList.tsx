@@ -1,12 +1,12 @@
-import { Expense, Scheduling } from '@/context/DocsContext'
+import { Outflow, Entry } from '@/context/DocsContext'
 import { moneyFormat } from '@/functions/common'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
 import { StyleSheet, Text, View } from 'react-native'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 
 interface RevenueListProps {
-    filteredSchedulings: Scheduling[]
-    filteredExpenses: Expense[]
+    filteredSchedulings: Entry[]
+    filteredExpenses: Outflow[]
 }
 
 export default function RevenueList({ filteredSchedulings, filteredExpenses }: RevenueListProps) {

@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext, Scheduling, Service } from '@/context/DocsContext'
+import { DocsContext, Entry, Item } from '@/context/DocsContext'
 import DateInput from '../common/DateInput'
 import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
@@ -19,6 +19,7 @@ import NumberInput from '../common/NumberInput'
 import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NameInput from '../common/NameInput'
+import React from 'react'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -28,13 +29,12 @@ interface AddSchedulingFormProps {
 export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: AddSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
-    const [services] = useContext(DocsContext).services
-    const [service, setService] = useState<Service>(getServices(services)[0])
+    const [services, setServices] = useContext(DocsContext).items
+    const [service, setService] = useState<Item>(getServices(services)[0])
 
     const [date, setDate] = useState('')
     const [value, setValue] = useState(0)
-    const [, setServices] = useContext(DocsContext).services
-    const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
+    const [schedulings, setSchedulings] = useContext(DocsContext).entries
     const [amount, setAmount] = useState(0)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [costumerName, setCustomerName] = useState('')
@@ -65,7 +65,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
         if (service.isThereAmount) {
 
-            const updatedService: Service = {
+            const updatedService: Item = {
                 category: service.category,
                 _id: service._id,
                 isThereAmount: service.isThereAmount,
@@ -95,7 +95,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
     }
 
-    const checkAmount = (product: Service) => {
+    const checkAmount = (product: Item) => {
 
         if (product.isThereAmount) {
 
@@ -138,7 +138,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
                 if (checkAmount(service)) {
 
-                    const newScheduling: Scheduling = {
+                    const newScheduling: Entry = {
                         _id: generateId(),
                         service: {
                             category: service.category,

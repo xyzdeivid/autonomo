@@ -1,4 +1,4 @@
-import { Service } from '@/context/DocsContext'
+import { Item } from '@/context/DocsContext'
 import { getServices } from '@/functions/schedulings'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { useEffect, useRef } from 'react'
@@ -10,7 +10,7 @@ interface AddItemFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
-    services: Service[]
+    services: Item[]
 }
 
 export default function AddItemForm({ setGeneralButton, setAddItemsForm, setAddServiceForm,

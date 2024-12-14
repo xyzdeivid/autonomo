@@ -1,19 +1,19 @@
 import { StyleSheet, View } from 'react-native'
 import { DataTable } from 'react-native-paper'
-import { Service } from '@/context/DocsContext'
+import { Item } from '@/context/DocsContext'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import ContainerHandler from '../common/ContainerHandler'
 import { orderServices } from '@/functions/services'
 
 interface ServicesListProps {
-    setServiceForDeletion: React.Dispatch<React.SetStateAction<Service>>
+    setServiceForDeletion: React.Dispatch<React.SetStateAction<Item>>
     setDeleteServiceForm: React.Dispatch<React.SetStateAction<boolean>>
-    services: Service[]
+    services: Item[]
 }
 
 export default function ServicesList({ setServiceForDeletion, setDeleteServiceForm, services }: ServicesListProps) {
 
-    const deleteService = (service: Service) => {
+    const deleteService = (service: Item) => {
         setServiceForDeletion(service)
         setDeleteServiceForm(true)
     }

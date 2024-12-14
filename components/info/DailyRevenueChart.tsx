@@ -10,7 +10,7 @@ import { DocsContext } from '@/context/DocsContext'
 export default function DailyRevenueChart() {
 
     const appDocs = useContext(DocsContext)
-    const [schedulings] = appDocs.schedulings
+    const [schedulings] = appDocs.entries
     const [currentYear] = appDocs.currentYear
     const [selectedMonth] = appDocs.selectedMonth
     const filteredSchedulings = filterSchedulings(schedulings, selectedMonth, currentYear)

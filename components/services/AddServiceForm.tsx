@@ -1,6 +1,6 @@
 import { Alert, Text } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
-import { DocsContext, Expense, Service } from '@/context/DocsContext'
+import { DocsContext, Outflow } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
 import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
@@ -20,6 +20,7 @@ import { generateId } from '@/functions/common'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ValueOption from '../common/ValueOption'
 import StockButton from './StockButton'
+import React from 'react'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -32,8 +33,8 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
     const [amount, setAmount] = useState(0)
-    const [services, setServices] = useContext(DocsContext).services
-    const [expenses, setExpenses] = useContext(DocsContext).expenses
+    const [services, setServices] = useContext(DocsContext).items
+    const [expenses, setExpenses] = useContext(DocsContext).outflows
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [choice, setChoice] = useState('product')
     const [valueChoice, setValueChoice] = useState('total')
@@ -71,7 +72,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         ? purchaseValue
                         : purchaseValue * amount
 
-                const newExpense: Expense = {
+                const newExpense: Outflow = {
                     _id: generateId(),
                     name: name,
                     date: purchaseDate,

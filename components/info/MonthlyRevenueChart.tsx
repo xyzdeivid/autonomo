@@ -1,12 +1,12 @@
-import { Expense, Scheduling } from '@/context/DocsContext'
+import { Outflow, Entry } from '@/context/DocsContext'
 import { findGreaterData } from '@/functions/info'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
 import { StyleSheet, View } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'
 
 interface RevenueChartProps {
-    filteredSchedulings: Scheduling[]
-    filteredExpenses: Expense[]
+    filteredSchedulings: Entry[]
+    filteredExpenses: Outflow[]
 }
 
 export default function RevenueChart({ filteredSchedulings, filteredExpenses }: RevenueChartProps) {

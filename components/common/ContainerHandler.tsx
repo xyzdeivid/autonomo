@@ -1,8 +1,9 @@
-import { Scheduling, Expense, Service } from '@/context/DocsContext'
+import { Entry, Outflow, Item } from '@/context/DocsContext'
+import React from 'react'
 import { ScrollView, View } from 'react-native'
 
 interface ContainerHandlerProps {
-    filteredTargets: Scheduling[] | Expense[] | Service[]
+    filteredTargets: Entry[] | Outflow[] | Item[]
     children: React.ReactNode
 }
 

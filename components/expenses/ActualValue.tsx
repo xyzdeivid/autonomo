@@ -11,7 +11,7 @@ interface ActualValueProps {
 
 export default function ActualValue({ name, value, setShowEditValueInput }: ActualValueProps) {
 
-    const [items] = useContext(DocsContext).services
+    const [items] = useContext(DocsContext).items
 
     const checkIfIsResale = () => {
         const product = items.find(current => current._id === name)

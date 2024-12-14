@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Alert } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext, Scheduling, Service } from '@/context/DocsContext'
+import { DocsContext, Entry, Item } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useContext, useEffect, useState } from 'react'
 import { MainDisplaysContext } from '@/context/MainDisplays'
@@ -17,9 +17,10 @@ import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { moneyFormat } from '@/functions/common'
+import React from 'react'
 
 interface AboutServiceCardProps {
-    service: Service
+    service: Item
     deleteFunction: (id: string) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
     setButton: React.Dispatch<React.SetStateAction<boolean>>
@@ -27,9 +28,9 @@ interface AboutServiceCardProps {
 
 export default function AboutServiceCard({ service, deleteFunction, setFormOff, setButton }: AboutServiceCardProps) {
 
-    const [services, setServices] = useContext(DocsContext).services
-    const [schedulings, setSchedulings] = useContext(DocsContext).schedulings
-    const [expenses, setExpenses] = useContext(DocsContext).expenses
+    const [services, setServices] = useContext(DocsContext).items
+    const [schedulings, setSchedulings] = useContext(DocsContext).entries
+    const [expenses, setExpenses] = useContext(DocsContext).outflows
 
     const serviceName = service._id
 
@@ -109,7 +110,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 current.service._id = name
             )
 
-            let editedSchedulings = [] as Scheduling[]
+            let editedSchedulings = [] as Entry[]
 
             if (remainingSchedulings[0]) {
 
@@ -133,7 +134,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             }
 
-            let editedItems = [] as Service[]
+            let editedItems = [] as Item[]
 
             if (remainingItems[0]) {
 
@@ -181,7 +182,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 return current._id !== service._id
             })
 
-            const editedService: Service = {
+            const editedService: Item = {
                 category: service.category,
                 _id: service._id,
                 value: value,
@@ -192,7 +193,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
             if (editedService.isThereAmount)
                 editedService.amount = service.amount
 
-            let editedItems = [] as Service[]
+            let editedItems = [] as Item[]
 
             if (remainingServices[0]) {
 
@@ -237,7 +238,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 return current._id !== service._id
             })
 
-            const editedService: Service = {
+            const editedService: Item = {
                 category: service.category,
                 _id: service._id,
                 value: service.value,
@@ -246,7 +247,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 amount: stock
             }
 
-            let editedItems = [] as Service[]
+            let editedItems = [] as Item[]
 
             if (remainingServices[0]) {
 
@@ -281,7 +282,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     }
 
-    const getTitle = (item: Service) => {
+    const getTitle = (item: Item) => {
 
         switch (item.category) {
 
