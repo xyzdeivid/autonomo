@@ -58,83 +58,78 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
     const addExpense = async () => {
 
-        if (checkAllInputs()) {
-
-            setLoadingScreen(true)
-
-            const resaleValue =
-                valueChoice === 'total'
-                    ? value
-                    : value * amount
-
-            // Criando nova despesa
-            const newExpense: Outflow = {
-                _id: generateId(),
-                name: !stockIntegrate ? name : product._id,
-                date,
-                value: !stockIntegrate ? value : resaleValue,
-            }
-
-            if (stockIntegrate) {
-
-                newExpense.amount = amount
-
-                // Atualizando estoque do produto selecionado
-                const productToUpdate = products.find(current =>
-                    current._id === product._id
-                )
-                if (productToUpdate) {
-
-                    if (productToUpdate.amount) {
-                        productToUpdate.amount = productToUpdate.amount + amount
-                    } else {
-                        productToUpdate.amount = amount
-                    }
-
-                    const remainingItems = services.filter(current => {
-                        return current._id !== productToUpdate._id
-                    })
-
-                    try {
-
-                        await AsyncStorage.setItem('items', JSON.stringify([...remainingItems, productToUpdate]))
-                        setServices(orderServices([...remainingItems, productToUpdate]))
-
-                    } catch (err) {
-
-                        Alert.alert('Erro ao acessar banco de dados')
-
-                    }
-
-                }
-
-            }
-
-            try {
-
-                await AsyncStorage.setItem('expenses', JSON.stringify([...expenses, newExpense]))
-                setExpenses([...expenses, newExpense])
-
-            } catch (err) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
-
-        } else {
+        if (!checkAllInputs()) {
 
             Alert.alert(
                 'Preencha todos os campos',
                 'Todos os campos do formulário precisam ser preenchidos'
             )
+            
+            return
 
         }
 
-        setAddExpenseForm(false)
-        setHideTabBar(false)
-        setButton(true)
+        setLoadingScreen(true)
+
+        const resaleValue = valueChoice === 'total' ? value : value * amount
+
+        const newExpense = {
+            _id: generateId(),
+            name: !stockIntegrate ? name : product._id,
+            date,
+            value: !stockIntegrate ? value : resaleValue,
+            ...(stockIntegrate && { amount })
+        }
+
+        if (stockIntegrate) {
+
+            const productToUpdate = products.find(current => current._id === product._id)
+
+            if (productToUpdate) {
+
+                productToUpdate.amount = (productToUpdate.amount || 0) + amount
+
+                const remainingItems = services.filter(current => current._id !== productToUpdate._id)
+
+                try {
+
+                    const updatedServices = [...remainingItems, productToUpdate]
+                    await AsyncStorage.setItem('items', JSON.stringify(updatedServices))
+                    setServices(orderServices(updatedServices))
+
+                } catch (err) {
+
+                    Alert.alert('Erro ao acessar banco de dados')
+                    setLoadingScreen(false)
+                    return
+
+                }
+
+            }
+
+        }
+
+        try {
+
+            const updatedExpenses = [...expenses, newExpense]
+            await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses))
+            setExpenses(updatedExpenses)
+
+        } catch (err) {
+
+            Alert.alert('Erro ao acessar banco de dados')
+
+        } finally {
+
+            setAddExpenseForm(false)
+            setHideTabBar(false)
+            setButton(true)
+            setLoadingScreen(false)
+
+        }
 
     }
+    
 
     const checkResaleButtonText = () => {
         return !stockIntegrate
