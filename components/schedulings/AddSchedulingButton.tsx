@@ -28,7 +28,13 @@ export default function AddSchedulingButton({ setAddSchedulingForm, setButton, s
 
     return (
         <View style={styles.container}>
-            <AntDesign onPress={() => setWhatIsSchedulingCard(true)} name='infocirlce' size={20} color={'rgba(0, 102, 0, 0.5)'} />
+            <Pressable
+                style={styles.aboutButton}
+                onPress={() => setWhatIsSchedulingCard(true)}
+            >
+                <Text style={{ color: 'rgba(0, 102, 0, 0.5)', fontSize: 12, marginEnd: 3 }}>Sobre</Text>
+                <AntDesign name='infocirlce' size={18} color={'rgba(0, 102, 0, 0.5)'} />
+            </Pressable>
             <Pressable
                 style={styles.button}
                 onPress={() => {
@@ -53,6 +59,14 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 10,
         paddingHorizontal: 10
+    },
+    aboutButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 6,
+        borderRadius: 3,
+        backgroundColor: 'rgba(0, 102, 0, 0.1)'
     },
     button: {
         padding: 10,

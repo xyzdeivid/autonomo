@@ -15,7 +15,15 @@ export default function AddItemButton({ setForm, mainColor, bgColor, text, setBu
 
     return (
         <View style={styles.container}>
-            <AntDesign onPress={() => setInfoCard(true)} name='infocirlce' size={20} color={infoButtonColor} />
+            <Pressable style={{
+                ...styles.aboutButton,
+                backgroundColor: bgColor,
+            }}
+                onPress={() => setInfoCard(true)}
+            >
+                <Text style={{ color: infoButtonColor, fontSize: 12, marginEnd: 3 }}>Sobre</Text>
+                <AntDesign name='infocirlce' size={18} color={infoButtonColor} />
+            </Pressable>
             <Pressable
                 style={{
                     ...styles.button,
@@ -45,6 +53,13 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 10,
         paddingHorizontal: 10
+    },
+    aboutButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 6,
+        borderRadius: 3
     },
     button: {
         padding: 10,
