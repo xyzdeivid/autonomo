@@ -1,5 +1,4 @@
 import Container from '@/components/common/Container'
-import AnyItemWarning from '@/components/common/AnyItemWarning'
 
 import { DocsContext, Outflow } from '@/context/DocsContext'
 import { useContext, useEffect, useState } from 'react'
@@ -14,6 +13,7 @@ import WhatIsExpenseCard from '@/components/expenses/WhatIsExpenseCard'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
+import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 export default function Expenses() {
 
@@ -119,7 +119,11 @@ export default function Expenses() {
                             setExpenseForDeletion={setExpenseForDeletion}
                             setDeleteExpenseForm={setDeleteExpenseForm}
                         />
-                        : <AnyItemWarning text='Nenhuma saída cadastrada' />
+                        : <AnyInfoWarning
+                            page='saída'
+                            text='Nesta página, listamos todas as suas saídas de capital do mês.'
+                            bgColor='#660000'
+                        />
                 }
                 {
                     button

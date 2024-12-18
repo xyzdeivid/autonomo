@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import AnyItemWarning from '@/components/common/AnyItemWarning'
 import Container from '@/components/common/Container'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import { DocsContext, Entry, Item } from '@/context/DocsContext'
@@ -16,6 +15,7 @@ import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { orderSchedulings } from '@/functions/schedulings'
 import React from 'react'
+import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 export default function Schedulings() {
 
@@ -142,7 +142,11 @@ export default function Schedulings() {
                             setSchedulingForDeletion={setSchedulingForDeletion}
                             setDeleteSchedulingForm={setDeleteSchedulingForm}
                         />
-                        : <AnyItemWarning text='Nenhuma entrada cadastrada' />
+                        : <AnyInfoWarning
+                            page='entrada'
+                            text='Neste página, listamos todas as suas entradas de capital do mês.'
+                            bgColor='#006600'
+                        />
                 }
                 {
                     button

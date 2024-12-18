@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react'
-import AnyItemWarning from '@/components/common/AnyItemWarning'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddServiceForm from '@/components/services/AddServiceForm'
 import { DocsContext, Item } from '@/context/DocsContext'
@@ -13,6 +12,7 @@ import WhatIsServiceCard from '@/components/services/WhatIsServiceCard'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
+import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 export default function Services() {
 
@@ -81,7 +81,11 @@ export default function Services() {
                             setServiceForDeletion={setServiceForDeletion}
                             setDeleteServiceForm={setAboutServiceCard}
                         />
-                        : <AnyItemWarning text='Nenhum item cadastrado' />
+                        : <AnyInfoWarning
+                            page='item'
+                            text='Nesta página, listamos todos os seus itens de trabalho.'
+                            bgColor='#330066'
+                        />
                 }
                 {
                     button

@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 
 import Container from '@/components/common/Container'
-import AnyItemWarning from '@/components/common/AnyItemWarning'
 import MonthInput from '@/components/common/MonthInput'
 import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/functions/common'
 import Revenue from '@/components/info/Revenue'
@@ -17,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import { months } from '@/constants/common'
+import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 export default function Info() {
 
@@ -103,7 +103,11 @@ export default function Info() {
                 filterSchedulings(schedulings, selectedMonth, currentYear)[0]
                     || filterExpenses(expenses, selectedMonth, currentYear)[0]
                     ? <Revenue />
-                    : <AnyItemWarning text='Nenhuma informação disponível' />
+                    : <AnyInfoWarning
+                        page='informação'
+                        text='Nesta página, te informamos sobre seu rendimento mensal, baseado nas suas entradas e saídas de capital.'
+                        bgColor='#08819B'
+                    />
             }
             {
                 generalButton
