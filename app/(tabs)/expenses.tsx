@@ -1,7 +1,7 @@
 import Container from '@/components/common/Container'
 
 import { DocsContext, Outflow } from '@/context/DocsContext'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
@@ -96,18 +96,6 @@ export default function Expenses() {
 
     }
 
-    useEffect(() => {
-        AsyncStorage.getItem('expenses-experienced')
-            .then(experienced => {
-                if (!experienced) {
-                    setWhatIsExpenseCard(true)
-                    AsyncStorage.setItem('expenses-experienced', 'experienced')
-                        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
-                }
-            })
-            .catch(() => Alert.alert('Erro ao acessar banco de dados'))
-    }, [])
-
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -122,7 +110,8 @@ export default function Expenses() {
                         : <AnyInfoWarning
                             page='saída'
                             text='Nesta página, listamos todas as suas saídas de capital do mês.'
-                            bgColor='#660000'
+                            titleBgColor='#660000'
+                            textBgColor='rgba(139, 0, 0, 0.1)'
                         />
                 }
                 {

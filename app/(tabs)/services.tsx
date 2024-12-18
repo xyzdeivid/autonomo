@@ -56,18 +56,6 @@ export default function Services() {
 
     }
 
-    useEffect(() => {
-        AsyncStorage.getItem('items-experienced')
-        .then(experienced => {
-            if (!experienced) {
-                setWhatIsServiceCard(true)
-                AsyncStorage.setItem('items-experienced', 'experienced')
-                .catch(() => Alert.alert('Erro ao acessar banco de dados'))
-            }
-        })
-        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
-    }, [])
-
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -84,7 +72,8 @@ export default function Services() {
                         : <AnyInfoWarning
                             page='item'
                             text='Nesta página, listamos todos os seus itens de trabalho.'
-                            bgColor='#330066'
+                            titleBgColor='#330066'
+                            textBgColor='rgba(51, 0, 102, 0.1)'
                         />
                 }
                 {

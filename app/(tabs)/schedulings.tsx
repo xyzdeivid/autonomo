@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import Container from '@/components/common/Container'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import { DocsContext, Entry, Item } from '@/context/DocsContext'
@@ -13,7 +13,6 @@ import LoadingScreen from '@/components/common/LoadingScreen'
 import WhatIsSchedulingCard from '@/components/schedulings/WhatIsSchedulingCard'
 import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { orderSchedulings } from '@/functions/schedulings'
 import React from 'react'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
@@ -118,19 +117,6 @@ export default function Schedulings() {
 
     }
 
-    useEffect(() => {
-        AsyncStorage.getItem('schedulings-experienced')
-            .then(experienced => {
-                if (!experienced) {
-                    setWhatIsSchedulingCard(true)
-                    AsyncStorage.setItem('schedulings-experienced', 'experienced')
-                        .catch(() => Alert.alert('Erro ao acessar banco de dados'))
-                }
-            })
-            .catch(() => Alert.alert('Erro ao acessar banco de dados'))
-        orderSchedulings(schedulings)
-    }, [])
-
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -145,7 +131,8 @@ export default function Schedulings() {
                         : <AnyInfoWarning
                             page='entrada'
                             text='Neste página, listamos todas as suas entradas de capital do mês.'
-                            bgColor='#006600'
+                            titleBgColor='#006600'
+                            textBgColor='rgba(0, 102, 0, 0.1)'
                         />
                 }
                 {

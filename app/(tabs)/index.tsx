@@ -106,7 +106,8 @@ export default function Info() {
                     : <AnyInfoWarning
                         page='informação'
                         text='Nesta página, te informamos sobre seu rendimento mensal, baseado nas suas entradas e saídas de capital.'
-                        bgColor='#08819B'
+                        titleBgColor='#08819B'
+                        textBgColor='rgba(8, 129, 155, 0.1)'
                     />
             }
             {

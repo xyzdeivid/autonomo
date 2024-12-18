@@ -3,20 +3,25 @@ import { View, StyleSheet, Text } from 'react-native'
 interface AnyInfoWarningProps {
     page: string,
     text: string,
-    bgColor: string
+    titleBgColor: string
+    textBgColor: string
 }
 
-export default function AnyInfoWarning({ page, text, bgColor }: AnyInfoWarningProps) {
+export default function AnyInfoWarning({ page, text, titleBgColor, textBgColor }: AnyInfoWarningProps) {
 
     return (
         <View style={styles.container}>
             <Text style={{
                 ...styles.warningTextTitle,
-                backgroundColor: bgColor
-                }}>
+                backgroundColor: titleBgColor
+            }}>
                 Nenhuma {page} disponível!
             </Text>
-            <Text style={styles.warningText}>
+            <Text style={{
+                ...styles.warningText,
+                backgroundColor: textBgColor,
+                borderBottomColor: titleBgColor
+            }}>
                 {text}
             </Text>
         </View>
@@ -27,9 +32,8 @@ export default function AnyInfoWarning({ page, text, bgColor }: AnyInfoWarningPr
 const styles = StyleSheet.create({
 
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        margin: 30
+        marginTop: 40,
+        marginHorizontal: 30
     },
 
     warningTextTitle: {
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
     warningText: {
         borderBottomWidth: 1,
         paddingVertical: 16,
-        paddingHorizontal: 4
+        paddingHorizontal: 12
     }
 
 })
