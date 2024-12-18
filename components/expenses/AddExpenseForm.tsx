@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
@@ -51,10 +51,6 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
         return false
 
     }
-
-    useEffect(() => {
-        setHideTabBar(true)
-    }, [])
 
     const addExpense = async () => {
 

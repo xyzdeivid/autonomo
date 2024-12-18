@@ -11,7 +11,9 @@ interface FormContainerProps {
 
 export default function FormContainer({ children, setFormOff, bgColor, setButton }: FormContainerProps) {
 
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
+    const displays = useContext(MainDisplaysContext)
+    const [, setHideTabBar] = displays.tabBar
+    
 
     const slideAnim = useRef(new Animated.Value(-1000)).current
 

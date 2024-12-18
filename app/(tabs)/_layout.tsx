@@ -1,15 +1,25 @@
 import { Tabs } from 'expo-router'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import { ContentContext } from '@/context/InfoContent'
+import { Keyboard } from 'react-native'
 
 export default function TabLayout() {
 
     const [hideHeader] = useContext(MainDisplaysContext).header
-    const [hideTabBar] = useContext(MainDisplaysContext).tabBar
+    const [hideTabBar, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [, setAddItemsForm] = useContext(ContentContext).form
     const [, setGeneralButton] = useContext(ContentContext).button
+
+    useEffect(() => {
+        Keyboard.addListener('keyboardDidShow', () =>
+            setHideTabBar(true)
+        )
+        Keyboard.addListener('keyboardDidHide', () =>
+            setHideTabBar(false)
+        )
+    }, [])
 
     return (
         <Tabs

@@ -1,6 +1,6 @@
 import { Alert, Text } from 'react-native'
-import { useContext, useEffect, useState } from 'react'
-import { DocsContext, Outflow } from '@/context/DocsContext'
+import { useContext, useState } from 'react'
+import { DocsContext } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
 import NumberInput from '../common/NumberInput'
 import FormContainer from '../common/FormContainer'
@@ -53,10 +53,6 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         }
         return false
     }
-
-    useEffect(() => {
-        setHideTabBar(true)
-    }, [])
 
     const addService = async () => {
 

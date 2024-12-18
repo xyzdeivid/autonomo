@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { StyleSheet, Text } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
@@ -7,7 +7,7 @@ import { DocsContext, Entry, Item } from '@/context/DocsContext'
 import DateInput from '../common/DateInput'
 import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
-import { generateId, warning } from '@/functions/common'
+import { warning } from '@/functions/common'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import { createNewEntry, getSchedulingValue, getServices } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
@@ -189,11 +189,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
     }
     
-
-    useEffect(() => {
-        setHideTabBar(true)
-    }, [])
-
     return (
         <>
             {loadingScreen && <LoadingScreen />}
