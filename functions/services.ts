@@ -52,40 +52,6 @@ export const getCategoryAndSet = (
     }
 }
 
-export const checkAllInputs = (
-    choice: string, name: string,
-    value: number, amount: number,
-    resale: boolean, stock: boolean
-): boolean => {
-
-    switch (choice) {
-
-        case 'product':
-
-            if (resale || stock) {
-                if (name && value && amount) return true
-            } else {
-                if (name && value) return true
-            }
-            return false
-
-        case 'service':
-
-            if (name && value) return true
-            return false
-
-        case 'budget':
-
-            if (name) return true
-            return false
-
-        default:
-            return false
-
-    }
-
-}
-
 export const createNewService = (
     choice: string, name: string,
     value: number, amount: number,

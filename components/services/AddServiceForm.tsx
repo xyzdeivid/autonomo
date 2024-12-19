@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, Button, StyleSheet, Text, View } from 'react-native'
 import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
@@ -9,7 +9,7 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import NameInput from '../common/NameInput'
 
 import {
-    checkAllInputs, checkIfThereIsAnotherService,
+    checkIfThereIsAnotherService,
     checkServicesAmount, createNewOutflow,
     createNewService, orderServices
 } from '@/functions/services'
@@ -57,19 +57,6 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
 
     const addService = async () => {
 
-        if (!checkAllInputs(choice, name, value, amount, resale, stock)) {
-
-            Alert.alert(
-                'Preencha todos os campos!'
-            )
-
-            setAddServiceForm(false)
-            setButton(true)
-
-            return
-
-        }
-
         setLoadingScreen(true)
 
         const service = createNewService(choice, name, value, amount, isThereAmount(), resale)
@@ -87,6 +74,8 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             } catch (err) {
 
                 warning('Erro ao acessar banco de dados', setLoadingScreen)
+                setAddServiceForm(false)
+                setButton(true)
                 return
 
             }
@@ -97,12 +86,16 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         }
 
         if (!checkServicesAmount(services, service)) {
-            warning('Você só pode registrar 8 items por categoria', setLoadingScreen)
+            warning('Você só pode registrar 8 itens por categoria', setLoadingScreen)
+            setAddServiceForm(false)
+            setButton(true)
             return
         }
 
         if (checkIfThereIsAnotherService(services, name)) {
             warning('Um item com este nome já existe', setLoadingScreen)
+            setAddServiceForm(false)
+            setButton(true)
             return
         }
 
@@ -115,6 +108,8 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         } catch (err) {
 
             warning('Erro ao acessar banco de dados', setLoadingScreen)
+            setAddServiceForm(false)
+            setButton(true)
             return
 
         }
@@ -137,6 +132,10 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     }
 
     const nextStep = () => {
+        if (step === 0 && !choice) {
+            Alert.alert('Escolha uma categoria!')
+            return
+        }
         if (step === 1 && choice === 'product' && resale) {
             if (!(amount && purchaseValue)) {
                 Alert.alert('Preencha todos os campos!')
@@ -150,15 +149,31 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             }
         }
         if (step === 1 && choice === 'service') {
+            if (!(name && value)) {
+                Alert.alert('Preencha todos os campos!')
+                return
+            }
             addService()
         }
         if (step === 1 && choice === 'budget') {
+            if (!name) {
+                Alert.alert('Preencha todos os campos!')
+                return
+            }
             addService()
         }
         if (step === 2 && resale) {
+            if (!(name && value)) {
+                Alert.alert('Preencha todos os campos!')
+                return
+            }
             addService()
         }
         if (step === 3) {
+            if (!(name && value)) {
+                Alert.alert('Preencha todos os campos!')
+                return
+            }
             addService()
         }
         setStep(step + 1)
@@ -172,7 +187,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             return '2. Preencha as informações finais do seu serviço:'
         }
         if (step === 1 && choice === 'budget') {
-            return '3. Preencha as informações finais do seu serviço:'
+            return '2. Preencha as informações finais do seu serviço:'
         }
         if (step === 2 && choice === 'product' && resale) {
             return '3. Preencha as informações finais do seu produto:'
@@ -181,7 +196,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             return '3. Verifique a forma de venda do seu produto:'
         }
         if (step === 3) {
-            return '3. Preencha as informações finais do seu produto:'
+            return '4. Preencha as informações finais do seu produto:'
         }
         return '1. Selecione a categoria do seu item:'
     }
@@ -354,7 +369,17 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         </>
                     )
                 }
-                <SubmitFormButtons submit={nextStep} submitButtonText='Próximo' submitButtonColor='#330066' />
+                <View style={styles.submitButtons}>
+                    <View>
+                        <Button onPress={() => nextStep()} title='Próximo' color='#330066' />
+                    </View>
+                    <View>
+                        <Button onPress={() => {
+                            setAddServiceForm(false)
+                            setButton(true)
+                        }} title='Cancelar' color='gray' />
+                    </View>
+                </View>
             </View>
         </>
     )
@@ -375,6 +400,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 16,
         color: '#330066'
+    },
+
+    submitButtons: {
+        position: 'absolute',
+        bottom: 20,
+        start: 16,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 
 
