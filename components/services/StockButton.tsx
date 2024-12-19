@@ -7,37 +7,22 @@ interface StockButtonProps {
 
 export default function StockButton({ stock, setStock }: StockButtonProps) {
 
-    const getText = () => {
-        return stock
-        ? 'possua estoque'
-        : 'seja vendido por encomenda'
-    }
-
     return (
         <View style={{ marginBottom: 20 }}>
-        <View style={styles.buttonsContainer}>
-            <Pressable style={{
-                ...styles.button,
-                borderTopLeftRadius: 4,
-                borderBottomLeftRadius: 4,
-                backgroundColor: stock ? '#330066' : '#6600CC'
-            }}
-                onPress={() => setStock(true)}
-            >
-                <Text style={styles.textButton}>Estoque</Text>
-            </Pressable>
-            <Pressable style={{
-                ...styles.button,
-                borderTopRightRadius: 4,
-                borderBottomRightRadius: 4,
-                backgroundColor: stock ? '#6600CC' : '#330066'
-            }}
-                onPress={() => setStock(false)}
-            >
-                <Text style={styles.textButton}>Encomenda</Text>
-            </Pressable>
-        </View>
-        <Text style={styles.text}>Caso seu produto {getText()}.</Text>
+            <View style={styles.buttonContainer}>
+                <Text style={{ color: '#330066', fontWeight: 'bold', fontSize: 14 }}>Estoque</Text>
+                <Pressable
+                    style={{
+                        ...styles.box,
+                        backgroundColor: stock ? '#330066' : 'transparent'
+                    }}
+                    onPress={() => {
+                        setStock(stock => !stock)
+                    }}
+                />
+            </View>
+            <Text style={styles.text}>Preencha caso o seu produto possua estoque.</Text>
+            <Text style={styles.text}>Caso ele seja vendido por encomenda, basta avançar para a próxima etapa.</Text>
         </View>
     )
 
@@ -45,24 +30,22 @@ export default function StockButton({ stock, setStock }: StockButtonProps) {
 
 const styles = StyleSheet.create({
 
-    buttonsContainer: {
+    buttonContainer: {
         display: 'flex',
         flexDirection: 'row'
     },
 
-    button: {
-        paddingHorizontal: 8,
-        paddingVertical: 4
-    },
-
-    textButton: {
-        color: 'white',
-        fontSize: 12
+    box: {
+        width: 20,
+        height: 20,
+        borderWidth: 1,
+        borderColor: '#330066',
+        marginStart: 4,
+        borderRadius: 5
     },
 
     text: {
-        color: 'rgba(51, 0, 102, 0.5)',
-        fontSize: 12,
+        color: '#330066',
         marginTop: 2
     }
 

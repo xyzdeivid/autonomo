@@ -45,7 +45,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [resale, setResale] = useState(false)
     const [purchaseValue, setPurchaseValue] = useState(0)
     const [purchaseDate, setPurchaseDate] = useState('')
-    const [stock, setStock] = useState(true)
+    const [stock, setStock] = useState(false)
     const [step, setStep] = useState(0)
 
     const isThereAmount = () => {
@@ -139,13 +139,22 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         if (step === 2 && resale) {
             addService()
         }
+        if (step === 3) {
+            addService()
+        }
     }
 
     const getTitle = () => {
         if (step === 1 && choice === 'product') {
             return '2. Verifique se o produto é uma revenda:'
         }
-        if (step === 2) {
+        if (step === 2 && choice === 'product' && resale) {
+            return '3. Preencha as informações finais do seu produto:'
+        }
+        if (step === 2 && choice === 'product' && !resale) {
+            return '3. Verifique a forma de venda do seu produto:'
+        }
+        if (step === 3) {
             return '3. Preencha as informações finais do seu produto:'
         }
         return '1. Selecione a categoria do seu item:'
@@ -233,13 +242,31 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         </Text>
                     </>
                 )}
+                {step === 2 && !resale && choice === 'product' && (
+                    <>
+                        <StockButton
+                            stock={stock}
+                            setStock={setStock}
+                        />
+                        {
+                            stock && (
+                                <AmountInput
+                                    text={resale ? 'Unidades' : 'Estoque Atual'}
+                                    setAmount={setAmount}
+                                    bgColor='rgba(51, 0, 102, 0.1)'
+                                    textColor='#330066'
+                                />
+                            )
+                        }
+                    </>
+                )}
                 {
                     step === 2 && resale && (
                         <>
                             <NameInput
                                 setName={setName}
-                                bgColor='rgba(51, 0, 102, 0.1)'
                                 textColor='#330066'
+                                bgColor='rgba(51, 0, 102, 0.1)'
                             />
                             {choice !== 'budget' && (
                                 <NumberInput
@@ -252,24 +279,30 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         </>
                     )
                 }
+                {
+                    step === 3 && (
+                        <>
+                        <NameInput
+                                setName={setName}
+                                textColor='#330066'
+                                bgColor='rgba(51, 0, 102, 0.1)'
+                            />
+                            {choice !== 'budget' && (
+                                <NumberInput
+                                    setValue={setValue}
+                                    bgColor='rgba(51, 0, 102, 0.1)'
+                                    textColor='#330066'
+                                    label={choice === 'product' ? 'Valor de Venda (un)' : ''}
+                                />
+                            )}
+                            </>
+                    )
+                }
                 {/* 
                         {choice === 'budget' && (
                             <Text style={{ marginBottom: 20, color: 'rgba(51, 0, 102, 0.5)' }} >O valor será definido ao registrar entrada.</Text>
                         )}
-                        {choice === 'product' && !resale && (
-                            <StockButton
-                                stock={stock}
-                                setStock={setStock}
-                            />
-                        )}
-                        {choice === 'product' && isThereAmount() && (
-                            <AmountInput
-                                text={resale ? 'Unidades' : 'Estoque Atual'}
-                                setAmount={setAmount}
-                                bgColor='rgba(51, 0, 102, 0.1)'
-                                textColor='#330066'
-                            />
-                        )}
+                        
                          */}
                 <SubmitFormButtons submit={nextStep} submitButtonText='Próximo' submitButtonColor='#330066' />
             </View>
