@@ -139,6 +139,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         if (step === 1 && choice === 'service') {
             addService()
         }
+        if (step === 1 && choice === 'budget') {
+            addService()
+        }
         if (step === 2 && resale) {
             addService()
         }
@@ -153,6 +156,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         }
         if (step === 1 && choice === 'service') {
             return '2. Preencha as informações finais do seu serviço:'
+        }
+        if (step === 1 && choice === 'budget') {
+            return '3. Preencha as informações finais do seu serviço:'
         }
         if (step === 2 && choice === 'product' && resale) {
             return '3. Preencha as informações finais do seu produto:'
@@ -202,6 +208,20 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 bgColor='rgba(51, 0, 102, 0.1)'
                                 textColor='#330066'
                             />
+                        </>
+                    )
+                }
+                {
+                    step === 1 && choice === 'budget' && (
+                        <>
+                            <NameInput
+                                setName={setName}
+                                textColor='#330066'
+                                bgColor='rgba(51, 0, 102, 0.1)'
+                            />
+                            <Text style={{ marginBottom: 20, color: '#330066' }}>
+                                O valor será definido ao registrar entrada.
+                            </Text>
                         </>
                     )
                 }
@@ -304,7 +324,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                 {
                     step === 3 && (
                         <>
-                        <NameInput
+                            <NameInput
                                 setName={setName}
                                 textColor='#330066'
                                 bgColor='rgba(51, 0, 102, 0.1)'
@@ -317,15 +337,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                     label={choice === 'product' ? 'Valor de Venda (un)' : ''}
                                 />
                             )}
-                            </>
+                        </>
                     )
                 }
-                {/* 
-                        {choice === 'budget' && (
-                            <Text style={{ marginBottom: 20, color: 'rgba(51, 0, 102, 0.5)' }} >O valor será definido ao registrar entrada.</Text>
-                        )}
-                        
-                         */}
                 <SubmitFormButtons submit={nextStep} submitButtonText='Próximo' submitButtonColor='#330066' />
             </View>
         </>
