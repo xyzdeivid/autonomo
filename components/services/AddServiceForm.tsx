@@ -136,6 +136,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
 
     const nextStep = () => {
         setStep(step + 1)
+        if (step === 1 && choice === 'service') {
+            addService()
+        }
         if (step === 2 && resale) {
             addService()
         }
@@ -147,6 +150,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const getTitle = () => {
         if (step === 1 && choice === 'product') {
             return '2. Verifique se o produto é uma revenda:'
+        }
+        if (step === 1 && choice === 'service') {
+            return '2. Preencha as informações finais do seu serviço:'
         }
         if (step === 2 && choice === 'product' && resale) {
             return '3. Preencha as informações finais do seu produto:'
@@ -181,6 +187,22 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                 {
                     step === 0 && (
                         <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
+                    )
+                }
+                {
+                    step === 1 && choice === 'service' && (
+                        <>
+                            <NameInput
+                                setName={setName}
+                                textColor='#330066'
+                                bgColor='rgba(51, 0, 102, 0.1)'
+                            />
+                            <NumberInput
+                                setValue={setValue}
+                                bgColor='rgba(51, 0, 102, 0.1)'
+                                textColor='#330066'
+                            />
+                        </>
                     )
                 }
                 {
