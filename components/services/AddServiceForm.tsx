@@ -60,9 +60,11 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         if (!checkAllInputs(choice, name, value, amount, resale, stock)) {
 
             Alert.alert(
-                'Preencha todos os campos',
-                'Todos os campos do formulário precisam ser preenchidos'
+                'Preencha todos os campos!'
             )
+
+            setAddServiceForm(false)
+            setButton(true)
 
             return
 
@@ -135,7 +137,18 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     }
 
     const nextStep = () => {
-        setStep(step + 1)
+        if (step === 1 && choice === 'product' && resale) {
+            if (!(amount && purchaseValue)) {
+                Alert.alert('Preencha todos os campos!')
+                return
+            }
+        }
+        if (step === 2 && choice === 'product' && stock) {
+            if (!amount) {
+                Alert.alert('Preencha todos os campos!')
+                return
+            }
+        }
         if (step === 1 && choice === 'service') {
             addService()
         }
@@ -148,6 +161,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         if (step === 3) {
             addService()
         }
+        setStep(step + 1)
     }
 
     const getTitle = () => {
