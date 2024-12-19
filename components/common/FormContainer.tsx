@@ -39,7 +39,6 @@ export default function FormContainer({ children, setFormOff, bgColor, setButton
                 }),
             ]).start(() => {
                 setFormOff(false)
-                setHideTabBar(false)
                 setButton(true)
             })
         }

@@ -1,5 +1,5 @@
-import { Alert, Button, StyleSheet, Text, View } from 'react-native'
-import { useContext, useState } from 'react'
+import { Alert, Animated, Button, StyleSheet, Text, View } from 'react-native'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import FormBody from '../common/FormBody'
 import NumberInput from '../common/NumberInput'
@@ -201,17 +201,36 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         return '1. Selecione a categoria do seu item:'
     }
 
+    const slideAnim = useRef(new Animated.Value(-1000)).current
+
+    useEffect(() => {
+
+        Animated.parallel([
+            Animated.timing(slideAnim, {
+                toValue: 0,
+                duration: 250,
+                useNativeDriver: true,
+            })
+        ]).start()
+
+    }, [])
+
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <View style={styles.container}>
+            <Animated.View
+                style={{
+                    ...styles.container,
+                    transform: [{ translateY: slideAnim }]
+                }}
+            >
                 <FormTitle
                     text='Novo Item'
                     textColor='#330066'
                 />
                 <View style={{
                     borderBottomWidth: 2,
-                    marginTop: -10,
+                    marginTop: -8,
                     marginBottom: 28,
                     borderBottomColor: '#330066'
                 }}
@@ -375,12 +394,20 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                     </View>
                     <View>
                         <Button onPress={() => {
-                            setAddServiceForm(false)
-                            setButton(true)
+                            Animated.parallel([
+                                Animated.timing(slideAnim, {
+                                    toValue: -1000,
+                                    duration: 250,
+                                    useNativeDriver: true
+                                }),
+                            ]).start(() => {
+                                setAddServiceForm(false)
+                                setButton(true)
+                            })
                         }} title='Cancelar' color='gray' />
                     </View>
                 </View>
-            </View>
+            </Animated.View>
         </>
     )
 
@@ -393,7 +420,8 @@ const styles = StyleSheet.create({
         height: '100%',
         position: 'absolute',
         backgroundColor: '#FFFFFF',
-        paddingHorizontal: 16
+        paddingHorizontal: 16,
+        paddingTop: 8
     },
 
     title: {

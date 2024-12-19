@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     buttonContainer: {
-        marginBottom: 24
+        marginBottom: 20
     },
     button: {
         alignSelf: 'flex-start',
