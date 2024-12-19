@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Alert } from 'react-native'
+import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
@@ -44,8 +44,12 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [newDate, setNewDate] = useState('')
 
     useEffect(() => {
-        setHideTabBar(true)
         setButton(false)
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            setFormOff(false)
+            setButton(true)
+            return null
+        })
     }, [])
 
     const editAmount = async () => {
@@ -73,14 +77,14 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
                             await AsyncStorage.setItem('items', JSON.stringify([...remainingItems, product]))
                             setItems(orderServices([...remainingItems, product]))
-                            
+
                         } catch (err) {
 
                             Alert.alert('Erro ao acessar banco de dados')
                             return
 
                         }
-                        
+
                         scheduling.service.value =
                             (scheduling.service.value / scheduling.service.amount) * newAmount
 
@@ -133,11 +137,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
             await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
             setEntries([...remainingEntries, scheduling])
-            
+
         } catch (err) {
 
             Alert.alert('Erro ao acessar banco de dados')
-            
+
         }
 
         setLoadingPage(false)
@@ -157,13 +161,13 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
             await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
             setEntries([...remainingEntries, scheduling])
-            
+
         } catch (err) {
 
             Alert.alert('Erro ao acessar banco de dados')
-            
+
         }
-        
+
         setLoadingPage(false)
         setHideTabBar(false)
         setButton(true)

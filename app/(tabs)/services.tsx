@@ -9,7 +9,7 @@ import ServicesContent from '@/components/services/ServicesContent'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import WhatIsServiceCard from '@/components/services/WhatIsServiceCard'
-import { Alert } from 'react-native'
+import { Alert, BackHandler } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
@@ -19,7 +19,9 @@ export default function Services() {
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [aboutServiceCard, setAboutServiceCard] = useState(false)
     const [serviceForDeletion, setServiceForDeletion] = useState({} as Item)
-    const [services, setServices] = useContext(DocsContext).items
+    const appDocs = useContext(DocsContext)
+    const [services, setServices] = appDocs.items
+    const [currentPage] = appDocs.currentPage
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
@@ -29,6 +31,23 @@ export default function Services() {
     useEffect(() => {
         getCategoryAndSet(services, setCategory)
     }, [services])
+
+    useEffect(() => {
+        if (currentPage !== 'services') {
+            setAddServiceForm(false)
+            setAboutServiceCard(false)
+            setWhatIsServiceCard(false)
+            setButton(true)
+        }
+    }, [currentPage])
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            setAddServiceForm(false)
+            setButton(true)
+            return null
+        })
+    }, [])
 
     const deleteService = async (id: string) => {
 

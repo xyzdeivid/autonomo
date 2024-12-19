@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Container from '@/components/common/Container'
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import { DocsContext, Entry, Item } from '@/context/DocsContext'
@@ -11,7 +11,7 @@ import { orderServices } from '@/functions/services'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import WhatIsSchedulingCard from '@/components/schedulings/WhatIsSchedulingCard'
-import { Alert } from 'react-native'
+import { Alert, BackHandler } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
@@ -30,6 +30,7 @@ export default function Schedulings() {
     const [button, setButton] = useState(true)
     const [whatIsSchedulingCard, setWhatIsSchedulingCard] = useState(false)
     const [currentYear] = appDocs.currentYear
+    const [currentPage] = appDocs.currentPage
 
     const checkAmount = async (scheduling: Entry) => {
 
@@ -116,6 +117,23 @@ export default function Schedulings() {
         setButton(true)
 
     }
+
+    useEffect(() => {
+        if (currentPage !== 'schedulings') {
+            setAddSchedulingForm(false)
+            setDeleteSchedulingForm(false)
+            setWhatIsSchedulingCard(false)
+            setButton(true)
+        }
+    }, [currentPage])
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            setAddSchedulingForm(false)
+            setButton(true)
+            return null
+        })
+    }, [])
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Alert } from 'react-native'
+import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
 import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
@@ -35,8 +35,12 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
     const [newValue, setNewValue] = useState(0)
 
     useEffect(() => {
-        setHideTabBar(true)
         setButton(false)
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            setFormOff(false)
+            setButton(true)
+            return null
+        })
     }, [])
 
     const editName = async () => {

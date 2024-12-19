@@ -1,7 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import FormContainer from '../common/FormContainer'
-import { useContext, useEffect } from 'react'
-import { MainDisplaysContext } from '@/context/MainDisplays'
+import { useEffect } from 'react'
 import FormBody from '../common/FormBody'
 
 interface WhatIsExpenseCardProps {
@@ -11,11 +10,14 @@ interface WhatIsExpenseCardProps {
 
 export default function WhatIsExpenseCard({ setWhatIsExpenseCard, setButton }: WhatIsExpenseCardProps) {
 
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
 
     useEffect(() => {
         setButton(false)
-        setHideTabBar(true)
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            setWhatIsExpenseCard(false)
+            setButton(true)
+            return null
+        })
     }, [])
 
     return (

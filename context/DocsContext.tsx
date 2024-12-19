@@ -67,6 +67,7 @@ const DEFAULT_ENTRY: Entry = {
 
 type CurrentYearState = [string, React.Dispatch<React.SetStateAction<string>>]
 type CurrentMonthState = [number, React.Dispatch<React.SetStateAction<number>>]
+type CurrentPageState = [string, React.Dispatch<React.SetStateAction<string>>]
 
 interface TDocsContext {
     items: ItemsState
@@ -74,6 +75,7 @@ interface TDocsContext {
     entries: EntriesState
     currentYear: CurrentYearState
     selectedMonth: CurrentMonthState
+    currentPage: CurrentPageState
 }
 
 const DEFAULT_CONTEXT: TDocsContext = {
@@ -81,7 +83,8 @@ const DEFAULT_CONTEXT: TDocsContext = {
     outflows: [[DEFAULT_OUTFLOW], () => { }],
     entries: [[DEFAULT_ENTRY], () => { }],
     currentYear: ['', () => { }],
-    selectedMonth: [0, () => { }]
+    selectedMonth: [0, () => { }],
+    currentPage: ['', () => { }]
 }
 
 export const DocsContext = createContext<TDocsContext>(DEFAULT_CONTEXT)
@@ -98,6 +101,7 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [entries, setEntries] = useState<Entry[]>([])
     const [currentYear, setCurrentYear] = useState<string>('')
     const [selectedMonth, setSelectedMonth] = useState(0)
+    const [currentPage, setCurrentPage] = useState('index')
 
     type SetterT = React.Dispatch<React.SetStateAction<Item[]>> 
     | React.Dispatch<React.SetStateAction<Outflow[]>>
@@ -137,7 +141,8 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         outflows: [outflows, setOutflows],
         entries: [entries, setEntries],
         currentYear: [currentYear, setCurrentYear],
-        selectedMonth: [selectedMonth, setSelectedMonth]
+        selectedMonth: [selectedMonth, setSelectedMonth],
+        currentPage: [currentPage, setCurrentPage]
     }
 
     useEffect(() => {

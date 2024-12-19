@@ -1,7 +1,7 @@
 import Container from '@/components/common/Container'
 
 import { DocsContext, Outflow } from '@/context/DocsContext'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import AddItemButton from '@/components/common/AddItemButton'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
@@ -10,7 +10,7 @@ import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import WhatIsExpenseCard from '@/components/expenses/WhatIsExpenseCard'
-import { Alert } from 'react-native'
+import { Alert, BackHandler } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
@@ -29,6 +29,7 @@ export default function Expenses() {
     const [button, setButton] = useState(true)
     const [whatIsExpenseCard, setWhatIsExpenseCard] = useState(false)
     const [currentYear] = appDocs.currentYear
+    const [currentPage] = appDocs.currentPage
 
     const deleteExpense = async (expense: Outflow) => {
 
@@ -95,6 +96,23 @@ export default function Expenses() {
         setButton(true)
 
     }
+
+    useEffect(() => {
+        if (currentPage !== 'expenses') {
+            setAddExpenseForm(false)
+            setDeleteExpenseForm(false)
+            setWhatIsExpenseCard(false)
+            setButton(true)
+        }
+    }, [currentPage])
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            setAddExpenseForm(false)
+            setButton(true)
+            return null
+        })
+    }, [])
 
     return (
         <>

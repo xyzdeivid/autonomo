@@ -4,6 +4,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import { ContentContext } from '@/context/InfoContent'
 import { Keyboard } from 'react-native'
+import { DocsContext } from '@/context/DocsContext'
 
 export default function TabLayout() {
 
@@ -11,6 +12,7 @@ export default function TabLayout() {
     const [hideTabBar, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [, setAddItemsForm] = useContext(ContentContext).form
     const [, setGeneralButton] = useContext(ContentContext).button
+    const [, setCurrentPage] = useContext(DocsContext).currentPage
 
     useEffect(() => {
         Keyboard.addListener('keyboardDidShow', () =>
@@ -38,6 +40,11 @@ export default function TabLayout() {
             }}>
             <Tabs.Screen
                 name='index'
+                listeners={() => ({
+                    tabPress: () => {
+                        setCurrentPage('index')
+                    },
+                })}
                 options={{
                     title: 'Informações',
                     tabBarActiveTintColor: '#08819B',
@@ -51,6 +58,7 @@ export default function TabLayout() {
                     tabPress: () => {
                         setAddItemsForm(false)
                         setGeneralButton(true)
+                        setCurrentPage('schedulings')
                     },
                 })}
                 options={{
@@ -65,6 +73,7 @@ export default function TabLayout() {
                     tabPress: () => {
                         setAddItemsForm(false)
                         setGeneralButton(true)
+                        setCurrentPage('expenses')
                     },
                 })}
                 options={{
@@ -79,6 +88,7 @@ export default function TabLayout() {
                     tabPress: () => {
                         setAddItemsForm(false)
                         setGeneralButton(true)
+                        setCurrentPage('services')
                     },
                 })}
                 options={{

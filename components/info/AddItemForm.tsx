@@ -7,13 +7,12 @@ import { StyleSheet, Pressable, Text, Animated, Alert } from 'react-native'
 interface AddItemFormProps {
     setGeneralButton: React.Dispatch<React.SetStateAction<boolean>>
     setAddItemsForm: React.Dispatch<React.SetStateAction<boolean>>
-    setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
     services: Item[]
 }
 
-export default function AddItemForm({ setGeneralButton, setAddItemsForm, setAddServiceForm,
+export default function AddItemForm({ setGeneralButton, setAddItemsForm,
     setAddExpenseForm, setAddSchedulingForm, services }: AddItemFormProps) {
 
     const slideAnim = useRef(new Animated.Value(1000)).current
