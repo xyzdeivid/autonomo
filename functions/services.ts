@@ -116,17 +116,6 @@ export const checkIfThereIsAnotherService = (services: Item[], name: string): bo
 
 }
 
-export const checkTitle = (item: string) => {
-    switch (item) {
-        case 'service':
-            return 'Serviço'
-        case 'product':
-            return 'Produto'
-        case 'budget':
-            return 'Orçamentário'
-    }
-}
-
 export const createNewOutflow = (
     valueChoice: string,
     purchaseValue: number,

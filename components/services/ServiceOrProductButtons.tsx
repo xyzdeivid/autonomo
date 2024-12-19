@@ -13,31 +13,30 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
             : '#6600CC'
     }
 
-    const getText = () => {
-        switch (choice) {
-            case 'product':
-                return 'produto com valor definido'                
-            case 'service':
-                return 'serviço com valor definido'
-            case 'budget':
-                return 'serviço com valor variável'
-        }
-    }
-
     return (
         <View style={styles.container}>
-            <View style={styles.buttonsContainer}>
+            <View style={styles.buttonContainer}>
                 <Pressable
                     style={{
                         ...styles.button,
-                        borderTopLeftRadius: 4,
-                        borderBottomLeftRadius: 4,
                         backgroundColor: checkChoice('product')
                     }}
                     onPress={() => setChoice('product')}
                 >
                     <Text style={styles.textButton}>Produto</Text>
                 </Pressable>
+                <Text
+                    style={{
+                        ...styles.infoText,
+                        fontWeight: choice === 'product' ? 'bold' : 'normal',
+                        textDecorationLine: choice === 'product' ? 'underline' : 'none'
+                    }}
+                >
+                    Selecione esta opção se o seu novo item de trabalho for um produto manufaturado destinado à venda.
+                    Como por exemplo: vestuário, acessórios, alimentos, etc...
+                </Text>
+            </View>
+            <View style={styles.buttonContainer}>
                 <Pressable
                     style={{
                         ...styles.button,
@@ -47,19 +46,38 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
                 >
                     <Text style={styles.textButton}>Serviço</Text>
                 </Pressable>
+                <Text
+                    style={{
+                        ...styles.infoText,
+                        fontWeight: choice === 'service' ? 'bold' : 'normal',
+                        textDecorationLine: choice === 'service' ? 'underline' : 'none'
+                    }}
+                >
+                    Selecione esta opção se o seu novo item de trabalho for um serviço prestado com um valor fixo definido.
+                    Como por exemplo: serviços de beleza (cortes de cabelo, maquiagem), etc...
+                </Text>
+            </View>
+            <View style={styles.buttonContainer}>
                 <Pressable
                     style={{
                         ...styles.button,
-                        borderTopRightRadius: 4,
-                        borderBottomRightRadius: 4,
                         backgroundColor: checkChoice('budget')
                     }}
                     onPress={() => setChoice('budget')}
                 >
                     <Text style={styles.textButton}>Orçamentário</Text>
                 </Pressable>
+                <Text
+                    style={{
+                        ...styles.infoText,
+                        fontWeight: choice === 'budget' ? 'bold' : 'normal',
+                        textDecorationLine: choice === 'budget' ? 'underline' : 'none'
+                    }}
+                >
+                    Selecione esta opção se o seu novo item de trabalho for um serviço prestado cujo valor pode variar
+                    conforme as condições ou requisitos do cliente. Como por exemplo: reparos, manutenção, etc...
+                </Text>
             </View>
-            <Text style={styles.infoText}>Caso seu novo item seja um {getText()}.</Text>
         </View>
     )
 
@@ -69,20 +87,20 @@ const styles = StyleSheet.create({
     container: {
         marginBottom: 20
     },
-    buttonsContainer: {
-        display: 'flex',
-        flexDirection: 'row'
+    buttonContainer: {
+        marginBottom: 24
     },
     button: {
-        paddingHorizontal: 8,
-        paddingVertical: 4
+        alignSelf: 'flex-start',
+        padding: 7,
+        borderTopStartRadius: 7
     },
     textButton: {
-        color: 'white'
+        color: 'white',
+        fontSize: 14
     },
     infoText: {
-        color: 'rgba(51, 0, 102, 0.5)',
-        fontSize: 12,
-        marginTop: 2
+        color: '#330066',
+        marginTop: 6
     }
 })

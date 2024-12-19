@@ -10,7 +10,7 @@ export default function ResaleButton({ resale, setResale }: ResaleButtonProps) {
     return (
         <View style={{ marginBottom: 20 }}>
             <View style={styles.container}>
-                <Text style={{ color: '#330066', fontWeight: 'bold' }}>Revenda</Text>
+                <Text style={{ color: '#330066', fontWeight: 'bold', fontSize: 14 }}>Revenda</Text>
                 <Pressable
                     style={{
                         ...styles.box,
@@ -21,7 +21,8 @@ export default function ResaleButton({ resale, setResale }: ResaleButtonProps) {
                     }}
                 />
             </View>
-            <Text style={styles.text}>Deixe preenchido caso você esteja revendendo o produto.</Text>
+            <Text style={styles.text}>Preencha caso você compre o produto de um fornecedor para revendê-lo posteriormente.</Text>
+            <Text style={styles.text}>Caso contrário, basta avançar para a próxima etapa.</Text>
         </View>
     )
 
@@ -41,8 +42,7 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     text: {
-        color: 'rgba(51, 0, 102, 0.5)',
-        fontSize: 12,
+        color: '#330066',
         marginTop: 2
     }
 })
