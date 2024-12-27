@@ -141,7 +141,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 bgColor='rgba(139, 0, 0, 0.1)'
                 setButton={setButton}
             >
-                <FormBody borderColor='rgba(102, 0, 0, 0.1)'>
+                <FormBody borderColor='#660000'>
                     <FormTitle text='Nova Saída' textColor='#660000' />
                     <FormInputs>
                         {products[0] && (

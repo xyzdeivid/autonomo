@@ -197,7 +197,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                 bgColor='rgba(0, 102, 0, 0.1)'
                 setButton={setButton}
             >
-                <FormBody borderColor='rgba(0, 102, 0, 0.1)'>
+                <FormBody borderColor='#006600'>
                     <FormTitle text='Nova Entrada' textColor='#006600' />
                     <FormInputs>
                         <SelectServiceInput

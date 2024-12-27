@@ -225,7 +225,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                 bgColor='rgba(0, 102, 0, 0.1)'
                 setButton={setButton}
             >
-                <FormBody borderColor='rgba(0, 102, 0, 0.1)'>
+                <FormBody borderColor='#006600'>
                     <FormTitle text='Informações de Entrada' textColor='#006600' />
                     <View>
                         {

@@ -15,7 +15,7 @@ export default function FormContainer({ children, setFormOff, bgColor, setButton
     const [, setHideTabBar] = displays.tabBar
     
 
-    const slideAnim = useRef(new Animated.Value(-1000)).current
+    const slideAnim = useRef(new Animated.Value(1000)).current
 
     useEffect(() => {
 
@@ -31,16 +31,8 @@ export default function FormContainer({ children, setFormOff, bgColor, setButton
 
     const closeForm = (key: string) => {
         if (key !== 'body') {
-            Animated.parallel([
-                Animated.timing(slideAnim, {
-                    toValue: -1000,
-                    duration: 250,
-                    useNativeDriver: true
-                }),
-            ]).start(() => {
-                setFormOff(false)
-                setButton(true)
-            })
+            setFormOff(false)
+            setButton(true)
         }
     }
 
@@ -48,7 +40,6 @@ export default function FormContainer({ children, setFormOff, bgColor, setButton
         <Animated.View
             style={{
                 ...styles.animation,
-                backgroundColor: bgColor ? bgColor : 'rgba(17, 41, 53, 0.1)',
                 transform: [{ translateY: slideAnim }]
             }}
         >

@@ -201,7 +201,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         return '1. Selecione a categoria do seu item:'
     }
 
-    const slideAnim = useRef(new Animated.Value(-1000)).current
+    const slideAnim = useRef(new Animated.Value(1000)).current
 
     useEffect(() => {
 
@@ -390,21 +390,13 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                 }
                 <View style={styles.submitButtons}>
                     <View>
-                        <Button onPress={() => nextStep()} title='Próximo' color='#330066' />
+                        <Button onPress={() => {
+                            setAddServiceForm(false)
+                            setButton(true)
+                        }} title='Cancelar' color='gray' />
                     </View>
                     <View>
-                        <Button onPress={() => {
-                            Animated.parallel([
-                                Animated.timing(slideAnim, {
-                                    toValue: -1000,
-                                    duration: 250,
-                                    useNativeDriver: true
-                                }),
-                            ]).start(() => {
-                                setAddServiceForm(false)
-                                setButton(true)
-                            })
-                        }} title='Cancelar' color='gray' />
+                        <Button onPress={() => nextStep()} title='Próximo' color='#330066' />
                     </View>
                 </View>
             </Animated.View>
