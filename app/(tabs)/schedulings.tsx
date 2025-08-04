@@ -148,7 +148,7 @@ export default function Schedulings() {
                         />
                         : <AnyInfoWarning
                             page='entrada'
-                            text='Neste página, listamos todas as suas entradas de capital do mês.'
+                            text='listamos todas as suas entradas de capital do mês.'
                             titleBgColor='#006600'
                             textBgColor='rgba(0, 102, 0, 0.1)'
                         />

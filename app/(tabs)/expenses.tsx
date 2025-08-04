@@ -127,7 +127,7 @@ export default function Expenses() {
                         />
                         : <AnyInfoWarning
                             page='saída'
-                            text='Nesta página, listamos todas as suas saídas de capital do mês.'
+                            text='listamos todas as suas saídas de capital do mês.'
                             titleBgColor='#660000'
                             textBgColor='rgba(139, 0, 0, 0.1)'
                         />

@@ -90,7 +90,7 @@ export default function Services() {
                         />
                         : <AnyInfoWarning
                             page='item'
-                            text='Nesta página, listamos todos os seus itens de trabalho.'
+                            text='listamos todos os seus itens de trabalho.'
                             titleBgColor='#330066'
                             textBgColor='rgba(51, 0, 102, 0.1)'
                         />

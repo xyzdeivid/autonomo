@@ -22,7 +22,7 @@ export default function AnyInfoWarning({ page, text, titleBgColor, textBgColor }
                 backgroundColor: textBgColor,
                 borderBottomColor: titleBgColor
             }}>
-                {text}
+                Nesta página, {text}
             </Text>
         </View>
     )
