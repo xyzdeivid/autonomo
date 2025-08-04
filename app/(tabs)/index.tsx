@@ -112,7 +112,7 @@ export default function Info() {
                     ? <Revenue />
                     : <AnyInfoWarning
                         page='informação'
-                        text='te informamos sobre seu rendimento mensal, baseado nas suas entradas e saídas de capital.'
+                        text='te informamos sobre seu rendimento financeiro mensal.'
                         titleBgColor='#08819B'
                         textBgColor='rgba(8, 129, 155, 0.1)'
                     />

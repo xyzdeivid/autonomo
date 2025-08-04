@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 interface AnyInfoWarningProps {
     page: string,
@@ -22,7 +22,7 @@ export default function AnyInfoWarning({ page, text, titleBgColor, textBgColor }
                 backgroundColor: textBgColor,
                 borderBottomColor: titleBgColor
             }}>
-                Nesta página, {text}
+                Nesta seção, {text}
             </Text>
         </View>
     )

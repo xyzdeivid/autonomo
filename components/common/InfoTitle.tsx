@@ -19,7 +19,7 @@ export default function InfoTitle({ text }: InfoTitleProps) {
         <View style={styles.titleContainer}>
             <FontAwesome name='info-circle' size={16} color='#FFFFFF' />
             <Text style={styles.titleText}>
-                {text} do mês de {getMonthName(months, selectedMonth)}/{currentYear}
+                {text} de {getMonthName(months, selectedMonth)}/{currentYear}
             </Text>
         </View>
     )
