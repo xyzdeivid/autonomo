@@ -1,18 +1,26 @@
+// native functions
 import { useContext, useEffect, useState } from 'react'
-import AddItemButton from '@/components/common/AddItemButton'
-import AddServiceForm from '@/components/services/AddServiceForm'
-import { DocsContext, Item } from '@/context/DocsContext'
-import Container from '@/components/common/Container'
-import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/functions/services'
-import AboutServiceCard from '@/components/services/AboutServiceCard'
-import ServicesContent from '@/components/services/ServicesContent'
-import LoadingScreen from '@/components/common/LoadingScreen'
-import { MainDisplaysContext } from '@/context/MainDisplays'
-import WhatIsServiceCard from '@/components/services/WhatIsServiceCard'
 import { Alert, BackHandler } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import React from 'react'
+
+// custom functions
+import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/functions/services'
+
+// context
+import { DocsContext, Item } from '@/context/DocsContext'
+import { MainDisplaysContext } from '@/context/MainDisplays'
+
+// common components
+import AddItemButton from '@/components/common/AddItemButton'
+import AddServiceForm from '@/components/services/AddServiceForm'
+import Container from '@/components/common/Container'
+import LoadingScreen from '@/components/common/LoadingScreen'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
+
+// service components
+import AboutServiceCard from '@/components/services/AboutServiceCard'
+import ServicesContent from '@/components/services/ServicesContent'
+import WhatIsServiceCard from '@/components/services/WhatIsServiceCard'
 
 export default function Services() {
 

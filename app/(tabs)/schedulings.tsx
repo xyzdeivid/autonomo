@@ -1,36 +1,45 @@
+// native functions
 import { useContext, useEffect, useState } from 'react'
-import Container from '@/components/common/Container'
-import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
-import { DocsContext, Entry, Item } from '@/context/DocsContext'
-import SchedulingsList from '@/components/schedulings/SchedulingsList'
-import { filterSchedulings } from '@/functions/common'
-import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
-
-import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
-import { orderServices } from '@/functions/services'
-import { MainDisplaysContext } from '@/context/MainDisplays'
-import LoadingScreen from '@/components/common/LoadingScreen'
-import WhatIsSchedulingCard from '@/components/schedulings/WhatIsSchedulingCard'
 import { Alert, BackHandler } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import React from 'react'
+
+// custom functions
+import { filterSchedulings } from '@/functions/common'
+import { orderServices } from '@/functions/services'
+
+// context
+import { DocsContext, Entry, Item } from '@/context/DocsContext'
+import { MainDisplaysContext } from '@/context/MainDisplays'
+
+// common components
+import Container from '@/components/common/Container'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
+import LoadingScreen from '@/components/common/LoadingScreen'
+
+// scheduling components
+import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
+import SchedulingsList from '@/components/schedulings/SchedulingsList'
+import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
+import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
+import WhatIsSchedulingCard from '@/components/schedulings/WhatIsSchedulingCard'
 
 export default function Schedulings() {
 
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
+    const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Entry)
+    const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
+    const [loadingScreen, setLoadingScreen] = useState(false)
+    const [button, setButton] = useState(true)
+    const [whatIsSchedulingCard, setWhatIsSchedulingCard] = useState(false)
+
     const appDocs = useContext(DocsContext)
     const [schedulings, setSchedulings] = appDocs.entries
     const [services, setServices] = appDocs.items
     const [selectedMonth] = appDocs.selectedMonth
-    const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Entry)
-    const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
-    const [loadingScreen, setLoadingScreen] = useState(false)
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
-    const [button, setButton] = useState(true)
-    const [whatIsSchedulingCard, setWhatIsSchedulingCard] = useState(false)
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
+
+    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
 
     const checkAmount = async (scheduling: Entry) => {
 

@@ -1,37 +1,55 @@
+// native functions
 import { useContext, useEffect, useState } from 'react'
-import { DocsContext } from '@/context/DocsContext'
+import { Alert } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
+// custom functions
+import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/functions/common'
+
+// context
+import { DocsContext } from '@/context/DocsContext'
+import { ContentContext } from '@/context/InfoContent'
+
+// constants
+import { months } from '@/constants/common'
+
+// common components
 import Container from '@/components/common/Container'
 import MonthInput from '@/components/common/MonthInput'
-import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/functions/common'
-import Revenue from '@/components/info/Revenue'
-import { ContentContext } from '@/context/InfoContent'
-import GeneralButton from '@/components/info/GeneralButton'
-import AddItemForm from '@/components/info/AddItemForm'
-import AddExpenseForm from '@/components/expenses/AddExpenseForm'
-import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
-import WelcomeCard from '@/components/info/WelcomeCard'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Alert } from 'react-native'
 import LoadingScreen from '@/components/common/LoadingScreen'
-import { months } from '@/constants/common'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
+// info components
+import Revenue from '@/components/info/Revenue'
+import GeneralButton from '@/components/info/GeneralButton'
+import AddItemForm from '@/components/info/AddItemForm'
+import WelcomeCard from '@/components/info/WelcomeCard'
+
+// scheduling components
+import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
+
+// expense components
+import AddExpenseForm from '@/components/expenses/AddExpenseForm'
+
 export default function Info() {
+
+    const [addExpenseForm, setAddExpenseForm] = useState(false)
+    const [addSchedulingForm, setAddSchedulingForm] = useState(false)
+    const [welcomeCard, setWelcomeCard] = useState(false)
+    const [loadingScreen, setLoadingScreen] = useState(true)
 
     const appDocs = useContext(DocsContext)
     const [schedulings] = appDocs.entries
     const [expenses] = appDocs.outflows
     const [services] = appDocs.items
-    const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
-    const [addItemsForm, setAddItemsForm] = useContext(ContentContext).form
-    const [generalButton, setGeneralButton] = useContext(ContentContext).button
-    const [addExpenseForm, setAddExpenseForm] = useState(false)
-    const [addSchedulingForm, setAddSchedulingForm] = useState(false)
-    const [welcomeCard, setWelcomeCard] = useState(false)
-    const [loadingScreen, setLoadingScreen] = useState(true)
     const [currentYear, setCurrentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
+    const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
+
+    const infoContent = useContext(ContentContext)
+    const [addItemsForm, setAddItemsForm] = infoContent.form
+    const [generalButton, setGeneralButton] = infoContent.button
+
     const filteredEntries = filterSchedulings(schedulings, selectedMonth, currentYear)
     const filteredExpenses = filterExpenses(expenses, selectedMonth, currentYear)
     const availableMonths = getAvailableMonths(schedulings, expenses, currentYear, months)
