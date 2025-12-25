@@ -3,7 +3,6 @@ import { Alert, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import { getServices } from '@/functions/schedulings'
-import { AntDesign } from '@expo/vector-icons'
 
 interface AddSchedulingButtonProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -33,7 +32,6 @@ export default function AddSchedulingButton({ setAddSchedulingForm, setButton, s
                 onPress={() => setWhatIsSchedulingCard(true)}
             >
                 <Text style={{ color: 'rgba(0, 102, 0, 0.5)', fontSize: 12, marginEnd: 3 }}>Sobre</Text>
-                <AntDesign name='infocirlce' size={18} color={'rgba(0, 102, 0, 0.5)'} />
             </Pressable>
             <Pressable
                 style={styles.button}

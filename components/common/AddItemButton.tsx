@@ -1,5 +1,4 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import AntDesign from '@expo/vector-icons/AntDesign'
 
 interface AddItemButtonProps {
     setForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -22,7 +21,6 @@ export default function AddItemButton({ setForm, mainColor, bgColor, text, setBu
                 onPress={() => setInfoCard(true)}
             >
                 <Text style={{ color: infoButtonColor, fontSize: 12, marginEnd: 3 }}>Sobre</Text>
-                <AntDesign name='infocirlce' size={18} color={infoButtonColor} />
             </Pressable>
             <Pressable
                 style={{
