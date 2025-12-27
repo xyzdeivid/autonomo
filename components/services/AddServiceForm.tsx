@@ -225,7 +225,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                 }}
             >
                 <FormTitle
-                    text='Novo Item'
+                    text='Novo Produto/Serviço'
                     textColor='#330066'
                 />
                 <View style={{

@@ -14,7 +14,6 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import Container from '@/components/common/Container'
 import AddItemButton from '@/components/common/AddItemButton'
 import LoadingScreen from '@/components/common/LoadingScreen'
-import WhatIsExpenseCard from '@/components/expenses/WhatIsExpenseCard'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // expenses components
@@ -134,7 +133,7 @@ export default function Expenses() {
                         />
                         : <AnyInfoWarning
                             page='saída'
-                            text='listamos todas as suas saídas de capital do mês.'
+                            text='listamos todas as suas despesas financeiras do mês.'
                             titleBgColor='#660000'
                             textBgColor='rgba(139, 0, 0, 0.1)'
                         />
@@ -145,10 +144,8 @@ export default function Expenses() {
                         setForm={setAddExpenseForm}
                         mainColor='#660000'
                         bgColor='rgba(139, 0, 0, 0.1)'
-                        text='Nova Saída'
+                        text='Registrar Despesa'
                         setButton={setButton}
-                        infoButtonColor='rgba(139, 0, 0, 0.5)'
-                        setInfoCard={setWhatIsExpenseCard}
                     />
                 }
                 {
@@ -168,10 +165,6 @@ export default function Expenses() {
                         />
                     )
                 }
-                {whatIsExpenseCard && <WhatIsExpenseCard
-                    setWhatIsExpenseCard={setWhatIsExpenseCard}
-                    setButton={setButton}
-                />}
             </Container>
         </>
     )

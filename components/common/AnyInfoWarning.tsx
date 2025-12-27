@@ -1,13 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native'
 
 interface AnyInfoWarningProps {
-    page: string,
     text: string,
     titleBgColor: string
     textBgColor: string
 }
 
-export default function AnyInfoWarning({ page, text, titleBgColor, textBgColor }: AnyInfoWarningProps) {
+export default function AnyInfoWarning({ text, titleBgColor, textBgColor }: AnyInfoWarningProps) {
 
     return (
         <View style={styles.container}>
@@ -15,7 +14,7 @@ export default function AnyInfoWarning({ page, text, titleBgColor, textBgColor }
                 ...styles.warningTextTitle,
                 backgroundColor: titleBgColor
             }}>
-                Nenhuma {page} disponível!
+                Nenhuma informação disponível!
             </Text>
             <Text style={{
                 ...styles.warningText,

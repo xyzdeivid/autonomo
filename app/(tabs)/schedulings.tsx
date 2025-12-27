@@ -21,7 +21,6 @@ import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import SchedulingsList from '@/components/schedulings/SchedulingsList'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
-import WhatIsSchedulingCard from '@/components/schedulings/WhatIsSchedulingCard'
 
 export default function Schedulings() {
 
@@ -156,8 +155,7 @@ export default function Schedulings() {
                             setDeleteSchedulingForm={setDeleteSchedulingForm}
                         />
                         : <AnyInfoWarning
-                            page='entrada'
-                            text='listamos todas as suas entradas de capital do mês.'
+                            text='listamos todas as suas receitas financeiras do mês.'
                             titleBgColor='#006600'
                             textBgColor='rgba(0, 102, 0, 0.1)'
                         />
@@ -186,12 +184,6 @@ export default function Schedulings() {
                             setButton={setButton}
                         />
                         : null
-                }
-                {whatIsSchedulingCard &&
-                    <WhatIsSchedulingCard
-                        setWhatIsSchedulingCard={setWhatIsSchedulingCard}
-                        setButton={setButton}
-                    />
                 }
             </Container>
         </>

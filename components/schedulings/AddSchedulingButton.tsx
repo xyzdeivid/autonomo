@@ -22,24 +22,18 @@ export default function AddSchedulingButton({ setAddSchedulingForm, setButton, s
     const checkServices = () => {
         getServices(services)[0]
             ? showForm()
-            : Alert.alert('Sem item disponível', 'Verifique se você tem algum item ou estoque disponível.')
+            : Alert.alert('Sem produto ou serviço disponível', 'Verifique se você tem algum produto ou serviço registrado. Caso tenha produto, verifique se tem estoque disponível.')
     }
 
     return (
         <View style={styles.container}>
-            <Pressable
-                style={styles.aboutButton}
-                onPress={() => setWhatIsSchedulingCard(true)}
-            >
-                <Text style={{ color: 'rgba(0, 102, 0, 0.5)', fontSize: 12, marginEnd: 3 }}>Sobre</Text>
-            </Pressable>
             <Pressable
                 style={styles.button}
                 onPress={() => {
                     checkServices()
                 }}
             >
-                <Text style={{ color: '#006600' }}>Nova Entrada</Text>
+                <Text style={{ color: '#006600' }}>Registrar Receita</Text>
             </Pressable>
         </View>
     )
@@ -49,27 +43,16 @@ export default function AddSchedulingButton({ setAddSchedulingForm, setButton, s
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        bottom: 0,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        width: '100%',
-        marginBottom: 10,
-        paddingHorizontal: 10
-    },
-    aboutButton: {
-        display: 'flex',
-        flexDirection: 'row',
         alignItems: 'center',
-        padding: 6,
-        borderRadius: 3,
-        backgroundColor: 'rgba(0, 102, 0, 0.1)'
+        bottom: 0,
+        width: '100%',
+        marginBottom: 16
     },
     button: {
         padding: 10,
-        borderTopWidth: 1,
+        borderWidth: 1,
         borderColor: '#006600',
+        borderRadius: 5,
         backgroundColor: 'rgba(0, 102, 0, 0.1)'
     }
 })

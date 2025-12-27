@@ -122,7 +122,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                 setButton={setButton}
             >
                 <FormBody borderColor='#660000'>
-                    <FormTitle text='Informações de Saída' textColor='#660000' />
+                    <FormTitle text='Informações de Despesa' textColor='#660000' />
                     <View>
                         {
                             showEditNameInput

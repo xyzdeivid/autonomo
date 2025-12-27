@@ -29,7 +29,7 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
     return (
         <View>
             <ListInfoTitle
-                text='saídas'
+                text='despesas'
                 color='#660000'
             />
             <ContainerHandler filteredTargets={filteredExpenses}>

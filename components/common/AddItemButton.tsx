@@ -6,22 +6,12 @@ interface AddItemButtonProps {
     bgColor: string
     text: string
     setButton: React.Dispatch<React.SetStateAction<boolean>>
-    infoButtonColor: string
-    setInfoCard: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddItemButton({ setForm, mainColor, bgColor, text, setButton, infoButtonColor, setInfoCard }: AddItemButtonProps) {
+export default function AddItemButton({ setForm, mainColor, bgColor, text, setButton }: AddItemButtonProps) {
 
     return (
         <View style={styles.container}>
-            <Pressable style={{
-                ...styles.aboutButton,
-                backgroundColor: bgColor,
-            }}
-                onPress={() => setInfoCard(true)}
-            >
-                <Text style={{ color: infoButtonColor, fontSize: 12, marginEnd: 3 }}>Sobre</Text>
-            </Pressable>
             <Pressable
                 style={{
                     ...styles.button,
@@ -43,14 +33,10 @@ export default function AddItemButton({ setForm, mainColor, bgColor, text, setBu
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
+        alignItems: 'center',
         bottom: 0,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
         width: '100%',
-        marginBottom: 10,
-        paddingHorizontal: 10
+        marginBottom: 16
     },
     aboutButton: {
         display: 'flex',
@@ -61,6 +47,7 @@ const styles = StyleSheet.create({
     },
     button: {
         padding: 10,
-        borderTopWidth: 1
+        borderWidth: 1,
+        borderRadius: 5
     }
 })

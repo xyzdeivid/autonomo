@@ -29,7 +29,7 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
     return (
         <View>
             <ListInfoTitle
-                text='entradas'
+                text='receitas'
                 color='#006600'
             />
             <ContainerHandler filteredTargets={filteredSchedulings}>

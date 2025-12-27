@@ -46,7 +46,7 @@ export default function TabLayout() {
                     },
                 })}
                 options={{
-                    title: 'Informações',
+                    title: 'Balanço Mensal',
                     tabBarActiveTintColor: '#08819B',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='chart-simple' size={24} color={color} />
@@ -62,7 +62,7 @@ export default function TabLayout() {
                     },
                 })}
                 options={{
-                    title: 'Entradas',
+                    title: 'Receitas',
                     tabBarActiveTintColor: '#006600',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='arrow-trend-up' size={24} color={color} />
@@ -77,7 +77,7 @@ export default function TabLayout() {
                     },
                 })}
                 options={{
-                    title: 'Saídas',
+                    title: 'Despesas',
                     tabBarActiveTintColor: '#660000',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='arrow-trend-down' size={24} color={color} />
@@ -92,7 +92,7 @@ export default function TabLayout() {
                     },
                 })}
                 options={{
-                    title: 'Itens',
+                    title: 'Produtos/Serviços',
                     tabBarActiveTintColor: '#330066',
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='bag-shopping' size={24} color={color} />

@@ -20,7 +20,6 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 // service components
 import AboutServiceCard from '@/components/services/AboutServiceCard'
 import ServicesContent from '@/components/services/ServicesContent'
-import WhatIsServiceCard from '@/components/services/WhatIsServiceCard'
 
 export default function Services() {
 
@@ -97,8 +96,7 @@ export default function Services() {
                             setDeleteServiceForm={setAboutServiceCard}
                         />
                         : <AnyInfoWarning
-                            page='item'
-                            text='listamos todos os seus itens de trabalho.'
+                            text='listamos todos os seus produtos ou serviços.'
                             titleBgColor='#330066'
                             textBgColor='rgba(51, 0, 102, 0.1)'
                         />
@@ -107,12 +105,10 @@ export default function Services() {
                     button
                     && <AddItemButton
                         setForm={setAddServiceForm}
-                        text='Novo Item'
+                        text='Registrar Produto/Serviço'
                         mainColor='#330066'
                         bgColor='rgba(51, 0, 102, 0.1)'
                         setButton={setButton}
-                        infoButtonColor='rgba(51, 0, 102, 0.5)'
-                        setInfoCard={setWhatIsServiceCard}
                     />
                 }
                 {
@@ -133,11 +129,6 @@ export default function Services() {
                         />
                         : null
                 }
-                {whatIsServiceCard &&
-                    <WhatIsServiceCard
-                        setWhatIsServiceCard={setWhatIsServiceCard}
-                        setButton={setButton}
-                    />}
             </Container>
         </>
     )

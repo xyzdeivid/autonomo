@@ -142,7 +142,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 setButton={setButton}
             >
                 <FormBody borderColor='#660000'>
-                    <FormTitle text='Nova Saída' textColor='#660000' />
+                    <FormTitle text='Nova Despesa' textColor='#660000' />
                     <FormInputs>
                         {products[0] && (
                             <IntegrateStockButton

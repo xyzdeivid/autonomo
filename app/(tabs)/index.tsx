@@ -129,8 +129,7 @@ export default function Info() {
                     || filterExpenses(expenses, selectedMonth, currentYear)[0]
                     ? <Revenue />
                     : <AnyInfoWarning
-                        page='informação'
-                        text='te informamos sobre seu rendimento financeiro mensal.'
+                        text='te informamos sobre seu balanço financeiro mensal.'
                         titleBgColor='#08819B'
                         textBgColor='rgba(8, 129, 155, 0.1)'
                     />
