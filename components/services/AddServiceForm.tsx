@@ -22,6 +22,7 @@ import StockButton from './StockButton'
 import React from 'react'
 import { warning } from '@/functions/common'
 import ItemsCategoriesForm from './ItemsCategoriesForm'
+import ServiceCreationForm from './ServiceCreationForm'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -178,12 +179,6 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     }
 
     const getTitle = () => {
-        if (step === 1 && choice === 'product') {
-            return '2. Verifique se o produto é uma revenda:'
-        }
-        if (step === 1 && choice === 'service') {
-            return '2. Preencha as informações finais do seu serviço:'
-        }
         if (step === 1 && choice === 'budget') {
             return '2. Preencha as informações finais do seu serviço:'
         }
@@ -222,10 +217,12 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                     transform: [{ translateY: slideAnim }]
                 }}
             >
-                <FormTitle
-                    text='Novo Produto/Serviço'
-                    textColor='#330066'
-                />
+                {
+                    step === 0 && <FormTitle
+                        text='Novo Produto/Serviço'
+                        textColor='#330066'
+                    />
+                }
                 <View style={{
                     borderBottomWidth: 2,
                     marginTop: -8,
@@ -240,18 +237,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                 }
                 {
                     step === 1 && choice === 'service' && (
-                        <>
-                            <NameInput
-                                setName={setName}
-                                textColor='#330066'
-                                bgColor='rgba(51, 0, 102, 0.1)'
-                            />
-                            <NumberInput
-                                setValue={setValue}
-                                bgColor='rgba(51, 0, 102, 0.1)'
-                                textColor='#330066'
-                            />
-                        </>
+                        <ServiceCreationForm setName={setName} setValue={setValue} />
                     )
                 }
                 {
