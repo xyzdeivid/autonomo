@@ -9,75 +9,79 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
 
     const checkChoice = (button: string) => {
         return choice === button
-            ? '#330066'
-            : '#6600CC'
+            ? ['#6600CC', '#FFFFFF']
+            : ['transparent', '#6600CC']
     }
 
     return (
         <View style={styles.container}>
-            <View style={styles.buttonContainer}>
+            <View>
                 <Pressable
                     style={{
                         ...styles.button,
-                        backgroundColor: checkChoice('product')
+                        backgroundColor: checkChoice('product')[0],
                     }}
                     onPress={() => setChoice('product')}
                 >
-                    <Text style={styles.textButton}>Produto</Text>
+                    <Text style={{
+                        ...styles.textButton,
+                        color: checkChoice('product')[1]
+                    }}>Produto</Text>
                 </Pressable>
                 <Text
-                    style={{
-                        ...styles.infoText,
-                        fontWeight: choice === 'product' ? 'bold' : 'normal',
-                        textDecorationLine: choice === 'product' ? 'underline' : 'none'
-                    }}
+                    style={styles.infoText}
                 >
-                    Selecione esta opção se o seu novo item de trabalho for um produto manufaturado destinado à venda.
-                    Como por exemplo: vestuário, acessórios, alimentos, etc...
+                    Produto destinado à venda ou revenda.
                 </Text>
             </View>
-            <View style={styles.buttonContainer}>
+            <View
+                style={styles.hr}
+            />
+            <View>
                 <Pressable
                     style={{
                         ...styles.button,
-                        backgroundColor: checkChoice('service')
+                        backgroundColor: checkChoice('service')[0],
                     }}
                     onPress={() => setChoice('service')}
                 >
-                    <Text style={styles.textButton}>Serviço</Text>
+                    <Text style={{
+                        ...styles.textButton,
+                        color: checkChoice('service')[1]
+                    }}>Serviço</Text>
                 </Pressable>
                 <Text
-                    style={{
-                        ...styles.infoText,
-                        fontWeight: choice === 'service' ? 'bold' : 'normal',
-                        textDecorationLine: choice === 'service' ? 'underline' : 'none'
-                    }}
+                    style={styles.infoText}
                 >
-                    Selecione esta opção se o seu novo item de trabalho for um serviço prestado com um valor fixo definido.
-                    Como por exemplo: serviços de beleza (cortes de cabelo, maquiagem), etc...
+                    Serviço prestado com um valor fixo definido.
                 </Text>
             </View>
-            <View style={styles.buttonContainer}>
+            <View
+                style={styles.hr}
+            />
+            <View>
                 <Pressable
                     style={{
                         ...styles.button,
-                        backgroundColor: checkChoice('budget')
+                        backgroundColor: checkChoice('budget')[0]
                     }}
                     onPress={() => setChoice('budget')}
                 >
-                    <Text style={styles.textButton}>Orçamentário</Text>
+                    <Text style={{
+                        ...styles.textButton,
+                        color: checkChoice('budget')[1]
+                    }}>Orçamentário</Text>
                 </Pressable>
                 <Text
-                    style={{
-                        ...styles.infoText,
-                        fontWeight: choice === 'budget' ? 'bold' : 'normal',
-                        textDecorationLine: choice === 'budget' ? 'underline' : 'none'
-                    }}
+                    style={styles.infoText}
                 >
-                    Selecione esta opção se o seu novo item de trabalho for um serviço prestado cujo valor pode variar
-                    conforme as condições ou requisitos do cliente. Como por exemplo: reparos, manutenção, etc...
+                    Serviço prestado cujo valor pode variar
+                    conforme as condições ou requisitos do cliente.
                 </Text>
             </View>
+            <View
+                style={styles.hr}
+            />
         </View>
     )
 
@@ -87,20 +91,27 @@ const styles = StyleSheet.create({
     container: {
         marginBottom: 20
     },
-    buttonContainer: {
-        marginBottom: 20
-    },
     button: {
         alignSelf: 'flex-start',
         padding: 7,
-        borderTopStartRadius: 7
+        borderColor: '#6600CC',
+        borderWidth: 1,
+        borderRadius: 7,
+        marginBottom: 4
     },
     textButton: {
-        color: 'white',
+        color: '#6600CC',
         fontSize: 14
     },
     infoText: {
         color: '#330066',
         marginTop: 6
+    },
+    hr: {
+        width: '100%',
+        height: 1,
+        backgroundColor: '#330066',
+        marginTop: 20,
+        marginBottom: 40
     }
 })

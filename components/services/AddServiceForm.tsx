@@ -1,9 +1,7 @@
 import { Alert, Animated, Button, StyleSheet, Text, View } from 'react-native'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
-import FormBody from '../common/FormBody'
 import NumberInput from '../common/NumberInput'
-import SubmitFormButtons from '../common/SubmitFormButtons'
 import FormTitle from '../common/FormTitle'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import NameInput from '../common/NameInput'
@@ -13,7 +11,6 @@ import {
     checkServicesAmount, createNewOutflow,
     createNewService, orderServices
 } from '@/functions/services'
-import FormInputs from '../common/FormInputs'
 import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
 import LoadingScreen from '../common/LoadingScreen'
@@ -24,6 +21,7 @@ import ValueOption from '../common/ValueOption'
 import StockButton from './StockButton'
 import React from 'react'
 import { warning } from '@/functions/common'
+import ItemsCategoriesForm from './ItemsCategoriesForm'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -198,7 +196,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         if (step === 3) {
             return '4. Preencha as informações finais do seu produto:'
         }
-        return '1. Selecione a categoria do seu item:'
+        return '1. Selecione a categoria:'
     }
 
     const slideAnim = useRef(new Animated.Value(1000)).current
@@ -235,12 +233,9 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                     borderBottomColor: '#330066'
                 }}
                 />
-                <Text style={styles.title}>
-                    {getTitle()}
-                </Text>
                 {
                     step === 0 && (
-                        <ServiceOrProductButtons choice={choice} setChoice={setChoice} />
+                        <ItemsCategoriesForm choice={choice} setChoice={setChoice} />
                     )
                 }
                 {
