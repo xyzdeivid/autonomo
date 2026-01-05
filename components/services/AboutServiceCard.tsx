@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
-import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { DocsContext, Entry, Item } from '@/context/DocsContext'
@@ -310,7 +309,6 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 setButton={setButton}
                 bgColor='rgba(51, 0, 102, 0.1)'
             >
-                <FormBody borderColor='#330066'>
                     <FormTitle text={`Informações do ${getTitle(service)}`} textColor='#330066' />
                     <View>
                         {
@@ -377,7 +375,6 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                                 setConfirmDelete={setConfirmDelete}
                             />
                     }
-                </FormBody>
             </FormContainer>
         </>
     )

@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react'
 import { StyleSheet, Text } from 'react-native'
-import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { DocsContext, Entry, Item } from '@/context/DocsContext'
@@ -9,7 +8,7 @@ import SelectServiceInput from './SelectServiceInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { warning } from '@/functions/common'
 import { MainDisplaysContext } from '@/context/MainDisplays'
-import { createNewEntry, getSchedulingValue, getServices } from '@/functions/schedulings'
+import { createNewEntry, getServices } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
 import { Alert } from 'react-native'
 import StockInfo from './StockInfo'
@@ -197,7 +196,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                 bgColor='rgba(0, 102, 0, 0.1)'
                 setButton={setButton}
             >
-                <FormBody borderColor='#006600'>
                     <FormTitle text='Nova Receita' textColor='#006600' />
                     <FormInputs>
                         <SelectServiceInput
@@ -243,8 +241,15 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
                             )
                         }
                     </FormInputs>
-                    <SubmitFormButtons submit={addScheduling} submitButtonText='Registrar' submitButtonColor='#006600' />
-                </FormBody>
+                    <SubmitFormButtons 
+                    cancel={() => {
+                        setAddSchedulingForm(false)
+                        setButton(true)
+                    }}
+                    submit={addScheduling} 
+                    submitButtonText='Registrar' 
+                    submitButtonColor='#006600' 
+                    />
             </FormContainer>
         </>
     )

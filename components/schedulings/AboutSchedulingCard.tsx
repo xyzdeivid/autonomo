@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
-import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { DocsContext, Entry } from '@/context/DocsContext'
@@ -225,7 +224,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                 bgColor='rgba(0, 102, 0, 0.1)'
                 setButton={setButton}
             >
-                <FormBody borderColor='#006600'>
                     <FormTitle text='Informações de Receita' textColor='#006600' />
                     <View>
                         {
@@ -283,6 +281,10 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                     {
                         !confirmDelete
                             ? <SubmitFormButtons
+                                cancel={() => {
+                                    setFormOff(false)
+                                    setButton(true)
+                                }}
                                 submit={() => setConfirmDelete(true)}
                                 submitButtonText='Excluir'
                                 submitButtonColor='darkred'
@@ -294,7 +296,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                 setConfirmDelete={setConfirmDelete}
                             />
                     }
-                </FormBody>
             </FormContainer>
         </>
     )

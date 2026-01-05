@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
-import FormBody from '../common/FormBody'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { DocsContext, Outflow } from '@/context/DocsContext'
@@ -121,7 +120,6 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                 bgColor='rgba(139, 0, 0, 0.1)'
                 setButton={setButton}
             >
-                <FormBody borderColor='#660000'>
                     <FormTitle text='Informações de Despesa' textColor='#660000' />
                     <View>
                         {
@@ -159,6 +157,10 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                     {
                         !confirmDelete
                             ? <SubmitFormButtons
+                                cancel={() => {
+                                    setFormOff(false)
+                                    setButton(true)
+                                }}
                                 submit={() => setConfirmDelete(true)}
                                 submitButtonText='Excluir'
                                 submitButtonColor='darkred'
@@ -170,7 +172,6 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                                 setConfirmDelete={setConfirmDelete}
                             />
                     }
-                </FormBody>
             </FormContainer>
         </>
     )

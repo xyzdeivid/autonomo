@@ -132,7 +132,6 @@ export default function Expenses() {
                             setDeleteExpenseForm={setDeleteExpenseForm}
                         />
                         : <AnyInfoWarning
-                            page='saída'
                             text='listamos todas as suas despesas financeiras do mês.'
                             titleBgColor='#660000'
                             textBgColor='rgba(139, 0, 0, 0.1)'

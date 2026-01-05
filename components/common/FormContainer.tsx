@@ -1,6 +1,4 @@
-import { MainDisplaysContext } from '@/context/MainDisplays'
-import { useContext, useEffect, useRef } from 'react'
-import { Pressable, StyleSheet, Animated } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 interface FormContainerProps {
     children: React.ReactNode
@@ -9,63 +7,26 @@ interface FormContainerProps {
     setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function FormContainer({ children, setFormOff, bgColor, setButton }: FormContainerProps) {
-
-    const displays = useContext(MainDisplaysContext)
-    const [, setHideTabBar] = displays.tabBar
-    
-
-    const slideAnim = useRef(new Animated.Value(1000)).current
-
-    useEffect(() => {
-
-        Animated.parallel([
-            Animated.timing(slideAnim, {
-                toValue: 0,
-                duration: 250,
-                useNativeDriver: true,
-            })
-        ]).start()
-
-    }, [])
-
-    const closeForm = (key: string) => {
-        if (key !== 'body') {
-            setFormOff(false)
-            setButton(true)
-        }
-    }
+export default function FormContainer({ children }: FormContainerProps) {
 
     return (
-        <Animated.View
-            style={{
-                ...styles.animation,
-                transform: [{ translateY: slideAnim }]
-            }}
+        <View
+            style={styles.container}
         >
-            <Pressable
-                onPress={() => closeForm('container')}
-                style={styles.container}
-            >
-                <Pressable onPress={() => closeForm('body')}>
-                    {children}
-                </Pressable>
-            </Pressable>
-        </Animated.View>
+            <View>
+                {children}
+            </View>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    animation: {
-        width: '100%',
-        height: '100%',
-        position: 'absolute'
-    },
     container: {
+        backgroundColor: 'white',
         width: '100%',
         height: '100%',
+        position: 'absolute',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        paddingHorizontal: 16
     }
 })
