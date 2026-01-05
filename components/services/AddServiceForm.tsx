@@ -219,7 +219,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             >
                 {
                     step === 0 && <FormTitle
-                        text='Novo Produto/Serviço'
+                        text='Novo Produto ou Serviço'
                         textColor='#330066'
                     />
                 }

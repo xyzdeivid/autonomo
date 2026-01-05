@@ -33,6 +33,11 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
                 >
                     Produto destinado à venda ou revenda.
                 </Text>
+                <Text
+                    style={styles.exampleText}
+                >
+                    Ex: Roupas, eletrônicos, alimentos, etc.
+                </Text>
             </View>
             <View
                 style={styles.hr}
@@ -53,7 +58,12 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
                 <Text
                     style={styles.infoText}
                 >
-                    Serviço prestado com um valor fixo definido.
+                    Serviço prestado com um valor fixo.
+                </Text>
+                <Text
+                    style={styles.exampleText}
+                >
+                    Ex: Cortes de cabelo, maquiagens, etc.
                 </Text>
             </View>
             <View
@@ -78,10 +88,12 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
                     Serviço prestado cujo valor pode variar
                     conforme as condições ou requisitos do cliente.
                 </Text>
+                <Text
+                    style={styles.exampleText}
+                >
+                    Ex: Consertos, pinturas, etc.
+                </Text>
             </View>
-            <View
-                style={styles.hr}
-            />
         </View>
     )
 
@@ -94,18 +106,26 @@ const styles = StyleSheet.create({
     button: {
         alignSelf: 'flex-start',
         padding: 7,
-        borderColor: '#6600CC',
+        borderColor: '#330066',
         borderWidth: 1,
         borderRadius: 7,
         marginBottom: 4
     },
     textButton: {
-        color: '#6600CC',
+        color: '#330066',
         fontSize: 14
     },
     infoText: {
-        color: '#330066',
-        marginTop: 6
+        color: '#6600CC',
+        marginVertical: 6
+    },
+    exampleText: {
+        backgroundColor: '#6600CC',
+        color: '#FFFFFF',
+        padding: 4,
+        borderRadius: 4,
+        marginBottom: 10,
+        alignSelf: 'flex-start'
     },
     hr: {
         width: '100%',
