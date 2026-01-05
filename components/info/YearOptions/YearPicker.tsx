@@ -1,9 +1,8 @@
 import { useContext, useEffect, useRef } from 'react'
-import { Animated, StyleSheet, View } from 'react-native'
+import { Animated, StyleSheet } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 
 import { DocsContext } from '@/context/DocsContext'
-import { AntDesign } from '@expo/vector-icons'
 
 interface YearPickerProps {
     availableYears: string[]
@@ -58,14 +57,6 @@ export default function YearPicker({ availableYears, setShowPicker }: YearPicker
                     <Picker.Item value={year} label={year} key={year} />
                 ))}
             </Picker>
-            <View style={{ paddingStart: 8 }}>
-                <AntDesign
-                    name='caretleft'
-                    size={24}
-                    color='#08819B'
-                    onPress={() => closePicker()}
-                />
-            </View>
         </Animated.View>
     )
 

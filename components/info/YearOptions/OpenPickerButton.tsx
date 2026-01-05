@@ -1,5 +1,4 @@
 import { DocsContext } from '@/context/DocsContext'
-import { AntDesign } from '@expo/vector-icons'
 import { useContext } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
@@ -25,14 +24,6 @@ export default function ClosePickerButton({ availableYears, setShowPicker }: Clo
                     {currentYear}
                 </Text>
             </View>
-            {
-                availableYears.length > 1 &&
-                <AntDesign
-                    name='caretright'
-                    size={20}
-                    color='#08819B'
-                />
-            }
         </Pressable>
     )
 
