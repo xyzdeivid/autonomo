@@ -10,90 +10,74 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
     const checkChoice = (button: string) => {
         return choice === button
             ? ['#6600CC', '#FFFFFF']
-            : ['transparent', '#6600CC']
+            : ['#6600CC1A', '#6600CC']
     }
 
     return (
         <View style={styles.container}>
-            <View>
-                <Pressable
-                    style={{
-                        ...styles.button,
-                        backgroundColor: checkChoice('product')[0],
-                    }}
-                    onPress={() => setChoice('product')}
-                >
-                    <Text style={{
-                        ...styles.textButton,
-                        color: checkChoice('product')[1]
-                    }}>Produto</Text>
-                </Pressable>
+            <Pressable
+                style={{
+                    ...styles.button,
+                    backgroundColor: checkChoice('product')[0],
+                }}
+                onPress={() => setChoice('product')}
+            >
                 <Text
-                    style={styles.infoText}
+                    style={{
+                        ...styles.infoText,
+                        color: checkChoice('product')[1],
+                    }}
                 >
-                    Produto destinado à venda ou revenda.
+                    Produto para venda.
                 </Text>
                 <Text
                     style={styles.exampleText}
                 >
-                    Ex: Roupas, eletrônicos, alimentos, etc.
+                    Ex: Roupas, lanches, eletrônicos, etc.
                 </Text>
-            </View>
-            <View
-                style={styles.hr}
-            />
-            <View>
-                <Pressable
+            </Pressable>
+            <Pressable
+                style={{
+                    ...styles.button,
+                    backgroundColor: checkChoice('service')[0],
+                }}
+                onPress={() => setChoice('service')}
+            >
+                <Text
                     style={{
-                        ...styles.button,
-                        backgroundColor: checkChoice('service')[0],
-                    }}
-                    onPress={() => setChoice('service')}
-                >
-                    <Text style={{
-                        ...styles.textButton,
+                        ...styles.infoText,
                         color: checkChoice('service')[1]
-                    }}>Serviço</Text>
-                </Pressable>
-                <Text
-                    style={styles.infoText}
+                    }}
                 >
-                    Serviço prestado com um valor fixo.
+                    Serviço com preço fixo.
                 </Text>
                 <Text
                     style={styles.exampleText}
                 >
-                    Ex: Cortes de cabelo, maquiagens, etc.
+                    Ex: Cortes de cabelo, maquiagens, manicure, etc.
                 </Text>
-            </View>
-            <View
-                style={styles.hr}
-            />
-            <View>
-                <Pressable
-                    style={{
-                        ...styles.button,
-                        backgroundColor: checkChoice('budget')[0]
-                    }}
-                    onPress={() => setChoice('budget')}
-                >
-                    <Text style={{
-                        ...styles.textButton,
-                        color: checkChoice('budget')[1]
-                    }}>Orçamentário</Text>
-                </Pressable>
+            </Pressable>
+            <Pressable
+                style={{
+                    ...styles.button,
+                    backgroundColor: checkChoice('budget')[0]
+                }}
+                onPress={() => setChoice('budget')}
+            >
                 <Text
-                    style={styles.infoText}
+                    style={{
+                        ...styles.infoText,
+                        color: checkChoice('budget')[1]
+                    }}
                 >
-                    Serviço prestado cujo valor pode variar
-                    conforme as condições ou requisitos do cliente.
+                    Serviço com preço variável.
                 </Text>
                 <Text
                     style={styles.exampleText}
                 >
                     Ex: Consertos, pinturas, etc.
                 </Text>
-            </View>
+            </Pressable>
         </View>
     )
 
@@ -104,34 +88,19 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     button: {
-        alignSelf: 'flex-start',
-        padding: 7,
-        borderColor: '#330066',
-        borderWidth: 1,
-        borderRadius: 7,
-        marginBottom: 4
-    },
-    textButton: {
-        color: '#330066',
-        fontSize: 14
+        padding: 12,
+        borderRadius: 6,
+        marginBottom: 24
     },
     infoText: {
-        color: '#6600CC',
-        marginVertical: 6
+        marginBottom: 6,
+        fontSize: 16
     },
     exampleText: {
-        backgroundColor: '#6600CC',
+        backgroundColor: 'rgba(102, 0, 204, 0.75)',
         color: '#FFFFFF',
         padding: 4,
         borderRadius: 4,
-        marginBottom: 10,
         alignSelf: 'flex-start'
-    },
-    hr: {
-        width: '100%',
-        height: 1,
-        backgroundColor: '#330066',
-        marginTop: 20,
-        marginBottom: 40
     }
 })

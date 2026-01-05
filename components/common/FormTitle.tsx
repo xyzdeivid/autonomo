@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 24,
-        marginEnd: 8
+        marginEnd: 8,
+        fontWeight: '500'
     }
 })

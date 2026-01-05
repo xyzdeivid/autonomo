@@ -83,7 +83,7 @@ export default function AddItemForm({ setGeneralButton, setAddItemsForm,
                             ...styles.text,
                             color: '#006600'
                         }}>
-                            Nova Entrada
+                            Nova Receita
                         </Text>
                         <FontAwesome6 name='arrow-trend-up' size={16} color='#006600' />
                     </Pressable>
@@ -103,7 +103,7 @@ export default function AddItemForm({ setGeneralButton, setAddItemsForm,
                             ...styles.text,
                             color: '#660000'
                         }}>
-                            Nova Saída
+                            Nova Despesa
                         </Text>
                         <FontAwesome6 name='arrow-trend-down' size={16} color='#660000' />
                     </Pressable>
