@@ -309,72 +309,76 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 setButton={setButton}
                 bgColor='rgba(51, 0, 102, 0.1)'
             >
-                    <FormTitle text={`Informações do ${getTitle(service)}`} textColor='#330066' />
-                    <View>
-                        {
-                            editNameInput
-                                ? <EditNameInput setName={setName} editName={editName} actualName={service._id} />
-                                : <ActualName name={name || service._id} setEditNameInput={setEditNameInput} />
-                        }
-                        {service.category !== 'budget' && (
-                            <View style={styles.inputContainer}>
-                                <View style={styles.infoContainer}>
-                                    <Text style={styles.label}>Valor:</Text>
-                                    {
-                                        editValueInput
-                                            ? <>
-                                                <EditValueInput
-                                                    setValue={setValue}
-                                                    editValue={editValue}
-                                                />
-                                            </>
-                                            : <ActualValue
-                                                value={value || service.value}
-                                                setEditValueInput={setEditValueInput}
-                                            />
-                                    }
-                                </View>
+                <FormTitle text={`Informações do ${getTitle(service)}`} textColor='#330066' />
+                <View>
+                    {
+                        editNameInput
+                            ? <EditNameInput setName={setName} editName={editName} actualName={service._id} />
+                            : <ActualName name={name || service._id} setEditNameInput={setEditNameInput} />
+                    }
+                    {service.category !== 'budget' && (
+                        <View style={styles.inputContainer}>
+                            <View style={styles.infoContainer}>
+                                <Text style={styles.label}>Valor:</Text>
                                 {
-                                    editValueInput &&
-                                    <Text style={styles.currentValueText}>
-                                        Valor atual: {moneyFormat(service.value)}
-                                    </Text>
+                                    editValueInput
+                                        ? <>
+                                            <EditValueInput
+                                                setValue={setValue}
+                                                editValue={editValue}
+                                            />
+                                        </>
+                                        : <ActualValue
+                                            value={value || service.value}
+                                            setEditValueInput={setEditValueInput}
+                                        />
                                 }
                             </View>
-                        )}
-                        {
-                            service.isThereAmount && (
-                                <View style={styles.inputContainer}>
-                                    <View style={styles.infoContainer}>
-                                        {
-                                            editStockInput
-                                                ? <EditStockInput
-                                                    setStock={setStock}
-                                                    editStock={editStock}
-                                                    setChangedValue={setChangedValue}
-                                                    currentStock={service.amount}
-                                                />
-                                                : <ActualStock stock={stock || service.amount || 0} setEditStockInput={setEditStockInput} />
-                                        }
-                                    </View>
-                                </View>
-                            )
-                        }
-                    </View>
+                            {
+                                editValueInput &&
+                                <Text style={styles.currentValueText}>
+                                    Valor atual: {moneyFormat(service.value)}
+                                </Text>
+                            }
+                        </View>
+                    )}
                     {
-                        !confirmDelete
-                            ? <SubmitFormButtons
-                                submit={() => setConfirmDelete(true)}
-                                submitButtonText='Excluir'
-                                submitButtonColor='darkred'
-                            />
-                            : <ConfirmDelete
-                                deleteFunction={() => {
-                                    deleteFunction(service._id)
-                                }}
-                                setConfirmDelete={setConfirmDelete}
-                            />
+                        service.isThereAmount && (
+                            <View style={styles.inputContainer}>
+                                <View style={styles.infoContainer}>
+                                    {
+                                        editStockInput
+                                            ? <EditStockInput
+                                                setStock={setStock}
+                                                editStock={editStock}
+                                                setChangedValue={setChangedValue}
+                                                currentStock={service.amount}
+                                            />
+                                            : <ActualStock stock={stock || service.amount || 0} setEditStockInput={setEditStockInput} />
+                                    }
+                                </View>
+                            </View>
+                        )
                     }
+                </View>
+                {
+                    !confirmDelete
+                        ? <SubmitFormButtons
+                            cancel={() => {
+                                setFormOff(false)
+                                setButton(true)
+                            }}
+                            submit={() => setConfirmDelete(true)}
+                            submitButtonText='Excluir'
+                            submitButtonColor='darkred'
+                        />
+                        : <ConfirmDelete
+                            deleteFunction={() => {
+                                deleteFunction(service._id)
+                            }}
+                            setConfirmDelete={setConfirmDelete}
+                        />
+                }
             </FormContainer>
         </>
     )
