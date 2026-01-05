@@ -2,9 +2,6 @@ import { StyleSheet, View } from 'react-native'
 
 interface FormContainerProps {
     children: React.ReactNode
-    setFormOff: React.Dispatch<React.SetStateAction<boolean>>
-    bgColor?: string
-    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function FormContainer({ children }: FormContainerProps) {

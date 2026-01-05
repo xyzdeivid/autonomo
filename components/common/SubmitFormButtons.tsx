@@ -33,10 +33,13 @@ export default function SubmitFormButtons({ cancel, submit, submitButtonText, su
 const styles = StyleSheet.create({
 
     buttonContainer: {
-        marginTop: 20,
+        position: 'absolute',
+        bottom: 20,
+        width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingHorizontal: 16
     }
 
 })

@@ -116,63 +116,60 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
         <>
             {loadingScreen && <LoadingScreen />}
             <FormContainer
-                setFormOff={setFormOff}
-                bgColor='rgba(139, 0, 0, 0.1)'
-                setButton={setButton}
             >
-                    <FormTitle text='Informações de Despesa' textColor='#660000' />
-                    <View>
-                        {
-                            showEditNameInput
-                                ? <EditNameInput actualName={expense.name} setName={setNewName} editName={editName} />
-                                : <ActualName name={expense.name} setShowEditNameInput={setShowEditNameInput} />
-                        }
-                        <Text style={styles.labelContainer}>
-                            <Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}
-                        </Text>
-                        {
-                            showEditValueInput
-                                ? <EditValueInput
-                                    setValue={setNewValue}
-                                    editValue={editValue}
-                                    actualValue={expense.value}
-                                />
-                                : <ActualValue
-                                    name={expense.name}
-                                    value={expense.value}
-                                    setShowEditValueInput={setShowEditValueInput}
-                                />
-                        }
-                        {
-                            expense.amount && (
-                                <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(expense.value / expense.amount)}</Text>
-                            )
-                        }
-                        {
-                            expense.amount && (
-                                <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {expense.amount}</Text>
-                            )
-                        }
-                    </View>
+                <FormTitle text='Informações de Despesa' textColor='#660000' />
+                <View>
                     {
-                        !confirmDelete
-                            ? <SubmitFormButtons
-                                cancel={() => {
-                                    setFormOff(false)
-                                    setButton(true)
-                                }}
-                                submit={() => setConfirmDelete(true)}
-                                submitButtonText='Excluir'
-                                submitButtonColor='darkred'
+                        showEditNameInput
+                            ? <EditNameInput actualName={expense.name} setName={setNewName} editName={editName} />
+                            : <ActualName name={expense.name} setShowEditNameInput={setShowEditNameInput} />
+                    }
+                    <Text style={styles.labelContainer}>
+                        <Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}
+                    </Text>
+                    {
+                        showEditValueInput
+                            ? <EditValueInput
+                                setValue={setNewValue}
+                                editValue={editValue}
+                                actualValue={expense.value}
                             />
-                            : <ConfirmDelete
-                                deleteFunction={() => {
-                                    deleteFunction(expense)
-                                }}
-                                setConfirmDelete={setConfirmDelete}
+                            : <ActualValue
+                                name={expense.name}
+                                value={expense.value}
+                                setShowEditValueInput={setShowEditValueInput}
                             />
                     }
+                    {
+                        expense.amount && (
+                            <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(expense.value / expense.amount)}</Text>
+                        )
+                    }
+                    {
+                        expense.amount && (
+                            <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {expense.amount}</Text>
+                        )
+                    }
+                </View>
             </FormContainer>
+            {
+                !confirmDelete
+                    ? <SubmitFormButtons
+                        cancel={() => {
+                            setFormOff(false)
+                            setButton(true)
+                        }}
+                        submit={() => setConfirmDelete(true)}
+                        submitButtonText='Excluir'
+                        submitButtonColor='darkred'
+                    />
+                    : <ConfirmDelete
+                        deleteFunction={() => {
+                            deleteFunction(expense)
+                        }}
+                        setConfirmDelete={setConfirmDelete}
+                    />
+            }
         </>
     )
 

@@ -1,5 +1,5 @@
-import { Alert, Animated, Button, StyleSheet, Text, View } from 'react-native'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { Alert, Button, StyleSheet, Text, View } from 'react-native'
+import { useContext, useState } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import NumberInput from '../common/NumberInput'
 import FormTitle from '../common/FormTitle'
@@ -11,7 +11,6 @@ import {
     checkServicesAmount, createNewOutflow,
     createNewService, orderServices
 } from '@/functions/services'
-import ServiceOrProductButtons from './ServiceOrProductButtons'
 import AmountInput from '../common/AmountInput'
 import LoadingScreen from '../common/LoadingScreen'
 import ResaleButton from './ResaleButton'
@@ -23,6 +22,7 @@ import React from 'react'
 import { warning } from '@/functions/common'
 import ItemsCategoriesForm from './ItemsCategoriesForm'
 import ServiceCreationForm from './ServiceCreationForm'
+import FormContainer from '../common/FormContainer'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -178,58 +178,16 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         setStep(step + 1)
     }
 
-    const getTitle = () => {
-        if (step === 1 && choice === 'budget') {
-            return '2. Preencha as informações finais do seu serviço:'
-        }
-        if (step === 2 && choice === 'product' && resale) {
-            return '3. Preencha as informações finais do seu produto:'
-        }
-        if (step === 2 && choice === 'product' && !resale) {
-            return '3. Verifique a forma de venda do seu produto:'
-        }
-        if (step === 3) {
-            return '4. Preencha as informações finais do seu produto:'
-        }
-        return '1. Selecione a categoria:'
-    }
-
-    const slideAnim = useRef(new Animated.Value(1000)).current
-
-    useEffect(() => {
-
-        Animated.parallel([
-            Animated.timing(slideAnim, {
-                toValue: 0,
-                duration: 250,
-                useNativeDriver: true,
-            })
-        ]).start()
-
-    }, [])
-
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <Animated.View
-                style={{
-                    ...styles.container,
-                    transform: [{ translateY: slideAnim }]
-                }}
-            >
+            <FormContainer>
                 {
                     step === 0 && <FormTitle
                         text='Novo Produto ou Serviço'
                         textColor='#330066'
                     />
                 }
-                <View style={{
-                    borderBottomWidth: 2,
-                    marginTop: -8,
-                    marginBottom: 28,
-                    borderBottomColor: '#330066'
-                }}
-                />
                 {
                     step === 0 && (
                         <ItemsCategoriesForm choice={choice} setChoice={setChoice} />
@@ -369,18 +327,18 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         </>
                     )
                 }
-                <View style={styles.submitButtons}>
-                    <View>
-                        <Button onPress={() => {
-                            setAddServiceForm(false)
-                            setButton(true)
-                        }} title='Cancelar' color='gray' />
-                    </View>
-                    <View>
-                        <Button onPress={() => nextStep()} title='Próximo' color='#330066' />
-                    </View>
+            </FormContainer>
+            <View style={styles.submitButtons}>
+                <View>
+                    <Button onPress={() => {
+                        setAddServiceForm(false)
+                        setButton(true)
+                    }} title='Cancelar' color='gray' />
                 </View>
-            </Animated.View>
+                <View>
+                    <Button onPress={() => nextStep()} title='Próximo' color='#330066' />
+                </View>
+            </View>
         </>
     )
 
@@ -406,11 +364,11 @@ const styles = StyleSheet.create({
     submitButtons: {
         position: 'absolute',
         bottom: 20,
-        start: 16,
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingHorizontal: 16
     }
 
 

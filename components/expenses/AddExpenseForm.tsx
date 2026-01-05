@@ -136,9 +136,6 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
         <>
             {loadingScreen && <LoadingScreen />}
             <FormContainer
-                setFormOff={setAddExpenseForm}
-                bgColor='rgba(139, 0, 0, 0.1)'
-                setButton={setButton}
             >
                 <FormTitle text='Nova Despesa' textColor='#660000' />
                 <FormInputs>
@@ -187,16 +184,16 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                         </>
                     )}
                 </FormInputs>
-                <SubmitFormButtons
-                    cancel={() => {
-                        setAddExpenseForm(false)
-                        setButton(true)
-                    }}
-                    submit={addExpense}
-                    submitButtonText='Registrar'
-                    submitButtonColor='#660000'
-                />
             </FormContainer>
+            <SubmitFormButtons
+                cancel={() => {
+                    setAddExpenseForm(false)
+                    setButton(true)
+                }}
+                submit={addExpense}
+                submitButtonText='Registrar'
+                submitButtonColor='#660000'
+            />
         </>
     )
 

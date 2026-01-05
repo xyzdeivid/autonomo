@@ -305,9 +305,6 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
         <>
             {loadingScreen && <LoadingScreen />}
             <FormContainer
-                setFormOff={setFormOff}
-                setButton={setButton}
-                bgColor='rgba(51, 0, 102, 0.1)'
             >
                 <FormTitle text={`Informações do ${getTitle(service)}`} textColor='#330066' />
                 <View>
@@ -361,25 +358,25 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                         )
                     }
                 </View>
-                {
-                    !confirmDelete
-                        ? <SubmitFormButtons
-                            cancel={() => {
-                                setFormOff(false)
-                                setButton(true)
-                            }}
-                            submit={() => setConfirmDelete(true)}
-                            submitButtonText='Excluir'
-                            submitButtonColor='darkred'
-                        />
-                        : <ConfirmDelete
-                            deleteFunction={() => {
-                                deleteFunction(service._id)
-                            }}
-                            setConfirmDelete={setConfirmDelete}
-                        />
-                }
             </FormContainer>
+            {
+                !confirmDelete
+                    ? <SubmitFormButtons
+                        cancel={() => {
+                            setFormOff(false)
+                            setButton(true)
+                        }}
+                        submit={() => setConfirmDelete(true)}
+                        submitButtonText='Excluir'
+                        submitButtonColor='darkred'
+                    />
+                    : <ConfirmDelete
+                        deleteFunction={() => {
+                            deleteFunction(service._id)
+                        }}
+                        setConfirmDelete={setConfirmDelete}
+                    />
+            }
         </>
     )
 

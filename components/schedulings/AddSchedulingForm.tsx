@@ -187,70 +187,67 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
         }
 
     }
-    
+
     return (
         <>
             {loadingScreen && <LoadingScreen />}
             <FormContainer
-                setFormOff={setAddSchedulingForm}
-                bgColor='rgba(0, 102, 0, 0.1)'
-                setButton={setButton}
             >
-                    <FormTitle text='Nova Receita' textColor='#006600' />
-                    <FormInputs>
-                        <SelectServiceInput
-                            service={service}
-                            setService={setService}
-                            services={getServices(services)}
-                        />
-                        {service.amount ? (
-                            <StockInfo amount={service.amount - amount} />
-                        ) : null}
-                        <NameInput 
-                            setName={setCustomerName}
-                            label='Cliente'
+                <FormTitle text='Nova Receita' textColor='#006600' />
+                <FormInputs>
+                    <SelectServiceInput
+                        service={service}
+                        setService={setService}
+                        services={getServices(services)}
+                    />
+                    {service.amount ? (
+                        <StockInfo amount={service.amount - amount} />
+                    ) : null}
+                    <NameInput
+                        setName={setCustomerName}
+                        label='Cliente'
+                        bgColor='rgba(0, 102, 0, 0.1)'
+                        textColor='#006600'
+                    />
+                    <DateInput
+                        setTargetDate={setDate}
+                        bgColor='#006600'
+                        textColor='#006600'
+                    />
+                    {service.category === 'product' && (
+                        <AmountInput
+                            text='* Quantidade'
+                            setAmount={setAmount}
                             bgColor='rgba(0, 102, 0, 0.1)'
                             textColor='#006600'
                         />
-                        <DateInput
-                            setTargetDate={setDate}
-                            bgColor='#006600'
-                            textColor='#006600'
-                        />
-                        {service.category === 'product' && (
-                            <AmountInput
-                                text='* Quantidade'
-                                setAmount={setAmount}
+                    )}
+                    {
+                        service.category === 'budget' && (
+                            <NumberInput
+                                label='* Valor'
+                                setValue={setValue}
                                 bgColor='rgba(0, 102, 0, 0.1)'
                                 textColor='#006600'
                             />
-                        )}
-                        {
-                            service.category === 'budget' && (
-                                <NumberInput
-                                label='* Valor'
-                                    setValue={setValue}
-                                    bgColor='rgba(0, 102, 0, 0.1)'
-                                    textColor='#006600'
-                                />
-                            )
-                        }
-                        {
-                            service.category !== 'service' && (
-                                <Text style={styles.infoText}>* campo obrigatório</Text>
-                            )
-                        }
-                    </FormInputs>
-                    <SubmitFormButtons 
-                    cancel={() => {
-                        setAddSchedulingForm(false)
-                        setButton(true)
-                    }}
-                    submit={addScheduling} 
-                    submitButtonText='Registrar' 
-                    submitButtonColor='#006600' 
-                    />
+                        )
+                    }
+                    {
+                        service.category !== 'service' && (
+                            <Text style={styles.infoText}>* campo obrigatório</Text>
+                        )
+                    }
+                </FormInputs>
             </FormContainer>
+            <SubmitFormButtons
+                cancel={() => {
+                    setAddSchedulingForm(false)
+                    setButton(true)
+                }}
+                submit={addScheduling}
+                submitButtonText='Registrar'
+                submitButtonColor='#006600'
+            />
         </>
     )
 

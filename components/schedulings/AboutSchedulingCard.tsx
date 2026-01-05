@@ -220,83 +220,80 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         <>
             {loadingPage && <LoadingScreen />}
             <FormContainer
-                setFormOff={setFormOff}
-                bgColor='rgba(0, 102, 0, 0.1)'
-                setButton={setButton}
             >
-                    <FormTitle text='Informações de Receita' textColor='#006600' />
-                    <View>
-                        {
-                            scheduling.customer
-                                ? <ActualCustomer
-                                    customer={scheduling.customer}
-                                    setNewCustomerName={setCustomer}
-                                    newCustomerName={customer}
-                                    editCustomerName={editCustomerName}
-                                />
-                                : <AddClienteButton
-                                    setCustomer={setCustomer}
-                                    customer={customer}
-                                    addCustomer={addCustomer}
-                                />
-                        }
-                        <Text style={styles.labelContainer}><Text style={styles.label}>Produto/Serviço:</Text> {scheduling.service._id}</Text>
-                        <ActualDate
-                            date={dateFormat(scheduling.date)}
-                            setNewDate={setNewDate}
-                            editDate={editDate}
-                        />
-                        <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
-                        {
-                            scheduling.service.category === 'product'
-                                ? <View>
-                                    <Text style={styles.labelContainer}>
-                                        <Text style={styles.label}>
-                                            Valor (un):
-                                        </Text>
-                                        {scheduling.service.amount
-                                            ? moneyFormat(scheduling.service.value / scheduling.service.amount)
-                                            : null}
-                                    </Text>
-                                    {
-                                        scheduling.service.amount && (
-                                            showEditAmountInput
-                                                ? <EditAmountInput
-                                                    actualAmount={scheduling.service.amount}
-                                                    newAmount={newAmount}
-                                                    setNewAmount={setNewAmount}
-                                                    setShowEditAmountInput={setShowEditAmountInput}
-                                                    editAmount={editAmount}
-                                                />
-                                                : <ActualAmount
-                                                    amount={scheduling.service.amount}
-                                                    setShowEditAmountInput={setShowEditAmountInput}
-                                                />
-                                        )
-                                    }
-                                </View>
-                                : null
-                        }
-                    </View>
+                <FormTitle text='Informações de Receita' textColor='#006600' />
+                <View>
                     {
-                        !confirmDelete
-                            ? <SubmitFormButtons
-                                cancel={() => {
-                                    setFormOff(false)
-                                    setButton(true)
-                                }}
-                                submit={() => setConfirmDelete(true)}
-                                submitButtonText='Excluir'
-                                submitButtonColor='darkred'
+                        scheduling.customer
+                            ? <ActualCustomer
+                                customer={scheduling.customer}
+                                setNewCustomerName={setCustomer}
+                                newCustomerName={customer}
+                                editCustomerName={editCustomerName}
                             />
-                            : <ConfirmDelete
-                                deleteFunction={() => {
-                                    deleteFunction(scheduling)
-                                }}
-                                setConfirmDelete={setConfirmDelete}
+                            : <AddClienteButton
+                                setCustomer={setCustomer}
+                                customer={customer}
+                                addCustomer={addCustomer}
                             />
                     }
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Produto/Serviço:</Text> {scheduling.service._id}</Text>
+                    <ActualDate
+                        date={dateFormat(scheduling.date)}
+                        setNewDate={setNewDate}
+                        editDate={editDate}
+                    />
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
+                    {
+                        scheduling.service.category === 'product'
+                            ? <View>
+                                <Text style={styles.labelContainer}>
+                                    <Text style={styles.label}>
+                                        Valor (un):
+                                    </Text>
+                                    {scheduling.service.amount
+                                        ? moneyFormat(scheduling.service.value / scheduling.service.amount)
+                                        : null}
+                                </Text>
+                                {
+                                    scheduling.service.amount && (
+                                        showEditAmountInput
+                                            ? <EditAmountInput
+                                                actualAmount={scheduling.service.amount}
+                                                newAmount={newAmount}
+                                                setNewAmount={setNewAmount}
+                                                setShowEditAmountInput={setShowEditAmountInput}
+                                                editAmount={editAmount}
+                                            />
+                                            : <ActualAmount
+                                                amount={scheduling.service.amount}
+                                                setShowEditAmountInput={setShowEditAmountInput}
+                                            />
+                                    )
+                                }
+                            </View>
+                            : null
+                    }
+                </View>
             </FormContainer>
+            {
+                !confirmDelete
+                    ? <SubmitFormButtons
+                        cancel={() => {
+                            setFormOff(false)
+                            setButton(true)
+                        }}
+                        submit={() => setConfirmDelete(true)}
+                        submitButtonText='Excluir'
+                        submitButtonColor='darkred'
+                    />
+                    : <ConfirmDelete
+                        deleteFunction={() => {
+                            deleteFunction(scheduling)
+                        }}
+                        setConfirmDelete={setConfirmDelete}
+                    />
+            }
         </>
     )
 
