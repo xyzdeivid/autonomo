@@ -23,6 +23,7 @@ import { warning } from '@/functions/common'
 import ItemsCategoriesForm from './ItemsCategoriesForm'
 import ServiceCreationForm from './ServiceCreationForm'
 import FormContainer from '../common/FormContainer'
+import { db } from '@/database/db'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -101,7 +102,19 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         try {
 
             const updatedServices = orderServices([...services, service])
-            await AsyncStorage.setItem('items', JSON.stringify(updatedServices))
+            await await db.runAsync(
+                `INSERT INTO items 
+   (_id, category, value, isThereAmount, resale, amount)
+   VALUES (?, ?, ?, ?, ?, ?)`,
+                [
+                    service._id,
+                    service.category,
+                    service.value,
+                    service.isThereAmount ? 1 : 0,
+                    service.resale ? 1 : 0,
+                    service.amount ?? null
+                ]
+            )
             setServices(updatedServices)
 
         } catch (err) {

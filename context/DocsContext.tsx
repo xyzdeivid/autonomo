@@ -1,6 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createContext, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
+import { getAllItems } from '@/database/repositories'
+import { initDatabase } from '@/database/initDatabase'
 
 export interface Item {
     category: string
@@ -107,24 +108,6 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     | React.Dispatch<React.SetStateAction<Outflow[]>>
     | React.Dispatch<React.SetStateAction<Entry[]>>
 
-    const fetchData = async (storageKey: string, setter: SetterT) => {
-
-        try {
-
-            const data = await AsyncStorage.getItem(storageKey)
-
-            if (data) {
-                setter(JSON.parse(data))
-            }
-
-        } catch (err) {
-
-            throw err
-
-        }
-
-    }
-
     const getCurrentYear = () => {
         
         const currentYear = String(new Date().getFullYear())
@@ -145,27 +128,41 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         currentPage: [currentPage, setCurrentPage]
     }
 
-    useEffect(() => {
+    const getAndSetItems = async () => {
 
-        const initializeData = async () => {
+        try {
 
-            try {
+            const items = await getAllItems()
+            setItems(items)
 
-                await fetchData('items', setItems)
-                await fetchData('expenses', setOutflows)
-                await fetchData('schedulings', setEntries)
+        } catch (err) {
 
-            } catch (err) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
+            Alert.alert('DOCS CONTEXT ERROR', 'Failed to fetch items from the database.')
 
         }
 
-        
-        getCurrentYear()
-        initializeData()
+    }
+
+    useEffect(() => {
+
+        async function startDb() {
+
+            try {
+                await initDatabase()
+                await getAndSetItems()
+                getCurrentYear()
+
+            } catch (err) {
+
+                Alert.alert(
+                    'APP INIT ERROR',
+                    'Failed to initialize app data.'
+                )
+                
+            }
+        }
+
+        startDb()
 
     }, [])
 
