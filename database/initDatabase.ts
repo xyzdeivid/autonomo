@@ -15,7 +15,13 @@ export const initDatabase = async () => {
       resale INTEGER NOT NULL,
       amount REAL
     );
-  `
+    CREATE TABLE IF NOT EXISTS outflows (
+      _id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      date TEXT NOT NULL,
+      value REAL NOT NULL,
+      amount REAL
+    );`
     )
 
   } catch (error) {

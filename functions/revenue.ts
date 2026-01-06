@@ -1,9 +1,9 @@
-import { Expense, Scheduling } from "@/context/DocsContext"
+import { Outflow as Expense, Entry as Scheduling } from "@/context/DocsContext"
 
 
 export const getSchedulingsRevenue = (schedulings: Scheduling[]) => {
     return schedulings.reduce((prev, current) => {
-        return prev + current.service.value
+        return prev + current.serviceValue
     }, 0)
 }
 

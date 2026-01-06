@@ -105,14 +105,11 @@ export const createNewEntry = (
 
     const newScheduling: Entry = {
         _id: generateId(),
-        service: {
-            category: service.category,
-            _id: service._id,
-            value: getSchedulingValue(service, amount, value),
-            isThereAmount: service.isThereAmount,
-            resale: service.resale,
-            ...(service.category === 'product' && { amount })
-        },
+        serviceId: service._id,
+        serviceCategory: service.category,
+        serviceValue: getSchedulingValue(service, amount, value),
+        serviceIsThereAmount: service.isThereAmount,
+        serviceAmount: amount,
         date,
         ...(costumerName && { customer: costumerName })
     }

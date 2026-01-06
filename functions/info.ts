@@ -1,4 +1,4 @@
-import { Scheduling, Expense } from '@/context/DocsContext'
+import { Entry as Scheduling, Outflow as Expense } from '@/context/DocsContext'
 import { getExpenses, getSchedulingsRevenue } from './revenue'
 
 export const getDays = (filteredSchedulings: Scheduling[]) => {
@@ -25,7 +25,7 @@ export const getDays = (filteredSchedulings: Scheduling[]) => {
     formatDays.forEach(day => {
         filteredSchedulings.forEach(scheduling => {
             if (scheduling.date.split('-')[2] === day.day) {
-                day.amount += scheduling.service.value
+                day.amount += scheduling.serviceValue
             }
         })
     })
@@ -49,7 +49,7 @@ export const findGreaterData = (schedulings: Scheduling[], expenses: Expense[]) 
 
 export const thereIsProduct = (schedulings: Scheduling[]) => {
     const product = schedulings.filter(scheduling => (
-        scheduling.service.category === 'product'
+        scheduling.serviceCategory === 'product'
     ))[0]
     if (product) return true
     return false
@@ -57,7 +57,7 @@ export const thereIsProduct = (schedulings: Scheduling[]) => {
 
 export const thereIsService = (schedulings: Scheduling[]) => {
     const service = schedulings.filter(scheduling => (
-        scheduling.service.category === 'service'
+        scheduling.serviceCategory === 'service'
     ))[0]
     if (service) return true
     return false
@@ -65,7 +65,7 @@ export const thereIsService = (schedulings: Scheduling[]) => {
 
 export const thereIsBudget = (schedulings: Scheduling[]) => {
     const budget = schedulings.filter(scheduling => (
-        scheduling.service.category === 'budget'
+        scheduling.serviceCategory === 'budget'
     ))[0]
     if (budget) return true
     return false

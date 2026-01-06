@@ -44,7 +44,7 @@ export default function Schedulings() {
 
         // Separando produto a ser atualizado
         const product = services.filter(current => {
-            return current._id === scheduling.service._id
+            return current._id === scheduling.serviceId
         })[0]
 
         // Verificando se o produto ainda está cadastrado no sistema
@@ -64,10 +64,10 @@ export default function Schedulings() {
                 resale: product.resale
             }
 
-            if (scheduling.service.amount && product.isThereAmount)
+            if (scheduling.serviceAmount && product.isThereAmount)
                 updatedProduct.amount = product.amount
-                    ? product.amount + scheduling.service.amount
-                    : 0 + scheduling.service.amount
+                    ? product.amount + scheduling.serviceAmount
+                    : 0 + scheduling.serviceAmount
 
             try {
 
@@ -88,7 +88,7 @@ export default function Schedulings() {
 
         setLoadingScreen(true)
 
-        if (scheduling.service.isThereAmount) {
+        if (scheduling.serviceIsThereAmount) {
 
             try {
 

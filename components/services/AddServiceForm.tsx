@@ -68,7 +68,17 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             try {
 
                 const updatedExpenses = [...expenses, newExpense]
-                await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses))
+                await db.runAsync(
+                    `INSERT INTO outflows (_id, name, date, value, amount)
+                    VALUES (?, ?, ?, ?, ?)`,
+                    [
+                        newExpense._id,
+                        newExpense.name,
+                        newExpense.date,
+                        newExpense.value,
+                        newExpense.amount ?? null
+                    ]
+                )
                 setExpenses(updatedExpenses)
 
             } catch (err) {
@@ -102,7 +112,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
         try {
 
             const updatedServices = orderServices([...services, service])
-            await await db.runAsync(
+            await db.runAsync(
                 `INSERT INTO items 
    (_id, category, value, isThereAmount, resale, amount)
    VALUES (?, ?, ?, ?, ?, ?)`,

@@ -102,15 +102,15 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
             }
 
             const schedulingsToEdit = schedulings.filter(current => {
-                return current.service._id === serviceName
+                return current.serviceId === serviceName
             })
 
             const remainingSchedulings = schedulings.filter(current => {
-                return current.service._id !== serviceName
+                return current.serviceId !== serviceName
             })
 
             schedulingsToEdit.forEach(current =>
-                current.service._id = name
+                current.serviceId = name
             )
 
             let editedSchedulings = [] as Entry[]

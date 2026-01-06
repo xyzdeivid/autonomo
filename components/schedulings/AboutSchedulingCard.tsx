@@ -30,11 +30,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [showEditAmountInput, setShowEditAmountInput] = useState(false)
     const [newAmount, setNewAmount] = useState(0)
-    const isThereAmount = scheduling.service.isThereAmount
+    const isThereAmount = scheduling.serviceIsThereAmount
     const appDocs = useContext(DocsContext)
     const [entries, setEntries] = appDocs.entries
     const [items, setItems] = appDocs.items
-    const product = items.find(current => current._id === scheduling.service._id)
+    const product = items.find(current => current._id === scheduling.serviceId)
     const remainingEntries = entries.filter(current => (
         current._id !== scheduling._id
     ))
@@ -55,14 +55,14 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
         setLoadingPage(true)
 
-        if (scheduling.service.amount) {
+        if (scheduling.serviceAmount) {
 
             let currentProductStock = product?.amount || 0
 
             // Atualizando estoque no itens
             if (isThereAmount) {
 
-                currentProductStock += scheduling.service.amount
+                currentProductStock += scheduling.serviceAmount
                 currentProductStock = currentProductStock - newAmount
 
                 if (currentProductStock >= 0) {
@@ -84,10 +84,10 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
                         }
 
-                        scheduling.service.value =
-                            (scheduling.service.value / scheduling.service.amount) * newAmount
+                        scheduling.serviceValue =
+                            (scheduling.serviceValue / scheduling.serviceAmount) * newAmount
 
-                        scheduling.service.amount = newAmount
+                        scheduling.serviceAmount = newAmount
 
                     }
 
@@ -99,10 +99,10 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
             } else {
 
-                scheduling.service.value =
-                    (scheduling.service.value / scheduling.service.amount) * newAmount
+                scheduling.serviceValue =
+                    (scheduling.serviceValue / scheduling.serviceAmount) * newAmount
 
-                scheduling.service.amount = newAmount
+                scheduling.serviceAmount = newAmount
 
             }
 
@@ -237,36 +237,36 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                 addCustomer={addCustomer}
                             />
                     }
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Produto/Serviço:</Text> {scheduling.service._id}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Produto/Serviço:</Text> {scheduling.serviceId}</Text>
                     <ActualDate
                         date={dateFormat(scheduling.date)}
                         setNewDate={setNewDate}
                         editDate={editDate}
                     />
-                    <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.service.value)}</Text>
+                    <Text style={styles.labelContainer}><Text style={styles.label}>Valor:</Text>{moneyFormat(scheduling.serviceValue)}</Text>
                     {
-                        scheduling.service.category === 'product'
+                        scheduling.serviceCategory === 'product'
                             ? <View>
                                 <Text style={styles.labelContainer}>
                                     <Text style={styles.label}>
                                         Valor (un):
                                     </Text>
-                                    {scheduling.service.amount
-                                        ? moneyFormat(scheduling.service.value / scheduling.service.amount)
+                                    {scheduling.serviceAmount
+                                        ? moneyFormat(scheduling.serviceValue / scheduling.serviceAmount)
                                         : null}
                                 </Text>
                                 {
-                                    scheduling.service.amount && (
+                                    scheduling.serviceAmount && (
                                         showEditAmountInput
                                             ? <EditAmountInput
-                                                actualAmount={scheduling.service.amount}
+                                                actualAmount={scheduling.serviceAmount}
                                                 newAmount={newAmount}
                                                 setNewAmount={setNewAmount}
                                                 setShowEditAmountInput={setShowEditAmountInput}
                                                 editAmount={editAmount}
                                             />
                                             : <ActualAmount
-                                                amount={scheduling.service.amount}
+                                                amount={scheduling.serviceAmount}
                                                 setShowEditAmountInput={setShowEditAmountInput}
                                             />
                                     )
@@ -288,7 +288,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                         submitButtonColor='darkred'
                     />
                     : <ConfirmDelete
-                    name={scheduling.service._id}
+                    name={scheduling.serviceId}
                         deleteFunction={() => {
                             deleteFunction(scheduling)
                         }}

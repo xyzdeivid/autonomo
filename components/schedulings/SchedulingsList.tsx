@@ -50,9 +50,9 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
                                             : '*'
                                     }
                                 </DataTable.Cell>
-                                <DataTable.Cell style={styles.text}>{scheduling.service._id}</DataTable.Cell>
+                                <DataTable.Cell style={styles.text}>{scheduling.serviceId}</DataTable.Cell>
                                 <DataTable.Cell style={styles.text}>{dateFormat(scheduling.date)}</DataTable.Cell>
-                                <DataTable.Cell style={styles.text}>{moneyFormat(scheduling.service.value)}</DataTable.Cell>
+                                <DataTable.Cell style={styles.text}>{moneyFormat(scheduling.serviceValue)}</DataTable.Cell>
                             </DataTable.Row>
                         )
                     })}

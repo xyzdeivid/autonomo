@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
-import { getAllItems } from '@/database/repositories'
+import { getAllItems, getAllOutflows } from '@/database/repositories'
 import { initDatabase } from '@/database/initDatabase'
 
 export interface Item {
@@ -45,7 +45,11 @@ const DEFAULT_OUTFLOW: Outflow = {
 
 export interface Entry {
     _id: string
-    service: Item
+    serviceId: string
+    serviceCategory: string
+    serviceValue: number
+    serviceIsThereAmount: boolean
+    serviceAmount?: number
     date: string
     customer?: string
 }
@@ -56,13 +60,10 @@ type EntriesState = [Entry[], SetEntries]
 
 const DEFAULT_ENTRY: Entry = {
     _id: '',
-    service: {
-        category: '',
-        _id: '',
-        value: 0,
-        isThereAmount: false,
-        resale: false
-    },
+    serviceId: '',
+    serviceCategory: '',
+    serviceValue: 0,
+    serviceIsThereAmount: false,
     date: '',
 }
 
@@ -133,7 +134,9 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         try {
 
             const items = await getAllItems()
+            const outflows = await getAllOutflows()
             setItems(items)
+            setOutflows(outflows)
 
         } catch (err) {
 

@@ -18,6 +18,7 @@ import AmountInput from '../common/AmountInput'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ValueOption from '../common/ValueOption'
 import React from 'react'
+import { db } from '@/database/db'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -107,7 +108,17 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
         try {
 
             const updatedExpenses = [...expenses, newExpense]
-            await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses))
+            await db.runAsync(
+                `INSERT INTO outflows (_id, name, date, value, amount)
+                                VALUES (?, ?, ?, ?, ?)`,
+                [
+                    newExpense._id,
+                    newExpense.name,
+                    newExpense.date,
+                    newExpense.value,
+                    newExpense.amount ?? null
+                ]
+            )
             setExpenses(updatedExpenses)
 
         } catch (err) {

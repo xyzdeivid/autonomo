@@ -1,4 +1,4 @@
-import { Expense, Service } from '@/context/DocsContext'
+import { Outflow as Expense, Item as Service } from '@/context/DocsContext'
 
 export const orderExpenses = (expenses: Expense[]) => {
 
