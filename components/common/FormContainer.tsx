@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
         height: '100%',
         position: 'absolute',
         display: 'flex',
-        paddingHorizontal: 16
+        padding: 16
     }
 })

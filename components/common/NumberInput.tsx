@@ -14,7 +14,8 @@ export default function NumberInput({ setValue, label, bgColor, textColor }: Num
         <View style={styles.inputContainer}>
             <Text style={{
                 color: textColor ? textColor : 'black',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                fontSize: 16
             }}>
                 {label ? label : 'Valor'}
             </Text>
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     input: {
         width: '25%',
         color: 'black',
-        padding: 4,
+        padding: 8,
         textAlign: 'center',
         marginStart: 8,
         borderRadius: 3

@@ -12,11 +12,12 @@ export default function SelectServiceInput({ service, setService, services }: Se
 
     return (
         <View>
-            <Text style={styles.label}>Produto / Serviço / Orçamentário:</Text>
+            <Text style={styles.label}>Produto ou Serviço</Text>
             <Picker
                 style={styles.inputContainer}
                 selectedValue={service}
                 onValueChange={(itemValue) => setService(itemValue)}
+                dropdownIconColor='white'
             >
                 {services.map(current => {
                     return (
@@ -33,11 +34,13 @@ const styles = StyleSheet.create({
     label: {
         marginBottom: 5,
         color: '#006600',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 16
     },
     inputContainer: {
-        backgroundColor: 'rgba(0, 102, 0, 0.1)', 
+        backgroundColor: 'rgba(0, 102, 0, 0.75)', 
         borderRadius: 6,
-        marginBottom: 20
+        marginBottom: 20,
+        color: 'white'
     }
 })

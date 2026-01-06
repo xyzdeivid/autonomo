@@ -2,26 +2,25 @@ import { StyleSheet, Text, View } from 'react-native'
 
 interface FormTitleProps {
     text: string
-    children?: React.ReactNode
     textColor?: string
 }
 
-export default function FormTitle({ text, children, textColor }: FormTitleProps) {
+export default function FormTitle({ text, textColor }: FormTitleProps) {
 
     return (
-        <View style={{
-            ...styles.container,
-            justifyContent: children ? 'space-between' : 'flex-start'
-        }}>
+        <View style={styles.container}>
             <Text style={{
                 ...styles.text,
-                color: textColor ? textColor : 'black',
-                maxWidth: children ? 300 : null
+                color: textColor ? textColor : 'black'
             }}
             >
                 {text}
             </Text>
-            {children}
+            <View style={{
+                ...styles.hr,
+                backgroundColor: textColor ? textColor : 'black'
+            }} 
+            />
         </View>
     )
 
@@ -29,15 +28,17 @@ export default function FormTitle({ text, children, textColor }: FormTitleProps)
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 16,
-        paddingVertical: 8
+        marginBottom: 16
+    },
+    hr: {
+        width: '100%',
+        height: 0.5,
+        marginVertical: 16
     },
     text: {
-        fontSize: 24,
+        fontSize: 28,
         marginEnd: 8,
-        fontWeight: '500'
+        fontWeight: '500',
+        textAlign: 'center'
     }
 })

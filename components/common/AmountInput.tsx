@@ -27,7 +27,8 @@ export default function AmountInput({ text, setAmount, defaultValue, bgColor, te
             <Text
                 style={{
                     color: textColor ? textColor : 'black',
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    fontSize: 16
                 }}
             >
                 {text}
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     input: {
         width: '25%',
         color: 'black',
-        padding: 4,
+        padding: 8,
         textAlign: 'center',
         marginStart: 8,
         borderRadius: 3

@@ -12,7 +12,8 @@ export default function NameInput({ setName, label, bgColor, textColor }: NameIn
         <View style={styles.inputContainer}>
             <Text style={{
                 color: textColor ? textColor : 'black',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                fontSize: 16
             }}
             >
                 {label ? label : 'Nome'}
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     },
     input: {
         color: 'black',
-        padding: 4,
+        padding: 8,
         borderRadius: 3,
         width: '70%',
         marginStart: 8,
