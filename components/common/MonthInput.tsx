@@ -29,9 +29,13 @@ export default function MonthInput({ dropdownIconColor }: MonthInputProps) {
             {
                 availableMonths.length > 1
                 && <Picker
+                style={{ 
+                    backgroundColor:  dropdownIconColor ? dropdownIconColor : 'lightgray',
+                    color: 'white'
+                }}
                     selectedValue={selectedMonth}
                     onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-                    dropdownIconColor={dropdownIconColor ? dropdownIconColor : 'lightgray'}
+                    dropdownIconColor='white'
                 >
                     {availableMonths.map(month => (
                         <Picker.Item key={month[0]} label={month[0]} value={month[1]} />
