@@ -371,6 +371,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                         submitButtonColor='darkred'
                     />
                     : <ConfirmDelete
+                    name={service._id}
                         deleteFunction={() => {
                             deleteFunction(service._id)
                         }}

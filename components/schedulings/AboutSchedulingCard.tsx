@@ -288,6 +288,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                         submitButtonColor='darkred'
                     />
                     : <ConfirmDelete
+                    name={scheduling.service._id}
                         deleteFunction={() => {
                             deleteFunction(scheduling)
                         }}

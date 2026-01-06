@@ -164,6 +164,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                         submitButtonColor='darkred'
                     />
                     : <ConfirmDelete
+                    name={expense.name}
                         deleteFunction={() => {
                             deleteFunction(expense)
                         }}
