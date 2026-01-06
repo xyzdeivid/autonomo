@@ -1,6 +1,7 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Picker } from '@react-native-picker/picker'
 import { useContext } from 'react'
+import { StyleSheet } from 'react-native'
 
 interface SelectCategoryInputProps {
     category: string
@@ -32,7 +33,8 @@ export default function SelectCategoryInput({ category, setCategory }: SelectCat
         <Picker
             selectedValue={category}
             onValueChange={itemValue => setCategory(itemValue)}
-            dropdownIconColor='#330066'
+            dropdownIconColor='white'
+            style={styles.input}
         >
             {
                 categories.map((current) => (
@@ -45,3 +47,10 @@ export default function SelectCategoryInput({ category, setCategory }: SelectCat
     )
 
 }
+
+const styles = StyleSheet.create({
+    input: {
+        backgroundColor: 'rgba(51, 0, 102, 0.75)',
+        color: 'white'
+    }
+})
