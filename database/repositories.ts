@@ -1,5 +1,5 @@
 import { db } from './db'
-import { Item, Outflow } from '@/context/DocsContext'
+import { Entry, Item, Outflow } from '@/context/DocsContext'
 
 export async function getAllItems(): Promise<Item[]> {
 
@@ -26,6 +26,23 @@ export async function getAllOutflows(): Promise<Outflow[]> {
         date: row.date,
         value: row.value,
         amount: row.amount ?? undefined
+    }))
+
+}
+
+export async function getAllEntries(): Promise<Entry[]> {
+
+    const rows = await db.getAllAsync<Entry>('SELECT * FROM entries')
+
+    return rows.map(row => ({
+        _id: row._id,
+        serviceId: row.serviceId,
+        date: row.date,
+        serviceCategory: row.serviceCategory,
+        serviceValue: row.serviceValue,
+        serviceIsThereAmount: row.serviceIsThereAmount,
+        serviceAmount: row.serviceAmount ?? undefined,
+        customer: row.customer ?? undefined
     }))
 
 }

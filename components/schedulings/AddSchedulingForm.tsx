@@ -16,9 +16,9 @@ import AmountInput from '../common/AmountInput'
 import { orderServices } from '@/functions/services'
 import NumberInput from '../common/NumberInput'
 import LoadingScreen from '../common/LoadingScreen'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import NameInput from '../common/NameInput'
 import React from 'react'
+import { db } from '@/database/db'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -81,7 +81,19 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
             try {
 
-                await AsyncStorage.setItem('items', JSON.stringify([...remainingServices, updatedService]))
+                await db.runAsync(
+                    `INSERT INTO items 
+                   (_id, category, value, isThereAmount, resale, amount)
+                   VALUES (?, ?, ?, ?, ?, ?)`,
+                    [
+                        service._id,
+                        service.category,
+                        service.value,
+                        service.isThereAmount ? 1 : 0,
+                        service.resale ? 1 : 0,
+                        service.amount ?? null
+                    ]
+                )
                 setServices(orderServices([...remainingServices, updatedService]))
 
             } catch (err) {
@@ -170,7 +182,21 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
         try {
 
             const updatedSchedulings = [...schedulings, newScheduling]
-            await AsyncStorage.setItem('schedulings', JSON.stringify(updatedSchedulings))
+            await db.runAsync(
+                `INSERT INTO entries
+   (_id, serviceId, serviceCategory, serviceValue, serviceIsThereAmount, serviceAmount, date, customer)
+   VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                [
+                    newScheduling._id,
+                    newScheduling.serviceId,
+                    newScheduling.serviceCategory,
+                    newScheduling.serviceValue,
+                    newScheduling.serviceIsThereAmount ? 1 : 0,
+                    newScheduling.serviceAmount ?? null,
+                    newScheduling.date,
+                    newScheduling.customer ?? null
+                ]
+            )
             setSchedulings(updatedSchedulings)
 
         } catch (err) {

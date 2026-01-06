@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
-import { getAllItems, getAllOutflows } from '@/database/repositories'
+import { getAllEntries, getAllItems, getAllOutflows } from '@/database/repositories'
 import { initDatabase } from '@/database/initDatabase'
 
 export interface Item {
@@ -135,6 +135,9 @@ export default function DocsProvider({ children }: DocsProviderProps) {
 
             const items = await getAllItems()
             const outflows = await getAllOutflows()
+            const entries = await getAllEntries()
+
+            setEntries(entries)
             setItems(items)
             setOutflows(outflows)
 

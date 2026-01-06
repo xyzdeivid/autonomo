@@ -21,13 +21,23 @@ export const initDatabase = async () => {
       date TEXT NOT NULL,
       value REAL NOT NULL,
       amount REAL
-    );`
+    );
+    CREATE TABLE IF NOT EXISTS entries (
+  _id TEXT PRIMARY KEY,
+  serviceId TEXT NOT NULL,
+  serviceCategory TEXT NOT NULL,
+  serviceValue REAL NOT NULL,
+  serviceIsThereAmount INTEGER NOT NULL,
+  serviceAmount REAL,
+  date TEXT NOT NULL,
+  customer TEXT
+);`
     )
 
   } catch (error) {
 
     Alert.alert('Database Error', 'Failed to initialize the database.')
-    
+
   }
 
 
