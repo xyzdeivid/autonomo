@@ -20,6 +20,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 // service components
 import AboutServiceCard from '@/components/services/AboutServiceCard'
 import ServicesContent from '@/components/services/ServicesContent'
+import { db } from '@/database/db'
 
 export default function Services() {
 
@@ -66,7 +67,10 @@ export default function Services() {
 
         try {
 
-            await AsyncStorage.setItem('items', JSON.stringify(remainingServices))
+            await db.runAsync(
+                'DELETE FROM items WHERE _id = ?',
+                [id]
+            )
             setServices(orderServices(remainingServices))
 
         } catch (err) {

@@ -21,6 +21,7 @@ import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import SchedulingsList from '@/components/schedulings/SchedulingsList'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
+import { db } from '@/database/db'
 
 export default function Schedulings() {
 
@@ -110,7 +111,10 @@ export default function Schedulings() {
 
         try {
 
-            await AsyncStorage.setItem('schedulings', JSON.stringify(remainingSchedulings))
+            await db.runAsync(
+                'DELETE FROM entries WHERE _id = ?',
+                [scheduling._id]
+            )
             setSchedulings(remainingSchedulings)
 
         } catch (err) {

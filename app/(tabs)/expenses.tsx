@@ -20,6 +20,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
 import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
+import { db } from '@/database/db'
 
 export default function Expenses() {
 
@@ -87,7 +88,10 @@ export default function Expenses() {
 
         try {
 
-            await AsyncStorage.setItem('expenses', JSON.stringify(remainingExpenses))
+            await db.runAsync(
+                'DELETE FROM outflows WHERE _id = ?',
+                [expense._id]
+            )
             setExpenses(remainingExpenses)
 
         } catch (err) {
