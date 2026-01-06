@@ -1,7 +1,5 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
-import { Alert } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // custom functions
 import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/functions/common'
@@ -23,7 +21,6 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 import Revenue from '@/components/info/Revenue'
 import GeneralButton from '@/components/info/GeneralButton'
 import AddItemForm from '@/components/info/AddItemForm'
-import WelcomeCard from '@/components/info/WelcomeCard'
 
 // scheduling components
 import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
@@ -35,8 +32,6 @@ export default function Info() {
 
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
-    const [welcomeCard, setWelcomeCard] = useState(false)
-    const [loadingScreen, setLoadingScreen] = useState(true)
 
     const appDocs = useContext(DocsContext)
     const [schedulings] = appDocs.entries
@@ -53,33 +48,6 @@ export default function Info() {
     const filteredEntries = filterSchedulings(schedulings, selectedMonth, currentYear)
     const filteredExpenses = filterExpenses(expenses, selectedMonth, currentYear)
     const availableMonths = getAvailableMonths(schedulings, expenses, currentYear, months)
-
-    const openFirstItem = () => {
-
-        try {
-
-            AsyncStorage.setItem('experienced', 'experienced')
-
-        } catch (err) {
-
-            Alert.alert('Erro ao acessar banco de dados')
-
-        }
-
-    }
-
-    useEffect(() => {
-        AsyncStorage.getItem('experienced')
-            .then(experienced => {
-                setTimeout(() => {
-                    setLoadingScreen(false)
-                    if (!experienced) {
-                        setWelcomeCard(true)
-                    }
-                }, 500)
-            })
-            .catch(() => Alert.alert('Erro ao acessar banco de dados'))
-    }, [])
 
     const yearEntries = schedulings.filter(entry => (
         entry.date.split('-')[0] === currentYear
@@ -112,15 +80,6 @@ export default function Info() {
 
     return (
         <Container>
-            {welcomeCard && (
-                <WelcomeCard
-                    setWelcomeCard={setWelcomeCard}
-                    openFirstItem={openFirstItem}
-                />
-            )}
-            {loadingScreen && (
-                <LoadingScreen />
-            )}
             {
                 yearEntries[0] && (<MonthInput dropdownIconColor='#08819B' />)
             }
