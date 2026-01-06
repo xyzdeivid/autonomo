@@ -21,7 +21,7 @@ export default function ClosePickerButton({ availableYears, setShowPicker }: Clo
         >
             <View style={styles.currentYear}>
                 <Text style={{ color: '#08819B' }}>
-                    {currentYear}
+                    Alterar Ano
                 </Text>
             </View>
         </Pressable>

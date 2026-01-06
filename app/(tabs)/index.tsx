@@ -80,7 +80,7 @@ export default function Info() {
     return (
         <Container>
             {
-                yearEntries[0] && (<MonthInput dropdownIconColor='#08819B' />)
+                yearEntries[0] && (<MonthInput dropdownIconColor='rgba(8, 129, 155, 0.75)' />)
             }
             {
                 filterSchedulings(schedulings, selectedMonth, currentYear)[0]

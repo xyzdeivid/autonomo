@@ -51,7 +51,7 @@ export default function YearPicker({ availableYears, setShowPicker }: YearPicker
                     setCurrentYear(year)
                     closePicker()
                 }}
-                dropdownIconColor='gray'
+                dropdownIconColor='white'
             >
                 {availableYears.map(year => (
                     <Picker.Item value={year} label={year} key={year} />
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     },
     picker: {
         width: '55%',
-        backgroundColor: 'rgba(0, 0, 0, 0.1)'
+        backgroundColor: 'rgba(8, 129, 155, 0.75)',
+        color: 'white'
     }
 })
