@@ -9,13 +9,13 @@ export default function ActualAmount({ amount, setShowEditAmountInput }: ActualA
 
     return (
         <View style={styles.container}>
-            <Text style={{ fontWeight: 'bold' }}>Quantidade:</Text>
-            <Text> {amount}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Quantidade:</Text>
+            <Text style={{ fontSize: 16 }}> {amount}</Text>
             <Pressable
                 style={styles.editButton}
                 onPress={() => setShowEditAmountInput(true)}
             >
-                <Text>Editar</Text>
+                <Text style={{ fontSize: 16 }}>Editar</Text>
             </Pressable>
         </View>
     )
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E0E0E0',
         borderColor: 'darkgray',
         borderWidth: 1,
-        padding: 4,
+        padding: 8,
         borderRadius: 4,
         marginStart: 8
     }

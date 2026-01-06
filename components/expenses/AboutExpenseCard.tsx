@@ -178,9 +178,11 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
 
 const styles = StyleSheet.create({
     labelContainer: {
-        marginBottom: 12
+        marginBottom: 12,
+        fontSize: 16
     },
     label: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 16
     }
 })

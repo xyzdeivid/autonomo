@@ -21,15 +21,15 @@ export default function ActualValue({ name, value, setShowEditValueInput }: Actu
 
     return (
         <View style={styles.container}>
-            <Text style={{ fontWeight: 'bold' }}>Valor:</Text>
-            <Text>{moneyFormat(value)}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Valor:</Text>
+            <Text style={{ fontSize: 16 }}>{moneyFormat(value)}</Text>
             {
                 checkIfIsResale() &&
                 <Pressable
                     style={styles.editButton}
                     onPress={() => setShowEditValueInput(true)}
                 >
-                    <Text>Editar</Text>
+                    <Text style={{ fontSize: 16 }}>Editar</Text>
                 </Pressable>
             }
         </View>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E0E0E0',
         borderColor: 'darkgray',
         borderWidth: 1,
-        padding: 4,
+        padding: 8,
         borderRadius: 4,
         marginStart: 8
     }

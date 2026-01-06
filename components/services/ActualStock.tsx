@@ -10,7 +10,7 @@ export default function ActualStock({ stock, setEditStockInput }: ActualStockPro
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Estoque: </Text>
-            <Text>
+            <Text style={{ fontSize: 16 }}>
                 {stock === 0
                     ? 'Sem estoque'
                     : stock}
@@ -19,7 +19,7 @@ export default function ActualStock({ stock, setEditStockInput }: ActualStockPro
                 style={styles.editButton}
                 onPress={() => setEditStockInput(true)}
             >
-                <Text>Editar</Text>
+                <Text style={{ fontSize: 16 }}>Editar</Text>
             </Pressable>
         </View>
     )
@@ -33,13 +33,14 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     label: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 16
     },
     editButton: {
         backgroundColor: '#E0E0E0',
         borderColor: 'darkgray',
         borderWidth: 1,
-        padding: 4,
+        padding: 8,
         borderRadius: 4,
         marginStart: 8
     }

@@ -18,13 +18,13 @@ export default function ActualDate({ date, setNewDate, editDate }: ActualDatePro
             {
                 !editInput
                     ? <View style={styles.container}>
-                        <Text style={{ fontWeight: 'bold' }}>Data:</Text>
-                        <Text> {date}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Data:</Text>
+                        <Text style={{ fontSize: 16 }}> {date}</Text>
                         <Pressable
                             style={styles.editButton}
                             onPress={() => setEditInput(true)}
                         >
-                            <Text>Editar</Text>
+                            <Text style={{ fontSize: 16 }}>Editar</Text>
                         </Pressable>
                     </View>
                     : <>
@@ -35,7 +35,7 @@ export default function ActualDate({ date, setNewDate, editDate }: ActualDatePro
                             style={styles.confirmButton}
                             onPress={() => editDate()}
                         >
-                            <Text style={{ color: 'white' }}>Confirmar</Text>
+                            <Text style={{ color: 'white', fontSize: 16 }}>Alterar</Text>
                         </Pressable>
                     </>
             }
@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#E0E0E0',
         borderColor: 'darkgray',
         borderWidth: 1,
-        padding: 4,
+        padding: 8,
         borderRadius: 4,
         marginStart: 8
     },
     confirmButton: {
         backgroundColor: '#006600',
-        padding: 4,
+        padding: 8,
         borderRadius: 4,
         alignSelf: 'flex-start',
         marginTop: -14,

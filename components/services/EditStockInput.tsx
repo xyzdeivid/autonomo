@@ -57,13 +57,14 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     label: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 16
     },
     editInput: {
         width: '25%',
         backgroundColor: '#E0E0E0',
         color: 'black',
-        padding: 4,
+        padding: 8,
         textAlign: 'center',
         marginStart: 8,
         borderRadius: 3

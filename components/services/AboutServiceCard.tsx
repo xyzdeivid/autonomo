@@ -393,7 +393,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     label: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 16
     },
     editButton: {
         backgroundColor: '#E0E0E0',

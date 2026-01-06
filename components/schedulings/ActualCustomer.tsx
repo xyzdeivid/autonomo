@@ -18,13 +18,13 @@ export default function ActualCustomer({ customer, setNewCustomerName, newCustom
             {
                 !editInput
                     ? <View style={styles.container}>
-                        <Text style={{ fontWeight: 'bold' }}>Cliente:</Text>
-                        <Text> {customer}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Cliente:</Text>
+                        <Text style={{ fontSize: 16 }}> {customer}</Text>
                         <Pressable
                             style={styles.editButton}
                             onPress={() => setEditInput(true)}
                         >
-                            <Text>Editar</Text>
+                            <Text style={{ fontSize: 16 }}>Editar</Text>
                         </Pressable>
                     </View>
                     : <View style={styles.container}>
@@ -65,18 +65,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#E0E0E0',
         borderColor: 'darkgray',
         borderWidth: 1,
-        padding: 4,
+        padding: 8,
         borderRadius: 4,
         marginStart: 8
     },
     label: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 16
     },
     editInput: {
         width: '50%',
         backgroundColor: '#E0E0E0',
         color: 'black',
-        padding: 4,
+        padding: 8,
         textAlign: 'center',
         marginStart: 8,
         borderRadius: 3

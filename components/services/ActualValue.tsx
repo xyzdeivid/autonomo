@@ -10,12 +10,12 @@ export default function ActualValue({ value, setEditValueInput }: ActualValuePro
 
     return (
         <View style={styles.container}>
-            <Text>{moneyFormat(value)}</Text>
+            <Text style={{ fontSize: 16 }}>{moneyFormat(value)}</Text>
             <Pressable
                 style={styles.editButton}
                 onPress={() => setEditValueInput(true)}
             >
-                <Text>Editar</Text>
+                <Text style={{ fontSize: 16 }}>Editar</Text>
             </Pressable>
         </View>
     )
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E0E0E0',
         borderColor: 'darkgray',
         borderWidth: 1,
-        padding: 4,
+        padding: 8,
         borderRadius: 4,
         marginStart: 8
     }

@@ -13,7 +13,7 @@ export default function EditValueInput({ setValue, editValue, actualValue }: Edi
     return (
         <View>
             <View style={styles.container}>
-                <Text style={{ fontWeight: 'bold' }}>Valor:</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Valor:</Text>
                 <MaskedTextInput
                     type='currency'
                     options={{
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         width: '25%',
         backgroundColor: '#E0E0E0',
         color: 'black',
-        padding: 4,
+        padding: 8,
         textAlign: 'center',
         marginStart: 8,
         borderRadius: 3
