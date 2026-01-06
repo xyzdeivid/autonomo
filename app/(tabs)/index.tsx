@@ -14,7 +14,6 @@ import { months } from '@/constants/common'
 // common components
 import Container from '@/components/common/Container'
 import MonthInput from '@/components/common/MonthInput'
-import LoadingScreen from '@/components/common/LoadingScreen'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // info components
