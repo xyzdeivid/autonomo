@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         width: '100%',
         zIndex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     card: {
         backgroundColor: 'white',
