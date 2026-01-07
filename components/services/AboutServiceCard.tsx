@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext, Entry, Item } from '@/context/DocsContext'
+import { DocsContext, Item } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useContext, useEffect, useState } from 'react'
 import { MainDisplaysContext } from '@/context/MainDisplays'
@@ -14,9 +14,9 @@ import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { moneyFormat } from '@/functions/common'
 import React from 'react'
+import { db } from '@/database/db'
 
 interface AboutServiceCardProps {
     service: Item
@@ -28,8 +28,6 @@ interface AboutServiceCardProps {
 export default function AboutServiceCard({ service, deleteFunction, setFormOff, setButton }: AboutServiceCardProps) {
 
     const [services, setServices] = useContext(DocsContext).items
-    const [schedulings, setSchedulings] = useContext(DocsContext).entries
-    const [expenses, setExpenses] = useContext(DocsContext).outflows
 
     const serviceName = service._id
 
@@ -69,82 +67,11 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
             const editedItem = service
             editedItem._id = name
 
-            const expensesToEdit = expenses.filter(expense => {
-                return expense.name === serviceName
-            })
-
-            const remainingExpenses = expenses.filter(expense => {
-                return expense.name !== serviceName
-            })
-
-            expensesToEdit.forEach(expense =>
-                expense.name = name
-            )
-
-            const editedExpenses = [...expensesToEdit]
-
-            if (remainingExpenses[0]) {
-
-                editedExpenses.push(...remainingExpenses)
-
-            }
-
-            try {
-
-                await AsyncStorage.setItem('expenses', JSON.stringify(editedExpenses))
-                setExpenses(editedExpenses)
-
-            } catch (err) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-                return
-
-            }
-
-            const schedulingsToEdit = schedulings.filter(current => {
-                return current.serviceId === serviceName
-            })
-
-            const remainingSchedulings = schedulings.filter(current => {
-                return current.serviceId !== serviceName
-            })
-
-            schedulingsToEdit.forEach(current =>
-                current.serviceId = name
-            )
-
-            let editedSchedulings = [] as Entry[]
-
-            if (remainingSchedulings[0]) {
-
-                editedSchedulings = [...remainingSchedulings, ...schedulingsToEdit]
-
-            } else {
-
-                editedSchedulings = schedulingsToEdit
-
-            }
-
-            try {
-
-                await AsyncStorage.setItem('schedulings', JSON.stringify(editedSchedulings))
-                setSchedulings(editedSchedulings)
-
-            } catch (err) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-                return
-
-            }
-
             let editedItems = [] as Item[]
 
             if (remainingItems[0]) {
 
-
                 editedItems = [...remainingItems, editedItem]
-
-
 
             } else {
 
@@ -154,7 +81,12 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             try {
 
-                await AsyncStorage.setItem('items', JSON.stringify(editedItems))
+                await db.runAsync(
+                    `UPDATE items
+                    SET _id = ?
+                    WHERE _id = ?`,
+                    [name, serviceName]
+                )
                 setServices(orderServices(editedItems))
 
             } catch (err) {
@@ -210,7 +142,12 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             try {
 
-                await AsyncStorage.setItem('items', JSON.stringify(editedItems))
+                await db.runAsync(
+                    `UPDATE items
+                    SET value = ?
+                    WHERE _id = ?`,
+                    [value ?? 0, serviceName]
+                )
                 setServices(editedItems)
 
             } catch (err) {
@@ -264,7 +201,12 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             try {
 
-                await AsyncStorage.setItem('items', JSON.stringify(editedItems))
+                await db.runAsync(
+                    `UPDATE items
+                    SET amount = ?
+                    WHERE _id = ?`,
+                    [stock ?? 0, serviceName]
+                )
                 setServices(editedItems)
 
             } catch (err) {
