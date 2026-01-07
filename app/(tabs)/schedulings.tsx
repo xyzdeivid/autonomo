@@ -72,7 +72,12 @@ export default function Schedulings() {
 
             try {
 
-                await AsyncStorage.setItem('items', JSON.stringify([...remainingProducts, updatedProduct]))
+                await db.runAsync(
+                    `UPDATE items
+                    SET amount = ?
+                    WHERE _id = ?`,
+                    [updatedProduct.amount || 0, product._id]
+                )
                 setServices(orderServices([...remainingProducts, updatedProduct]))
 
             } catch (err) {
