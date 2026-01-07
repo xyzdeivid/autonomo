@@ -90,7 +90,12 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                 try {
 
                     const updatedServices = [...remainingItems, productToUpdate]
-                    await AsyncStorage.setItem('items', JSON.stringify(updatedServices))
+                    await db.runAsync(
+                        `UPDATE items
+                        SET amount = ?
+                        WHERE _id = ?`,
+                        [productToUpdate.amount ?? 0, productToUpdate._id]
+                    )
                     setServices(orderServices(updatedServices))
 
                 } catch (err) {

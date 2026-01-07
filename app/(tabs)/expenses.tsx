@@ -34,7 +34,7 @@ export default function Expenses() {
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
-    const [whatIsExpenseCard, setWhatIsExpenseCard] = useState(false)
+    const [, setWhatIsExpenseCard] = useState(false)
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
 
@@ -68,13 +68,14 @@ export default function Expenses() {
 
                 }
 
-                const remainingItems = items.filter(current =>
-                    current !== product
-                )
-
                 try {
 
-                    await AsyncStorage.setItem('items', JSON.stringify([...remainingItems, product]))
+                    await db.runAsync(
+                        `UPDATE items
+                        SET amount = ?
+                        WHERE _id = ?`,
+                        [product.amount ?? 0, product._id]
+                    )
 
                 } catch (err) {
 
