@@ -4,7 +4,6 @@ import FormTitle from '../common/FormTitle'
 import { DocsContext, Item } from '@/context/DocsContext'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useContext, useEffect, useState } from 'react'
-import { MainDisplaysContext } from '@/context/MainDisplays'
 import { orderServices } from '@/functions/services'
 import EditValueInput from './EditValueInput'
 import ActualValue from './ActualValue'
@@ -30,8 +29,6 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
     const [services, setServices] = useContext(DocsContext).items
 
     const serviceName = service._id
-
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
 
     const [editNameInput, setEditNameInput] = useState(false)
     const [name, setName] = useState('')
@@ -59,6 +56,15 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
         if (name) {
 
             setLoadingScreen(true)
+
+            // Verificando se existe algum outro serviço com o mesmo nome
+            if (services.find(current => current._id === name)) {
+                Alert.alert('Já existe um serviço com esse nome.')
+                setLoadingScreen(false)
+                setFormOff(false)
+                setButton(true)
+                return
+            }
 
             const remainingItems = services.filter(current => {
                 return current._id !== service._id
@@ -97,7 +103,6 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             setFormOff(false)
             setButton(true)
-            setHideTabBar(false)
 
         } else {
 
@@ -158,7 +163,6 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             setFormOff(false)
             setButton(true)
-            setHideTabBar(false)
 
         } else {
 
@@ -217,7 +221,6 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
             setFormOff(false)
             setButton(true)
-            setHideTabBar(false)
 
         } else {
 
