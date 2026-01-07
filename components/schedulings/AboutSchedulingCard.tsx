@@ -16,6 +16,7 @@ import AddClienteButton from './AddClienteButton'
 import ActualCustomer from './ActualCustomer'
 import ActualDate from './ActualDate'
 import React from 'react'
+import { db } from '@/database/db'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -74,7 +75,12 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
                         try {
 
-                            await AsyncStorage.setItem('items', JSON.stringify([...remainingItems, product]))
+                            await db.runAsync(
+                                `UPDATE items
+                                SET amount = ?
+                                WHERE _id = ?`,
+                                [currentProductStock, product._id]
+                            )
                             setItems(orderServices([...remainingItems, product]))
 
                         } catch (err) {
@@ -108,7 +114,13 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
             try {
 
-                await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
+                await db.runAsync(
+                    `UPDATE entries
+                    SET serviceAmount = ?,
+                    serviceValue = ?
+                    WHERE _id = ?`,
+                    [newAmount, (scheduling.serviceValue / scheduling.serviceAmount) * newAmount,scheduling._id]
+                )
                 setEntries([...remainingEntries, scheduling])
 
             } catch (err) {
@@ -134,7 +146,12 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
         try {
 
-            await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
+            await db.runAsync(
+                `UPDATE entries
+                SET customer = ?
+                WHERE _id = ?`,
+                [customer, scheduling._id]
+            )
             setEntries([...remainingEntries, scheduling])
 
         } catch (err) {
@@ -158,7 +175,12 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
         try {
 
-            await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
+            await db.runAsync(
+                `UPDATE entries
+                SET customer = ?
+                WHERE _id = ?`,
+                [customer, scheduling._id]
+            )
             setEntries([...remainingEntries, scheduling])
 
         } catch (err) {
@@ -194,7 +216,12 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
             try {
 
-                await AsyncStorage.setItem('schedulings', JSON.stringify([...remainingEntries, scheduling]))
+                await db.runAsync(
+                `UPDATE entries
+                SET date = ?
+                WHERE _id = ?`,
+                [newDate, scheduling._id]
+            )
                 setEntries([...remainingEntries, scheduling])
 
             } catch (err) {
