@@ -82,17 +82,10 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
             try {
 
                 await db.runAsync(
-                    `INSERT INTO items 
-                   (_id, category, value, isThereAmount, resale, amount)
-                   VALUES (?, ?, ?, ?, ?, ?)`,
-                    [
-                        service._id,
-                        service.category,
-                        service.value,
-                        service.isThereAmount ? 1 : 0,
-                        service.resale ? 1 : 0,
-                        service.amount ?? null
-                    ]
+                    `UPDATE items
+                    SET amount = ?
+                    WHERE _id = ?`,
+                    [updatedService.amount ?? 0, updatedService._id]
                 )
                 setServices(orderServices([...remainingServices, updatedService]))
 
