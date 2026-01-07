@@ -16,10 +16,11 @@ export default function ProductOptionsInput({ product, setProduct, products }: P
         <Picker
             selectedValue={product}
             onValueChange={itemValue => setProduct(itemValue)}
-            dropdownIconColor='#660000'
+            dropdownIconColor='white'
             style={{
-                backgroundColor: 'rgba(139, 0, 0, 0.1)',
-                marginBottom: 20
+                backgroundColor: 'rgba(139, 0, 0, 0.75)',
+                marginBottom: 20,
+                color: 'white'
             }}
         >
             {products.map(product => (

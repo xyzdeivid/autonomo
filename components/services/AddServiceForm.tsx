@@ -328,6 +328,16 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                     label={choice === 'product' ? 'Valor de Venda (un)' : ''}
                                 />
                             )}
+                            <Text
+                                style={{
+                                    backgroundColor: 'rgba(51, 0, 102, 0.75)',
+                                    color: 'white',
+                                    padding: 8,
+                                    borderRadius: 4
+                                }}
+                            >
+                                Para atualizar o estoque futuramente, basta criar uma nova despesa e selecionar "Reposição de Estoque".
+                            </Text>
                         </>
                     )
                 }
