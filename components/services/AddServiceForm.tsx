@@ -61,6 +61,24 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
 
         const service = createNewService(choice, name, value, amount, isThereAmount(), resale)
 
+        if (!services[0] && setCategory) {
+            setCategory(choice)
+        }
+
+        if (!checkServicesAmount(services, service)) {
+            warning('Você só pode registrar 8 itens por categoria', setLoadingScreen)
+            setAddServiceForm(false)
+            setButton(true)
+            return
+        }
+
+        if (checkIfThereIsAnotherService(services, name)) {
+            warning('Um item com este nome já existe', setLoadingScreen)
+            setAddServiceForm(false)
+            setButton(true)
+            return
+        }
+        
         if (resale) {
 
             const newExpense = createNewOutflow(valueChoice, purchaseValue, amount, name, purchaseDate)
@@ -91,31 +109,13 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
             }
         }
 
-        if (!services[0] && setCategory) {
-            setCategory(choice)
-        }
-
-        if (!checkServicesAmount(services, service)) {
-            warning('Você só pode registrar 8 itens por categoria', setLoadingScreen)
-            setAddServiceForm(false)
-            setButton(true)
-            return
-        }
-
-        if (checkIfThereIsAnotherService(services, name)) {
-            warning('Um item com este nome já existe', setLoadingScreen)
-            setAddServiceForm(false)
-            setButton(true)
-            return
-        }
-
         try {
 
             const updatedServices = orderServices([...services, service])
             await db.runAsync(
                 `INSERT INTO items 
-   (_id, category, value, isThereAmount, resale, amount)
-   VALUES (?, ?, ?, ?, ?, ?)`,
+                (_id, category, value, isThereAmount, resale, amount)
+                VALUES (?, ?, ?, ?, ?, ?)`,
                 [
                     service._id,
                     service.category,
