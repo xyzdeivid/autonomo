@@ -165,7 +165,7 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         const testEntries: Entry[] = [
             { _id: 'ent-1', serviceId: 'Revenda', serviceCategory: 'product', serviceValue: 10, serviceIsThereAmount: true, serviceAmount: 2, date: '2026-01-01', customer: 'Cliente A' },
             { _id: 'ent-2', serviceId: 'Estoque', serviceCategory: 'product', serviceValue: 20, serviceIsThereAmount: true, serviceAmount: 1, date: '2026-01-02', customer: 'Cliente B' },
-            { _id: 'ent-3', serviceId: 'Sem Estoque', serviceCategory: 'product', serviceValue: 30, serviceIsThereAmount: false, date: '2026-01-03', customer: 'Cliente C' },
+            { _id: 'ent-3', serviceId: 'Sem Estoque', serviceCategory: 'product', serviceValue: 30, serviceIsThereAmount: true, serviceAmount: 3, date: '2026-01-03', customer: 'Cliente C' },
             { _id: 'ent-4', serviceId: 'Serviço Valor Fixo', serviceCategory: 'service', serviceValue: 35, serviceIsThereAmount: false, date: '2026-01-04', customer: 'Cliente D' },
             { _id: 'ent-5', serviceId: 'Serviço Valor Variável', serviceCategory: 'budget', serviceValue: 40, serviceIsThereAmount: false, date: '2026-01-05', customer: 'Cliente E' },
             { _id: 'ent-6', serviceId: 'Serviço Valor Fixo', serviceCategory: 'service', serviceValue: 35, serviceIsThereAmount: false, date: '2025-01-04', customer: 'Cliente F' },
