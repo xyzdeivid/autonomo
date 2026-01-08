@@ -105,10 +105,6 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [selectedMonth, setSelectedMonth] = useState(0)
     const [currentPage, setCurrentPage] = useState('index')
 
-    type SetterT = React.Dispatch<React.SetStateAction<Item[]>> 
-    | React.Dispatch<React.SetStateAction<Outflow[]>>
-    | React.Dispatch<React.SetStateAction<Entry[]>>
-
     const getCurrentYear = () => {
         
         const currentYear = String(new Date().getFullYear())
