@@ -70,7 +70,7 @@ const getDataFromAsyncStorage = async () => {
     try {
 
         parsedItems = items ? JSON.parse(items) : []
-        
+
     } catch {
 
         parsedItems = []
@@ -94,12 +94,52 @@ const getDataFromAsyncStorage = async () => {
     } catch {
 
         parsedEntries = []
-        
+
     }
 
-    if (parsedItems.length > 0) {
+    const dataFromAsync = {
+        items: parsedItems,
+        outflows: parsedOutflows,
+        entries: parsedEntries
+    }
 
-        for (const item of parsedItems) {
+    return dataFromAsync
+
+}
+
+const checkIfThereIsDataFromAsync = (dataFromAsync: {
+    items: Item[];
+    outflows: Outflow[];
+    entries: Entry[];
+}) => {
+
+    if (dataFromAsync.items.length > 0 ||
+        dataFromAsync.outflows.length > 0 ||
+        dataFromAsync.entries.length > 0) {
+
+            return true
+
+    }
+
+    return false
+
+}
+
+const migrateDataToNewDB = async (dataFromAsync: {
+    items: Item[];
+    outflows: Outflow[];
+    entries: Entry[];
+}) => {
+
+    // migrating data to new database
+
+    const items = dataFromAsync.items
+    const outflows = dataFromAsync.outflows
+    const entries = dataFromAsync.entries
+
+    if (items.length > 0) {
+
+        for (const item of items) {
 
             await saveItemOnNewDB(item)
 
@@ -107,9 +147,9 @@ const getDataFromAsyncStorage = async () => {
 
     }
 
-    if (parsedOutflows.length > 0) {
+    if (outflows.length > 0) {
 
-        for (const outflow of parsedOutflows) {
+        for (const outflow of outflows) {
 
             await saveOutflowOnNewDB(outflow)
 
@@ -117,9 +157,9 @@ const getDataFromAsyncStorage = async () => {
 
     }
 
-    if (parsedEntries.length > 0) {
+    if (entries.length > 0) {
 
-        for (const entry of parsedEntries) {
+        for (const entry of entries) {
 
             await saveEntryOnNewDB(entry)
 
@@ -127,27 +167,36 @@ const getDataFromAsyncStorage = async () => {
 
     }
 
+    // cleaning old AsyncStorage data
+    await AsyncStorage.multiRemove([
+        'items',
+        'expenses',
+        'schedulings'
+    ])
+
 }
 
 export const migrationData = async () => {
 
     const dbVersion = await getVersionFlag()
 
-    if (dbVersion < 1) {
+    if (!dbVersion) {
 
-        try {
+        // getting data from AsyncStorage
+        const dataFromAsync = await getDataFromAsyncStorage()
 
-            // perform migration steps for version 1
+        // checking if there is data to migrate
+        const thereIsDataFromAsync = checkIfThereIsDataFromAsync(dataFromAsync)
 
-            await getDataFromAsyncStorage()
+        if (thereIsDataFromAsync) {
 
-            await AsyncStorage.setItem('dbVersion', '1')
-
-        } catch (error) {
-
-            throw error
+            // migrating data to new database
+            await migrateDataToNewDB(dataFromAsync)
 
         }
+
+        // saving database version flag
+        await AsyncStorage.setItem('dbVersion', '1')
 
     }
 
