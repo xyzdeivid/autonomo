@@ -2,8 +2,7 @@ import { createContext, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 import { getAllEntries, getAllItems, getAllOutflows } from '@/database/repositories'
 import { initDatabase } from '@/database/initDatabase'
-import { migrationData } from '@/storage/migrationDataFromAsyncStorage'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { migrateData } from '@/storage/migrationDataFromAsyncStorage'
 
 export interface Item {
     category: string
@@ -152,7 +151,7 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         async function startDb() {
 
             await initDatabase()
-            await migrationData()
+            await migrateData()
             await getAndSetItems()
             getCurrentYear()
 
