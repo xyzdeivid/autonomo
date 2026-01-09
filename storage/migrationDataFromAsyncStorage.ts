@@ -3,6 +3,7 @@ import getVersionFlag from './dbVersionFlag'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { db } from '@/database/db'
 import { Alert } from 'react-native'
+import { parse } from 'date-fns'
 
 const saveItemOnNewDB = async (item: Item) => {
 
@@ -78,6 +79,26 @@ const saveEntryOnNewDB = async (entry: Entry) => {
 
 }
 
+interface OldEntry {
+    
+}
+
+const convertOldEntryFormat = (entries: string) => {
+    const parsedEntries = JSON.parse(entries)
+    const convertedEntries: Entry[] = parsedEntries.map((entry: any) => {
+        return {
+            _id: entry._id,
+            serviceId: entry.serviceId,
+            serviceCategory: entry.category,
+            serviceValue: entry.value,
+            serviceIsThereAmount: entry.isThereAmount,
+            serviceAmount: entry.amount,
+            date: entry.date,
+            customer: entry.customer ?? undefined
+        }
+    })
+}
+
 const getDataFromAsyncStorage = async () => {
 
     let items: string | null = ''
@@ -98,7 +119,7 @@ const getDataFromAsyncStorage = async () => {
 
     let parsedItems: Item[] = items ? JSON.parse(items) : []
     let parsedOutflows: Outflow[] = outflows ? JSON.parse(outflows) : []
-    let parsedEntries: Entry[] = entries ? JSON.parse(entries) : []
+    let parsedEntries: Entry[] = entries ? convertOldEntryFormat(entries) : []
 
     const dataFromAsync = {
         items: parsedItems,
