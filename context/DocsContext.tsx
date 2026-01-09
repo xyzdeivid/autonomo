@@ -3,7 +3,6 @@ import { Alert } from 'react-native'
 import { getAllEntries, getAllItems, getAllOutflows } from '@/database/repositories'
 import { initDatabase } from '@/database/initDatabase'
 import { migrationData } from '@/storage/migrationDataFromAsyncStorage'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export interface Item {
     category: string
@@ -147,64 +146,15 @@ export default function DocsProvider({ children }: DocsProviderProps) {
 
     }
 
-    const generateDataToTest = async () => {
-
-        const testItems: Item[] = [
-            { category: 'product', _id: 'Revenda', value: 10, isThereAmount: true, resale: true, amount: 5 },
-            { category: 'product', _id: 'Estoque', value: 20, isThereAmount: true, resale: false, amount: 5 },
-            { category: 'product', _id: 'Sem Estoque', value: 30, isThereAmount: false, resale: false },
-            { category: 'service', _id: 'Serviço Valor Fixo', value: 35, isThereAmount: false, resale: false },
-            { category: 'budget', _id: 'Serviço Valor Variável', value: 0, isThereAmount: false, resale: false }
-        ]
-
-        const testOutflows: Outflow[] = [
-            { _id: 'rvn-1', name: 'Revenda', date: '2026-01-01', value: 50, amount: 5 },
-            { _id: 'rvn-2', name: 'Teste', date: '2026-01-02', value: 10 }
-        ]
-
-        const testEntries: Entry[] = [
-            { _id: 'ent-1', serviceId: 'Revenda', serviceCategory: 'product', serviceValue: 10, serviceIsThereAmount: true, serviceAmount: 2, date: '2026-01-01', customer: 'Cliente A' },
-            { _id: 'ent-2', serviceId: 'Estoque', serviceCategory: 'product', serviceValue: 20, serviceIsThereAmount: true, serviceAmount: 1, date: '2026-01-02', customer: 'Cliente B' },
-            { _id: 'ent-3', serviceId: 'Sem Estoque', serviceCategory: 'product', serviceValue: 30, serviceIsThereAmount: true, serviceAmount: 3, date: '2026-01-03', customer: 'Cliente C' },
-            { _id: 'ent-4', serviceId: 'Serviço Valor Fixo', serviceCategory: 'service', serviceValue: 35, serviceIsThereAmount: false, date: '2026-01-04', customer: 'Cliente D' },
-            { _id: 'ent-5', serviceId: 'Serviço Valor Variável', serviceCategory: 'budget', serviceValue: 40, serviceIsThereAmount: false, date: '2026-01-05', customer: 'Cliente E' },
-            { _id: 'ent-6', serviceId: 'Serviço Valor Fixo', serviceCategory: 'service', serviceValue: 35, serviceIsThereAmount: false, date: '2025-01-04', customer: 'Cliente F' },
-        ]
-
-        try {
-
-            await AsyncStorage.setItem('items', JSON.stringify(testItems))
-            await AsyncStorage.setItem('expenses', JSON.stringify(testOutflows))
-            await AsyncStorage.setItem('schedulings', JSON.stringify(testEntries))
-
-        } catch (error) {
-
-            Alert.alert('Erro ao salvar dados de teste no AsyncStorage.')
-
-        }
-
-    }
-
     useEffect(() => {
 
         async function startDb() {
 
-            await generateDataToTest()
+            await initDatabase()
+            await migrationData()
+            await getAndSetItems()
+            getCurrentYear()
 
-            try {
-                await initDatabase()
-                await migrationData()
-                await getAndSetItems()
-                getCurrentYear()
-
-            } catch (err) {
-
-                Alert.alert(
-                    'APP INIT ERROR',
-                    'Failed to initialize app data.'
-                )
-                
-            }
         }
 
         startDb()

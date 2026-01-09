@@ -2,6 +2,7 @@ import { Entry, Item, Outflow } from '@/context/DocsContext'
 import getVersionFlag from './dbVersionFlag'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { db } from '@/database/db'
+import { Alert } from 'react-native'
 
 const saveItemOnNewDB = async (item: Item) => {
 
@@ -59,43 +60,25 @@ const saveEntryOnNewDB = async (entry: Entry) => {
 
 const getDataFromAsyncStorage = async () => {
 
-    const items = await AsyncStorage.getItem('items')
-    const outflows = await AsyncStorage.getItem('expenses')
-    const entries = await AsyncStorage.getItem('schedulings')
-
-    let parsedItems: Item[] = []
-    let parsedOutflows: Outflow[] = []
-    let parsedEntries: Entry[] = []
+    let items: string | null = ''
+    let outflows: string | null = ''
+    let entries: string | null = ''
 
     try {
 
-        parsedItems = items ? JSON.parse(items) : []
+        items = await AsyncStorage.getItem('items')
+        outflows = await AsyncStorage.getItem('expenses')
+        entries = await AsyncStorage.getItem('schedulings')
 
-    } catch {
+    } catch (error) {
 
-        parsedItems = []
-
+        throw new Error('Error getting data from AsyncStorage')
+        
     }
 
-    try {
-
-        parsedOutflows = outflows ? JSON.parse(outflows) : []
-
-    } catch {
-
-        parsedOutflows = []
-
-    }
-
-    try {
-
-        parsedEntries = entries ? JSON.parse(entries) : []
-
-    } catch {
-
-        parsedEntries = []
-
-    }
+    let parsedItems: Item[] = items ? JSON.parse(items) : []
+    let parsedOutflows: Outflow[] = outflows ? JSON.parse(outflows) : []
+    let parsedEntries: Entry[] = entries ? JSON.parse(entries) : []
 
     const dataFromAsync = {
         items: parsedItems,
@@ -137,42 +120,58 @@ const migrateDataToNewDB = async (dataFromAsync: {
     const outflows = dataFromAsync.outflows
     const entries = dataFromAsync.entries
 
-    if (items.length > 0) {
+    try {
 
-        for (const item of items) {
+        if (items.length > 0) {
 
-            await saveItemOnNewDB(item)
+            for (const item of items) {
 
-        }
+                await saveItemOnNewDB(item)
 
-    }
-
-    if (outflows.length > 0) {
-
-        for (const outflow of outflows) {
-
-            await saveOutflowOnNewDB(outflow)
+            }
 
         }
 
-    }
+        if (outflows.length > 0) {
 
-    if (entries.length > 0) {
+            for (const outflow of outflows) {
 
-        for (const entry of entries) {
+                await saveOutflowOnNewDB(outflow)
 
-            await saveEntryOnNewDB(entry)
+            }
 
         }
 
+        if (entries.length > 0) {
+
+            for (const entry of entries) {
+
+                await saveEntryOnNewDB(entry)
+
+            }
+
+        }
+
+    } catch (error) {
+
+        throw new Error('Error migrating data to new database')
+
     }
 
-    // cleaning old AsyncStorage data
-    await AsyncStorage.multiRemove([
-        'items',
-        'expenses',
-        'schedulings'
-    ])
+    try {
+
+        // cleaning old AsyncStorage data
+        await AsyncStorage.multiRemove([
+            'items',
+            'expenses',
+            'schedulings'
+        ])
+
+    } catch (error) {
+
+        throw new Error('Error cleaning old AsyncStorage data')
+
+    }
 
 }
 
@@ -182,21 +181,37 @@ export const migrationData = async () => {
 
     if (!dbVersion) {
 
-        // getting data from AsyncStorage
-        const dataFromAsync = await getDataFromAsyncStorage()
+        try {
 
-        // checking if there is data to migrate
-        const thereIsDataFromAsync = checkIfThereIsDataFromAsync(dataFromAsync)
+            // getting data from AsyncStorage
+            const dataFromAsync = await getDataFromAsyncStorage()
 
-        if (thereIsDataFromAsync) {
+            // checking if there is data to migrate
+            const thereIsDataFromAsync = checkIfThereIsDataFromAsync(dataFromAsync)
 
-            // migrating data to new database
-            await migrateDataToNewDB(dataFromAsync)
+            if (thereIsDataFromAsync) {
 
+                // migrating data to new database
+                await migrateDataToNewDB(dataFromAsync)
+
+            }
+
+            // saving database version flag
+            await AsyncStorage.setItem('dbVersion', '1')
+
+
+        } catch (error) {
+
+            if (error instanceof Error) {
+
+                Alert.alert('MIGRATION ERROR', error.message)
+
+            } else {
+
+                Alert.alert('MIGRATION ERROR', 'Erro desconhecido')
+
+            }
         }
-
-        // saving database version flag
-        await AsyncStorage.setItem('dbVersion', '1')
 
     }
 
