@@ -6,55 +6,75 @@ import { Alert } from 'react-native'
 
 const saveItemOnNewDB = async (item: Item) => {
 
-    await db.runAsync(
-        `INSERT INTO items 
-        (_id, category, value, isThereAmount, resale, amount)
-        VALUES (?, ?, ?, ?, ?, ?)`,
-        [
-            item._id,
-            item.category,
-            item.value,
-            item.isThereAmount ? 1 : 0,
-            item.resale ? 1 : 0,
-            item.amount ?? null
-        ]
-    )
+    try {
+
+        await db.runAsync(
+            `INSERT INTO items 
+            (_id, category, value, isThereAmount, resale, amount)
+            VALUES (?, ?, ?, ?, ?, ?)`,
+            [
+                item._id,
+                item.category,
+                item.value,
+                item.isThereAmount ? 1 : 0,
+                item.resale ? 1 : 0,
+                item.amount ?? null
+            ]
+        )
+
+    } catch (error) {
+
+        throw new Error('Error saving item on new database')
+
+    }
 
 }
 
 const saveOutflowOnNewDB = async (outflow: Outflow) => {
 
-    await db.runAsync(
-        `INSERT INTO outflows (_id, name, date, value, amount)
+    try {
+        await db.runAsync(
+            `INSERT INTO outflows (_id, name, date, value, amount)
         VALUES (?, ?, ?, ?, ?)`,
-        [
-            outflow._id,
-            outflow.name,
-            outflow.date,
-            outflow.value,
-            outflow.amount ?? null
-        ]
-    )
+            [
+                outflow._id,
+                outflow.name,
+                outflow.date,
+                outflow.value,
+                outflow.amount ?? null
+            ]
+        )
+    } catch (error) {
+
+        throw new Error('Error saving outflow on new database')
+
+    }
 
 }
 
 const saveEntryOnNewDB = async (entry: Entry) => {
 
-    await db.runAsync(
-        `INSERT INTO entries
+    try {
+        await db.runAsync(
+            `INSERT INTO entries
        (_id, serviceId, serviceCategory, serviceValue, serviceIsThereAmount, serviceAmount, date, customer)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-            entry._id,
-            entry.serviceId,
-            entry.serviceCategory,
-            entry.serviceValue,
-            entry.serviceIsThereAmount ? 1 : 0,
-            entry.serviceAmount ?? null,
-            entry.date,
-            entry.customer ?? null
-        ]
-    )
+            [
+                entry._id,
+                entry.serviceId,
+                entry.serviceCategory,
+                entry.serviceValue,
+                entry.serviceIsThereAmount ? 1 : 0,
+                entry.serviceAmount ?? null,
+                entry.date,
+                entry.customer ?? null
+            ]
+        )
+    } catch (error) {
+
+        throw new Error('Error saving entry on new database')
+
+    }
 
 }
 
@@ -73,7 +93,7 @@ const getDataFromAsyncStorage = async () => {
     } catch (error) {
 
         throw new Error('Error getting data from AsyncStorage')
-        
+
     }
 
     let parsedItems: Item[] = items ? JSON.parse(items) : []
@@ -100,7 +120,7 @@ const checkIfThereIsDataFromAsync = (dataFromAsync: {
         dataFromAsync.outflows.length > 0 ||
         dataFromAsync.entries.length > 0) {
 
-            return true
+        return true
 
     }
 
@@ -154,7 +174,13 @@ const migrateDataToNewDB = async (dataFromAsync: {
 
     } catch (error) {
 
-        throw new Error('Error migrating data to new database')
+        if (error instanceof Error) {
+
+            throw new Error(error.message)
+
+        }
+
+        throw new Error('Unknown error migrating data to new database')
 
     }
 
