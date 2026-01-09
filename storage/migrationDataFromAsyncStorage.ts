@@ -3,7 +3,6 @@ import getVersionFlag from './dbVersionFlag'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { db } from '@/database/db'
 import { Alert } from 'react-native'
-import { parse } from 'date-fns'
 
 const saveItemOnNewDB = async (item: Item) => {
 
@@ -79,24 +78,35 @@ const saveEntryOnNewDB = async (entry: Entry) => {
 
 }
 
-interface OldEntry {
-    
+interface OldEntryFormat {
+    _id: string
+    service: Item
+    date: string
+    customer?: string
 }
 
+// function to convert old entry format to new entry format
 const convertOldEntryFormat = (entries: string) => {
+
     const parsedEntries = JSON.parse(entries)
-    const convertedEntries: Entry[] = parsedEntries.map((entry: any) => {
+
+    const convertedEntries: Entry[] = parsedEntries.map((entry: OldEntryFormat) => {
+
         return {
             _id: entry._id,
-            serviceId: entry.serviceId,
-            serviceCategory: entry.category,
-            serviceValue: entry.value,
-            serviceIsThereAmount: entry.isThereAmount,
-            serviceAmount: entry.amount,
+            serviceId: entry.service._id,
+            serviceCategory: entry.service.category,
+            serviceValue: entry.service.value,
+            serviceIsThereAmount: entry.service.isThereAmount,
+            serviceAmount: entry.service.amount,
             date: entry.date,
-            customer: entry.customer ?? undefined
+            customer: entry.customer
         }
+
     })
+
+    return convertedEntries
+
 }
 
 const getDataFromAsyncStorage = async () => {
