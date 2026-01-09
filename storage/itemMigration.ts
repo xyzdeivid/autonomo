@@ -22,7 +22,7 @@ export const saveItemOnNewDB = async (item: Item) => {
 
     } catch (error) {
 
-        throw new Error('Error saving item on new database', { cause: error })
+        throw new Error(`Error saving item ${item._id} on new database`, { cause: error })
 
     }
 

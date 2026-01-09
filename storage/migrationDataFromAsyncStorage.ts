@@ -72,8 +72,6 @@ export const migrateData = async () => {
             // saving database version flag
             await AsyncStorage.setItem('dbVersion', '1')
 
-            console.log('Data migration completed successfully')
-
 
         } catch (error) {
 
