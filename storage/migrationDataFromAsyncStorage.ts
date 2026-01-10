@@ -4,37 +4,6 @@ import { Alert } from 'react-native'
 import { saveItemsOnNewDB } from './itemMigration'
 import { saveOutflowsOnNewDB } from './outflowMigration'
 
-/* interface OldEntryFormat {
-    _id: string
-    service: Item
-    date: string
-    customer?: string
-} */
-
-// function to convert old entry format to new entry format
-/* const convertOldEntryFormat = (entries: string) => {
-
-    const parsedEntries = JSON.parse(entries)
-
-    const convertedEntries: Entry[] = parsedEntries.map((entry: OldEntryFormat) => {
-
-        return {
-            _id: entry._id,
-            serviceId: entry.service._id,
-            serviceCategory: entry.service.category,
-            serviceValue: entry.service.value,
-            serviceIsThereAmount: entry.service.isThereAmount,
-            serviceAmount: entry.service.amount,
-            date: entry.date,
-            customer: entry.customer
-        }
-
-    })
-
-    return convertedEntries
-
-} */
-
 const migrateDataToNewDB = async () => {
 
     // migrating items
