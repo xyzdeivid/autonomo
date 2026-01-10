@@ -2,6 +2,7 @@ import getVersionFlag from './dbVersionFlag'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import { saveItemsOnNewDB } from './itemMigration'
+import { saveOutflowsOnNewDB } from './outflowMigration'
 
 /* interface OldEntryFormat {
     _id: string
@@ -38,6 +39,9 @@ const migrateDataToNewDB = async () => {
 
     // migrating items
     await saveItemsOnNewDB()
+
+    // migrating outflows
+    await saveOutflowsOnNewDB()
 
     // cleaning old AsyncStorage data
     try {

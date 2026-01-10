@@ -1,8 +1,8 @@
 import { Item } from '@/context/DocsContext'
 import { db } from '@/database/db'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { getDataFromAsyncStorage } from './getDataFromAsyncStorage'
 
-export const saveItemOnNewDB = async (item: Item) => {
+const saveItemOnNewDB = async (item: Item) => {
 
     try {
 
@@ -28,25 +28,9 @@ export const saveItemOnNewDB = async (item: Item) => {
 
 }
 
-const getItemsFromAsyncStorage = async (): Promise<string | null> => {
-
-    try {
-
-        const itemsFromAsyncStorage = await AsyncStorage.getItem('items')
-        return itemsFromAsyncStorage
-
-    } catch (error) {
-
-        throw new Error('Error getting items from AsyncStorage')
-        
-    }
-
-
-}
-
 export const saveItemsOnNewDB = async () => {
 
-    const itemsFromAsyncStorage = await getItemsFromAsyncStorage()
+    const itemsFromAsyncStorage = await getDataFromAsyncStorage('items')
 
     if (itemsFromAsyncStorage) {
 
