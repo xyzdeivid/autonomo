@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from 'react-native'
 import { saveItemsOnNewDB } from './itemMigration'
 import { saveOutflowsOnNewDB } from './outflowMigration'
+import { saveEntriesOnNewDB } from './entryMigration'
 
 const migrateDataToNewDB = async () => {
 
@@ -11,6 +12,9 @@ const migrateDataToNewDB = async () => {
 
     // migrating outflows
     await saveOutflowsOnNewDB()
+
+    // migrating entries
+    await saveEntriesOnNewDB()
 
     // cleaning old AsyncStorage data
     try {
