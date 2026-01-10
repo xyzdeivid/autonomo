@@ -55,6 +55,13 @@ export interface Entry {
     customer?: string
 }
 
+export interface OldEntry {
+    _id: string
+    service: Item
+    date: string
+    customer?: string
+}
+
 type SetEntries = React.Dispatch<React.SetStateAction<Entry[]>>
 
 type EntriesState = [Entry[], SetEntries]

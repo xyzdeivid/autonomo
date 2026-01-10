@@ -1,20 +1,13 @@
-import { Entry, Item } from '@/context/DocsContext'
+import { Entry, OldEntry } from '@/context/DocsContext'
 import { db } from '@/database/db'
 import { getDataFromAsyncStorage } from './getDataFromAsyncStorage'
-
-interface OldEntryFormat {
-    _id: string
-    service: Item
-    date: string
-    customer?: string
-}
 
 // function to convert old entry format to new entry format
 const convertOldEntryFormat = (entries: string) => {
 
     const parsedEntries = JSON.parse(entries)
 
-    const convertedEntries: Entry[] = parsedEntries.map((entry: OldEntryFormat) => {
+    const convertedEntries: Entry[] = parsedEntries.map((entry: OldEntry) => {
 
         return {
             _id: entry._id,
