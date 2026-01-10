@@ -49,7 +49,6 @@ export const migrateData = async () => {
             // saving database version flag
             await AsyncStorage.setItem('dbVersion', '1')
 
-
         } catch (error) {
 
             if (error instanceof Error) {
