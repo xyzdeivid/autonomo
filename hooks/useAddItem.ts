@@ -1,12 +1,14 @@
-import { Item, DocsContext } from "@/context/DocsContext"
+import { Item, DocsContext, Outflow } from "@/context/DocsContext"
 import { addItemToDb } from "@/database/repositories"
 import { orderServices } from "@/functions/services"
 import { useContext } from "react"
 import { Alert } from "react-native"
+import useAddOutflow from "./useAddOutflow"
 
 const useAddItem = () => {
 
     const [items, setItems] = useContext(DocsContext).items
+    const addOutflow = useAddOutflow().addOutflow
 
     const checkIfThereIsAnotherItem = (items: Item[], name: string): boolean => {
 
@@ -22,7 +24,7 @@ const useAddItem = () => {
 
     }
 
-    const addItem = async (item: Item) => {
+    const addItem = async (item: Item, resaleOutflow?: Outflow): Promise<boolean> => {
 
         if (checkIfThereIsAnotherItem(items, item._id)) {
 
@@ -36,14 +38,28 @@ const useAddItem = () => {
 
         try {
 
+            let success = true
+
+            // add resale outflow if needed
+            if (item.resale && resaleOutflow) success = await addOutflow(resaleOutflow)
+
+            // if adding resale outflow failed, do not proceed
+            if (!success) return false
+
             await addItemToDb(item)
+
             const updatedServices = orderServices([...items, item])
             setItems(updatedServices)
+
             return true
 
         } catch (err) {
 
-            Alert.alert('Erro ao acessar banco de dados', 'Por favor, tente novamente mais tarde.')
+            Alert.alert(
+                'Erro ao acessar banco de dados', 
+                'Por favor, tente novamente mais tarde.'
+            )
+
             return false
 
         }

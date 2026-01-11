@@ -8,18 +8,20 @@ const useAddOutflow = () => {
 
     const [outflows, setOutflows] = useContext(DocsContext).outflows
 
-    const addOutflow = async (outflow: Outflow) => {
+    const addOutflow = async (outflow: Outflow): Promise<boolean> => {
 
         try {
 
             await addOutflowToDb(outflow)
             const updatedServices = orderExpenses([...outflows, outflow])
             setOutflows(updatedServices)
+
             return true
 
         } catch (err) {
 
             Alert.alert('Erro ao acessar banco de dados', 'Por favor, tente novamente mais tarde.')
+            
             return false
 
         }

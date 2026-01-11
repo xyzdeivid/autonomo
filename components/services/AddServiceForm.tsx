@@ -10,13 +10,12 @@ import ResaleButton from './ResaleButton'
 import DateInput from '../common/DateInput'
 import ValueOption from '../common/ValueOption'
 import StockButton from './StockButton'
-import { generateId } from '@/functions/common'
 import ItemsCategoriesForm from './ItemsCategoriesForm'
 import ServiceCreationForm from './ServiceCreationForm'
 import FormContainer from '../common/FormContainer'
 import useAddItem from '@/hooks/useAddItem'
-import useAddOutflow from '@/hooks/useAddOutflow'
-import { checkIfItemHasAmount } from '@/functions/checkIfItemHasAmount'
+import createItem from '@/functions/createItem'
+import createResaleOutflow from '@/functions/createResaleOutflow'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -38,43 +37,33 @@ export default function AddServiceForm({ setAddServiceForm, setButton }: AddServ
     const [step, setStep] = useState(0)
 
     const addItem = useAddItem().addItem
-    const addOutflow = useAddOutflow().addOutflow
 
     const submitNewItem = async () => {
 
         setLoadingScreen(true)
 
-        // if the product is for resale, create an outflow
+        let resaleOutflow: Outflow | undefined = undefined
+
+        // create resale outflow to submit if needed
         if (resale) {
 
-            const newOutflowValue =
-                valueOutflowChoice === 'total' ? purchaseValue : purchaseValue * amount
-
-            const newOutflow: Outflow = {
-                _id: generateId(),
+            resaleOutflow = createResaleOutflow(
+                purchaseValue,
+                amount,
+                purchaseDate,
                 name,
-                date: purchaseDate,
-                value: newOutflowValue,
-                amount
-            }
-
-            await addOutflow(newOutflow)
-
+                valueOutflowChoice
+            )
+            
         }
 
         // create item to submit
-        const item: Item = {
-            category,
-            _id: name,
-            value,
-            isThereAmount: checkIfItemHasAmount(category, resale, stock),
-            resale
-        }
-        if (item.isThereAmount) item.amount = amount
+        const item: Item = createItem(category, name, value, amount, resale, stock)
 
-        // add item to database and context
-        await addItem(item)
+        // add data to database and context
+        await addItem(item, resaleOutflow)
 
+        // close form
         setAddServiceForm(false)
         setButton(true)
         setLoadingScreen(false)
