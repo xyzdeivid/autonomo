@@ -1,14 +1,14 @@
 import { View, Pressable, Text, StyleSheet } from 'react-native'
 
 interface ServiceOrProductButtonsProps {
-    choice: string
-    setChoice: React.Dispatch<React.SetStateAction<string>>
+    category: string
+    setCategory: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOrProductButtonsProps) {
+export default function ServiceOrProductButtons({ category, setCategory }: ServiceOrProductButtonsProps) {
 
     const checkChoice = (button: string) => {
-        return choice === button
+        return category === button
             ? ['#6600CC', '#FFFFFF']
             : ['#6600CC1A', '#6600CC']
     }
@@ -20,7 +20,7 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
                     ...styles.button,
                     backgroundColor: checkChoice('product')[0],
                 }}
-                onPress={() => setChoice('product')}
+                onPress={() => setCategory('product')}
             >
                 <Text
                     style={{
@@ -41,7 +41,7 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
                     ...styles.button,
                     backgroundColor: checkChoice('service')[0],
                 }}
-                onPress={() => setChoice('service')}
+                onPress={() => setCategory('service')}
             >
                 <Text
                     style={{
@@ -62,7 +62,7 @@ export default function ServiceOrProductButtons({ choice, setChoice }: ServiceOr
                     ...styles.button,
                     backgroundColor: checkChoice('budget')[0]
                 }}
-                onPress={() => setChoice('budget')}
+                onPress={() => setCategory('budget')}
             >
                 <Text
                     style={{

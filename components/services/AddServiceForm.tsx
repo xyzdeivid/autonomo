@@ -1,46 +1,35 @@
 import { Alert, Button, StyleSheet, Text, View } from 'react-native'
-import { useContext, useState } from 'react'
-import { DocsContext } from '@/context/DocsContext'
+import { useState } from 'react'
+import { Item, Outflow } from '@/context/DocsContext'
 import NumberInput from '../common/NumberInput'
 import FormTitle from '../common/FormTitle'
-import { MainDisplaysContext } from '@/context/MainDisplays'
 import NameInput from '../common/NameInput'
-
-import {
-    checkIfThereIsAnotherService,
-    checkServicesAmount, createNewOutflow,
-    createNewService, orderServices
-} from '@/functions/services'
 import AmountInput from '../common/AmountInput'
 import LoadingScreen from '../common/LoadingScreen'
 import ResaleButton from './ResaleButton'
 import DateInput from '../common/DateInput'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import ValueOption from '../common/ValueOption'
 import StockButton from './StockButton'
-import React from 'react'
-import { warning } from '@/functions/common'
+import { generateId } from '@/functions/common'
 import ItemsCategoriesForm from './ItemsCategoriesForm'
 import ServiceCreationForm from './ServiceCreationForm'
 import FormContainer from '../common/FormContainer'
-import { db } from '@/database/db'
+import useAddItem from '@/hooks/useAddItem'
+import useAddOutflow from '@/hooks/useAddOutflow'
+import { checkIfItemHasAmount } from '@/functions/checkIfItemHasAmount'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
-    setCategory?: React.Dispatch<React.SetStateAction<string>>
     setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddServiceForm({ setAddServiceForm, setCategory, setButton }: AddServiceFormProps) {
+export default function AddServiceForm({ setAddServiceForm, setButton }: AddServiceFormProps) {
 
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
     const [amount, setAmount] = useState(0)
-    const [services, setServices] = useContext(DocsContext).items
-    const [expenses, setExpenses] = useContext(DocsContext).outflows
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
-    const [choice, setChoice] = useState('')
-    const [valueChoice, setValueChoice] = useState('total')
+    const [category, setCategory] = useState('')
+    const [valueOutflowChoice, setValueOutflowChoice] = useState('total')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [resale, setResale] = useState(false)
     const [purchaseValue, setPurchaseValue] = useState(0)
@@ -48,96 +37,45 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     const [stock, setStock] = useState(false)
     const [step, setStep] = useState(0)
 
-    const isThereAmount = () => {
-        if (choice === 'product') {
-            if (resale || stock) return true
-        }
-        return false
-    }
+    const addItem = useAddItem().addItem
+    const addOutflow = useAddOutflow().addOutflow
 
-    const addService = async () => {
+    const submitNewItem = async () => {
 
         setLoadingScreen(true)
 
-        const service = createNewService(choice, name, value, amount, isThereAmount(), resale)
-
-        if (!services[0] && setCategory) {
-            setCategory(choice)
-        }
-
-        if (!checkServicesAmount(services, service)) {
-            warning('Você só pode registrar 8 itens por categoria', setLoadingScreen)
-            setAddServiceForm(false)
-            setButton(true)
-            return
-        }
-
-        if (checkIfThereIsAnotherService(services, name)) {
-            warning('Um item com este nome já existe', setLoadingScreen)
-            setAddServiceForm(false)
-            setButton(true)
-            return
-        }
-        
+        // if the product is for resale, create an outflow
         if (resale) {
 
-            const newExpense = createNewOutflow(valueChoice, purchaseValue, amount, name, purchaseDate)
+            const newOutflowValue =
+                valueOutflowChoice === 'total' ? purchaseValue : purchaseValue * amount
 
-            try {
-
-                const updatedExpenses = [...expenses, newExpense]
-                await db.runAsync(
-                    `INSERT INTO outflows (_id, name, date, value, amount)
-                    VALUES (?, ?, ?, ?, ?)`,
-                    [
-                        newExpense._id,
-                        newExpense.name,
-                        newExpense.date,
-                        newExpense.value,
-                        newExpense.amount ?? null
-                    ]
-                )
-                setExpenses(updatedExpenses)
-
-            } catch (err) {
-
-                warning('Erro ao acessar banco de dados', setLoadingScreen)
-                setAddServiceForm(false)
-                setButton(true)
-                return
-
+            const newOutflow: Outflow = {
+                _id: generateId(),
+                name,
+                date: purchaseDate,
+                value: newOutflowValue,
+                amount
             }
-        }
 
-        try {
-
-            const updatedServices = orderServices([...services, service])
-            await db.runAsync(
-                `INSERT INTO items 
-                (_id, category, value, isThereAmount, resale, amount)
-                VALUES (?, ?, ?, ?, ?, ?)`,
-                [
-                    service._id,
-                    service.category,
-                    service.value,
-                    service.isThereAmount ? 1 : 0,
-                    service.resale ? 1 : 0,
-                    service.amount ?? null
-                ]
-            )
-            setServices(updatedServices)
-
-        } catch (err) {
-
-            warning('Erro ao acessar banco de dados', setLoadingScreen)
-            setAddServiceForm(false)
-            setButton(true)
-            return
+            await addOutflow(newOutflow)
 
         }
+
+        // create item to submit
+        const item: Item = {
+            category,
+            _id: name,
+            value,
+            isThereAmount: checkIfItemHasAmount(category, resale, stock),
+            resale
+        }
+        if (item.isThereAmount) item.amount = amount
+
+        // add item to database and context
+        await addItem(item)
 
         setAddServiceForm(false)
-        setHideTabBar(false)
         setButton(true)
         setLoadingScreen(false)
 
@@ -145,7 +83,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
 
 
     const getPurchaseValueText = () => {
-        switch (valueChoice) {
+        switch (valueOutflowChoice) {
             case 'total':
                 return 'Valor de todas as unidades do produto somadas.'
             default:
@@ -154,49 +92,49 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
     }
 
     const nextStep = () => {
-        if (step === 0 && !choice) {
+        if (step === 0 && !category) {
             Alert.alert('Escolha uma categoria!')
             return
         }
-        if (step === 1 && choice === 'product' && resale) {
+        if (step === 1 && category === 'product' && resale) {
             if (!(amount && purchaseValue)) {
                 Alert.alert('Preencha todos os campos!')
                 return
             }
         }
-        if (step === 2 && choice === 'product' && stock) {
+        if (step === 2 && category === 'product' && stock) {
             if (!amount) {
                 Alert.alert('Preencha todos os campos!')
                 return
             }
         }
-        if (step === 1 && choice === 'service') {
+        if (step === 1 && category === 'service') {
             if (!(name && value)) {
                 Alert.alert('Preencha todos os campos!')
                 return
             }
-            addService()
+            submitNewItem()
         }
-        if (step === 1 && choice === 'budget') {
+        if (step === 1 && category === 'budget') {
             if (!name) {
                 Alert.alert('Preencha todos os campos!')
                 return
             }
-            addService()
+            submitNewItem()
         }
         if (step === 2 && resale) {
             if (!(name && value)) {
                 Alert.alert('Preencha todos os campos!')
                 return
             }
-            addService()
+            submitNewItem()
         }
         if (step === 3) {
             if (!(name && value)) {
                 Alert.alert('Preencha todos os campos!')
                 return
             }
-            addService()
+            submitNewItem()
         }
         setStep(step + 1)
     }
@@ -213,16 +151,16 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                 }
                 {
                     step === 0 && (
-                        <ItemsCategoriesForm choice={choice} setChoice={setChoice} />
+                        <ItemsCategoriesForm category={category} setCategory={setCategory} />
                     )
                 }
                 {
-                    step === 1 && choice === 'service' && (
+                    step === 1 && category === 'service' && (
                         <ServiceCreationForm setName={setName} setValue={setValue} />
                     )
                 }
                 {
-                    step === 1 && choice === 'budget' && (
+                    step === 1 && category === 'budget' && (
                         <>
                             <NameInput
                                 setName={setName}
@@ -236,7 +174,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                     )
                 }
                 {
-                    step === 1 && choice === 'product' && (
+                    step === 1 && category === 'product' && (
                         <ResaleButton
                             resale={resale}
                             setResale={setResale}
@@ -276,12 +214,12 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         <NumberInput
                             setValue={setPurchaseValue}
                             bgColor='rgba(51, 0, 102, 0.1)'
-                            label={valueChoice === 'total' ? 'Valor de Compra (total)' : 'Valor de Compra (un)'}
+                            label={valueOutflowChoice === 'total' ? 'Valor de Compra (total)' : 'Valor de Compra (un)'}
                             textColor='#330066'
                         />
                         <ValueOption
-                            choice={valueChoice}
-                            setChoice={setValueChoice}
+                            choice={valueOutflowChoice}
+                            setChoice={setValueOutflowChoice}
                             buttonColors={['#330066', '#6600CC']}
                         />
                         <Text style={{
@@ -294,7 +232,7 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                         </Text>
                     </>
                 )}
-                {step === 2 && !resale && choice === 'product' && (
+                {step === 2 && !resale && category === 'product' && (
                     <>
                         <StockButton
                             stock={stock}
@@ -320,12 +258,12 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 textColor='#330066'
                                 bgColor='rgba(51, 0, 102, 0.1)'
                             />
-                            {choice !== 'budget' && (
+                            {category !== 'budget' && (
                                 <NumberInput
                                     setValue={setValue}
                                     bgColor='rgba(51, 0, 102, 0.1)'
                                     textColor='#330066'
-                                    label={choice === 'product' ? 'Valor de Venda (un)' : ''}
+                                    label={category === 'product' ? 'Valor de Venda (un)' : ''}
                                 />
                             )}
                             <Text
@@ -349,12 +287,12 @@ export default function AddServiceForm({ setAddServiceForm, setCategory, setButt
                                 textColor='#330066'
                                 bgColor='rgba(51, 0, 102, 0.1)'
                             />
-                            {choice !== 'budget' && (
+                            {category !== 'budget' && (
                                 <NumberInput
                                     setValue={setValue}
                                     bgColor='rgba(51, 0, 102, 0.1)'
                                     textColor='#330066'
-                                    label={choice === 'product' ? 'Valor de Venda (un)' : ''}
+                                    label={category === 'product' ? 'Valor de Venda (un)' : ''}
                                 />
                             )}
                         </>

@@ -1,6 +1,40 @@
 import { db } from './db'
 import { Entry, Item, Outflow } from '@/context/DocsContext'
 
+export async function addItemToDb(item: Item): Promise<void> {
+
+    await db.runAsync(
+        `INSERT INTO items 
+        (_id, category, value, isThereAmount, resale, amount)
+        VALUES (?, ?, ?, ?, ?, ?)`,
+        [
+            item._id,
+            item.category,
+            item.value,
+            item.isThereAmount ? 1 : 0,
+            item.resale ? 1 : 0,
+            item.amount ?? null
+        ]
+    )
+
+}
+
+export async function addOutflowToDb(outflow: Outflow): Promise<void> {
+
+    await db.runAsync(
+        `INSERT INTO outflows (_id, name, date, value, amount)
+        VALUES (?, ?, ?, ?, ?)`,
+        [
+            outflow._id,
+            outflow.name,
+            outflow.date,
+            outflow.value,
+            outflow.amount ?? null
+        ]
+    )
+    
+}
+
 export async function getAllItems(): Promise<Item[]> {
 
     const rows = await db.getAllAsync<Item>('SELECT * FROM items')

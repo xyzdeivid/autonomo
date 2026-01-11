@@ -119,7 +119,6 @@ export default function Services() {
                     addServiceForm
                     && <AddServiceForm
                         setAddServiceForm={setAddServiceForm}
-                        setCategory={setCategory}
                         setButton={setButton}
                     />
                 }
