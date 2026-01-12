@@ -33,9 +33,16 @@ const useEditStockItem = () => {
             // Atualizando estado no UI
             updateItemsInUI(item, newStock)
 
+            return true
+
         } catch {
 
-            Alert.alert('Erro ao acessar banco de dados')
+            Alert.alert(
+                'Erro ao acessar banco de dados',
+                'Por favor, tente novamente mais tarde.'
+            )
+
+            return false
 
         }
 

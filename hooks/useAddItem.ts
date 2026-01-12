@@ -39,7 +39,7 @@ const useAddItem = () => {
 
         try {
 
-            let success = true
+            let success: boolean = true
 
             // add resale outflow if needed
             if (item.resale && resaleOutflow) success = await addOutflow(resaleOutflow)
