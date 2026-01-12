@@ -1,19 +1,19 @@
 import { DocsContext } from '@/context/DocsContext'
+import { updateNewValuedItemToDB } from '@/database/itemRepositories'
 import { Item } from '@/types'
-import { updateNewNamedItemToDb } from '@/database/itemRepositories'
 import { useContext } from 'react'
 import { Alert } from 'react-native'
 
-const useEditItemName = () => {
+const useEditItemValue = () => {
 
     const [items, setItems] = useContext(DocsContext).items
 
-    const updateItemsInUI = (item: Item, newName: string) => {
+    const updateItemsInUI = (item: Item, newValue: number) => {
 
         const newItems = items.map(current => {
 
             if (current._id === item._id) {
-                return { ...current, _id: newName }
+                return { ...current, value: newValue }
             }
             return current
 
@@ -23,21 +23,15 @@ const useEditItemName = () => {
 
     }
 
-    const editItemName = async (newName: string, item: Item): Promise<boolean> => {
-
-        // Verificando se existe algum outro serviço com o mesmo nome
-        if (items.find(current => current._id === newName)) {
-            Alert.alert('Já existe um serviço com esse nome.')
-            return false
-        }
+    const editItemValue = async (newValue: number, item: Item) => {
 
         try {
 
             // Salvando item editado no banco de dados
-            await updateNewNamedItemToDb(newName, item._id)
+            await updateNewValuedItemToDB(newValue, item._id)
 
             // Atualizando estado no UI
-            updateItemsInUI(item, newName)
+            updateItemsInUI(item, newValue)
 
             return true
 
@@ -47,14 +41,15 @@ const useEditItemName = () => {
                 'Erro ao acessar banco de dados',
                 'Por favor, tente novamente mais tarde.'
             )
+
             return false
 
         }
 
     }
 
-    return { editItemName }
+    return { editItemValue }
 
 }
 
-export default useEditItemName
+export default useEditItemValue

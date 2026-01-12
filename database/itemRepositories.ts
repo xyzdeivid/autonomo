@@ -1,6 +1,21 @@
 import { db } from './db'
 import { Item } from '@/types/index'
 
+export async function getAllItems(): Promise<Item[]> {
+
+    const rows = await db.getAllAsync<Item>('SELECT * FROM items')
+
+    return rows.map(row => ({
+        _id: row._id,
+        category: row.category,
+        value: row.value,
+        isThereAmount: !!row.isThereAmount,
+        resale: !!row.resale,
+        amount: row.amount ?? undefined
+    }))
+
+}
+
 export async function addItemToDb(item: Item): Promise<void> {
 
     await db.runAsync(
@@ -19,7 +34,7 @@ export async function addItemToDb(item: Item): Promise<void> {
 
 }
 
-export async function updateItemToDb(newName: string, oldName: string): Promise<void> {
+export async function updateNewNamedItemToDb(newName: string, oldName: string): Promise<void> {
 
     await db.runAsync(
         `UPDATE items
@@ -30,17 +45,13 @@ export async function updateItemToDb(newName: string, oldName: string): Promise<
 
 }
 
-export async function getAllItems(): Promise<Item[]> {
+export async function updateNewValuedItemToDB(newValue: number, name: string): Promise<void> {
 
-    const rows = await db.getAllAsync<Item>('SELECT * FROM items')
-
-    return rows.map(row => ({
-        _id: row._id,
-        category: row.category,
-        value: row.value,
-        isThereAmount: !!row.isThereAmount,
-        resale: !!row.resale,
-        amount: row.amount ?? undefined
-    }))
+    await db.runAsync(
+        `UPDATE items
+        SET value = ?
+        WHERE _id = ?`,
+        [newValue, name]
+    )
 
 }
