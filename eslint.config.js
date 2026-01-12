@@ -10,9 +10,11 @@ module.exports = defineConfig([
       'quotes': ['error', 'single'],
       // Desativa a obrigatoriedade do ponto e vírgula
       'semi': ['error', 'never'],
+      'react/no-unescaped-entities': 'off',
+      'react/prop-types': 'off'
     },
   },
   {
-    ignores: ['dist/*'],
+    ignores: ['dist/*', '.expo/*'],
   }
 ])

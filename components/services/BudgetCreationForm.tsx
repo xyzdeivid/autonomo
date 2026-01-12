@@ -1,5 +1,5 @@
-import { Text } from "react-native"
-import NameInput from "../common/NameInput"
+import { Text } from 'react-native'
+import NameInput from '../common/NameInput'
 
 interface BudgetCreationFormProps {
     setName: React.Dispatch<React.SetStateAction<string>>

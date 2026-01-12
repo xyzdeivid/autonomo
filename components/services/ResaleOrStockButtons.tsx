@@ -1,6 +1,5 @@
-import AmountInput from "../common/AmountInput"
-import ResaleButton from "./ResaleButton"
-import StockButton from "./StockButton"
+import ResaleButton from './ResaleButton'
+import StockButton from './StockButton'
 
 interface ResaleOrStockButtonsProps {
     resale: boolean

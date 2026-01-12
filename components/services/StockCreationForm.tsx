@@ -1,6 +1,6 @@
-import AmountInput from "../common/AmountInput";
-import NameInput from "../common/NameInput";
-import NumberInput from "../common/NumberInput";
+import AmountInput from '../common/AmountInput'
+import NameInput from '../common/NameInput'
+import NumberInput from '../common/NumberInput'
 
 interface StockCreationFormProps {
     setName: React.Dispatch<React.SetStateAction<string>>

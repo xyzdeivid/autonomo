@@ -1,9 +1,9 @@
-import AmountInput from "../common/AmountInput"
-import DateInput from "../common/DateInput"
-import NameInput from "../common/NameInput"
-import NumberInput from "../common/NumberInput"
-import ValueOption from "../common/ValueOption"
-import { Text } from "react-native"
+import AmountInput from '../common/AmountInput'
+import DateInput from '../common/DateInput'
+import NameInput from '../common/NameInput'
+import NumberInput from '../common/NumberInput'
+import ValueOption from '../common/ValueOption'
+import { Text } from 'react-native'
 
 interface ResaleCreationFormProps {
     setPurchaseDate: React.Dispatch<React.SetStateAction<string>>
