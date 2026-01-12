@@ -1,7 +1,6 @@
-import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
+import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext } from '@/context/DocsContext'
 import { Outflow } from '@/types'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
@@ -11,31 +10,31 @@ import ConfirmDelete from '../common/ConfirmDelete'
 import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
 import LoadingScreen from '../common/LoadingScreen'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import ActualValue from './ActualValue'
 import EditValueInput from './EditValueInput'
 import useEditOutflowName from '@/hooks/useEditOutflowName'
+import useEditOutflowValue from '@/hooks/useEditOutflowValue'
 
 
-interface AboutExpenseCardProps {
-    expense: Outflow
+interface AboutOutflowCardProps {
+    outflow: Outflow
     deleteFunction: (expense: Outflow) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
     setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, setButton }: AboutExpenseCardProps) {
+export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, setButton }: AboutOutflowCardProps) {
 
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [showEditNameInput, setShowEditNameInput] = useState(false)
     const [showEditValueInput, setShowEditValueInput] = useState(false)
     const [newName, setNewName] = useState('')
-    const [expenses, setExpenses] = useContext(DocsContext).outflows
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [newValue, setNewValue] = useState(0)
 
     const editOutflowName = useEditOutflowName().editOutflowName
+    const editOutflowValue = useEditOutflowValue().editOutflowValue
 
     useEffect(() => {
         setButton(false)
@@ -46,13 +45,13 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
         })
     }, [setButton, setFormOff])
 
-    const editName = async () => {
+    const submitNameToEdit = async () => {
 
         if (newName) {
 
             setLoadingScreen(true)
 
-            await editOutflowName(expense, newName)
+            await editOutflowName(outflow, newName)
 
             setLoadingScreen(false)
             setHideTabBar(false)
@@ -73,26 +72,12 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
 
             setLoadingScreen(true)
 
-            expense.value = newValue
+            await editOutflowValue(outflow, newValue)
 
-            const remainingExpenses = expenses.filter(current => {
-                return current._id !== expense._id
-            })
-
-            try {
-
-                await AsyncStorage.setItem('expenses', JSON.stringify([...remainingExpenses, expense]))
-                setExpenses([...remainingExpenses, expense])
-                setLoadingScreen(false)
-                setHideTabBar(false)
-                setButton(true)
-                setFormOff(false)
-
-            } catch {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
+            setLoadingScreen(false)
+            setHideTabBar(false)
+            setButton(true)
+            setFormOff(false)
 
         } else {
 
@@ -111,33 +96,33 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                 <View>
                     {
                         showEditNameInput
-                            ? <EditNameInput actualName={expense.name} setName={setNewName} editName={editName} />
-                            : <ActualName name={expense.name} setShowEditNameInput={setShowEditNameInput} />
+                            ? <EditNameInput actualName={outflow.name} setName={setNewName} editName={submitNameToEdit} />
+                            : <ActualName name={outflow.name} setShowEditNameInput={setShowEditNameInput} />
                     }
                     <Text style={styles.labelContainer}>
-                        <Text style={styles.label}>Data:</Text> {dateFormat(expense.date)}
+                        <Text style={styles.label}>Data:</Text> {dateFormat(outflow.date)}
                     </Text>
                     {
                         showEditValueInput
                             ? <EditValueInput
                                 setValue={setNewValue}
                                 editValue={editValue}
-                                actualValue={expense.value}
+                                actualValue={outflow.value}
                             />
                             : <ActualValue
-                                name={expense.name}
-                                value={expense.value}
+                                name={outflow.name}
+                                value={outflow.value}
                                 setShowEditValueInput={setShowEditValueInput}
                             />
                     }
                     {
-                        expense.amount && (
-                            <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(expense.value / expense.amount)}</Text>
+                        outflow.amount && (
+                            <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(outflow.value / outflow.amount)}</Text>
                         )
                     }
                     {
-                        expense.amount && (
-                            <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {expense.amount}</Text>
+                        outflow.amount && (
+                            <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {outflow.amount}</Text>
                         )
                     }
                 </View>
@@ -154,9 +139,9 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                         submitButtonColor='darkred'
                     />
                     : <ConfirmDelete
-                    name={expense.name}
+                        name={outflow.name}
                         deleteFunction={() => {
-                            deleteFunction(expense)
+                            deleteFunction(outflow)
                         }}
                         setConfirmDelete={setConfirmDelete}
                     />

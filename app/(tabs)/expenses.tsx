@@ -1,13 +1,13 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
 import { Alert, BackHandler } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // custom functions
 import { filterExpenses } from '@/functions/common'
 
 // context
-import { DocsContext, Outflow } from '@/context/DocsContext'
+import { DocsContext } from '@/context/DocsContext'
+import { Outflow } from '@/types'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
@@ -19,7 +19,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 // expenses components
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
-import AboutExpenseCard from '@/components/expenses/AboutExpenseCard'
+import AboutExpenseCard from '@/components/expenses/AboutOutflowCard'
 import { db } from '@/database/db'
 
 export default function Expenses() {
@@ -77,7 +77,7 @@ export default function Expenses() {
                         [product.amount ?? 0, product._id]
                     )
 
-                } catch (err) {
+                } catch {
 
                     Alert.alert('Erro ao acessar banco de dados')
 
@@ -95,7 +95,7 @@ export default function Expenses() {
             )
             setExpenses(remainingExpenses)
 
-        } catch (err) {
+        } catch {
 
             Alert.alert('Erro ao acessar banco de dados')
 
@@ -162,7 +162,7 @@ export default function Expenses() {
                 {
                     deleteExpenseForm && (
                         <AboutExpenseCard
-                            expense={expenseForDeletion}
+                            outflow={expenseForDeletion}
                             deleteFunction={deleteExpense}
                             setFormOff={setDeleteExpenseForm}
                             setButton={setButton}
