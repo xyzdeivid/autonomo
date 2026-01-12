@@ -1,6 +1,20 @@
 import { Outflow } from '@/types/index'
 import { db } from './db'
 
+export async function getAllOutflows(): Promise<Outflow[]> {
+
+    const rows = await db.getAllAsync<Outflow>('SELECT * FROM outflows')
+
+    return rows.map(row => ({
+        _id: row._id,
+        name: row.name,
+        date: row.date,
+        value: row.value,
+        amount: row.amount ?? undefined
+    }))
+
+}
+
 export async function addOutflowToDb(outflow: Outflow): Promise<void> {
 
     await db.runAsync(
@@ -17,16 +31,13 @@ export async function addOutflowToDb(outflow: Outflow): Promise<void> {
 
 }
 
-export async function getAllOutflows(): Promise<Outflow[]> {
+export async function updateNewNamedOutflowToDb(newName: string, _id: string): Promise<void> {
 
-    const rows = await db.getAllAsync<Outflow>('SELECT * FROM outflows')
-
-    return rows.map(row => ({
-        _id: row._id,
-        name: row.name,
-        date: row.date,
-        value: row.value,
-        amount: row.amount ?? undefined
-    }))
+    await db.runAsync(
+        `UPDATE outflows
+        SET name = ?
+        WHERE _id = ?`,
+        [newName, _id]
+    )
 
 }

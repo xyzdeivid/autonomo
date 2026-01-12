@@ -13,8 +13,11 @@ const useEditItemName = () => {
         const newItems = items.map(current => {
 
             if (current._id === item._id) {
+
                 return { ...current, _id: newName }
+
             }
+            
             return current
 
         })

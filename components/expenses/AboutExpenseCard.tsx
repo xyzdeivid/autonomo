@@ -14,6 +14,7 @@ import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ActualValue from './ActualValue'
 import EditValueInput from './EditValueInput'
+import useEditOutflowName from '@/hooks/useEditOutflowName'
 
 
 interface AboutExpenseCardProps {
@@ -34,6 +35,8 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [newValue, setNewValue] = useState(0)
 
+    const editOutflowName = useEditOutflowName().editOutflowName
+
     useEffect(() => {
         setButton(false)
         BackHandler.addEventListener('hardwareBackPress', () => {
@@ -41,7 +44,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
             setButton(true)
             return null
         })
-    }, [])
+    }, [setButton, setFormOff])
 
     const editName = async () => {
 
@@ -49,26 +52,12 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
 
             setLoadingScreen(true)
 
-            expense.name = newName
+            await editOutflowName(expense, newName)
 
-            const remainingExpenses = expenses.filter(current => {
-                return current._id !== expense._id
-            })
-
-            try {
-
-                await AsyncStorage.setItem('expenses', JSON.stringify([...remainingExpenses, expense]))
-                setExpenses([...remainingExpenses, expense])
-                setLoadingScreen(false)
-                setHideTabBar(false)
-                setButton(true)
-                setFormOff(false)
-
-            } catch (error) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
+            setLoadingScreen(false)
+            setHideTabBar(false)
+            setButton(true)
+            setFormOff(false)
 
         } else {
 
@@ -99,7 +88,7 @@ export default function AboutExpenseCard({ expense, deleteFunction, setFormOff, 
                 setButton(true)
                 setFormOff(false)
 
-            } catch (error) {
+            } catch {
 
                 Alert.alert('Erro ao acessar banco de dados')
 
