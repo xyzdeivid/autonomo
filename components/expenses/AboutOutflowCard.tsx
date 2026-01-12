@@ -66,7 +66,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, 
 
     }
 
-    const editValue = async () => {
+    const submitValueToEdit = async () => {
 
         if (newValue) {
 
@@ -106,7 +106,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, 
                         showEditValueInput
                             ? <EditValueInput
                                 setValue={setNewValue}
-                                editValue={editValue}
+                                editValue={submitValueToEdit}
                                 actualValue={outflow.value}
                             />
                             : <ActualValue
