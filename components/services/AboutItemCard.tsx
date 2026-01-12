@@ -120,7 +120,10 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff, set
             {loadingScreen && <LoadingScreen />}
             <FormContainer
             >
-                <FormTitle text={`Informações do ${getAboutItemCardTitle(service.category)}`} textColor='#330066' />
+                <FormTitle
+                    text={`Informações do ${getAboutItemCardTitle(service.category)}`}
+                    textColor='#330066'
+                />
                 <View>
                     {
                         editNameInput
