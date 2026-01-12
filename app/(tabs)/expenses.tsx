@@ -1,6 +1,6 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
-import { Alert, BackHandler } from 'react-native'
+import { BackHandler } from 'react-native'
 
 // custom functions
 import { filterExpenses } from '@/functions/common'
@@ -20,13 +20,12 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
 import AboutExpenseCard from '@/components/expenses/AboutOutflowCard'
-import { db } from '@/database/db'
+import useDeleteOutflow from '@/hooks/useDeleteOutflow'
 
 export default function Expenses() {
 
     const appDocs = useContext(DocsContext)
-    const [expenses, setExpenses] = appDocs.outflows
-    const [items] = appDocs.items
+    const [expenses] = appDocs.outflows
     const [selectedMonth] = appDocs.selectedMonth
     const [addExpenseForm, setAddExpenseForm] = useState(false)
     const [expenseForDeletion, setExpenseForDeletion] = useState({} as Outflow)
@@ -38,68 +37,13 @@ export default function Expenses() {
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
 
+    const deleteOutflow = useDeleteOutflow().deleteOutflow
+
     const deleteExpense = async (expense: Outflow) => {
 
         setLoadingScreen(true)
 
-        const remainingExpenses = expenses.filter(current => {
-            return current._id !== expense._id
-        })
-
-        if (expense.amount) {
-
-            const product = items.find(current =>
-                current._id === expense.name
-            )
-
-            if (product) {
-
-                if (product.amount) {
-
-                    if (product.amount > expense.amount) {
-
-                        product.amount = product.amount - expense.amount
-
-                    } else {
-
-                        product.amount = 0
-
-                    }
-
-                }
-
-                try {
-
-                    await db.runAsync(
-                        `UPDATE items
-                        SET amount = ?
-                        WHERE _id = ?`,
-                        [product.amount ?? 0, product._id]
-                    )
-
-                } catch {
-
-                    Alert.alert('Erro ao acessar banco de dados')
-
-                }
-
-            }
-
-        }
-
-        try {
-
-            await db.runAsync(
-                'DELETE FROM outflows WHERE _id = ?',
-                [expense._id]
-            )
-            setExpenses(remainingExpenses)
-
-        } catch {
-
-            Alert.alert('Erro ao acessar banco de dados')
-
-        }
+        await deleteOutflow(expense)        
 
         setDeleteExpenseForm(false)
         setLoadingScreen(false)

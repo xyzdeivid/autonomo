@@ -31,6 +31,15 @@ export async function addOutflowToDb(outflow: Outflow): Promise<void> {
 
 }
 
+export async function deleteOutflowToDb(_id: string): Promise<void> {
+
+    await db.runAsync(
+        'DELETE FROM outflows WHERE _id = ?',
+        [_id]
+    )
+
+}
+
 export async function updateNewNamedOutflowToDb(newName: string, _id: string): Promise<void> {
 
     await db.runAsync(
