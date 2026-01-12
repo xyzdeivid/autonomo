@@ -8,7 +8,7 @@ const getVersionFlag = async () => {
         const dbVersion = await AsyncStorage.getItem('dbVersion')
         return dbVersion
         
-    } catch (error) {
+    } catch {
 
         Alert.alert('Erro ao obter a versão do banco de dados.')
         return null

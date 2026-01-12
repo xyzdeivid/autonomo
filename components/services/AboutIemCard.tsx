@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext, Item } from '@/context/DocsContext'
+import { DocsContext } from '@/context/DocsContext'
+import { Item } from '@/types'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useContext, useEffect, useState } from 'react'
 import { orderServices } from '@/functions/services'
@@ -14,7 +15,6 @@ import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
 import { moneyFormat } from '@/functions/common'
-import React from 'react'
 import { db } from '@/database/db'
 import useEditItemName from '@/hooks/useEditItemName'
 
@@ -50,7 +50,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
             setButton(true)
             return null
         })
-    }, [])
+    }, [setButton, setFormOff])
 
     const submitNameToEdit = async () => {
 
@@ -115,7 +115,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 )
                 setServices(editedItems)
 
-            } catch (err) {
+            } catch {
 
                 Alert.alert('Erro ao acessar banco de dados')
 
@@ -173,7 +173,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 )
                 setServices(editedItems)
 
-            } catch (err) {
+            } catch {
 
                 Alert.alert('Erro ao acessar banco de dados')
 

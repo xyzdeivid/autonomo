@@ -1,4 +1,4 @@
-import { Item } from "@/context/DocsContext"
+import { Item } from '@/types/index'
 
 const checkIfItemHasAmount = (category: string, resale: boolean, stock: boolean) => {
 

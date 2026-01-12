@@ -1,4 +1,4 @@
-import { Entry } from '@/context/DocsContext'
+import { Entry } from '@/types/index'
 import { format, parseISO } from 'date-fns'
 import { View, StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'

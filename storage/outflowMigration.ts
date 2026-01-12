@@ -1,4 +1,4 @@
-import { Outflow } from '@/context/DocsContext'
+import { Outflow } from '@/types/index'
 import { db } from '@/database/db'
 import { getDataFromAsyncStorage } from './getDataFromAsyncStorage'
 

@@ -1,4 +1,4 @@
-import { Entry, Item } from '@/context/DocsContext'
+import { Entry, Item } from '@/types/index'
 import { generateId } from './common'
 
 export const orderSchedulings = (entries: Entry[]) => {

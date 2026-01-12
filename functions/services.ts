@@ -1,4 +1,4 @@
-import { Item, Outflow } from '@/context/DocsContext'
+import { Item, Outflow } from '@/types/index'
 import { generateId } from './common'
 
 export const orderServices = (services: Item[]) => {

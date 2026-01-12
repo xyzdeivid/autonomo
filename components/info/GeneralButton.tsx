@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import YearOptions from './YearOptions'
 import { availableYears } from '@/functions/info'

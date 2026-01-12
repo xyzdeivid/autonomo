@@ -1,4 +1,4 @@
-import { Outflow, Entry } from '@/context/DocsContext'
+import { Outflow, Entry } from '@/types/index'
 import { moneyFormat } from '@/functions/common'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
 import { StyleSheet, Text, View } from 'react-native'

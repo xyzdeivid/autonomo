@@ -1,4 +1,4 @@
-import { Entry as Scheduling, Outflow as Expense } from '@/context/DocsContext'
+import { Entry as Scheduling, Outflow as Expense } from '@/types/index'
 import { getExpenses, getSchedulingsRevenue } from './revenue'
 
 export const getDays = (filteredSchedulings: Scheduling[]) => {

@@ -1,10 +1,8 @@
 import { useContext, useEffect } from 'react'
-import { StyleSheet, Text } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
 import { getAvailableMonths } from '@/functions/common'
-import React from 'react'
 
 interface MonthInputProps {
     dropdownIconColor?: string

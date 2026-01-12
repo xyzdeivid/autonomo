@@ -6,7 +6,7 @@ import DateInput from '../common/DateInput'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import { DocsContext } from '@/context/DocsContext'
-import { Alert, View } from 'react-native'
+import { Alert } from 'react-native'
 import { generateId } from '@/functions/common'
 import FormInputs from '../common/FormInputs'
 import IntegrateStockButton from './IntegrateStockButton'
@@ -15,9 +15,7 @@ import LoadingScreen from '../common/LoadingScreen'
 import NumberInput from '../common/NumberInput'
 import ProductOptionsInput from './ProductOptionsInput'
 import AmountInput from '../common/AmountInput'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import ValueOption from '../common/ValueOption'
-import React from 'react'
 import { db } from '@/database/db'
 
 interface AddExpenseFormProps {
@@ -98,7 +96,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                     )
                     setServices(orderServices(updatedServices))
 
-                } catch (err) {
+                } catch {
 
                     Alert.alert('Erro ao acessar banco de dados')
                     setLoadingScreen(false)
@@ -126,7 +124,7 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
             )
             setExpenses(updatedExpenses)
 
-        } catch (err) {
+        } catch {
 
             Alert.alert('Erro ao acessar banco de dados')
 

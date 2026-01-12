@@ -1,9 +1,10 @@
-import { Item, DocsContext, Outflow } from "@/context/DocsContext"
-import { addItemToDb } from "@/database/repositories"
-import { orderServices } from "@/functions/services"
-import { useContext } from "react"
-import { Alert } from "react-native"
-import useAddOutflow from "./useAddOutflow"
+import { DocsContext } from '@/context/DocsContext'
+import { Item, Outflow } from '@/types/index'
+import { addItemToDb } from '@/database/itemRepositories'
+import { orderServices } from '@/functions/services'
+import { useContext } from 'react'
+import { Alert } from 'react-native'
+import useAddOutflow from './useAddOutflow'
 
 const useAddItem = () => {
 
@@ -53,7 +54,7 @@ const useAddItem = () => {
 
             return true
 
-        } catch (err) {
+        } catch {
 
             Alert.alert(
                 'Erro ao acessar banco de dados', 

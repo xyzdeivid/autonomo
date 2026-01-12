@@ -1,4 +1,4 @@
-import { Item } from '@/context/DocsContext'
+import { Item } from '@/types/index'
 import { getServices } from '@/functions/schedulings'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { useEffect, useRef } from 'react'

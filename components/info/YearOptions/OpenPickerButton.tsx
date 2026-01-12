@@ -1,5 +1,3 @@
-import { DocsContext } from '@/context/DocsContext'
-import { useContext } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface ClosePickerButtonProps {
@@ -8,8 +6,6 @@ interface ClosePickerButtonProps {
 }
 
 export default function ClosePickerButton({ availableYears, setShowPicker }: ClosePickerButtonProps) {
-
-    const [currentYear] = useContext(DocsContext).currentYear
 
     return (
         <Pressable

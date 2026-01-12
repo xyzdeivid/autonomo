@@ -1,17 +1,11 @@
 import { createContext, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
-import { getAllEntries, getAllItems, getAllOutflows } from '@/database/repositories'
+import { getAllEntries } from '@/database/entryRepositories'
+import { getAllItems } from '@/database/itemRepositories'
+import { getAllOutflows } from '@/database/outflowRepositories'
 import { initDatabase } from '@/database/initDatabase'
 import { migrateData } from '@/storage/migrationDataFromAsyncStorage'
-
-export interface Item {
-    category: string
-    _id: string
-    value: number
-    isThereAmount: boolean
-    resale: boolean
-    amount?: number
-}
+import { Entry, Item, Outflow } from '@/types'
 
 type SetItems = React.Dispatch<React.SetStateAction<Item[]>>
 
@@ -25,14 +19,6 @@ const DEFAULT_ITEM: Item = {
     resale: false
 }
 
-export interface Outflow {
-    _id: string
-    name: string
-    date: string
-    value: number
-    amount?: number
-}
-
 
 type SetOutflows = React.Dispatch<React.SetStateAction<Outflow[]>>
 type OutflowsState = [Outflow[], SetOutflows]
@@ -42,24 +28,6 @@ const DEFAULT_OUTFLOW: Outflow = {
     name: '',
     date: '',
     value: 0,
-}
-
-export interface Entry {
-    _id: string
-    serviceId: string
-    serviceCategory: string
-    serviceValue: number
-    serviceIsThereAmount: boolean
-    serviceAmount?: number
-    date: string
-    customer?: string
-}
-
-export interface OldEntry {
-    _id: string
-    service: Item
-    date: string
-    customer?: string
 }
 
 type SetEntries = React.Dispatch<React.SetStateAction<Entry[]>>
@@ -145,7 +113,7 @@ export default function DocsProvider({ children }: DocsProviderProps) {
             setItems(items)
             setOutflows(outflows)
 
-        } catch (err) {
+        } catch {
 
             Alert.alert('DOCS CONTEXT ERROR', 'Failed to fetch items from the database.')
 

@@ -1,7 +1,8 @@
-import { DocsContext, Item } from "@/context/DocsContext"
-import { updateItemToDb } from "@/database/repositories"
-import { useContext } from "react"
-import { Alert } from "react-native"
+import { DocsContext } from '@/context/DocsContext'
+import { Item } from '@/types'
+import { updateItemToDb } from '@/database/itemRepositories'
+import { useContext } from 'react'
+import { Alert } from 'react-native'
 
 const useEditItemName = () => {
 
@@ -40,7 +41,7 @@ const useEditItemName = () => {
 
             return true
 
-        } catch (err) {
+        } catch {
 
             Alert.alert(
                 'Erro ao acessar banco de dados',

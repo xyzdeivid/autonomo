@@ -1,6 +1,6 @@
 import { Button, StyleSheet, View } from 'react-native'
 import { useState } from 'react'
-import { Item, Outflow } from '@/context/DocsContext'
+import { Item, Outflow } from '@/types/index'
 import FormTitle from '../common/FormTitle'
 import LoadingScreen from '../common/LoadingScreen'
 import ItemsCategoriesForm from './ItemsCategoriesForm'

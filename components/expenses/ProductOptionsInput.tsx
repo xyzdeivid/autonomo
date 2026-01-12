@@ -1,6 +1,5 @@
-import { DocsContext, Item } from '@/context/DocsContext'
+import { Item } from '@/types'
 import { Picker } from '@react-native-picker/picker'
-import { useContext } from 'react'
 
 interface ProductOptionsInputProps {
     product: Item
@@ -9,8 +8,6 @@ interface ProductOptionsInputProps {
 }
 
 export default function ProductOptionsInput({ product, setProduct, products }: ProductOptionsInputProps) {
-
-    const [items] = useContext(DocsContext).items
 
     return (
         <Picker

@@ -1,5 +1,5 @@
-import { moneyFormat } from "@/functions/common";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { moneyFormat } from '@/functions/common'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 
 interface ActualValueProps {
     value: number

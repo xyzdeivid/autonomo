@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext, Outflow } from '@/context/DocsContext'
+import { DocsContext } from '@/context/DocsContext'
+import { Outflow } from '@/types'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
 import { useContext, useEffect, useState } from 'react'
@@ -13,7 +14,7 @@ import LoadingScreen from '../common/LoadingScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ActualValue from './ActualValue'
 import EditValueInput from './EditValueInput'
-import React from 'react'
+
 
 interface AboutExpenseCardProps {
     expense: Outflow

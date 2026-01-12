@@ -1,4 +1,4 @@
-import { Entry, Outflow, Item } from '@/context/DocsContext'
+import { Entry, Outflow, Item } from '@/types/index'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
 

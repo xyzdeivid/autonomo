@@ -1,8 +1,9 @@
-import { Outflow, DocsContext } from "@/context/DocsContext"
-import { useContext } from "react"
-import { Alert } from "react-native"
-import { orderExpenses } from "@/functions/expenses"
-import { addOutflowToDb } from "@/database/repositories"
+import { DocsContext } from '@/context/DocsContext'
+import { Outflow } from '@/types'
+import { useContext } from 'react'
+import { Alert } from 'react-native'
+import { orderExpenses } from '@/functions/expenses'
+import { addOutflowToDb } from '@/database/outflowRepositories'
 
 const useAddOutflow = () => {
 
@@ -18,7 +19,7 @@ const useAddOutflow = () => {
 
             return true
 
-        } catch (err) {
+        } catch {
 
             Alert.alert('Erro ao acessar banco de dados', 'Por favor, tente novamente mais tarde.')
             

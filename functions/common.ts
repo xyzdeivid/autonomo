@@ -1,4 +1,4 @@
-import { Outflow, Entry } from '@/context/DocsContext'
+import { Outflow, Entry } from '@/types/index'
 import { format, parseISO } from 'date-fns'
 import { Alert } from 'react-native'
 

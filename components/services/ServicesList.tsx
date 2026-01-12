@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native'
 import { DataTable } from 'react-native-paper'
-import { Item } from '@/context/DocsContext'
+import { Item } from '@/types/index'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import ContainerHandler from '../common/ContainerHandler'
 import { orderServices } from '@/functions/services'

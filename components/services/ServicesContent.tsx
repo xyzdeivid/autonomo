@@ -2,7 +2,8 @@ import { View } from 'react-native'
 import SelectCategoryInput from './SelectCategoryInput'
 import ServicesList from './ServicesList'
 
-import { DocsContext, Item } from '@/context/DocsContext'
+import { DocsContext } from '@/context/DocsContext'
+import { Item } from '@/types'
 import { useContext } from 'react'
 
 interface ServicesContentProps {

@@ -1,4 +1,4 @@
-import { Entry, OldEntry } from '@/context/DocsContext'
+import { Entry, OldEntry } from '@/types/index'
 import { db } from '@/database/db'
 import { getDataFromAsyncStorage } from './getDataFromAsyncStorage'
 

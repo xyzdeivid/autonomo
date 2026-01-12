@@ -1,0 +1,34 @@
+export interface Item {
+    category: string
+    _id: string
+    value: number
+    isThereAmount: boolean
+    resale: boolean
+    amount?: number
+}
+
+export interface Outflow {
+    _id: string
+    name: string
+    date: string
+    value: number
+    amount?: number
+}
+
+export interface Entry {
+    _id: string
+    serviceId: string
+    serviceCategory: string
+    serviceValue: number
+    serviceIsThereAmount: boolean
+    serviceAmount?: number
+    date: string
+    customer?: string
+}
+
+export interface OldEntry {
+    _id: string
+    service: Item
+    date: string
+    customer?: string
+}

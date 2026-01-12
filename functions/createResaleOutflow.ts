@@ -1,5 +1,5 @@
-import { Outflow } from "@/context/DocsContext"
-import { generateId } from "./common"
+import { Outflow } from '@/types/index'
+import { generateId } from './common'
 
 export default function createResaleOutflow(
     purchaseValue: number,

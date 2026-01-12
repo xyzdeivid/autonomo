@@ -1,4 +1,4 @@
-import { Item } from '@/context/DocsContext'
+import { Item } from '@/types/index'
 import { Picker } from '@react-native-picker/picker'
 import { StyleSheet, Text, View } from 'react-native'
 
