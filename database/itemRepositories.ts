@@ -34,6 +34,15 @@ export async function addItemToDb(item: Item): Promise<void> {
 
 }
 
+export async function deleteItemToDb(id: string): Promise<void> {
+
+    await db.runAsync(
+        'DELETE FROM items WHERE _id = ?',
+        [id]
+    )
+
+}
+
 export async function updateNewNamedItemToDb(newName: string, oldName: string): Promise<void> {
 
     await db.runAsync(

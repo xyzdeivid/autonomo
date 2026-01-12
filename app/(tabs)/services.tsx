@@ -1,9 +1,9 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
-import { Alert, BackHandler } from 'react-native'
+import { BackHandler } from 'react-native'
 
 // custom functions
-import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/functions/services'
+import { getServicesByCategory, getCategoryAndSet } from '@/functions/services'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
@@ -20,7 +20,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 // service components
 import AboutServiceCard from '@/components/services/AboutItemCard'
 import ServicesContent from '@/components/services/ServicesContent'
-import { db } from '@/database/db'
+import useDeleteItem from '@/hooks/useDeleteItem'
 
 export default function Services() {
 
@@ -28,12 +28,14 @@ export default function Services() {
     const [aboutServiceCard, setAboutServiceCard] = useState(false)
     const [serviceForDeletion, setServiceForDeletion] = useState({} as Item)
     const appDocs = useContext(DocsContext)
-    const [services, setServices] = appDocs.items
+    const [services] = appDocs.items
     const [currentPage] = appDocs.currentPage
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
+
+    const deleteItem = useDeleteItem().deleteItem
 
     useEffect(() => {
         getCategoryAndSet(services, setCategory)
@@ -59,23 +61,7 @@ export default function Services() {
 
         setLoadingScreen(true)
 
-        const remainingServices = services.filter(service => {
-            return service._id !== id
-        })
-
-        try {
-
-            await db.runAsync(
-                'DELETE FROM items WHERE _id = ?',
-                [id]
-            )
-            setServices(orderServices(remainingServices))
-
-        } catch {
-
-            Alert.alert('Erro ao acessar banco de dados')
-
-        }
+        await deleteItem(id)
 
         setAboutServiceCard(false)
         setLoadingScreen(false)
