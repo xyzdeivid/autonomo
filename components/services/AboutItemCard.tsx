@@ -1,11 +1,9 @@
-import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
+import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext } from '@/context/DocsContext'
 import { Item } from '@/types'
 import SubmitFormButtons from '../common/SubmitFormButtons'
-import { useContext, useEffect, useState } from 'react'
-import { orderServices } from '@/functions/services'
+import { useEffect, useState } from 'react'
 import EditValueInput from './EditValueInput'
 import ActualValue from './ActualValue'
 import ActualStock from './ActualStock'
@@ -15,20 +13,19 @@ import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
 import EditNameInput from './EditNameInput'
 import { moneyFormat } from '@/functions/common'
-import { db } from '@/database/db'
 import useEditItemName from '@/hooks/useEditItemName'
 import useEditItemValue from '@/hooks/useEditItemValue'
+import useEditStockItem from '@/hooks/useEditStockItem'
+import { getAboutItemCardTitle } from '@/functions/getAboutItemCardTitle'
 
-interface AboutServiceCardProps {
+interface AboutItemCardProps {
     service: Item
     deleteFunction: (id: string) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
     setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AboutServiceCard({ service, deleteFunction, setFormOff, setButton }: AboutServiceCardProps) {
-
-    const [services, setServices] = useContext(DocsContext).items
+export default function AboutItemCard({ service, deleteFunction, setFormOff, setButton }: AboutItemCardProps) {
 
     const [editNameInput, setEditNameInput] = useState(false)
     const [name, setName] = useState('')
@@ -44,6 +41,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     const editItemName = useEditItemName().editItemName
     const editItemValue = useEditItemValue().editItemValue
+    const editItemStock = useEditStockItem().editStockItem
 
     useEffect(() => {
         setButton(false)
@@ -80,9 +78,9 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     }
 
-    const editValue = async () => {
+    const submitValueToEdit = async () => {
 
-        // Apenas salvando se existir valor e ele for diferente do atual
+        // Apenas salvando se existir novo valor e ele for diferente do atual
         if (value && value !== service.value) {
 
             setLoadingScreen(true)
@@ -99,55 +97,15 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     }
 
-    const editStock = async () => {
+    const submitStockToEdit = async () => {
 
-        if (changedValue) {
+        if (changedValue && stock !== service.amount) {
 
             setLoadingScreen(true)
 
-            const remainingServices = services.filter(current => {
-                return current._id !== service._id
-            })
+            await editItemStock(stock, service)
 
-            const editedService: Item = {
-                category: service.category,
-                _id: service._id,
-                value: service.value,
-                isThereAmount: true,
-                resale: service.resale,
-                amount: stock
-            }
-
-            let editedItems = [] as Item[]
-
-            if (remainingServices[0]) {
-
-                editedItems = orderServices([...remainingServices, editedService])
-
-            } else {
-
-                editedItems = [editedService]
-
-            }
-
-            try {
-
-                await db.runAsync(
-                    `UPDATE items
-                    SET amount = ?
-                    WHERE _id = ?`,
-                    [stock ?? 0, service._id]
-                )
-                setServices(editedItems)
-
-            } catch {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
-
-            setFormOff(false)
-            setButton(true)
+            closeForm()
 
         } else {
 
@@ -157,28 +115,12 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
 
     }
 
-    const getTitle = (item: Item) => {
-
-        switch (item.category) {
-
-            case 'product':
-                return 'Produto'
-
-            case 'service':
-                return 'Serviço'
-
-            case 'budget':
-                return 'Orçamentário'
-
-        }
-    }
-
     return (
         <>
             {loadingScreen && <LoadingScreen />}
             <FormContainer
             >
-                <FormTitle text={`Informações do ${getTitle(service)}`} textColor='#330066' />
+                <FormTitle text={`Informações do ${getAboutItemCardTitle(service.category)}`} textColor='#330066' />
                 <View>
                     {
                         editNameInput
@@ -194,7 +136,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                                         ? <>
                                             <EditValueInput
                                                 setValue={setValue}
-                                                editValue={editValue}
+                                                editValue={submitValueToEdit}
                                             />
                                         </>
                                         : <ActualValue
@@ -219,7 +161,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                                         editStockInput
                                             ? <EditStockInput
                                                 setStock={setStock}
-                                                editStock={editStock}
+                                                editStock={submitStockToEdit}
                                                 setChangedValue={setChangedValue}
                                                 currentStock={service.amount}
                                             />

@@ -6,7 +6,8 @@ import { Alert, BackHandler } from 'react-native'
 import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/functions/services'
 
 // context
-import { DocsContext, Item } from '@/context/DocsContext'
+import { DocsContext } from '@/context/DocsContext'
+import { Item } from '@/types'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
@@ -17,7 +18,7 @@ import LoadingScreen from '@/components/common/LoadingScreen'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // service components
-import AboutServiceCard from '@/components/services/AboutIemCard'
+import AboutServiceCard from '@/components/services/AboutItemCard'
 import ServicesContent from '@/components/services/ServicesContent'
 import { db } from '@/database/db'
 
@@ -70,7 +71,7 @@ export default function Services() {
             )
             setServices(orderServices(remainingServices))
 
-        } catch (err) {
+        } catch {
 
             Alert.alert('Erro ao acessar banco de dados')
 

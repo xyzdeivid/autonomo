@@ -55,3 +55,14 @@ export async function updateNewValuedItemToDB(newValue: number, name: string): P
     )
 
 }
+
+export async function updateNewStockedItemToDB(newStock: number, name: string): Promise<void> {
+
+    await db.runAsync(
+        `UPDATE items
+        SET amount = ?
+        WHERE _id = ?`,
+        [newStock, name]
+    )
+
+}
