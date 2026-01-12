@@ -16,6 +16,7 @@ import EditNameInput from './EditNameInput'
 import { moneyFormat } from '@/functions/common'
 import React from 'react'
 import { db } from '@/database/db'
+import useEditItemName from '@/hooks/useEditItemName'
 
 interface AboutServiceCardProps {
     service: Item
@@ -27,8 +28,6 @@ interface AboutServiceCardProps {
 export default function AboutServiceCard({ service, deleteFunction, setFormOff, setButton }: AboutServiceCardProps) {
 
     const [services, setServices] = useContext(DocsContext).items
-
-    const serviceName = service._id
 
     const [editNameInput, setEditNameInput] = useState(false)
     const [name, setName] = useState('')
@@ -42,6 +41,8 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [changedValue, setChangedValue] = useState(false)
 
+    const editItemName = useEditItemName().editItemName
+
     useEffect(() => {
         setButton(false)
         BackHandler.addEventListener('hardwareBackPress', () => {
@@ -51,58 +52,17 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
         })
     }, [])
 
-    const editName = async () => {
+    const submitNameToEdit = async () => {
 
         if (name) {
 
             setLoadingScreen(true)
 
-            // Verificando se existe algum outro serviço com o mesmo nome
-            if (services.find(current => current._id === name)) {
-                Alert.alert('Já existe um serviço com esse nome.')
-                setLoadingScreen(false)
-                setFormOff(false)
-                setButton(true)
-                return
-            }
-
-            const remainingItems = services.filter(current => {
-                return current._id !== service._id
-            })
-
-            const editedItem = service
-            editedItem._id = name
-
-            let editedItems = [] as Item[]
-
-            if (remainingItems[0]) {
-
-                editedItems = [...remainingItems, editedItem]
-
-            } else {
-
-                editedItems = [editedItem]
-
-            }
-
-            try {
-
-                await db.runAsync(
-                    `UPDATE items
-                    SET _id = ?
-                    WHERE _id = ?`,
-                    [name, serviceName]
-                )
-                setServices(orderServices(editedItems))
-
-            } catch (err) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
+            await editItemName(name, service)
 
             setFormOff(false)
             setButton(true)
+            setLoadingScreen(false)
 
         } else {
 
@@ -151,7 +111,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                     `UPDATE items
                     SET value = ?
                     WHERE _id = ?`,
-                    [value ?? 0, serviceName]
+                    [value ?? 0, service._id]
                 )
                 setServices(editedItems)
 
@@ -209,7 +169,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                     `UPDATE items
                     SET amount = ?
                     WHERE _id = ?`,
-                    [stock ?? 0, serviceName]
+                    [stock ?? 0, service._id]
                 )
                 setServices(editedItems)
 
@@ -255,7 +215,7 @@ export default function AboutServiceCard({ service, deleteFunction, setFormOff, 
                 <View>
                     {
                         editNameInput
-                            ? <EditNameInput setName={setName} editName={editName} actualName={service._id} />
+                            ? <EditNameInput setName={setName} editName={submitNameToEdit} actualName={service._id} />
                             : <ActualName name={name || service._id} setEditNameInput={setEditNameInput} />
                     }
                     {service.category !== 'budget' && (

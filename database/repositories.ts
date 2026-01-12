@@ -19,6 +19,17 @@ export async function addItemToDb(item: Item): Promise<void> {
 
 }
 
+export async function updateItemToDb(newName: string, oldName: string): Promise<void> {
+
+    await db.runAsync(
+        `UPDATE items
+        SET _id = ?
+        WHERE _id = ?`,
+        [newName, oldName]
+    )
+
+}
+
 export async function addOutflowToDb(outflow: Outflow): Promise<void> {
 
     await db.runAsync(

@@ -1,7 +1,6 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
 import { Alert, BackHandler } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // custom functions
 import { getServicesByCategory, orderServices, getCategoryAndSet } from '@/functions/services'
@@ -12,13 +11,13 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
 import AddItemButton from '@/components/common/AddItemButton'
-import AddServiceForm from '@/components/services/AddServiceForm'
+import AddServiceForm from '@/components/services/AddItemForm'
 import Container from '@/components/common/Container'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // service components
-import AboutServiceCard from '@/components/services/AboutServiceCard'
+import AboutServiceCard from '@/components/services/AboutIemCard'
 import ServicesContent from '@/components/services/ServicesContent'
 import { db } from '@/database/db'
 
@@ -34,7 +33,6 @@ export default function Services() {
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [button, setButton] = useState(true)
-    const [whatIsServiceCard, setWhatIsServiceCard] = useState(false)
 
     useEffect(() => {
         getCategoryAndSet(services, setCategory)
@@ -44,7 +42,6 @@ export default function Services() {
         if (currentPage !== 'services') {
             setAddServiceForm(false)
             setAboutServiceCard(false)
-            setWhatIsServiceCard(false)
             setButton(true)
         }
     }, [currentPage])
