@@ -9,9 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import ConfirmDelete from '../common/ConfirmDelete'
 import ActualAmount from './ActualAmount'
-import EditAmountInput from './EditAmountInput'
 import LoadingScreen from '../common/LoadingScreen'
-import { orderServices } from '@/functions/services'
 import AddClienteButton from './AddClienteButton'
 import ActualCustomer from './ActualCustomer'
 import ActualDate from './ActualDate'
@@ -30,13 +28,8 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
-    const [showEditAmountInput, setShowEditAmountInput] = useState(false)
-    const [newAmount, setNewAmount] = useState(0)
-    const isThereAmount = scheduling.serviceIsThereAmount
     const appDocs = useContext(DocsContext)
     const [entries, setEntries] = appDocs.entries
-    const [items, setItems] = appDocs.items
-    const product = items.find(current => current._id === scheduling.serviceId)
     const remainingEntries = entries.filter(current => (
         current._id !== scheduling._id
     ))
@@ -55,92 +48,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
             return null
         })
     }, [setButton, setFormOff])
-
-    const editAmount = async () => {
-
-        setLoadingPage(true)
-
-        if (scheduling.serviceAmount) {
-
-            let currentProductStock = product?.amount || 0
-
-            // Atualizando estoque no itens
-            if (isThereAmount) {
-
-                currentProductStock += scheduling.serviceAmount
-                currentProductStock = currentProductStock - newAmount
-
-                if (currentProductStock >= 0) {
-
-                    if (product) {
-
-                        product.amount = currentProductStock
-                        const remainingItems = items.filter(current => current._id !== product._id)
-
-                        try {
-
-                            await db.runAsync(
-                                `UPDATE items
-                                SET amount = ?
-                                WHERE _id = ?`,
-                                [currentProductStock, product._id]
-                            )
-                            setItems(orderServices([...remainingItems, product]))
-
-                        } catch (err) {
-
-                            Alert.alert('Erro ao acessar banco de dados')
-                            return
-
-                        }
-
-                        scheduling.serviceValue =
-                            (scheduling.serviceValue / scheduling.serviceAmount) * newAmount
-
-                        scheduling.serviceAmount = newAmount
-
-                    }
-
-                } else {
-
-                    Alert.alert('Estoque insuficiente')
-
-                }
-
-            } else {
-
-                scheduling.serviceValue =
-                    (scheduling.serviceValue / scheduling.serviceAmount) * newAmount
-
-                scheduling.serviceAmount = newAmount
-
-            }
-
-            try {
-
-                await db.runAsync(
-                    `UPDATE entries
-                    SET serviceAmount = ?,
-                    serviceValue = ?
-                    WHERE _id = ?`,
-                    [newAmount, (scheduling.serviceValue / scheduling.serviceAmount) * newAmount,scheduling._id]
-                )
-                setEntries([...remainingEntries, scheduling])
-
-            } catch (err) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
-
-            setLoadingPage(false)
-            setHideTabBar(false)
-            setButton(true)
-            setFormOff(false)
-
-        }
-
-    }
 
     const submitCustomerName = async () => {
 
@@ -256,18 +163,9 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                 </Text>
                                 {
                                     scheduling.serviceAmount && (
-                                        showEditAmountInput
-                                            ? <EditAmountInput
-                                                actualAmount={scheduling.serviceAmount}
-                                                newAmount={newAmount}
-                                                setNewAmount={setNewAmount}
-                                                setShowEditAmountInput={setShowEditAmountInput}
-                                                editAmount={editAmount}
-                                            />
-                                            : <ActualAmount
-                                                amount={scheduling.serviceAmount}
-                                                setShowEditAmountInput={setShowEditAmountInput}
-                                            />
+                                        <ActualAmount
+                                            amount={scheduling.serviceAmount}
+                                        />
                                     )
                                 }
                             </View>

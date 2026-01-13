@@ -1,22 +1,15 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 interface ActualAmountProps {
     amount: number
-    setShowEditAmountInput: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ActualAmount({ amount, setShowEditAmountInput }: ActualAmountProps) {
+export default function ActualAmount({ amount }: ActualAmountProps) {
 
     return (
         <View style={styles.container}>
             <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Quantidade:</Text>
             <Text style={{ fontSize: 16 }}> {amount}</Text>
-            <Pressable
-                style={styles.editButton}
-                onPress={() => setShowEditAmountInput(true)}
-            >
-                <Text style={{ fontSize: 16 }}>Editar</Text>
-            </Pressable>
         </View>
     )
 

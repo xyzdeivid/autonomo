@@ -34,7 +34,7 @@ export const initDatabase = async () => {
 );`
     )
 
-  } catch (error) {
+  } catch {
 
     Alert.alert('Database Error', 'Failed to initialize the database.')
 
