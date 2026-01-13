@@ -16,6 +16,7 @@ import AddClienteButton from './AddClienteButton'
 import ActualCustomer from './ActualCustomer'
 import ActualDate from './ActualDate'
 import { db } from '@/database/db'
+import useAddCustomerName from '@/hooks/useAddCustomerName'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -42,6 +43,8 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [customer, setCustomer] = useState('')
     const [newDate, setNewDate] = useState('')
 
+    const addCustomerName = useAddCustomerName().addCustomerName
+
     useEffect(() => {
         setButton(false)
         BackHandler.addEventListener('hardwareBackPress', () => {
@@ -49,7 +52,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
             setButton(true)
             return null
         })
-    }, [])
+    }, [setButton, setFormOff])
 
     const editAmount = async () => {
 
@@ -137,27 +140,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     }
 
-    const addCustomer = async () => {
+    const submitCustomerName = async () => {
 
         setLoadingPage(true)
 
-        scheduling.customer = customer
-
-        try {
-
-            await db.runAsync(
-                `UPDATE entries
-                SET customer = ?
-                WHERE _id = ?`,
-                [customer, scheduling._id]
-            )
-            setEntries([...remainingEntries, scheduling])
-
-        } catch (err) {
-
-            Alert.alert('Erro ao acessar banco de dados')
-
-        }
+        await addCustomerName(scheduling._id, customer)
 
         setLoadingPage(false)
         setHideTabBar(false)
@@ -260,7 +247,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                             : <AddClienteButton
                                 setCustomer={setCustomer}
                                 customer={customer}
-                                addCustomer={addCustomer}
+                                addCustomer={submitCustomerName}
                             />
                     }
                     <Text style={styles.labelContainer}><Text style={styles.label}>Produto/Serviço:</Text> {scheduling.serviceId}</Text>
