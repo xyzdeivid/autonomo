@@ -1,5 +1,4 @@
-import { Item, Outflow } from '@/types/index'
-import { generateId } from './common'
+import { Item } from '@/types/index'
 
 export const orderServices = (services: Item[]) => {
 
@@ -78,28 +77,5 @@ export const checkIfThereIsAnotherService = (services: Item[], name: string): bo
     return isThereAnotherService
         ? true
         : false
-
-}
-
-export const createNewOutflow = (
-    valueChoice: string,
-    purchaseValue: number,
-    amount: number,
-    name: string,
-    purchaseDate: string
-) => {
-
-    const newExpenseValue =
-        valueChoice === 'total' ? purchaseValue : purchaseValue * amount
-
-    const newExpense: Outflow = {
-        _id: generateId(),
-        name,
-        date: purchaseDate,
-        value: newExpenseValue,
-        amount
-    }
-
-    return newExpense
 
 }

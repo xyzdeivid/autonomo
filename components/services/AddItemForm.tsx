@@ -115,7 +115,6 @@ export default function AddServiceForm({ setAddServiceForm, setButton }: AddServ
                             setPurchaseDate={setPurchaseDate}
                             setAmount={setAmount}
                             setPurchaseValue={setPurchaseValue}
-                            resale={resale}
                             valueOutflowChoice={valueOutflowChoice}
                             setValueOutflowChoice={setValueOutflowChoice}
                             setName={setName}

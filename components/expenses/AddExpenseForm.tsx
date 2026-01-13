@@ -15,7 +15,7 @@ import AmountInput from '../common/AmountInput'
 import ValueOption from '../common/ValueOption'
 import useAddOutflow from '@/hooks/useAddOutflow'
 import { Outflow } from '@/types'
-import createOutflow from '@/functions/createOutflow'
+import { createNewOutflow } from '@/functions/createNewOutflow'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -64,14 +64,8 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
 
         setLoadingScreen(true)
 
-        const resaleValue = valueChoice === 'total' ? value : value * amount
-
-        const newOutflow: Outflow = createOutflow(
-            stockIntegrate, name,
-            product, date,
-            value, resaleValue,
-            amount
-        )
+        const newOutflowName = stockIntegrate ? product._id : name
+        const newOutflow: Outflow = createNewOutflow(valueChoice, value, amount, newOutflowName, date)
 
         await addOutflow(
             newOutflow, stockIntegrate ? (product.amount || 0) + amount : undefined,

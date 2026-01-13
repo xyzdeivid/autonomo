@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, BackHandler } from 'react-native'
+import { View, Text, StyleSheet, BackHandler, Pressable, Alert } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { Item } from '@/types'
+import { Item, Outflow } from '@/types'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useEffect, useState } from 'react'
 import EditValueInput from './EditValueInput'
@@ -17,6 +17,9 @@ import useEditItemName from '@/hooks/useEditItemName'
 import useEditItemValue from '@/hooks/useEditItemValue'
 import useEditStockItem from '@/hooks/useEditStockItem'
 import { getAboutItemCardTitle } from '@/functions/getAboutItemCardTitle'
+import ReplenishResaleStock from './ReplenishResaleStock'
+import { createNewOutflow } from '@/functions/createNewOutflow'
+import useAddOutflow from '@/hooks/useAddOutflow'
 
 interface AboutItemCardProps {
     service: Item
@@ -39,9 +42,16 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff, set
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [changedValue, setChangedValue] = useState(false)
 
+    const [replenishForm, setReplenishForm] = useState(false)
+    const [replenishDate, setReplenishDate] = useState('')
+    const [replenishValue, setReplenishValue] = useState(0)
+    const [replenishAmount, setReplenishAmount] = useState(0)
+    const [replenishValueChoice, setReplenishValueChoice] = useState('total')
+
     const editItemName = useEditItemName().editItemName
     const editItemValue = useEditItemValue().editItemValue
     const editItemStock = useEditStockItem().editStockItem
+    const addOutflow = useAddOutflow().addOutflow
 
     useEffect(() => {
         setButton(false)
@@ -115,6 +125,33 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff, set
 
     }
 
+    const submitReplenishStock = async () => {
+
+        if (!replenishAmount || !replenishValue) {
+
+            Alert.alert('Preencha todos os campos')
+
+            return
+
+        }
+
+        setLoadingScreen(true)
+
+        const newReplenishOuflow: Outflow = createNewOutflow(
+            replenishValueChoice, replenishValue,
+            replenishAmount, service._id,
+            replenishDate
+        )
+
+        const newResaleAmount: number = (service.amount ?? 0) + replenishAmount
+
+        await addOutflow(newReplenishOuflow, newResaleAmount, service)
+
+        // Fechando card de reposição de estoque
+        closeForm()
+
+    }
+
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -174,7 +211,40 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff, set
                             </View>
                         )
                     }
+                    {
+                        service.resale && (
+                            <View style={{ marginTop: 12 }}>
+                                <View
+                                    style={styles.resaleWarningCard}
+                                >
+                                    <View><Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginBottom: 8 }}>Evite erros no seu saldo!</Text></View>
+                                    <Text style={{ textAlign: 'justify' }}>Para produtos que são revendidos, não recomendamos editar estoque manualmente. Ao clicar em <Text style={{ fontWeight: 'bold' }}>Repor Estoque</Text>,
+                                        você atualiza o estoque e registra a despesa da compra do produto de uma só vez.</Text>
+                                </View>
+                                <Pressable
+                                    style={styles.resaleButton}
+                                    onPress={() => setReplenishForm(true)}
+                                >
+                                    <Text style={{ color: 'white' }}>Repor Estoque</Text>
+                                </Pressable>
+                            </View>
+                        )
+                    }
                 </View>
+                {
+                    replenishForm && (
+                        <ReplenishResaleStock
+                            resaleProductName={service._id}
+                            setReplenishDate={setReplenishDate}
+                            setReplenishValue={setReplenishValue}
+                            setReplenishAmount={setReplenishAmount}
+                            setReplenishForm={setReplenishForm}
+                            replenishValueChoice={replenishValueChoice}
+                            setReplenishValueChoice={setReplenishValueChoice}
+                            submitReplenishStock={submitReplenishStock}
+                        />
+                    )
+                }
             </FormContainer>
             {
                 !confirmDelete
@@ -225,5 +295,22 @@ const styles = StyleSheet.create({
         color: 'rgba(0, 0, 0, 0.5)',
         fontSize: 12,
         marginTop: 2
+    },
+    resaleWarningCard: {
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        borderWidth: 0.5,
+        borderColor: 'black',
+        padding: 16,
+        borderRadius: 4,
+        marginTop: 12
+    },
+    resaleButton: {
+        padding: 8,
+        borderRadius: 4,
+        backgroundColor: 'rgba(51, 0, 102, 0.75)',
+        borderWidth: 1,
+        borderColor: '#330066',
+        alignSelf: 'center',
+        marginTop: 8
     }
 })

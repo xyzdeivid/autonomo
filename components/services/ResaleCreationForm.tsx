@@ -9,7 +9,6 @@ interface ResaleCreationFormProps {
     setPurchaseDate: React.Dispatch<React.SetStateAction<string>>
     setAmount: React.Dispatch<React.SetStateAction<number>>
     setPurchaseValue: React.Dispatch<React.SetStateAction<number>>
-    resale: boolean
     valueOutflowChoice: string
     setValueOutflowChoice: React.Dispatch<React.SetStateAction<string>>
     setName: React.Dispatch<React.SetStateAction<string>>
@@ -21,7 +20,6 @@ export default function ResaleCreationForm({
     setPurchaseDate,
     setAmount,
     setPurchaseValue,
-    resale,
     valueOutflowChoice,
     setValueOutflowChoice,
     setName,
