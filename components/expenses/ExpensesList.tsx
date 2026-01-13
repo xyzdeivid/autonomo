@@ -26,6 +26,14 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
         return formatedDate
     }
 
+    const getExpenseName = (expense: Outflow): string => {
+
+        if (expense.amount) return `Reposição de ${expense.name}`
+
+        return expense.name
+
+    }
+
     return (
         <View>
             <ListInfoTitle
@@ -42,7 +50,7 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
                     {orderExpenses(filteredExpenses).map(expense => {
                         return (
                             <DataTable.Row onPress={() => deleteExpense(expense)} key={expense._id}>
-                                <DataTable.Cell style={styles.text}>{expense.name}</DataTable.Cell>
+                                <DataTable.Cell style={styles.text}>{getExpenseName(expense)}</DataTable.Cell>
                                 <DataTable.Cell style={styles.text}>{dateFormat(expense.date)}</DataTable.Cell>
                                 <DataTable.Cell style={styles.text}>{moneyFormat(expense.value)}</DataTable.Cell>
                             </DataTable.Row>

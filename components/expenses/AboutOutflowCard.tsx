@@ -95,6 +95,11 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, 
                 <FormTitle text='Informações de Despesa' textColor='#660000' />
                 <View>
                     {
+                        outflow.amount && (
+                            <Text style={styles.replenishLabel}>Reposição de Estoque</Text>
+                        )
+                    }
+                    {
                         showEditNameInput
                             ? <EditNameInput actualName={outflow.name} setName={setNewName} editName={submitNameToEdit} />
                             : <ActualName name={outflow.name} setShowEditNameInput={setShowEditNameInput} />
@@ -152,12 +157,22 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, 
 }
 
 const styles = StyleSheet.create({
+
+    replenishLabel: {
+        fontSize: 16,
+        color: '#660000',
+        fontWeight: 'bold',
+        marginBottom: 12
+    },
+
     labelContainer: {
         marginBottom: 12,
         fontSize: 16
     },
+
     label: {
         fontWeight: 'bold',
         fontSize: 16
     }
+
 })
