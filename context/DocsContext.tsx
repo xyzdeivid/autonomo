@@ -126,8 +126,12 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         async function startDb() {
 
             await initDatabase()
+            
+            // Migrando dados de db antigos se necessário
             await migrateData()
+
             await getAndSetItems()
+            
             getCurrentYear()
 
         }
