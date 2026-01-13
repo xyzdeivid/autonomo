@@ -17,3 +17,12 @@ export async function getAllEntries(): Promise<Entry[]> {
     }))
 
 }
+
+export async function deleteEntryToDb(_id: string): Promise<void> {
+
+    await db.runAsync(
+        'DELETE FROM entries WHERE _id = ?',
+        [_id]
+    )
+
+}

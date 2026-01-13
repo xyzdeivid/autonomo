@@ -1,14 +1,12 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
-import { Alert, BackHandler } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { BackHandler } from 'react-native'
 
 // custom functions
 import { filterSchedulings } from '@/functions/common'
-import { orderServices } from '@/functions/services'
 
 // context
-import { DocsContext, Entry, Item } from '@/context/DocsContext'
+import { DocsContext,  } from '@/context/DocsContext'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
@@ -21,7 +19,9 @@ import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 import SchedulingsList from '@/components/schedulings/SchedulingsList'
 import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
 import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
-import { db } from '@/database/db'
+
+import { Entry } from '@/types'
+import useDeleteEntry from '@/hooks/useDeleteEntry'
 
 export default function Schedulings() {
 
@@ -30,103 +30,22 @@ export default function Schedulings() {
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [button, setButton] = useState(true)
-    const [whatIsSchedulingCard, setWhatIsSchedulingCard] = useState(false)
 
     const appDocs = useContext(DocsContext)
-    const [schedulings, setSchedulings] = appDocs.entries
-    const [services, setServices] = appDocs.items
+    const [schedulings] = appDocs.entries
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
 
+    const deleteEntry = useDeleteEntry().deleteEntry
+
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
-
-    const checkAmount = async (scheduling: Entry) => {
-
-        // Separando produto a ser atualizado
-        const product = services.filter(current => {
-            return current._id === scheduling.serviceId
-        })[0]
-
-        // Verificando se o produto ainda está cadastrado no sistema
-        if (product) {
-
-            // Separando outros produtos
-            const remainingProducts = services.filter(current => {
-                return current !== product
-            })
-
-            // Atualizando estoque do produto
-            const updatedProduct: Item = {
-                category: product.category,
-                _id: product._id,
-                value: product.value,
-                isThereAmount: product.isThereAmount,
-                resale: product.resale
-            }
-
-            if (scheduling.serviceAmount && product.isThereAmount)
-                updatedProduct.amount = product.amount
-                    ? product.amount + scheduling.serviceAmount
-                    : 0 + scheduling.serviceAmount
-
-            try {
-
-                await db.runAsync(
-                    `UPDATE items
-                    SET amount = ?
-                    WHERE _id = ?`,
-                    [updatedProduct.amount || 0, product._id]
-                )
-                setServices(orderServices([...remainingProducts, updatedProduct]))
-
-            } catch (err) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
-
-        }
-
-    }
 
     const deleteScheduling = async (scheduling: Entry) => {
 
         setLoadingScreen(true)
 
-        if (scheduling.serviceIsThereAmount) {
-
-            try {
-
-                await checkAmount(scheduling)
-
-            } catch (err) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-                return
-
-            }
-
-        }
-
-
-        const remainingSchedulings = schedulings.filter(current => {
-            return current._id !== scheduling._id
-        })
-
-        try {
-
-            await db.runAsync(
-                'DELETE FROM entries WHERE _id = ?',
-                [scheduling._id]
-            )
-            setSchedulings(remainingSchedulings)
-
-        } catch (err) {
-
-            Alert.alert('Erro ao acessar banco de dados')
-
-        }
+        await deleteEntry(scheduling)
 
         setDeleteSchedulingForm(false)
         setLoadingScreen(false)
@@ -139,7 +58,6 @@ export default function Schedulings() {
         if (currentPage !== 'schedulings') {
             setAddSchedulingForm(false)
             setDeleteSchedulingForm(false)
-            setWhatIsSchedulingCard(false)
             setButton(true)
         }
     }, [currentPage])
@@ -174,7 +92,6 @@ export default function Schedulings() {
                     && <AddSchedulingButton
                         setAddSchedulingForm={setAddSchedulingForm}
                         setButton={setButton}
-                        setWhatIsSchedulingCard={setWhatIsSchedulingCard}
                     />
                 }
                 {

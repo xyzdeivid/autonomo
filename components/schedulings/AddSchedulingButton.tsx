@@ -7,10 +7,9 @@ import { getServices } from '@/functions/schedulings'
 interface AddSchedulingButtonProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
     setButton: React.Dispatch<React.SetStateAction<boolean>>
-    setWhatIsSchedulingCard: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddSchedulingButton({ setAddSchedulingForm, setButton, setWhatIsSchedulingCard }: AddSchedulingButtonProps) {
+export default function AddSchedulingButton({ setAddSchedulingForm, setButton }: AddSchedulingButtonProps) {
 
     const [services] = useContext(DocsContext).items
 
