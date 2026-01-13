@@ -13,11 +13,10 @@ import { createNewEntry, getServices } from '@/functions/schedulings'
 import FormInputs from '../common/FormInputs'
 import StockInfo from './StockInfo'
 import AmountInput from '../common/AmountInput'
-import { orderServices } from '@/functions/services'
 import NumberInput from '../common/NumberInput'
 import LoadingScreen from '../common/LoadingScreen'
 import NameInput from '../common/NameInput'
-import { db } from '@/database/db'
+import useAddEntry from '@/hooks/useAddEntry'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -27,15 +26,16 @@ interface AddSchedulingFormProps {
 export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: AddSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
-    const [services, setServices] = useContext(DocsContext).items
+    const [services] = useContext(DocsContext).items
     const [service, setService] = useState<Item>(getServices(services)[0])
 
     const [date, setDate] = useState('')
     const [value, setValue] = useState(0)
-    const [schedulings, setSchedulings] = useContext(DocsContext).entries
     const [amount, setAmount] = useState(0)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [costumerName, setCustomerName] = useState('')
+
+    const addEntry = useAddEntry().addEntry
 
     const checkAllInputs = (): boolean => {
 
@@ -54,45 +54,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
             default:
                 return false
-
-        }
-
-    }
-
-    const updateStock = async () => {
-
-        if (service.isThereAmount) {
-
-            const updatedService: Item = {
-                category: service.category,
-                _id: service._id,
-                isThereAmount: service.isThereAmount,
-                value: service.value,
-                resale: service.resale
-            }
-
-            if (updatedService.isThereAmount && service.amount)
-                updatedService.amount = service.amount - amount
-
-            const remainingServices = services.filter(service => {
-                return service._id !== updatedService._id
-            })
-
-            try {
-
-                await db.runAsync(
-                    `UPDATE items
-                    SET amount = ?
-                    WHERE _id = ?`,
-                    [updatedService.amount ?? 0, updatedService._id]
-                )
-                setServices(orderServices([...remainingServices, updatedService]))
-
-            } catch (err) {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
 
         }
 
@@ -137,8 +98,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
         }
 
-        setLoadingScreen(true)
-
         const currentDate = new Date(getCurrentDate())
         const entryDate = new Date(date)
 
@@ -155,54 +114,18 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
             return
         }
 
+        setLoadingScreen(true)
+
         const newScheduling: Entry = createNewEntry(service, amount, value, date, costumerName)
 
-        if (service.category === 'product') {
+        const productToUpdate = services.find(service => service._id === newScheduling.serviceId)
 
-            try {
+        await addEntry(newScheduling, productToUpdate)
 
-                await updateStock()
-
-            } catch (err) {
-
-                warning('Erro ao acessar banco de dados', setLoadingScreen)
-                return
-            }
-
-        }
-
-        try {
-
-            const updatedSchedulings = [...schedulings, newScheduling]
-            await db.runAsync(
-                `INSERT INTO entries
-   (_id, serviceId, serviceCategory, serviceValue, serviceIsThereAmount, serviceAmount, date, customer)
-   VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                [
-                    newScheduling._id,
-                    newScheduling.serviceId,
-                    newScheduling.serviceCategory,
-                    newScheduling.serviceValue,
-                    newScheduling.serviceIsThereAmount ? 1 : 0,
-                    newScheduling.serviceAmount ?? null,
-                    newScheduling.date,
-                    newScheduling.customer ?? null
-                ]
-            )
-            setSchedulings(updatedSchedulings)
-
-        } catch (err) {
-
-            Alert.alert('Erro ao acessar banco de dados')
-
-        } finally {
-
-            setAddSchedulingForm(false)
-            setHideTabBar(false)
-            setButton(true)
-            setLoadingScreen(false)
-
-        }
+        setAddSchedulingForm(false)
+        setHideTabBar(false)
+        setButton(true)
+        setLoadingScreen(false)
 
     }
 

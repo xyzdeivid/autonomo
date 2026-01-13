@@ -18,6 +18,26 @@ export async function getAllEntries(): Promise<Entry[]> {
 
 }
 
+export async function addEntryToDb(entry: Entry): Promise<void> {
+
+    await db.runAsync(
+        `INSERT INTO entries
+           (_id, serviceId, serviceCategory, serviceValue, serviceIsThereAmount, serviceAmount, date, customer)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+            entry._id,
+            entry.serviceId,
+            entry.serviceCategory,
+            entry.serviceValue,
+            entry.serviceIsThereAmount ? 1 : 0,
+            entry.serviceAmount ?? null,
+            entry.date,
+            entry.customer ?? null
+        ]
+    )
+
+}
+
 export async function deleteEntryToDb(_id: string): Promise<void> {
 
     await db.runAsync(
