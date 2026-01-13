@@ -60,6 +60,17 @@ export async function editCustomerNameToDb(customerName: string, id: string): Pr
 
 }
 
+export async function editEntryDateToDb(newDate: string, id: string): Promise<void> {
+
+    await db.runAsync(
+        `UPDATE entries
+        SET date = ?
+        WHERE _id = ?`,
+        [newDate, id]
+    )
+
+}
+
 export async function deleteEntryToDb(_id: string): Promise<void> {
 
     await db.runAsync(

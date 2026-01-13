@@ -1,21 +1,19 @@
-import { View, Text, StyleSheet, Alert, BackHandler } from 'react-native'
+import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
-import { DocsContext } from '@/context/DocsContext'
 import { Entry } from '@/types'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
-import { useContext, useEffect, useState } from 'react'
-import { MainDisplaysContext } from '@/context/MainDisplays'
+import { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
 import ActualAmount from './ActualAmount'
 import LoadingScreen from '../common/LoadingScreen'
 import AddClienteButton from './AddClienteButton'
 import ActualCustomer from './ActualCustomer'
 import ActualDate from './ActualDate'
-import { db } from '@/database/db'
 import useAddCustomerName from '@/hooks/useAddCustomerName'
 import useEditCustomerName from '@/hooks/useEditCustomerName'
+import useEditEntryDate from '@/hooks/useEditEntryDate'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -26,19 +24,14 @@ interface AboutSchedulingCardProps {
 
 export default function AboutSchedulingCard({ scheduling, deleteFunction, setFormOff, setButton }: AboutSchedulingCardProps) {
 
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
-    const appDocs = useContext(DocsContext)
-    const [entries, setEntries] = appDocs.entries
-    const remainingEntries = entries.filter(current => (
-        current._id !== scheduling._id
-    ))
     const [loadingPage, setLoadingPage] = useState(false)
     const [customer, setCustomer] = useState('')
     const [newDate, setNewDate] = useState('')
 
     const addCustomerName = useAddCustomerName().addCustomerName
     const editCustomerName = useEditCustomerName().editCustomerName
+    const editEntryDate = useEditEntryDate().editEntryDate
 
     useEffect(() => {
         setButton(false)
@@ -56,7 +49,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         await addCustomerName(scheduling._id, customer)
 
         setLoadingPage(false)
-        setHideTabBar(false)
         setButton(true)
         setFormOff(false)
 
@@ -69,54 +61,18 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         await editCustomerName(scheduling._id, customer)
 
         setLoadingPage(false)
-        setHideTabBar(false)
         setButton(true)
         setFormOff(false)
 
     }
 
-    const getCurrentDate = () => {
-        const year = new Date().getFullYear()
-        const month = String(new Date().getMonth() + 1).padStart(2, '0')
-        const day = String(new Date().getDate()).padStart(2, '0')
-        return `${year}-${month}-${day}`
-    }
-
     const editDate = async () => {
 
-        const currentDate = new Date(getCurrentDate())
-        const entryDate = new Date(newDate)
+        setLoadingPage(true)
 
-        if (entryDate <= currentDate) {
-
-            setLoadingPage(true)
-
-            scheduling.date = newDate
-
-            try {
-
-                await db.runAsync(
-                `UPDATE entries
-                SET date = ?
-                WHERE _id = ?`,
-                [newDate, scheduling._id]
-            )
-                setEntries([...remainingEntries, scheduling])
-
-            } catch {
-
-                Alert.alert('Erro ao acessar banco de dados')
-
-            }
-
-        } else {
-
-            Alert.alert('Não é possivel registrar entradas em datas futuras')
-
-        }
+        await editEntryDate(newDate, scheduling._id)
 
         setLoadingPage(false)
-        setHideTabBar(false)
         setButton(true)
         setFormOff(false)
 
@@ -185,7 +141,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                         submitButtonColor='darkred'
                     />
                     : <ConfirmDelete
-                    name={scheduling.serviceId}
+                        name={scheduling.serviceId}
                         deleteFunction={() => {
                             deleteFunction(scheduling)
                         }}
