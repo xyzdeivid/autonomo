@@ -17,6 +17,7 @@ import ActualCustomer from './ActualCustomer'
 import ActualDate from './ActualDate'
 import { db } from '@/database/db'
 import useAddCustomerName from '@/hooks/useAddCustomerName'
+import useEditCustomerName from '@/hooks/useEditCustomerName'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -44,6 +45,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [newDate, setNewDate] = useState('')
 
     const addCustomerName = useAddCustomerName().addCustomerName
+    const editCustomerName = useEditCustomerName().editCustomerName
 
     useEffect(() => {
         setButton(false)
@@ -153,27 +155,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     }
 
-    const editCustomerName = async () => {
+    const submitCustomerNameToEdit = async () => {
 
         setLoadingPage(true)
 
-        scheduling.customer = customer
-
-        try {
-
-            await db.runAsync(
-                `UPDATE entries
-                SET customer = ?
-                WHERE _id = ?`,
-                [customer, scheduling._id]
-            )
-            setEntries([...remainingEntries, scheduling])
-
-        } catch (err) {
-
-            Alert.alert('Erro ao acessar banco de dados')
-
-        }
+        await editCustomerName(scheduling._id, customer)
 
         setLoadingPage(false)
         setHideTabBar(false)
@@ -210,7 +196,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
             )
                 setEntries([...remainingEntries, scheduling])
 
-            } catch (err) {
+            } catch {
 
                 Alert.alert('Erro ao acessar banco de dados')
 
@@ -242,7 +228,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                 customer={scheduling.customer}
                                 setNewCustomerName={setCustomer}
                                 newCustomerName={customer}
-                                editCustomerName={editCustomerName}
+                                editCustomerName={submitCustomerNameToEdit}
                             />
                             : <AddClienteButton
                                 setCustomer={setCustomer}
