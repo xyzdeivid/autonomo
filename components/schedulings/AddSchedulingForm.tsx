@@ -1,29 +1,28 @@
 import React, { useContext, useState } from 'react'
-import { StyleSheet, Text , Alert } from 'react-native'
+import { StyleSheet, Text, Alert } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { DocsContext } from '@/context/DocsContext'
 import { Entry, Item } from '@/types'
 import DateInput from '../common/DateInput'
 import SelectServiceInput from './SelectServiceInput'
-import SubmitFormButtons from '../common/SubmitFormButtons'
 import { warning } from '@/functions/common'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import { createNewEntry, getServices } from '@/functions/schedulings'
-import FormInputs from '../common/FormInputs'
 import StockInfo from './StockInfo'
 import AmountInput from '../common/AmountInput'
 import NumberInput from '../common/NumberInput'
 import LoadingScreen from '../common/LoadingScreen'
 import NameInput from '../common/NameInput'
 import useAddEntry from '@/hooks/useAddEntry'
+import { CloseFormButton } from '../common/CloseFormButton'
+import SaveButton from '../common/SaveButton'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
-    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: AddSchedulingFormProps) {
+export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
 
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [services] = useContext(DocsContext).items
@@ -124,7 +123,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
 
         setAddSchedulingForm(false)
         setHideTabBar(false)
-        setButton(true)
         setLoadingScreen(false)
 
     }
@@ -135,60 +133,55 @@ export default function AddSchedulingForm({ setAddSchedulingForm, setButton }: A
             <FormContainer
             >
                 <FormTitle text='Nova Receita' textColor='#006600' />
-                <FormInputs>
-                    <SelectServiceInput
-                        service={service}
-                        setService={setService}
-                        services={getServices(services)}
-                    />
-                    {service.amount ? (
-                        <StockInfo amount={service.amount - amount} />
-                    ) : null}
-                    <NameInput
-                        setName={setCustomerName}
-                        label='Cliente'
+                <SelectServiceInput
+                    service={service}
+                    setService={setService}
+                    services={getServices(services)}
+                />
+                {service.amount ? (
+                    <StockInfo amount={service.amount - amount} />
+                ) : null}
+                <NameInput
+                    setName={setCustomerName}
+                    label='Cliente'
+                    bgColor='rgba(0, 102, 0, 0.1)'
+                    textColor='#006600'
+                />
+                <DateInput
+                    setTargetDate={setDate}
+                    bgColor='#006600'
+                    textColor='#006600'
+                />
+                {service.category === 'product' && (
+                    <AmountInput
+                        text='* Quantidade'
+                        setAmount={setAmount}
                         bgColor='rgba(0, 102, 0, 0.1)'
                         textColor='#006600'
                     />
-                    <DateInput
-                        setTargetDate={setDate}
-                        bgColor='#006600'
-                        textColor='#006600'
-                    />
-                    {service.category === 'product' && (
-                        <AmountInput
-                            text='* Quantidade'
-                            setAmount={setAmount}
+                )}
+                {
+                    service.category === 'budget' && (
+                        <NumberInput
+                            label='* Valor'
+                            setValue={setValue}
                             bgColor='rgba(0, 102, 0, 0.1)'
                             textColor='#006600'
                         />
-                    )}
-                    {
-                        service.category === 'budget' && (
-                            <NumberInput
-                                label='* Valor'
-                                setValue={setValue}
-                                bgColor='rgba(0, 102, 0, 0.1)'
-                                textColor='#006600'
-                            />
-                        )
-                    }
-                    {
-                        service.category !== 'service' && (
-                            <Text style={styles.infoText}>* campo obrigatório</Text>
-                        )
-                    }
-                </FormInputs>
+                    )
+                }
+                {
+                    service.category !== 'service' && (
+                        <Text style={styles.infoText}>* campo obrigatório</Text>
+                    )
+                }
+                {
+                    checkAllInputs() && (
+                        <SaveButton color='#006600' submitItem={addScheduling} />
+                    )
+                }
             </FormContainer>
-            <SubmitFormButtons
-                cancel={() => {
-                    setAddSchedulingForm(false)
-                    setButton(true)
-                }}
-                submit={addScheduling}
-                submitButtonText='Registrar'
-                submitButtonColor='#006600'
-            />
+            <CloseFormButton onCloseFormButtonPress={() => setAddSchedulingForm(false)} />
         </>
     )
 

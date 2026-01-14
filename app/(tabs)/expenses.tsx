@@ -19,7 +19,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 // expenses components
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
-import AboutExpenseCard from '@/components/expenses/AboutOutflowCard'
+import AboutOutflowCard from '@/components/expenses/AboutOutflowCard'
 import useDeleteOutflow from '@/hooks/useDeleteOutflow'
 
 export default function Expenses() {
@@ -32,7 +32,6 @@ export default function Expenses() {
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
-    const [button, setButton] = useState(true)
     const [, setWhatIsExpenseCard] = useState(false)
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
@@ -43,12 +42,11 @@ export default function Expenses() {
 
         setLoadingScreen(true)
 
-        await deleteOutflow(expense)        
+        await deleteOutflow(expense)
 
         setDeleteExpenseForm(false)
         setLoadingScreen(false)
         setHideTabBar(false)
-        setButton(true)
 
     }
 
@@ -57,14 +55,12 @@ export default function Expenses() {
             setAddExpenseForm(false)
             setDeleteExpenseForm(false)
             setWhatIsExpenseCard(false)
-            setButton(true)
         }
     }, [currentPage])
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
             setAddExpenseForm(false)
-            setButton(true)
             return null
         })
     }, [])
@@ -86,30 +82,23 @@ export default function Expenses() {
                             textBgColor='rgba(139, 0, 0, 0.1)'
                         />
                 }
-                {
-                    button
-                    && <AddItemButton
-                        setForm={setAddExpenseForm}
-                        mainColor='#660000'
-                        bgColor='rgba(139, 0, 0, 0.1)'
-                        text='Registrar Despesa'
-                        setButton={setButton}
-                    />
-                }
+                <AddItemButton
+                    setForm={setAddExpenseForm}
+                    mainColor='#660000'
+                    bgColor='rgba(139, 0, 0, 0.1)'
+                    text='Registrar Despesa' />
                 {
                     addExpenseForm
                     && <AddExpenseForm
                         setAddExpenseForm={setAddExpenseForm}
-                        setButton={setButton}
                     />
                 }
                 {
                     deleteExpenseForm && (
-                        <AboutExpenseCard
+                        <AboutOutflowCard
                             outflow={expenseForDeletion}
                             deleteFunction={deleteExpense}
                             setFormOff={setDeleteExpenseForm}
-                            setButton={setButton}
                         />
                     )
                 }

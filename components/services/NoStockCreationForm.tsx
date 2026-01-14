@@ -43,7 +43,7 @@ export default function NoStockCreationForm({ name, value, setStep, setName, set
             />
             {
                 (name && value) ? (
-                    <SubmitItemButton submitItem={submitNoStock} />
+                    <SubmitItemButton color='#330066' submitItem={submitNoStock} />
                 ) : null
             }
         </>

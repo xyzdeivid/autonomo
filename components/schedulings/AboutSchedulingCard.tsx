@@ -19,10 +19,9 @@ interface AboutSchedulingCardProps {
     scheduling: Entry
     deleteFunction: (scheduling: Entry) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
-    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AboutSchedulingCard({ scheduling, deleteFunction, setFormOff, setButton }: AboutSchedulingCardProps) {
+export default function AboutSchedulingCard({ scheduling, deleteFunction, setFormOff }: AboutSchedulingCardProps) {
 
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [loadingPage, setLoadingPage] = useState(false)
@@ -34,13 +33,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const editEntryDate = useEditEntryDate().editEntryDate
 
     useEffect(() => {
-        setButton(false)
         BackHandler.addEventListener('hardwareBackPress', () => {
             setFormOff(false)
-            setButton(true)
             return null
         })
-    }, [setButton, setFormOff])
+    }, [setFormOff])
 
     const submitCustomerName = async () => {
 
@@ -49,7 +46,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         await addCustomerName(scheduling._id, customer)
 
         setLoadingPage(false)
-        setButton(true)
         setFormOff(false)
 
     }
@@ -61,7 +57,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         await editCustomerName(scheduling._id, customer)
 
         setLoadingPage(false)
-        setButton(true)
         setFormOff(false)
 
     }
@@ -73,7 +68,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         await editEntryDate(newDate, scheduling._id)
 
         setLoadingPage(false)
-        setButton(true)
         setFormOff(false)
 
     }
@@ -134,7 +128,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                     ? <SubmitFormButtons
                         cancel={() => {
                             setFormOff(false)
-                            setButton(true)
                         }}
                         submit={() => setConfirmDelete(true)}
                         submitButtonText='Excluir'

@@ -3,10 +3,8 @@ import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import NameInput from '../common/NameInput'
 import DateInput from '../common/DateInput'
-import SubmitFormButtons from '../common/SubmitFormButtons'
 import { DocsContext } from '@/context/DocsContext'
 import { Alert } from 'react-native'
-import FormInputs from '../common/FormInputs'
 import IntegrateStockButton from './IntegrateStockButton'
 import LoadingScreen from '../common/LoadingScreen'
 import NumberInput from '../common/NumberInput'
@@ -16,13 +14,14 @@ import ValueOption from '../common/ValueOption'
 import useAddOutflow from '@/hooks/useAddOutflow'
 import { Outflow } from '@/types'
 import { createNewOutflow } from '@/functions/createNewOutflow'
+import SaveButton from '../common/SaveButton'
+import { CloseFormButton } from '../common/CloseFormButton'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
-    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpenseFormProps) {
+export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProps) {
 
     const [name, setName] = useState('')
     const [date, setDate] = useState('')
@@ -73,7 +72,6 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
         )
 
         setAddExpenseForm(false)
-        setButton(true)
         setLoadingScreen(false)
 
     }
@@ -91,37 +89,37 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
             <FormContainer
             >
                 <FormTitle text='Nova Despesa' textColor='#660000' />
-                <FormInputs>
-                    {products[0] && (
-                        <IntegrateStockButton
-                            setStockIntegrate={setStockIntegrate}
+                {products[0] && (
+                    <IntegrateStockButton
+                        setStockIntegrate={setStockIntegrate}
+                    />
+                )}
+                {
+                    !stockIntegrate
+                        ? <NameInput
+                            setName={setName}
+                            bgColor='rgba(102, 0, 0, 0.1)'
+                            textColor='#660000'
                         />
-                    )}
-                    {
-                        !stockIntegrate
-                            ? <NameInput
-                                setName={setName}
-                                bgColor='rgba(102, 0, 0, 0.1)'
-                                textColor='#660000'
-                            />
-                            : <ProductOptionsInput
-                                product={product}
-                                setProduct={setProduct}
-                                products={products}
-                            />
-                    }
-                    <DateInput
-                        setTargetDate={setDate}
-                        bgColor='#660000'
-                        textColor='#660000'
-                    />
-                    <NumberInput
-                        setValue={setValue}
-                        bgColor='rgba(102, 0, 0, 0.1)'
-                        textColor='#660000'
-                        label={checkResaleButtonText()}
-                    />
-                    {stockIntegrate && (
+                        : <ProductOptionsInput
+                            product={product}
+                            setProduct={setProduct}
+                            products={products}
+                        />
+                }
+                <DateInput
+                    setTargetDate={setDate}
+                    bgColor='#660000'
+                    textColor='#660000'
+                />
+                <NumberInput
+                    setValue={setValue}
+                    bgColor='rgba(102, 0, 0, 0.1)'
+                    textColor='#660000'
+                    label={checkResaleButtonText()}
+                />
+                {
+                    stockIntegrate && (
                         <>
                             <ValueOption
                                 choice={valueChoice}
@@ -135,18 +133,15 @@ export default function AddExpenseForm({ setAddExpenseForm, setButton }: AddExpe
                                 textColor='#660000'
                             />
                         </>
-                    )}
-                </FormInputs>
+                    )
+                }
+                {
+                    checkAllInputs() && (
+                        <SaveButton color='#660000' submitItem={addExpense} />
+                    )
+                }
             </FormContainer>
-            <SubmitFormButtons
-                cancel={() => {
-                    setAddExpenseForm(false)
-                    setButton(true)
-                }}
-                submit={addExpense}
-                submitButtonText='Registrar'
-                submitButtonColor='#660000'
-            />
+            <CloseFormButton onCloseFormButtonPress={() => setAddExpenseForm(false)} />
         </>
     )
 

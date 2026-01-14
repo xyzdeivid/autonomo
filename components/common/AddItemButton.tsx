@@ -5,10 +5,9 @@ interface AddItemButtonProps {
     mainColor: string
     bgColor: string
     text: string
-    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddItemButton({ setForm, mainColor, bgColor, text, setButton }: AddItemButtonProps) {
+export default function AddItemButton({ setForm, mainColor, bgColor, text }: AddItemButtonProps) {
 
     return (
         <View style={styles.container}>
@@ -20,7 +19,6 @@ export default function AddItemButton({ setForm, mainColor, bgColor, text, setBu
                 }}
                 onPress={() => {
                     setForm(true)
-                    setButton(false)
                 }}
             >
                 <Text style={{ color: mainColor }}>{text}</Text>

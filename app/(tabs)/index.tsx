@@ -113,14 +113,12 @@ export default function Info() {
                 addExpenseForm
                 && <AddExpenseForm
                     setAddExpenseForm={setAddExpenseForm}
-                    setButton={setGeneralButton}
                 />
             }
             {
                 addSchedulingForm
                 && <AddSchedulingForm
                     setAddSchedulingForm={setAddSchedulingForm}
-                    setButton={setGeneralButton}
                 />
             }
         </Container>

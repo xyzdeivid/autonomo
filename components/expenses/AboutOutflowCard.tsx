@@ -20,10 +20,9 @@ interface AboutOutflowCardProps {
     outflow: Outflow
     deleteFunction: (expense: Outflow) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
-    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, setButton }: AboutOutflowCardProps) {
+export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }: AboutOutflowCardProps) {
 
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
@@ -37,13 +36,11 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, 
     const editOutflowValue = useEditOutflowValue().editOutflowValue
 
     useEffect(() => {
-        setButton(false)
         BackHandler.addEventListener('hardwareBackPress', () => {
             setFormOff(false)
-            setButton(true)
             return null
         })
-    }, [setButton, setFormOff])
+    }, [setFormOff])
 
     const submitNameToEdit = async () => {
 
@@ -55,7 +52,6 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, 
 
             setLoadingScreen(false)
             setHideTabBar(false)
-            setButton(true)
             setFormOff(false)
 
         } else {
@@ -76,7 +72,6 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, 
 
             setLoadingScreen(false)
             setHideTabBar(false)
-            setButton(true)
             setFormOff(false)
 
         } else {
@@ -137,7 +132,6 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff, 
                     ? <SubmitFormButtons
                         cancel={() => {
                             setFormOff(false)
-                            setButton(true)
                         }}
                         submit={() => setConfirmDelete(true)}
                         submitButtonText='Excluir'

@@ -36,7 +36,7 @@ export function BudgetCreationForm({ name, setName, setStep, submitBudget }: Bud
             </Text>
             {
                 name && (
-                    <SubmitItemButton submitItem={submitBudget} />
+                    <SubmitItemButton color='#330066' submitItem={submitBudget} />
                 )
             }
         </>

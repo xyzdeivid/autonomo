@@ -6,7 +6,7 @@ import { BackHandler } from 'react-native'
 import { filterSchedulings } from '@/functions/common'
 
 // context
-import { DocsContext,  } from '@/context/DocsContext'
+import { DocsContext, } from '@/context/DocsContext'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
@@ -29,7 +29,6 @@ export default function Schedulings() {
     const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Entry)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
-    const [button, setButton] = useState(true)
 
     const appDocs = useContext(DocsContext)
     const [schedulings] = appDocs.entries
@@ -50,7 +49,6 @@ export default function Schedulings() {
         setDeleteSchedulingForm(false)
         setLoadingScreen(false)
         setHideTabBar(false)
-        setButton(true)
 
     }
 
@@ -58,14 +56,12 @@ export default function Schedulings() {
         if (currentPage !== 'schedulings') {
             setAddSchedulingForm(false)
             setDeleteSchedulingForm(false)
-            setButton(true)
         }
     }, [currentPage])
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
             setAddSchedulingForm(false)
-            setButton(true)
             return null
         })
     }, [])
@@ -87,18 +83,13 @@ export default function Schedulings() {
                             textBgColor='rgba(0, 102, 0, 0.1)'
                         />
                 }
-                {
-                    button
-                    && <AddSchedulingButton
-                        setAddSchedulingForm={setAddSchedulingForm}
-                        setButton={setButton}
-                    />
-                }
+                <AddSchedulingButton
+                    setAddSchedulingForm={setAddSchedulingForm}
+                />
                 {
                     addSchedulingForm
                     && <AddSchedulingForm
                         setAddSchedulingForm={setAddSchedulingForm}
-                        setButton={setButton}
                     />
                 }
                 {
@@ -107,7 +98,6 @@ export default function Schedulings() {
                             scheduling={schedulingForDeletion}
                             deleteFunction={deleteScheduling}
                             setFormOff={setDeleteSchedulingForm}
-                            setButton={setButton}
                         />
                         : null
                 }

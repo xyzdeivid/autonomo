@@ -55,7 +55,7 @@ export default function StockCreationForm({ name, amount, value, setStep, setSto
             />
             {
                 (name && amount && value) ? (
-                    <SubmitItemButton submitItem={submitStock} />
+                    <SubmitItemButton color='#330066' submitItem={submitStock} />
                 ) : null
             }
         </>

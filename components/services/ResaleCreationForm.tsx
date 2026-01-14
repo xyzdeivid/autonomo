@@ -132,7 +132,7 @@ export default function ResaleCreationForm({
             />
             {
                 (name && amount && purchaseValue && value) ? (
-                    <SubmitItemButton submitItem={submitResale} />
+                    <SubmitItemButton color='#330066' submitItem={submitResale} />
                 ) : null
             }
         </>

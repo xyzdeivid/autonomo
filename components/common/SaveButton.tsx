@@ -1,17 +1,18 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
 
-interface SubmitItemButtonProps {
+interface SaveButtonProps {
+    color: string
     submitItem: () => Promise<void>
 }
 
-export default function SubmitItemButton({ submitItem }: SubmitItemButtonProps) {
+export default function SaveButton({ color, submitItem }: SaveButtonProps) {
 
     return (
         <Pressable
-            style={styles.button}
+            style={{ ...styles.button, backgroundColor: color }}
             onPress={submitItem}
         >
-            <Text style={styles.buttonText}>Confirmar</Text>
+            <Text style={styles.buttonText}>Salvar</Text>
         </Pressable>
     )
 
@@ -20,7 +21,6 @@ export default function SubmitItemButton({ submitItem }: SubmitItemButtonProps) 
 const styles = StyleSheet.create({
 
     button: {
-        backgroundColor: '#330066',
         marginTop: 12,
         padding: 12,
         display: 'flex',

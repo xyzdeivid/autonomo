@@ -1,4 +1,3 @@
-import { Pressable, StyleSheet, View, Text } from 'react-native'
 import { useState } from 'react'
 import { Item, Outflow } from '@/types/index'
 import FormTitle from '../common/FormTitle'
@@ -14,13 +13,13 @@ import ResaleCreationForm from './ResaleCreationForm'
 import ResaleOrStockButtons from './ResaleOrStockButtons'
 import StockCreationForm from './StockCreationForm'
 import NoStockCreationForm from './NoStockCreationForm'
+import { CloseFormButton } from '../common/CloseFormButton'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
-    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddServiceForm({ setAddServiceForm, setButton }: AddServiceFormProps) {
+export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProps) {
 
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
@@ -63,7 +62,6 @@ export default function AddServiceForm({ setAddServiceForm, setButton }: AddServ
 
         // close form
         setAddServiceForm(false)
-        setButton(true)
         setLoadingScreen(false)
 
     }
@@ -166,43 +164,8 @@ export default function AddServiceForm({ setAddServiceForm, setButton }: AddServ
                     )
                 }
             </FormContainer>
-            <View style={styles.closeFormButtonContainer}>
-                <Pressable
-                    style={styles.closeFormButton}
-                    onPress={() => {
-                        setAddServiceForm(false)
-                        setButton(true)
-                    }}
-                >
-                    <Text style={styles.closeFormButtonText}>Fechar Formulário</Text>
-                </Pressable>
-            </View>
+            <CloseFormButton onCloseFormButtonPress={() => setAddServiceForm(false)} />
         </>
     )
 
 }
-
-const styles = StyleSheet.create({
-
-    closeFormButtonContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        alignItems: 'center'
-    },
-
-    closeFormButton: {
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8,
-        marginBottom: 8,
-        backgroundColor: 'rgba(0,0,0,0.1)'
-    },
-
-    closeFormButtonText: {
-        color: '#00000090'
-    }
-
-})

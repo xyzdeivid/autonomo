@@ -41,7 +41,7 @@ export default function ServiceCreationForm({ name, value, setName, setValue, se
             />
             {
                 (name && value) ? (
-                    <SubmitItemButton submitItem={submitService} />
+                    <SubmitItemButton color='#330066' submitItem={submitService} />
                 ) : null
             }
         </>

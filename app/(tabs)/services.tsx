@@ -33,7 +33,6 @@ export default function Services() {
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
-    const [button, setButton] = useState(true)
 
     const deleteItem = useDeleteItem().deleteItem
 
@@ -45,14 +44,12 @@ export default function Services() {
         if (currentPage !== 'services') {
             setAddServiceForm(false)
             setAboutServiceCard(false)
-            setButton(true)
         }
     }, [currentPage])
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
             setAddServiceForm(false)
-            setButton(true)
             return null
         })
     }, [])
@@ -66,7 +63,6 @@ export default function Services() {
         setAboutServiceCard(false)
         setLoadingScreen(false)
         setHideTabBar(false)
-        setButton(true)
 
     }
 
@@ -89,21 +85,17 @@ export default function Services() {
                             textBgColor='rgba(51, 0, 102, 0.1)'
                         />
                 }
-                {
-                    button
-                    && <AddItemButton
-                        setForm={setAddServiceForm}
-                        text='Registrar Produto/Serviço'
-                        mainColor='#330066'
-                        bgColor='rgba(51, 0, 102, 0.1)'
-                        setButton={setButton}
-                    />
-                }
+
+                <AddItemButton
+                    setForm={setAddServiceForm}
+                    text='Registrar Produto/Serviço'
+                    mainColor='#330066'
+                    bgColor='rgba(51, 0, 102, 0.1)'
+                />
                 {
                     addServiceForm
                     && <AddServiceForm
                         setAddServiceForm={setAddServiceForm}
-                        setButton={setButton}
                     />
                 }
                 {
@@ -112,7 +104,6 @@ export default function Services() {
                             service={serviceForDeletion}
                             deleteFunction={deleteService}
                             setFormOff={setAboutServiceCard}
-                            setButton={setButton}
                         />
                         : null
                 }

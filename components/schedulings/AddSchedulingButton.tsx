@@ -6,22 +6,18 @@ import { getServices } from '@/functions/schedulings'
 
 interface AddSchedulingButtonProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
-    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddSchedulingButton({ setAddSchedulingForm, setButton }: AddSchedulingButtonProps) {
+export default function AddSchedulingButton({ setAddSchedulingForm }: AddSchedulingButtonProps) {
 
     const [services] = useContext(DocsContext).items
 
-    const showForm = () => {
-        setAddSchedulingForm(true)
-        setButton(false)
-    }
-
     const checkServices = () => {
-        getServices(services)[0]
-            ? showForm()
-            : Alert.alert('Sem produto ou serviço disponível', 'Verifique se você tem algum produto ou serviço registrado. Caso tenha produto, verifique se tem estoque disponível.')
+        if (getServices(services)[0]) {
+            setAddSchedulingForm(true)
+        } else {
+            Alert.alert('Sem produto ou serviço disponível', 'Verifique se você tem algum produto ou serviço registrado. Caso tenha produto, verifique se tem estoque disponível.')
+        }
     }
 
     return (

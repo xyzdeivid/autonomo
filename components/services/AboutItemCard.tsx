@@ -25,10 +25,9 @@ interface AboutItemCardProps {
     service: Item
     deleteFunction: (id: string) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
-    setButton: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AboutItemCard({ service, deleteFunction, setFormOff, setButton }: AboutItemCardProps) {
+export default function AboutItemCard({ service, deleteFunction, setFormOff }: AboutItemCardProps) {
 
     const [editNameInput, setEditNameInput] = useState(false)
     const [name, setName] = useState('')
@@ -54,18 +53,15 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff, set
     const addOutflow = useAddOutflow().addOutflow
 
     useEffect(() => {
-        setButton(false)
         BackHandler.addEventListener('hardwareBackPress', () => {
             setFormOff(false)
-            setButton(true)
             return null
         })
-    }, [setButton, setFormOff])
+    }, [setFormOff])
 
     const closeForm = () => {
 
         setFormOff(false)
-        setButton(true)
         setLoadingScreen(false)
 
     }
@@ -251,7 +247,6 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff, set
                     ? <SubmitFormButtons
                         cancel={() => {
                             setFormOff(false)
-                            setButton(true)
                         }}
                         submit={() => setConfirmDelete(true)}
                         submitButtonText='Excluir'
