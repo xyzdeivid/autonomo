@@ -1,53 +1,60 @@
-import { Text } from 'react-native'
-import ResaleButton from './ResaleButton'
-import StockButton from './StockButton'
+import { Pressable, StyleSheet, Text } from 'react-native'
+import ProductSubCategoryButton from './ProductSubCategoryButton'
 
 interface ResaleOrStockButtonsProps {
-    resale: boolean
-    stock: boolean
+    setStep: React.Dispatch<React.SetStateAction<number>>
     setResale: React.Dispatch<React.SetStateAction<boolean>>
     setStock: React.Dispatch<React.SetStateAction<boolean>>
     setAmount: React.Dispatch<React.SetStateAction<number>>
-    whichButtonPressed: string
-    setWhichButtonPressed: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function ResaleOrStockButtons({
-    resale, stock,
     setResale,
-    setStock,
-    whichButtonPressed,
-    setWhichButtonPressed
+    setStep,
+    setStock
 }: ResaleOrStockButtonsProps) {
 
     return (
         <>
-            <ResaleButton
-                resale={resale}
-                setResale={setResale}
-                whichButtonPressed={whichButtonPressed}
-                setWhichButtonPressed={setWhichButtonPressed}
+            <Pressable
+                style={styles.comeBackButton}
+                onPress={() => setStep(0)}
+            >
+                <Text style={{ color: 'white' }}>Voltar</Text>
+            </Pressable>
+            {/* botão de revenda */}
+            <ProductSubCategoryButton
+                subCategoryName='Revenda'
+                subCategoryText='Selecione caso você compre o produto de um fornecedor para revendê-lo posteriormente.'
+                setStep={setStep}
+                setSubCategory={setResale}
             />
-            <StockButton
-                stock={stock}
-                setStock={setStock}
-                whichButtonPressed={whichButtonPressed}
-                setWhichButtonPressed={setWhichButtonPressed}
+            {/* botão de estoque */}
+            <ProductSubCategoryButton
+                subCategoryName='Estoque'
+                subCategoryText='Selecione caso você mesmo fabrique seu produto e ele possua estoque.'
+                setStep={setStep}
+                setSubCategory={setStock}
             />
-            {
-                !resale && !stock && (
-                    <Text style={{
-                        backgroundColor: '#6600CC1A',
-                        padding: 12,
-                        borderRadius: 6,
-                        color: '#330066'
-                    }}>
-                        Caso seja você mesmo fabrique seu produto e ele seja vendido por encomenda,
-                        basta avançar para a próxima etapa.
-                    </Text>
-                )
-            }
+            {/* botão de sem estoque */}
+            <ProductSubCategoryButton
+                subCategoryName='Sem Estoque'
+                subCategoryText='Selecione caso você mesmo fabrique seu produto e ele seja vendido por encomenda.'
+                setStep={setStep}
+            />
         </>
     )
 
 }
+
+const styles = StyleSheet.create({
+
+    comeBackButton: {
+        backgroundColor: '#330066',
+        alignSelf: 'flex-start',
+        marginBottom: 20,
+        padding: 6,
+        borderRadius: 4
+    }
+
+})

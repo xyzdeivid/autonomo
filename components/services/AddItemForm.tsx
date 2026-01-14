@@ -1,4 +1,4 @@
-import { Button, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View, Text } from 'react-native'
 import { useState } from 'react'
 import { Item, Outflow } from '@/types/index'
 import FormTitle from '../common/FormTitle'
@@ -13,7 +13,6 @@ import { BudgetCreationForm } from './BudgetCreationForm'
 import ResaleCreationForm from './ResaleCreationForm'
 import ResaleOrStockButtons from './ResaleOrStockButtons'
 import StockCreationForm from './StockCreationForm'
-import addItemStepHandle from '@/functions/addItemStepHandle'
 import NoStockCreationForm from './NoStockCreationForm'
 
 interface AddServiceFormProps {
@@ -34,8 +33,6 @@ export default function AddServiceForm({ setAddServiceForm, setButton }: AddServ
     const [purchaseDate, setPurchaseDate] = useState('')
     const [stock, setStock] = useState(false)
     const [step, setStep] = useState(0)
-
-    const [whichButtonPressed, setWhichButtonPressed] = useState('')
 
     const addItem = useAddItem().addItem
 
@@ -82,83 +79,103 @@ export default function AddServiceForm({ setAddServiceForm, setButton }: AddServ
                                 text='Novo Produto ou Serviço'
                                 textColor='#330066'
                             />
-                            <ItemsCategoriesForm category={category} setCategory={setCategory} />
+                            <ItemsCategoriesForm
+                                setCategory={setCategory}
+                                setStep={setStep}
+                            />
                         </>
                     )
                 }
                 {
                     step === 1 && category === 'service' && (
-                        <ServiceCreationForm setName={setName} setValue={setValue} />
+                        <ServiceCreationForm
+                            name={name}
+                            value={value}
+                            setName={setName}
+                            setValue={setValue}
+                            setStep={setStep}
+                            submitService={submitNewItem}
+                        />
                     )
                 }
                 {
                     step === 1 && category === 'budget' && (
-                        <BudgetCreationForm setName={setName} />
+                        <BudgetCreationForm
+                            name={name}
+                            setName={setName}
+                            setStep={setStep}
+                            submitBudget={submitNewItem}
+                        />
                     )
                 }
                 {
                     step === 1 && category === 'product' && (
                         <ResaleOrStockButtons
-                            resale={resale}
-                            stock={stock}
+                            setStep={setStep}
                             setResale={setResale}
                             setStock={setStock}
                             setAmount={setAmount}
-                            whichButtonPressed={whichButtonPressed}
-                            setWhichButtonPressed={setWhichButtonPressed}
                         />
                     )
                 }
                 {
-                    step === 1 && resale && (
+                    step === 2 && resale && (
                         <ResaleCreationForm
+                            submitResale={submitNewItem}
+                            setResale={setResale}
+                            setStep={setStep}
+                            name={name}
+                            amount={amount}
+                            purchaseValue={purchaseValue}
+                            value={value}
                             setPurchaseDate={setPurchaseDate}
                             setAmount={setAmount}
                             setPurchaseValue={setPurchaseValue}
                             valueOutflowChoice={valueOutflowChoice}
                             setValueOutflowChoice={setValueOutflowChoice}
                             setName={setName}
-                            category={category}
                             setValue={setValue}
                         />
                     )
                 }
                 {
-                    step === 1 && stock && (
+                    step === 2 && stock && (
                         <StockCreationForm
+                            name={name}
+                            amount={amount}
+                            value={value}
+                            setStep={setStep}
+                            setStock={setStock}
                             setAmount={setAmount}
                             setValue={setValue}
                             setName={setName}
+                            submitStock={submitNewItem}
                         />
                     )
                 }
                 {
-                    step === 2 && (
+                    step === 2 && !resale && !stock && (
                         <NoStockCreationForm
+                            name={name}
+                            value={value}
+                            setStep={setStep}
                             setName={setName}
                             setValue={setValue}
+                            submitNoStock={submitNewItem}
                         />
                     )
                 }
             </FormContainer>
-            <View style={styles.submitButtons}>
-                <View>
-                    <Button onPress={() => {
+            <View style={styles.closeFormButtonContainer}>
+                <Pressable
+                    style={styles.closeFormButton}
+                    onPress={() => {
                         setAddServiceForm(false)
                         setButton(true)
-                    }} title='Cancelar' color='gray' />
-                </View>
-                <View>
-                    <Button onPress={() =>
-                        addItemStepHandle(
-                            step, category,
-                            resale, amount,
-                            purchaseValue, stock,
-                            name, value,
-                            submitNewItem, setStep
-                        )
-                    } title='Próximo' color='#330066' />
-                </View>
+                    }}
+                >
+                    <Text style={styles.closeFormButtonText}>Fechar Formulário</Text>
+                </Pressable>
             </View>
         </>
     )
@@ -167,15 +184,25 @@ export default function AddServiceForm({ setAddServiceForm, setButton }: AddServ
 
 const styles = StyleSheet.create({
 
-    submitButtons: {
+    closeFormButtonContainer: {
         position: 'absolute',
-        bottom: 20,
-        width: '100%',
+        bottom: 0,
+        left: 0,
+        right: 0,
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16
-    }
+        alignItems: 'center'
+    },
 
+    closeFormButton: {
+        padding: 8,
+        borderRadius: 4,
+        marginStart: 8,
+        marginBottom: 8,
+        backgroundColor: 'rgba(0,0,0,0.1)'
+    },
+
+    closeFormButtonText: {
+        color: '#00000090'
+    }
 
 })

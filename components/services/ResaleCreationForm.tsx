@@ -4,26 +4,37 @@ import NameInput from '../common/NameInput'
 import NumberInput from '../common/NumberInput'
 import ValueOption from '../common/ValueOption'
 import { Text } from 'react-native'
+import CreateItemFormHeader from './CreateItemFormHeader'
+import SubmitItemButton from '../common/SaveButton'
 
 interface ResaleCreationFormProps {
+    name: string
+    amount: number
+    purchaseValue: number
+    value: number
     setPurchaseDate: React.Dispatch<React.SetStateAction<string>>
     setAmount: React.Dispatch<React.SetStateAction<number>>
     setPurchaseValue: React.Dispatch<React.SetStateAction<number>>
     valueOutflowChoice: string
     setValueOutflowChoice: React.Dispatch<React.SetStateAction<string>>
     setName: React.Dispatch<React.SetStateAction<string>>
-    category: string
     setValue: React.Dispatch<React.SetStateAction<number>>
+    setStep: React.Dispatch<React.SetStateAction<number>>
+    setResale: React.Dispatch<React.SetStateAction<boolean>>
+    submitResale: () => Promise<void>
 }
 
 export default function ResaleCreationForm({
+    submitResale,
+    setResale,
+    name, amount, purchaseValue, value,
+    setStep,
     setPurchaseDate,
     setAmount,
     setPurchaseValue,
     valueOutflowChoice,
     setValueOutflowChoice,
     setName,
-    category,
     setValue
 }: ResaleCreationFormProps) {
 
@@ -41,8 +52,25 @@ export default function ResaleCreationForm({
 
     }
 
+    // Função do botão voltar do header
+    const onComeBackButtonPress = () => {
+
+        // Zerando estados ao sair do formulário
+        setName('')
+        setValue(0)
+        setAmount(0)
+        setPurchaseValue(0)
+        setStep(1)
+        setResale(false)
+
+    }
+
     return (
         <>
+            <CreateItemFormHeader
+            title='Novo Produto'
+                onComeBackButtonPress={onComeBackButtonPress}
+            />
             <NameInput
                 setName={setName}
                 textColor='#330066'
@@ -96,25 +124,17 @@ export default function ResaleCreationForm({
             }}>
                 {getPurchaseValueText()}
             </Text>
-            {category !== 'budget' && (
-                <NumberInput
-                    setValue={setValue}
-                    bgColor='rgba(51, 0, 102, 0.1)'
-                    textColor='#330066'
-                    label='Valor de Venda (un)'
-                />
-            )}
-            <Text
-                style={{
-                    backgroundColor: 'rgba(51, 0, 102, 0.75)',
-                    color: 'white',
-                    padding: 8,
-                    borderRadius: 4
-                }}
-            >
-                Para atualizar o estoque futuramente, basta criar uma nova despesa e selecionar "Reposição de Estoque".
-            </Text>
+            <NumberInput
+                setValue={setValue}
+                bgColor='rgba(51, 0, 102, 0.1)'
+                textColor='#330066'
+                label='Valor de Venda (un)'
+            />
+            {
+                (name && amount && purchaseValue && value) ? (
+                    <SubmitItemButton submitItem={submitResale} />
+                ) : null
+            }
         </>
     )
-
 }

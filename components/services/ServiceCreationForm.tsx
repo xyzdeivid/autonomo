@@ -1,19 +1,34 @@
-import { Text, StyleSheet } from 'react-native'
-
 import NameInput from '../common/NameInput'
 import NumberInput from '../common/NumberInput'
+import CreateItemFormHeader from './CreateItemFormHeader'
+import SubmitItemButton from '../common/SaveButton'
 
 interface ServiceCreationFormProps {
+    name: string
+    value: number
     setName: React.Dispatch<React.SetStateAction<string>>
     setValue: React.Dispatch<React.SetStateAction<number>>
+    setStep: React.Dispatch<React.SetStateAction<number>>
+    submitService: () => Promise<void>
 }
 
-export default function ServiceCreationForm({ setName, setValue }: ServiceCreationFormProps) {
+export default function ServiceCreationForm({ name, value, setName, setValue, setStep, submitService }: ServiceCreationFormProps) {
+
+    const onComeBackButtonPress = () => {
+
+        // Zerando estados ao sair do formulário
+        setName('')
+        setValue(0)
+        setStep(0)
+
+    }
+
     return (
         <>
-            <Text style={styles.title}>
-                2. Preencha as informações finais do seu serviço:
-            </Text>
+            <CreateItemFormHeader
+                title='Novo Serviço'
+                onComeBackButtonPress={onComeBackButtonPress}
+            />
             <NameInput
                 setName={setName}
                 textColor='#330066'
@@ -24,14 +39,12 @@ export default function ServiceCreationForm({ setName, setValue }: ServiceCreati
                 bgColor='rgba(51, 0, 102, 0.1)'
                 textColor='#330066'
             />
+            {
+                (name && value) ? (
+                    <SubmitItemButton submitItem={submitService} />
+                ) : null
+            }
         </>
     )
-}
 
-const styles = StyleSheet.create({
-    title: {
-        fontSize: 20,
-        marginBottom: 16,
-        color: '#330066'
-    }
-})
+}
