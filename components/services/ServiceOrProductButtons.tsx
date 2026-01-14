@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { View, Pressable, Text, StyleSheet } from 'react-native'
+import CardWhichProductToChoose from './CardWhichProductToChoose'
 
 interface ServiceOrProductButtonsProps {
     category: string
@@ -12,6 +14,8 @@ export default function ServiceOrProductButtons({ category, setCategory }: Servi
             ? ['#6600CC', '#FFFFFF']
             : ['#6600CC1A', '#6600CC']
     }
+
+    const [showHelpCard, setShowHelpCard] = useState(false)
 
     return (
         <View style={styles.container}>
@@ -51,7 +55,6 @@ export default function ServiceOrProductButtons({ category, setCategory }: Servi
                 >
                     Serviço com preço fixo.
                 </Text>
-                <Text>O valor é sempre o mesmo.</Text>
                 <Text
                     style={styles.exampleText}
                 >
@@ -79,6 +82,24 @@ export default function ServiceOrProductButtons({ category, setCategory }: Servi
                     Ex: Conserto, pintura, etc.
                 </Text>
             </Pressable>
+            <Text>Precisa de ajuda para escolher?</Text>
+            <Pressable
+                style={{
+                    backgroundColor: 'rgba(51, 0, 102, 0.75)',
+                    padding: 6,
+                    alignSelf: 'flex-start',
+                    borderRadius: 4,
+                    marginTop: 6
+                }}
+                onPress={() => setShowHelpCard(true)}
+            >
+                <Text style={{ color: 'white' }}>Clique aqui!</Text>
+            </Pressable>
+            {
+                showHelpCard && (
+                    <CardWhichProductToChoose setShowHelpCard={setShowHelpCard} />
+                )
+            }
         </View>
     )
 
