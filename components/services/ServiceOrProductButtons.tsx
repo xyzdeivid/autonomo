@@ -33,7 +33,7 @@ export default function ServiceOrProductButtons({ category, setCategory }: Servi
                 <Text
                     style={styles.exampleText}
                 >
-                    Ex: Roupas, lanches, eletrônicos, etc.
+                    Ex: Roupa, comida, eletrônico, etc.
                 </Text>
             </Pressable>
             <Pressable
@@ -51,10 +51,11 @@ export default function ServiceOrProductButtons({ category, setCategory }: Servi
                 >
                     Serviço com preço fixo.
                 </Text>
+                <Text>O valor é sempre o mesmo.</Text>
                 <Text
                     style={styles.exampleText}
                 >
-                    Ex: Cortes de cabelo, maquiagens, manicure, etc.
+                    Ex: Corte de cabelo, maquiagem, manicure, etc.
                 </Text>
             </Pressable>
             <Pressable
@@ -75,7 +76,7 @@ export default function ServiceOrProductButtons({ category, setCategory }: Servi
                 <Text
                     style={styles.exampleText}
                 >
-                    Ex: Consertos, pinturas, etc.
+                    Ex: Conserto, pintura, etc.
                 </Text>
             </Pressable>
         </View>

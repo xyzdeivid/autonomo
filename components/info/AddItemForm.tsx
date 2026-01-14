@@ -1,8 +1,7 @@
 import { Item } from '@/types/index'
 import { getServices } from '@/functions/schedulings'
 import { FontAwesome6 } from '@expo/vector-icons'
-import { useEffect, useRef } from 'react'
-import { StyleSheet, Pressable, Text, Animated, Alert } from 'react-native'
+import { StyleSheet, Pressable, Text, Alert, View } from 'react-native'
 
 interface AddItemFormProps {
     setGeneralButton: React.Dispatch<React.SetStateAction<boolean>>
@@ -15,32 +14,15 @@ interface AddItemFormProps {
 export default function AddItemForm({ setGeneralButton, setAddItemsForm,
     setAddExpenseForm, setAddSchedulingForm, services }: AddItemFormProps) {
 
-    const slideAnim = useRef(new Animated.Value(1000)).current
-
-    useEffect(() => {
-
-        Animated.parallel([
-            Animated.timing(slideAnim, {
-                toValue: 0,
-                duration: 250,
-                useNativeDriver: true,
-            })
-        ]).start()
-
-    }, [])
-
     const closeForm = (element: string) => {
-        if (element !== 'button-container')
-            Animated.parallel([
-                Animated.timing(slideAnim, {
-                    toValue: 1000,
-                    duration: 250,
-                    useNativeDriver: true
-                }),
-            ]).start(() => {
-                setAddItemsForm(false)
-                setGeneralButton(true)
-            })
+
+        if (element !== 'button-container') {
+
+            setAddItemsForm(false)
+            setGeneralButton(true)
+
+        }
+
     }
 
     const showAlert = () => {
@@ -49,17 +31,22 @@ export default function AddItemForm({ setGeneralButton, setAddItemsForm,
     }
 
     const checkServices = () => {
-        getServices(services)[0]
-            ? setAddSchedulingForm(true)
-            : showAlert()
+
+        if (getServices(services)[0]) {
+
+            setAddSchedulingForm(true)
+
+        } else {
+
+            showAlert()
+
+        }
+
     }
 
     return (
-        <Animated.View
-            style={{
-                ...styles.container,
-                transform: [{ translateX: slideAnim }]
-            }}>
+        <View
+            style={styles.container}>
             <Pressable
                 style={styles.container}
                 onPress={() => closeForm('container')}
@@ -109,7 +96,7 @@ export default function AddItemForm({ setGeneralButton, setAddItemsForm,
                     </Pressable>
                 </Pressable>
             </Pressable>
-        </Animated.View>
+        </View>
     )
 
 }

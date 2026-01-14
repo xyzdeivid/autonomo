@@ -47,6 +47,7 @@ export default function ResaleCreationForm({
                 setName={setName}
                 textColor='#330066'
                 bgColor='rgba(51, 0, 102, 0.1)'
+                label='Nome do Produto'
             />
             <DateInput
                 setTargetDate={setPurchaseDate}

@@ -13,6 +13,7 @@ export default function StockCreationForm({ setName, setValue, setAmount }: Stoc
     return (
         <>
             <NameInput
+            label='Nome do Produto'
                 setName={setName}
                 textColor='#330066'
                 bgColor='rgba(51, 0, 102, 0.1)'

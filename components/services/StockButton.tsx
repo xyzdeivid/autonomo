@@ -26,30 +26,38 @@ export default function StockButton({ stock, setStock, whichButtonPressed, setWh
             {
                 showButton() && (
                     <View style={{ marginBottom: 20 }}>
-                        <View style={styles.buttonContainer}>
-                            <Text style={{ color: '#330066', fontWeight: 'bold', fontSize: 14 }}>Estoque</Text>
-                            <Pressable
-                                style={{
-                                    ...styles.box,
-                                    backgroundColor: stock ? '#330066' : 'transparent'
-                                }}
-                                onPress={() => {
-                                    setStock(stock => !stock)
-                                    if (whichButtonPressed === 'stock') {
-                                        setWhichButtonPressed('')
-                                    } else {
-                                        setWhichButtonPressed('stock')
-                                    }
-                                }}
-                            />
-                        </View>
-                        {
-                            whichButtonPressed !== 'stock' && (
-                                <Text style={styles.text}>
-                                    Preencha caso você mesmo fabrique seu produto e ele possua estoque. Caso seja vendido por encomenda, basta avançar para a próxima etapa.
-                                </Text>
-                            )
-                        }
+                        <Pressable
+                            style={styles.buttonContainer}
+                            onPress={() => {
+                                if (!stock) {
+                                    setStock(true)
+                                    setWhichButtonPressed('stock')
+                                }
+                            }}
+                        >
+                            <Text style={{ color: '#330066', fontWeight: 'bold', fontSize: 20 }}>Estoque</Text>
+                            {
+                                whichButtonPressed !== 'stock' && (
+                                    <Text style={styles.text}>
+                                        Selecione caso você mesmo fabrique seu produto e ele possua estoque.
+                                    </Text>
+                                )
+                            }
+                            {
+                                stock && (
+                                    <Pressable
+                                        style={styles.comeBackButtonContainer}
+                                        onPress={() => {
+                                            setStock(false)
+                                            setWhichButtonPressed('')
+                                        }}
+                                    >
+                                        <Text style={styles.comeBackButtonText}>Voltar</Text>
+                                    </Pressable>
+                                )
+                            }
+                        </Pressable>
+
                     </View>
                 )
             }
@@ -62,21 +70,31 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         display: 'flex',
-        flexDirection: 'row'
-    },
-
-    box: {
-        width: 20,
-        height: 20,
-        borderWidth: 1,
-        borderColor: '#330066',
-        marginStart: 4,
-        borderRadius: 5
+        backgroundColor: '#6600CC1A',
+        padding: 12,
+        borderRadius: 6
     },
 
     text: {
         color: '#330066',
         marginTop: 2
+    },
+
+    comeBackButtonContainer: {
+        display: 'flex', 
+        justifyContent: 'center', 
+        position: 'absolute', 
+        top: 0, 
+        bottom: 0, 
+        right: 12
+    },
+
+    comeBackButtonText: {
+        backgroundColor: '#330066', 
+        padding: 4, 
+        borderRadius: 4, 
+        fontWeight: 'bold', 
+        color: 'white'
     }
 
 })

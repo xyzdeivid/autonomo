@@ -1,10 +1,11 @@
+import { Text } from 'react-native'
 import ResaleButton from './ResaleButton'
 import StockButton from './StockButton'
 
 interface ResaleOrStockButtonsProps {
     resale: boolean
-    setResale: React.Dispatch<React.SetStateAction<boolean>>
     stock: boolean
+    setResale: React.Dispatch<React.SetStateAction<boolean>>
     setStock: React.Dispatch<React.SetStateAction<boolean>>
     setAmount: React.Dispatch<React.SetStateAction<number>>
     whichButtonPressed: string
@@ -12,11 +13,9 @@ interface ResaleOrStockButtonsProps {
 }
 
 export default function ResaleOrStockButtons({
-    resale,
+    resale, stock,
     setResale,
-    stock,
     setStock,
-    setAmount,
     whichButtonPressed,
     setWhichButtonPressed
 }: ResaleOrStockButtonsProps) {
@@ -35,6 +34,19 @@ export default function ResaleOrStockButtons({
                 whichButtonPressed={whichButtonPressed}
                 setWhichButtonPressed={setWhichButtonPressed}
             />
+            {
+                !resale && !stock && (
+                    <Text style={{
+                        backgroundColor: '#6600CC1A',
+                        padding: 12,
+                        borderRadius: 6,
+                        color: '#330066'
+                    }}>
+                        Caso seja você mesmo fabrique seu produto e ele seja vendido por encomenda,
+                        basta avançar para a próxima etapa.
+                    </Text>
+                )
+            }
         </>
     )
 

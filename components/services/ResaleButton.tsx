@@ -27,30 +27,38 @@ export default function ResaleButton({ resale, setResale, whichButtonPressed, se
             {
                 showButton() && (
                     <View style={{ marginBottom: 20 }}>
-                        <View style={styles.container}>
-                            <Text style={{ color: '#330066', fontWeight: 'bold', fontSize: 14 }}>Revenda</Text>
-                            <Pressable
-                                style={{
-                                    ...styles.box,
-                                    backgroundColor: resale ? '#330066' : 'transparent'
-                                }}
-                                onPress={() => {
-                                    setResale(resale => !resale)
-                                    if (whichButtonPressed === 'resale') {
-                                        setWhichButtonPressed('')
-                                    } else {
-                                        setWhichButtonPressed('resale')
-                                    }
-                                }}
-                            />
-                        </View>
-                        {
-                            !(whichButtonPressed === 'resale') && (
-                                <Text style={styles.text}>
-                                    Preencha caso você compre o produto de um fornecedor para revendê-lo posteriormente.
-                                </Text>
-                            )
-                        }
+                        <Pressable
+                            style={styles.container}
+                            onPress={() => {
+                                if (!resale) {
+                                    setResale(true)
+                                    setWhichButtonPressed('resale')
+                                }
+                            }}
+                        >
+                            <Text style={{ color: '#330066', fontWeight: 'bold', fontSize: 20 }}>Revenda</Text>
+                            {
+                                whichButtonPressed !== 'resale' && (
+                                    <Text style={styles.text}>
+                                        Selecione caso você compre o produto de um fornecedor para revendê-lo posteriormente.
+                                    </Text>
+                                )
+                            }
+                            {
+                                resale && (
+                                    <Pressable 
+                                        style={styles.comeBackButtonContainer}
+                                        onPress={() => {
+                                            setResale(false)
+                                            setWhichButtonPressed('')
+                                        }}
+                                    >
+                                        <Text style={styles.comeBackButtonText}>Voltar</Text>
+                                    </Pressable>
+                                )
+                            }
+                        </Pressable>
+
                     </View>
                 )
             }
@@ -60,20 +68,34 @@ export default function ResaleButton({ resale, setResale, whichButtonPressed, se
 }
 
 const styles = StyleSheet.create({
+
     container: {
         display: 'flex',
-        flexDirection: 'row'
+        backgroundColor: '#6600CC1A',
+        padding: 12,
+        borderRadius: 6
     },
-    box: {
-        width: 20,
-        height: 20,
-        borderWidth: 1,
-        borderColor: '#330066',
-        marginStart: 4,
-        borderRadius: 5
-    },
+
     text: {
         color: '#330066',
         marginTop: 2
+    },
+
+    comeBackButtonContainer: {
+        display: 'flex', 
+        justifyContent: 'center', 
+        position: 'absolute', 
+        top: 0, 
+        bottom: 0, 
+        right: 12
+    },
+
+    comeBackButtonText: {
+        backgroundColor: '#330066', 
+        padding: 4, 
+        borderRadius: 4, 
+        fontWeight: 'bold', 
+        color: 'white'
     }
+
 })

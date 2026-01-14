@@ -100,8 +100,8 @@ export default function AddServiceForm({ setAddServiceForm, setButton }: AddServ
                     step === 1 && category === 'product' && (
                         <ResaleOrStockButtons
                             resale={resale}
-                            setResale={setResale}
                             stock={stock}
+                            setResale={setResale}
                             setStock={setStock}
                             setAmount={setAmount}
                             whichButtonPressed={whichButtonPressed}
