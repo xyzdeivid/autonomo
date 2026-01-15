@@ -21,7 +21,7 @@ export default function ActualStock({ item, showEditInput, setShowEditInput, set
                         label='Estoque'
                         propertyName={String(item.amount)}
                         isEditable={isEditable}
-                        onEditablePropertyButtonPress={() => {
+                        onEditButtonPress={() => {
                             setShowEditInput(true)
                         }}
                     />

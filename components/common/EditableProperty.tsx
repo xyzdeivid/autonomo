@@ -4,10 +4,10 @@ interface EditablePropertyProps {
     label: string
     propertyName: string
     isEditable: boolean
-    onEditablePropertyButtonPress?: () => void
+    onEditButtonPress?: () => void
 }
 
-export function EditableProperty({ label, propertyName, isEditable, onEditablePropertyButtonPress }: EditablePropertyProps) {
+export function EditableProperty({ label, propertyName, isEditable, onEditButtonPress }: EditablePropertyProps) {
 
     return (
         <View style={styles.container}>
@@ -17,7 +17,7 @@ export function EditableProperty({ label, propertyName, isEditable, onEditablePr
                 isEditable && (
                     <Pressable
                         style={styles.button}
-                        onPress={onEditablePropertyButtonPress}
+                        onPress={onEditButtonPress}
                     >
                         <Text style={styles.buttonText}>Editar</Text>
                     </Pressable>

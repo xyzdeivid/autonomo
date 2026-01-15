@@ -164,7 +164,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                     )
                 }
             </FormContainer>
-            <CloseFormButton onCloseFormButtonPress={() => setAddServiceForm(false)} />
+            <CloseFormButton onPress={() => setAddServiceForm(false)} />
         </>
     )
 

@@ -1,14 +1,14 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
 
 interface ConfirmEditButtonProps {
-    onSuccessButtonPress: () => Promise<void>
+    onPress: () => Promise<void>
 }
 
-export function ConfirmEditButton({ onSuccessButtonPress }: ConfirmEditButtonProps) {
+export function ConfirmEditButton({ onPress }: ConfirmEditButtonProps) {
     return (
         <Pressable
             style={styles.button}
-            onPress={onSuccessButtonPress}
+            onPress={onPress}
         >
             <Text style={{ color: 'white' }}>Salvar</Text>
         </Pressable>

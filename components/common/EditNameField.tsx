@@ -19,7 +19,7 @@ export function EditNameField({ defaultValue, newName, setNewName, onSuccessButt
             {
                 newName && newName !== defaultValue && (
                     <ConfirmEditButton
-                        onSuccessButtonPress={onSuccessButtonPress}
+                        onPress={onSuccessButtonPress}
                     />
                 )
             }

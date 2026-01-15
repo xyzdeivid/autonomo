@@ -137,11 +137,11 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 }
                 {
                     checkAllInputs() && (
-                        <SaveButton color='#660000' submitItem={addExpense} />
+                        <SaveButton color='#660000' onPress={addExpense} />
                     )
                 }
             </FormContainer>
-            <CloseFormButton onCloseFormButtonPress={() => setAddExpenseForm(false)} />
+            <CloseFormButton onPress={() => setAddExpenseForm(false)} />
         </>
     )
 

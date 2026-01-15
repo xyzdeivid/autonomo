@@ -23,7 +23,7 @@ export default function ActualValue({ item, showEditInput, setShowEditInput, val
                         label='Valor'
                         propertyName={moneyFormat(item.value)}
                         isEditable={isEditable}
-                        onEditablePropertyButtonPress={() => {
+                        onEditButtonPress={() => {
                             setShowEditInput(true)
                         }}
                     />

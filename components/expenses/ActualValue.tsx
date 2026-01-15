@@ -23,7 +23,7 @@ export default function ActualValue({ outflow, showEditInput, setShowEditInput, 
                         label='Valor'
                         propertyName={moneyFormat(outflow.value)}
                         isEditable={isEditable}
-                        onEditablePropertyButtonPress={() => {
+                        onEditButtonPress={() => {
                             setShowEditInput(true)
                         }}
                     />

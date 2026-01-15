@@ -38,7 +38,7 @@ export function EditValueField({ newValue, setNewValue, onSuccessButtonPress, de
                 {
                     newValue && newValue !== defaultValue ? (
                         <ConfirmEditButton
-                            onSuccessButtonPress={onSuccessButtonPress}
+                            onPress={onSuccessButtonPress}
                         />
                     ) : null
                 }

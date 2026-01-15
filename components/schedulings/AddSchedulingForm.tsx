@@ -177,11 +177,11 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                 }
                 {
                     checkAllInputs() && (
-                        <SaveButton color='#006600' submitItem={addScheduling} />
+                        <SaveButton color='#006600' onPress={addScheduling} />
                     )
                 }
             </FormContainer>
-            <CloseFormButton onCloseFormButtonPress={() => setAddSchedulingForm(false)} />
+            <CloseFormButton onPress={() => setAddSchedulingForm(false)} />
         </>
     )
 

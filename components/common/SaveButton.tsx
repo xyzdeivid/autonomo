@@ -2,15 +2,15 @@ import { Pressable, StyleSheet, Text } from 'react-native'
 
 interface SaveButtonProps {
     color: string
-    submitItem: () => Promise<void>
+    onPress: () => Promise<void>
 }
 
-export default function SaveButton({ color, submitItem }: SaveButtonProps) {
+export default function SaveButton({ color, onPress }: SaveButtonProps) {
 
     return (
         <Pressable
             style={{ ...styles.button, backgroundColor: color }}
-            onPress={submitItem}
+            onPress={onPress}
         >
             <Text style={styles.buttonText}>Salvar</Text>
         </Pressable>

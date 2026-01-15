@@ -22,7 +22,7 @@ export default function ActualName({ outflow, name, setName, editName, showEditI
                         label='Nome'
                         propertyName={outflow.name}
                         isEditable={isEditable}
-                        onEditablePropertyButtonPress={() => {
+                        onEditButtonPress={() => {
                             setShowEditInput(true)
                         }}
                     />

@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, BackHandler, Pressable, Alert } from 'react-nat
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { Item, Outflow } from '@/types'
-import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useEffect, useState } from 'react'
 import ActualValue from './ActualValue'
 import ActualStock from './ActualStock'
@@ -16,6 +15,8 @@ import { getAboutItemCardTitle } from '@/functions/getAboutItemCardTitle'
 import ReplenishResaleStock from './ReplenishResaleStock'
 import { createNewOutflow } from '@/functions/createNewOutflow'
 import useAddOutflow from '@/hooks/useAddOutflow'
+import { DeleteButton } from '../common/DeleteButton'
+import { CloseFormButton } from '../common/CloseFormButton'
 
 interface AboutItemCardProps {
     item: Item
@@ -221,23 +222,18 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                     )
                 }
             </FormContainer>
+            <DeleteButton onPress={() => setConfirmDelete(true)} />
+            <CloseFormButton onPress={() => setFormOff(false)} />
             {
-                !confirmDelete
-                    ? <SubmitFormButtons
-                        cancel={() => {
-                            setFormOff(false)
-                        }}
-                        submit={() => setConfirmDelete(true)}
-                        submitButtonText='Excluir'
-                        submitButtonColor='darkred'
-                    />
-                    : <ConfirmDelete
+                confirmDelete && (
+                    <ConfirmDelete
                         name={item._id}
                         deleteFunction={() => {
                             deleteFunction(item._id)
                         }}
                         setConfirmDelete={setConfirmDelete}
                     />
+                )
             }
         </>
     )
@@ -245,31 +241,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        marginBottom: 12
-    },
-    infoContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    label: {
-        fontWeight: 'bold',
-        fontSize: 16
-    },
-    editButton: {
-        backgroundColor: '#E0E0E0',
-        borderColor: 'darkgray',
-        borderWidth: 1,
-        padding: 4,
-        borderRadius: 4,
-        marginStart: 8
-    },
-    currentValueText: {
-        color: 'rgba(0, 0, 0, 0.5)',
-        fontSize: 12,
-        marginTop: 2
-    },
+
     resaleWarningCard: {
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
         borderWidth: 0.5,
@@ -278,6 +250,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginTop: 12
     },
+
     resaleButton: {
         padding: 8,
         borderRadius: 4,
@@ -287,4 +260,5 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 8
     }
+
 })

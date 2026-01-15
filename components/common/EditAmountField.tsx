@@ -41,7 +41,7 @@ export function EditAmountField({ setAmount, onSuccessButtonPress, defaultValue,
             {
                 textValue && textValue !== String(defaultValue) && (
                     <ConfirmEditButton
-                        onSuccessButtonPress={onSuccessButtonPress}
+                        onPress={onSuccessButtonPress}
                     />
                 )
             }

@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { Outflow } from '@/types'
-import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
 import { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
@@ -12,6 +11,8 @@ import ActualValue from './ActualValue'
 import useEditOutflowName from '@/hooks/useEditOutflowName'
 import useEditOutflowValue from '@/hooks/useEditOutflowValue'
 import { EditableProperty } from '../common/EditableProperty'
+import { DeleteButton } from '../common/DeleteButton'
+import { CloseFormButton } from '../common/CloseFormButton'
 
 
 interface AboutOutflowCardProps {
@@ -127,7 +128,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                     }
                     {
                         outflow.amount && (
-                            <EditableProperty 
+                            <EditableProperty
                                 label='Quantidade'
                                 propertyName={String(outflow.amount)}
                                 isEditable={isEditable()}
@@ -136,23 +137,17 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                     }
                 </View>
             </FormContainer>
+            <DeleteButton onPress={() => setConfirmDelete(true)} />
+            <CloseFormButton onPress={() => setFormOff(false)} />
             {
-                !confirmDelete
-                    ? <SubmitFormButtons
-                        cancel={() => {
-                            setFormOff(false)
-                        }}
-                        submit={() => setConfirmDelete(true)}
-                        submitButtonText='Excluir'
-                        submitButtonColor='darkred'
-                    />
-                    : <ConfirmDelete
-                        name={outflow.name}
-                        deleteFunction={() => {
-                            deleteFunction(outflow)
-                        }}
-                        setConfirmDelete={setConfirmDelete}
-                    />
+                confirmDelete &&
+                <ConfirmDelete
+                    name={outflow.name}
+                    deleteFunction={() => {
+                        deleteFunction(outflow)
+                    }}
+                    setConfirmDelete={setConfirmDelete}
+                />
             }
         </>
     )
