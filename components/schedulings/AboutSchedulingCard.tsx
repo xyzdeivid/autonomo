@@ -77,7 +77,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
             {loadingPage && <LoadingScreen />}
             <FormContainer
             >
-                <FormTitle text='Informações de Receita' textColor='#006600' />
+                <FormTitle
+                    text='Informações de Receita'
+                    onCloseFormButtonPress={() => setFormOff(false)}
+                    textColor='#006600'
+                />
                 <View>
                     {
                         scheduling.customer

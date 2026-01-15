@@ -16,7 +16,6 @@ import ReplenishResaleStock from './ReplenishResaleStock'
 import { createNewOutflow } from '@/functions/createNewOutflow'
 import useAddOutflow from '@/hooks/useAddOutflow'
 import { DeleteButton } from '../common/DeleteButton'
-import { CloseFormButton } from '../common/CloseFormButton'
 
 interface AboutItemCardProps {
     item: Item
@@ -152,6 +151,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
             >
                 <FormTitle
                     text={`Informações do ${getAboutItemCardTitle(item.category)}`}
+                    onCloseFormButtonPress={() => setFormOff(false)}
                     textColor='#330066'
                 />
                 <View>
@@ -223,7 +223,6 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                 }
             </FormContainer>
             <DeleteButton onPress={() => setConfirmDelete(true)} />
-            <CloseFormButton onPress={() => setFormOff(false)} />
             {
                 confirmDelete && (
                     <ConfirmDelete

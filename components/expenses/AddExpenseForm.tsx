@@ -15,7 +15,6 @@ import useAddOutflow from '@/hooks/useAddOutflow'
 import { Outflow } from '@/types'
 import { createNewOutflow } from '@/functions/createNewOutflow'
 import SaveButton from '../common/SaveButton'
-import { CloseFormButton } from '../common/CloseFormButton'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -88,7 +87,11 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
             {loadingScreen && <LoadingScreen />}
             <FormContainer
             >
-                <FormTitle text='Nova Despesa' textColor='#660000' />
+                <FormTitle
+                    text='Nova Despesa'
+                    onCloseFormButtonPress={() => setAddExpenseForm(false)}
+                    textColor='#660000'
+                />
                 {products[0] && (
                     <IntegrateStockButton
                         setStockIntegrate={setStockIntegrate}
@@ -141,7 +144,6 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     )
                 }
             </FormContainer>
-            <CloseFormButton onPress={() => setAddExpenseForm(false)} />
         </>
     )
 

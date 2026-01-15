@@ -12,7 +12,6 @@ import useEditOutflowName from '@/hooks/useEditOutflowName'
 import useEditOutflowValue from '@/hooks/useEditOutflowValue'
 import { EditableProperty } from '../common/EditableProperty'
 import { DeleteButton } from '../common/DeleteButton'
-import { CloseFormButton } from '../common/CloseFormButton'
 
 
 interface AboutOutflowCardProps {
@@ -87,7 +86,11 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
             {loadingScreen && <LoadingScreen />}
             <FormContainer
             >
-                <FormTitle text='Informações de Despesa' textColor='#660000' />
+                <FormTitle 
+                text='Informações de Despesa'
+                onCloseFormButtonPress={() => setFormOff(false)} 
+                textColor='#660000' 
+                />
                 <View>
                     {
                         outflow.amount && (
@@ -138,7 +141,6 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                 </View>
             </FormContainer>
             <DeleteButton onPress={() => setConfirmDelete(true)} />
-            <CloseFormButton onPress={() => setFormOff(false)} />
             {
                 confirmDelete &&
                 <ConfirmDelete

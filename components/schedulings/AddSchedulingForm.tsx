@@ -15,7 +15,6 @@ import NumberInput from '../common/NumberInput'
 import LoadingScreen from '../common/LoadingScreen'
 import NameInput from '../common/NameInput'
 import useAddEntry from '@/hooks/useAddEntry'
-import { CloseFormButton } from '../common/CloseFormButton'
 import SaveButton from '../common/SaveButton'
 
 interface AddSchedulingFormProps {
@@ -132,7 +131,11 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
             {loadingScreen && <LoadingScreen />}
             <FormContainer
             >
-                <FormTitle text='Nova Receita' textColor='#006600' />
+                <FormTitle
+                    text='Nova Receita'
+                    onCloseFormButtonPress={() => setAddSchedulingForm(false)}
+                    textColor='#006600'
+                />
                 <SelectServiceInput
                     service={service}
                     setService={setService}
@@ -181,7 +184,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                     )
                 }
             </FormContainer>
-            <CloseFormButton onPress={() => setAddSchedulingForm(false)} />
         </>
     )
 

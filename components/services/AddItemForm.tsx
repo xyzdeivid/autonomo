@@ -13,7 +13,6 @@ import ResaleCreationForm from './ResaleCreationForm'
 import ResaleOrStockButtons from './ResaleOrStockButtons'
 import StockCreationForm from './StockCreationForm'
 import NoStockCreationForm from './NoStockCreationForm'
-import { CloseFormButton } from '../common/CloseFormButton'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -75,6 +74,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                         <>
                             <FormTitle
                                 text='Novo Produto ou Serviço'
+                                onCloseFormButtonPress={() => setAddServiceForm(false)}
                                 textColor='#330066'
                             />
                             <ItemsCategoriesForm
@@ -164,7 +164,6 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                     )
                 }
             </FormContainer>
-            <CloseFormButton onPress={() => setAddServiceForm(false)} />
         </>
     )
 

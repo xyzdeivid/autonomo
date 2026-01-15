@@ -1,37 +1,20 @@
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { FontAwesome6 } from '@expo/vector-icons'
+import { TouchableOpacity } from 'react-native'
 
 interface CloseFormButtonProps {
     onPress: () => void
+    color?: string
 }
 
-export function CloseFormButton({ onPress }: CloseFormButtonProps) {
+export function CloseFormButton({ onPress, color }: CloseFormButtonProps) {
 
     return (
-        <Pressable
-            style={styles.button}
+        <TouchableOpacity
             onPress={onPress}
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-            <Text style={styles.buttonText}>FECHAR</Text>
-        </Pressable>
+            <FontAwesome6 name='xmark' size={24} color={color || 'rgba(0, 0, 0, 0.5)'} />
+        </TouchableOpacity>
     )
 
 }
-
-const styles = StyleSheet.create({
-
-    button: {
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8,
-        marginBottom: 8,
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        position: 'absolute',
-        bottom: 0,
-        left: 0
-    },
-
-    buttonText: {
-        color: '#00000090'
-    }
-
-})
