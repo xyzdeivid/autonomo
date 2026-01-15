@@ -10,14 +10,14 @@ import { orderExpenses } from '@/functions/expenses'
 
 interface ExpensesListProps {
     filteredExpenses: Outflow[]
-    setExpenseForDeletion: React.Dispatch<React.SetStateAction<Outflow>>
+    setExpenseForDeletion: React.Dispatch<React.SetStateAction<string>>
     setDeleteExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, setDeleteExpenseForm }: ExpensesListProps) {
 
     const deleteExpense = (expense: Outflow) => {
-        setExpenseForDeletion(expense)
+        setExpenseForDeletion(expense._id)
         setDeleteExpenseForm(true)
     }
 

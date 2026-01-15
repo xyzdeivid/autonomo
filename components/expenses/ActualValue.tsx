@@ -1,55 +1,49 @@
-import { DocsContext } from '@/context/DocsContext'
 import { moneyFormat } from '@/functions/common'
-import { useContext } from 'react'
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { Outflow } from '@/types'
+import { EditableProperty } from '../common/EditableProperty'
+import { EditValueInput } from '../common/EditValueInput'
 
 interface ActualValueProps {
-    name: string
+    outflow: Outflow
+    showEditInput: boolean
+    setShowEditInput: React.Dispatch<React.SetStateAction<boolean>>
     value: number
-    setShowEditValueInput: React.Dispatch<React.SetStateAction<boolean>>
+    setValue: React.Dispatch<React.SetStateAction<number>>
+    editValue: () => Promise<void>
+    isEditable: boolean
 }
 
-export default function ActualValue({ name, value, setShowEditValueInput }: ActualValueProps) {
-
-    const [items] = useContext(DocsContext).items
-
-    const checkIfIsResale = () => {
-        const product = items.find(current => current._id === name)
-        return product
-            ? false : true
-    }
+export default function ActualValue({ outflow, showEditInput, setShowEditInput, value, setValue, editValue, isEditable }: ActualValueProps) {
 
     return (
-        <View style={styles.container}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Valor:</Text>
-            <Text style={{ fontSize: 16 }}>{moneyFormat(value)}</Text>
+        <>
             {
-                checkIfIsResale() &&
-                <Pressable
-                    style={styles.editButton}
-                    onPress={() => setShowEditValueInput(true)}
-                >
-                    <Text style={{ fontSize: 16 }}>Editar</Text>
-                </Pressable>
+                !showEditInput && (
+                    <EditableProperty
+                        label='Valor'
+                        propertyName={moneyFormat(outflow.value)}
+                        isEditable={isEditable}
+                        onEditablePropertyButtonPress={() => {
+                            setShowEditInput(true)
+                        }}
+                    />
+                )
             }
-        </View>
+            {
+                showEditInput && (
+                    <EditValueInput
+                        newValue={value}
+                        setNewValue={setValue}
+                        onSuccessButtonPress={editValue}
+                        defaultValue={outflow.value}
+                        onCancelButtonPress={() => {
+                            setValue(0)
+                            setShowEditInput(false)
+                        }}
+                    />
+                )
+            }
+        </>
     )
 
 }
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 12
-    },
-    editButton: {
-        backgroundColor: '#E0E0E0',
-        borderColor: 'darkgray',
-        borderWidth: 1,
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8
-    }
-})

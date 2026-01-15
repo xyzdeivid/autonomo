@@ -28,7 +28,8 @@ export default function Expenses() {
     const [expenses] = appDocs.outflows
     const [selectedMonth] = appDocs.selectedMonth
     const [addExpenseForm, setAddExpenseForm] = useState(false)
-    const [expenseForDeletion, setExpenseForDeletion] = useState({} as Outflow)
+    const [selectedExpenseId, setSelectedExpenseId] = useState<string>('')
+    const expenseForDeletion = expenses.find(e => e._id === selectedExpenseId)
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
@@ -73,7 +74,7 @@ export default function Expenses() {
                     filterExpenses(expenses, selectedMonth, currentYear)[0]
                         ? <ExpensesList
                             filteredExpenses={filterExpenses(expenses, selectedMonth, currentYear)}
-                            setExpenseForDeletion={setExpenseForDeletion}
+                            setExpenseForDeletion={setSelectedExpenseId}
                             setDeleteExpenseForm={setDeleteExpenseForm}
                         />
                         : <AnyInfoWarning
@@ -94,9 +95,10 @@ export default function Expenses() {
                     />
                 }
                 {
-                    deleteExpenseForm && (
+                    // Se temos um ID e o formulário está ativo, mostramos o card
+                    (deleteExpenseForm && expenseForDeletion) && (
                         <AboutOutflowCard
-                            outflow={expenseForDeletion}
+                            outflow={expenseForDeletion} // Agora este objeto vem atualizado da lista do contexto!
                             deleteFunction={deleteExpense}
                             setFormOff={setDeleteExpenseForm}
                         />

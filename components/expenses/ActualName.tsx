@@ -1,59 +1,49 @@
-import { DocsContext } from '@/context/DocsContext'
-import { useContext } from 'react'
-import { View, Text, Pressable, StyleSheet } from 'react-native'
+import { Outflow } from '@/types'
+import { EditableProperty } from '../common/EditableProperty'
+import { EditNameInput } from '../common/EditNameInput'
 
 interface ActualNameProps {
+    outflow: Outflow
     name: string
-    setShowEditNameInput: React.Dispatch<React.SetStateAction<boolean>>
+    setName: React.Dispatch<React.SetStateAction<string>>
+    editName: () => Promise<void>
+    showEditInput: boolean
+    setShowEditInput: React.Dispatch<React.SetStateAction<boolean>>
+    isEditable: boolean
 }
 
-export default function ActualName({ name, setShowEditNameInput }: ActualNameProps) {
-
-    const [items] = useContext(DocsContext).items
-
-    const checkIfIsResale = () => {
-        const product = items.find(current => current._id === name)
-        return product
-        ? false : true
-    }
+export default function ActualName({ outflow, name, setName, editName, showEditInput, setShowEditInput, isEditable }: ActualNameProps) {
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Nome: </Text>
-            <Text style={{ fontSize: 16 }}>{name}</Text>
+        <>
             {
-                checkIfIsResale() ?
-                <Pressable
-                    style={styles.editButton}
-                    onPress={() => setShowEditNameInput(true)}
-                >
-                    <Text style={{ fontSize: 16 }}>Editar</Text>
-                </Pressable>
-                : null
+                !showEditInput && (
+                    <EditableProperty
+                        label='Nome'
+                        propertyName={outflow.name}
+                        isEditable={isEditable}
+                        onEditablePropertyButtonPress={() => {
+                            setShowEditInput(true)
+                        }}
+                    />
+                )
+            }
+            {
+                showEditInput && (
+                    <EditNameInput
+                        defaultValue={outflow.name}
+                        newName={name}
+                        setNewName={setName}
+                        onSuccessButtonPress={editName}
+                        onCancelButtonPress={() => {
+                            setShowEditInput(false)
+                            setName('')
+                        }}
+                    />
+                )
             }
 
-        </View>
+        </>
     )
 
 }
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 12
-    },
-    label: {
-        fontWeight: 'bold',
-        fontSize: 16
-    },
-    editButton: {
-        backgroundColor: '#E0E0E0',
-        borderColor: 'darkgray',
-        borderWidth: 1,
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8
-    }
-})

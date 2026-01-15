@@ -3,12 +3,14 @@ import { Pressable, StyleSheet, View, Text } from 'react-native'
 import { MaskedTextInput } from 'react-native-mask-text'
 
 interface EditValueInputProps {
-    setValue: React.Dispatch<React.SetStateAction<number>>
-    editValue: () => void
-    actualValue: number
+    newValue: number
+    setNewValue: React.Dispatch<React.SetStateAction<number>>
+    onSuccessButtonPress: () => Promise<void>
+    onCancelButtonPress: () => void
+    defaultValue: number
 }
 
-export default function EditValueInput({ setValue, editValue, actualValue }: EditValueInputProps) {
+export function EditValueInput({ newValue, setNewValue, onSuccessButtonPress, defaultValue, onCancelButtonPress }: EditValueInputProps) {
 
     return (
         <View>
@@ -28,18 +30,32 @@ export default function EditValueInput({ setValue, editValue, actualValue }: Edi
                         let value = text.replace(',', '.')
                             .replace(/\.(?=.*\.)/g, '')
 
-                        setValue(Number(value))
+                        setNewValue(Number(value))
                     }}
                 />
-                <Pressable
-                    style={styles.editButton}
-                    onPress={() => editValue()}
-                >
-                    <Text style={{ color: 'white' }}>Ok</Text>
-                </Pressable>
+                {
+                    newValue && newValue !== defaultValue ? (
+                        <Pressable
+                            style={styles.button}
+                            onPress={onSuccessButtonPress}
+                        >
+                            <Text style={{ color: 'white' }}>Salvar</Text>
+                        </Pressable>
+                    ): null
+                }
+                {
+                    (!newValue || newValue === defaultValue) ? (
+                        <Pressable
+                            style={styles.cancelButton}
+                            onPress={onCancelButtonPress}
+                        >
+                            <Text style={{ color: 'white' }}>Cancelar</Text>
+                        </Pressable>
+                    ): null
+                }
             </View>
             <Text style={styles.currentValueText}>
-                Valor atual: {moneyFormat(actualValue)}
+                Valor atual: {moneyFormat(defaultValue)}
             </Text>
         </View>
     )
@@ -62,11 +78,9 @@ const styles = StyleSheet.create({
         borderRadius: 3
 
     },
-    editButton: {
-        backgroundColor: 'blue',
-        borderColor: 'darkblue',
-        borderWidth: 1,
-        padding: 4,
+    button: {
+        backgroundColor: '#716fc4',
+        padding: 8,
         borderRadius: 4,
         marginStart: 8
     },
@@ -75,5 +89,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginTop: 2,
         marginBottom: 12
+    },
+    cancelButton: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        padding: 8,
+        borderRadius: 4,
+        marginStart: 8
     }
 })

@@ -4,16 +4,14 @@ import FormTitle from '../common/FormTitle'
 import { Outflow } from '@/types'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { dateFormat, moneyFormat } from '@/functions/common'
-import { useContext, useEffect, useState } from 'react'
-import { MainDisplaysContext } from '@/context/MainDisplays'
+import { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
 import ActualName from './ActualName'
-import EditNameInput from './EditNameInput'
 import LoadingScreen from '../common/LoadingScreen'
 import ActualValue from './ActualValue'
-import EditValueInput from './EditValueInput'
 import useEditOutflowName from '@/hooks/useEditOutflowName'
 import useEditOutflowValue from '@/hooks/useEditOutflowValue'
+import { EditableProperty } from '../common/EditableProperty'
 
 
 interface AboutOutflowCardProps {
@@ -24,13 +22,12 @@ interface AboutOutflowCardProps {
 
 export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }: AboutOutflowCardProps) {
 
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [confirmDelete, setConfirmDelete] = useState(false)
-    const [showEditNameInput, setShowEditNameInput] = useState(false)
     const [showEditValueInput, setShowEditValueInput] = useState(false)
     const [newName, setNewName] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [newValue, setNewValue] = useState(0)
+    const [showEditNameInput, setShowEditNameInput] = useState(false)
 
     const editOutflowName = useEditOutflowName().editOutflowName
     const editOutflowValue = useEditOutflowValue().editOutflowValue
@@ -42,6 +39,13 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
         })
     }, [setFormOff])
 
+    const isEditable = () => {
+
+        if (outflow.amount) return false
+        return true
+
+    }
+
     const submitNameToEdit = async () => {
 
         if (newName) {
@@ -51,12 +55,8 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
             await editOutflowName(outflow, newName)
 
             setLoadingScreen(false)
-            setHideTabBar(false)
-            setFormOff(false)
-
-        } else {
-
             setShowEditNameInput(false)
+            setNewName('')
 
         }
 
@@ -71,8 +71,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
             await editOutflowValue(outflow, newValue)
 
             setLoadingScreen(false)
-            setHideTabBar(false)
-            setFormOff(false)
+            setShowEditValueInput(false)
 
         } else {
 
@@ -94,35 +93,45 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                             <Text style={styles.replenishLabel}>Reposição de Estoque</Text>
                         )
                     }
-                    {
-                        showEditNameInput
-                            ? <EditNameInput actualName={outflow.name} setName={setNewName} editName={submitNameToEdit} />
-                            : <ActualName name={outflow.name} setShowEditNameInput={setShowEditNameInput} />
-                    }
-                    <Text style={styles.labelContainer}>
-                        <Text style={styles.label}>Data:</Text> {dateFormat(outflow.date)}
-                    </Text>
-                    {
-                        showEditValueInput
-                            ? <EditValueInput
-                                setValue={setNewValue}
-                                editValue={submitValueToEdit}
-                                actualValue={outflow.value}
-                            />
-                            : <ActualValue
-                                name={outflow.name}
-                                value={outflow.value}
-                                setShowEditValueInput={setShowEditValueInput}
-                            />
-                    }
+                    <ActualName
+                        outflow={outflow}
+                        name={newName}
+                        setName={setNewName}
+                        editName={submitNameToEdit}
+                        showEditInput={showEditNameInput}
+                        setShowEditInput={setShowEditNameInput}
+                        isEditable={isEditable()}
+                    />
+                    <EditableProperty
+                        label='Data'
+                        propertyName={dateFormat(outflow.date)}
+                        isEditable={false}
+                    />
+                    <ActualValue
+                        outflow={outflow}
+                        showEditInput={showEditValueInput}
+                        setShowEditInput={setShowEditValueInput}
+                        value={newValue}
+                        setValue={setNewValue}
+                        editValue={submitValueToEdit}
+                        isEditable={isEditable()}
+                    />
                     {
                         outflow.amount && (
-                            <Text style={styles.labelContainer}><Text style={styles.label}>Valor (un):</Text>{moneyFormat(outflow.value / outflow.amount)}</Text>
+                            <EditableProperty
+                                label='Valor (un)'
+                                propertyName={moneyFormat(outflow.value / outflow.amount)}
+                                isEditable={isEditable()}
+                            />
                         )
                     }
                     {
                         outflow.amount && (
-                            <Text style={styles.labelContainer}><Text style={styles.label}>Quantidade:</Text> {outflow.amount}</Text>
+                            <EditableProperty 
+                                label='Quantidade'
+                                propertyName={String(outflow.amount)}
+                                isEditable={isEditable()}
+                            />
                         )
                     }
                 </View>
@@ -156,7 +165,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#660000',
         fontWeight: 'bold',
-        marginBottom: 12
+        marginBottom: 24
     },
 
     labelContainer: {

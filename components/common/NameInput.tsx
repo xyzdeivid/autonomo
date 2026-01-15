@@ -5,9 +5,10 @@ interface NameInputProps {
     label?: string
     bgColor?: string
     textColor?: string
+    defaultValue?: string
 }
 
-export default function NameInput({ setName, label, bgColor, textColor }: NameInputProps) {
+export default function NameInput({ setName, label, bgColor, textColor, defaultValue }: NameInputProps) {
     return (
         <View style={styles.inputContainer}>
             <Text style={{
@@ -19,6 +20,7 @@ export default function NameInput({ setName, label, bgColor, textColor }: NameIn
                 {label ? label : 'Nome'}
             </Text>
             <TextInput
+                defaultValue={defaultValue}
                 style={{
                     ...styles.input,
                     backgroundColor: bgColor ? bgColor : '#E0E0E0'
