@@ -1,6 +1,8 @@
 import { moneyFormat } from '@/functions/common'
-import { Pressable, StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import { MaskedTextInput } from 'react-native-mask-text'
+import { ConfirmEditButton } from './ConfirmEditButton'
+import { CancelEditButton } from './CancelEditButton'
 
 interface EditValueInputProps {
     newValue: number
@@ -10,7 +12,7 @@ interface EditValueInputProps {
     defaultValue: number
 }
 
-export function EditValueInput({ newValue, setNewValue, onSuccessButtonPress, defaultValue, onCancelButtonPress }: EditValueInputProps) {
+export function EditValueField({ newValue, setNewValue, onSuccessButtonPress, defaultValue, onCancelButtonPress }: EditValueInputProps) {
 
     return (
         <View>
@@ -35,23 +37,17 @@ export function EditValueInput({ newValue, setNewValue, onSuccessButtonPress, de
                 />
                 {
                     newValue && newValue !== defaultValue ? (
-                        <Pressable
-                            style={styles.button}
-                            onPress={onSuccessButtonPress}
-                        >
-                            <Text style={{ color: 'white' }}>Salvar</Text>
-                        </Pressable>
-                    ): null
+                        <ConfirmEditButton
+                            onSuccessButtonPress={onSuccessButtonPress}
+                        />
+                    ) : null
                 }
                 {
                     (!newValue || newValue === defaultValue) ? (
-                        <Pressable
-                            style={styles.cancelButton}
-                            onPress={onCancelButtonPress}
-                        >
-                            <Text style={{ color: 'white' }}>Cancelar</Text>
-                        </Pressable>
-                    ): null
+                        <CancelEditButton
+                            onCancelButtonPress={onCancelButtonPress}
+                        />
+                    ) : null
                 }
             </View>
             <Text style={styles.currentValueText}>
@@ -68,6 +64,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
+
     editInput: {
         width: '25%',
         backgroundColor: '#E0E0E0',
@@ -78,22 +75,12 @@ const styles = StyleSheet.create({
         borderRadius: 3
 
     },
-    button: {
-        backgroundColor: '#716fc4',
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8
-    },
+
     currentValueText: {
         color: 'rgba(0, 0, 0, 0.5)',
         fontSize: 12,
         marginTop: 2,
         marginBottom: 12
-    },
-    cancelButton: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8
     }
+
 })

@@ -1,4 +1,6 @@
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native'
+import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { ConfirmEditButton } from './ConfirmEditButton'
+import { CancelEditButton } from './CancelEditButton'
 
 interface EditNameInputProps {
     defaultValue: string
@@ -8,7 +10,7 @@ interface EditNameInputProps {
     onCancelButtonPress: () => void
 }
 
-export function EditNameInput({ defaultValue, newName, setNewName, onSuccessButtonPress, onCancelButtonPress }: EditNameInputProps) {
+export function EditNameField({ defaultValue, newName, setNewName, onSuccessButtonPress, onCancelButtonPress }: EditNameInputProps) {
 
     return (
         <View style={styles.container}>
@@ -16,22 +18,16 @@ export function EditNameInput({ defaultValue, newName, setNewName, onSuccessButt
             <TextInput defaultValue={defaultValue} onChangeText={text => setNewName(text.trim())} style={styles.input} />
             {
                 newName && newName !== defaultValue && (
-                    <Pressable
-                        style={styles.button}
-                        onPress={onSuccessButtonPress}
-                    >
-                        <Text style={{ color: 'white' }}>Salvar</Text>
-                    </Pressable>
+                    <ConfirmEditButton
+                        onSuccessButtonPress={onSuccessButtonPress}
+                    />
                 )
             }
             {
                 (!newName || newName === defaultValue) && (
-                    <Pressable
-                        style={styles.cancelButton}
-                        onPress={onCancelButtonPress}
-                    >
-                        <Text style={{ color: 'white' }}>Cancelar</Text>
-                    </Pressable>
+                    <CancelEditButton
+                        onCancelButtonPress={onCancelButtonPress}
+                    />
                 )
             }
         </View>
@@ -53,13 +49,6 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
 
-    button: {
-        backgroundColor: '#716fc4',
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8
-    },
-
     input: {
         width: '50%',
         backgroundColor: '#E0E0E0',
@@ -69,13 +58,6 @@ const styles = StyleSheet.create({
         marginStart: 8,
         borderRadius: 3
 
-    },
-
-    cancelButton: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8
     }
 
 })

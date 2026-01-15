@@ -1,7 +1,7 @@
 import { moneyFormat } from '@/functions/common'
 import { Outflow } from '@/types'
 import { EditableProperty } from '../common/EditableProperty'
-import { EditValueInput } from '../common/EditValueInput'
+import { EditValueField } from '../common/EditValueField'
 
 interface ActualValueProps {
     outflow: Outflow
@@ -31,7 +31,7 @@ export default function ActualValue({ outflow, showEditInput, setShowEditInput, 
             }
             {
                 showEditInput && (
-                    <EditValueInput
+                    <EditValueField
                         newValue={value}
                         setNewValue={setValue}
                         onSuccessButtonPress={editValue}

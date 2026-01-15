@@ -1,6 +1,6 @@
 import { Outflow } from '@/types'
 import { EditableProperty } from '../common/EditableProperty'
-import { EditNameInput } from '../common/EditNameInput'
+import { EditNameField } from '../common/EditNameField'
 
 interface ActualNameProps {
     outflow: Outflow
@@ -30,7 +30,7 @@ export default function ActualName({ outflow, name, setName, editName, showEditI
             }
             {
                 showEditInput && (
-                    <EditNameInput
+                    <EditNameField
                         defaultValue={outflow.name}
                         newName={name}
                         setNewName={setName}
