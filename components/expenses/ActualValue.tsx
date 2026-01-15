@@ -13,7 +13,7 @@ interface ActualValueProps {
     isEditable: boolean
 }
 
-export default function ActualValue({ outflow, showEditInput, setShowEditInput, value, setValue, editValue, isEditable }: ActualValueProps) {
+export function ActualValue({ outflow, showEditInput, setShowEditInput, value, setValue, editValue, isEditable }: ActualValueProps) {
 
     return (
         <>

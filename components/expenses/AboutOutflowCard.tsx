@@ -2,16 +2,18 @@ import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { Outflow } from '@/types'
-import { dateFormat, moneyFormat } from '@/functions/common'
+import { moneyFormat } from '@/functions/common'
 import { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
-import ActualName from './ActualName'
+import { ActualName } from './ActualName'
 import LoadingScreen from '../common/LoadingScreen'
-import ActualValue from './ActualValue'
+import { ActualValue } from './ActualValue'
 import useEditOutflowName from '@/hooks/useEditOutflowName'
 import useEditOutflowValue from '@/hooks/useEditOutflowValue'
 import { EditableProperty } from '../common/EditableProperty'
 import { DeleteButton } from '../common/DeleteButton'
+import { EditDateField } from '../common/EditDateField'
+import useEditOutflowDate from '@/hooks/useEditOutflowDate'
 
 
 interface AboutOutflowCardProps {
@@ -31,6 +33,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
 
     const editOutflowName = useEditOutflowName().editOutflowName
     const editOutflowValue = useEditOutflowValue().editOutflowValue
+    const editOutflowDate = useEditOutflowDate().editOutflowDate
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
@@ -62,6 +65,16 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
 
     }
 
+    const submitDateToEdit = async (newDate: string) => {
+
+        setLoadingScreen(true)
+
+        await editOutflowDate(outflow, newDate)
+
+        setLoadingScreen(false)
+
+    }
+
     const submitValueToEdit = async () => {
 
         if (newValue) {
@@ -86,10 +99,10 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
             {loadingScreen && <LoadingScreen />}
             <FormContainer
             >
-                <FormTitle 
-                text='Informações de Despesa'
-                onCloseFormButtonPress={() => setFormOff(false)} 
-                textColor='#660000' 
+                <FormTitle
+                    text='Informações de Despesa'
+                    onCloseFormButtonPress={() => setFormOff(false)}
+                    textColor='#660000'
                 />
                 <View>
                     {
@@ -106,10 +119,9 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                         setShowEditInput={setShowEditNameInput}
                         isEditable={isEditable()}
                     />
-                    <EditableProperty
-                        label='Data'
-                        propertyName={dateFormat(outflow.date)}
-                        isEditable={false}
+                    <EditDateField
+                        defaultValue={outflow.date}
+                        editDate={submitDateToEdit}
                     />
                     <ActualValue
                         outflow={outflow}

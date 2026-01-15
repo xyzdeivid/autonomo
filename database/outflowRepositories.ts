@@ -51,6 +51,17 @@ export async function updateNewNamedOutflowToDb(newName: string, _id: string): P
 
 }
 
+export async function updateNewDatedOutflowToDb(newDate: string, _id: string): Promise<void> {
+
+    await db.runAsync(
+        `UPDATE outflows
+        SET date = ?
+        WHERE _id = ?`,
+        [newDate, _id]
+    )
+
+}
+
 export async function updateNewValuedOutflowToDb(newValue: number, _id: string): Promise<void> {
 
     await db.runAsync(

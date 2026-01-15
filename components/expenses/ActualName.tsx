@@ -12,7 +12,7 @@ interface ActualNameProps {
     isEditable: boolean
 }
 
-export default function ActualName({ outflow, name, setName, editName, showEditInput, setShowEditInput, isEditable }: ActualNameProps) {
+export function ActualName({ outflow, name, setName, editName, showEditInput, setShowEditInput, isEditable }: ActualNameProps) {
 
     return (
         <>
