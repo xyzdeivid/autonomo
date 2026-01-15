@@ -1,39 +1,49 @@
 import { moneyFormat } from '@/functions/common'
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { Item } from '@/types'
+import { EditableProperty } from '../common/EditableProperty'
+import { EditValueField } from '../common/EditValueField'
 
 interface ActualValueProps {
+    item: Item
+    showEditInput: boolean
+    setShowEditInput: React.Dispatch<React.SetStateAction<boolean>>
     value: number
-    setEditValueInput: React.Dispatch<React.SetStateAction<boolean>>
+    setValue: React.Dispatch<React.SetStateAction<number>>
+    editValue: () => Promise<void>
+    isEditable: boolean
 }
 
-export default function ActualValue({ value, setEditValueInput }: ActualValueProps) {
+export default function ActualValue({ item, showEditInput, setShowEditInput, value, setValue, editValue, isEditable }: ActualValueProps) {
 
     return (
-        <View style={styles.container}>
-            <Text style={{ fontSize: 16 }}>{moneyFormat(value)}</Text>
-            <Pressable
-                style={styles.editButton}
-                onPress={() => setEditValueInput(true)}
-            >
-                <Text style={{ fontSize: 16 }}>Editar</Text>
-            </Pressable>
-        </View>
+        <>
+            {
+                !showEditInput && (
+                    <EditableProperty
+                        label='Valor'
+                        propertyName={moneyFormat(item.value)}
+                        isEditable={isEditable}
+                        onEditablePropertyButtonPress={() => {
+                            setShowEditInput(true)
+                        }}
+                    />
+                )
+            }
+            {
+                showEditInput && (
+                    <EditValueField
+                        newValue={value}
+                        setNewValue={setValue}
+                        onSuccessButtonPress={editValue}
+                        defaultValue={item.value}
+                        onCancelButtonPress={() => {
+                            setValue(0)
+                            setShowEditInput(false)
+                        }}
+                    />
+                )
+            }
+        </>
     )
 
 }
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    editButton: {
-        backgroundColor: '#E0E0E0',
-        borderColor: 'darkgray',
-        borderWidth: 1,
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8
-    }
-})

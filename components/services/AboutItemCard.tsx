@@ -4,14 +4,12 @@ import FormTitle from '../common/FormTitle'
 import { Item, Outflow } from '@/types'
 import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useEffect, useState } from 'react'
-import EditValueInput from './EditValueInput'
 import ActualValue from './ActualValue'
 import ActualStock from './ActualStock'
 import EditStockInput from './EditStockInput'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
-import { moneyFormat } from '@/functions/common'
 import useEditItemName from '@/hooks/useEditItemName'
 import useEditItemValue from '@/hooks/useEditItemValue'
 import useEditStockItem from '@/hooks/useEditStockItem'
@@ -31,7 +29,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
     const [showEditNameInput, setShowEditNameInput] = useState(false)
     const [name, setName] = useState('')
 
-    const [editValueInput, setEditValueInput] = useState(false)
+    const [showEditValueInput, setShowEditValueInput] = useState(false)
     const [value, setValue] = useState(0)
 
     const [editStockInput, setEditStockInput] = useState(false)
@@ -97,7 +95,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
         } else {
 
-            setEditValueInput(false)
+            setShowEditValueInput(false)
 
         }
 
@@ -168,30 +166,15 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                         isEditable={true}
                     />
                     {item.category !== 'budget' && (
-                        <View style={styles.inputContainer}>
-                            <View style={styles.infoContainer}>
-                                <Text style={styles.label}>Valor:</Text>
-                                {
-                                    editValueInput
-                                        ? <>
-                                            <EditValueInput
-                                                setValue={setValue}
-                                                editValue={submitValueToEdit}
-                                            />
-                                        </>
-                                        : <ActualValue
-                                            value={value || item.value}
-                                            setEditValueInput={setEditValueInput}
-                                        />
-                                }
-                            </View>
-                            {
-                                editValueInput &&
-                                <Text style={styles.currentValueText}>
-                                    Valor atual: {moneyFormat(item.value)}
-                                </Text>
-                            }
-                        </View>
+                        <ActualValue
+                            item={item}
+                            showEditInput={showEditValueInput}
+                            value={value}
+                            setValue={setValue}
+                            setShowEditInput={setShowEditValueInput}
+                            editValue={submitValueToEdit}
+                            isEditable={true}
+                        />
                     )}
                     {
                         item.isThereAmount && (
