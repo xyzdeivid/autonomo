@@ -11,7 +11,6 @@ import EditStockInput from './EditStockInput'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
-import EditNameInput from './EditNameInput'
 import { moneyFormat } from '@/functions/common'
 import useEditItemName from '@/hooks/useEditItemName'
 import useEditItemValue from '@/hooks/useEditItemValue'
@@ -22,14 +21,14 @@ import { createNewOutflow } from '@/functions/createNewOutflow'
 import useAddOutflow from '@/hooks/useAddOutflow'
 
 interface AboutItemCardProps {
-    service: Item
+    item: Item
     deleteFunction: (id: string) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AboutItemCard({ service, deleteFunction, setFormOff }: AboutItemCardProps) {
+export default function AboutItemCard({ item, deleteFunction, setFormOff }: AboutItemCardProps) {
 
-    const [editNameInput, setEditNameInput] = useState(false)
+    const [showEditNameInput, setShowEditNameInput] = useState(false)
     const [name, setName] = useState('')
 
     const [editValueInput, setEditValueInput] = useState(false)
@@ -72,13 +71,14 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
 
             setLoadingScreen(true)
 
-            await editItemName(name, service)
+            await editItemName(name, item)
 
-            closeForm()
+            setFormOff(false)
+            setLoadingScreen(false)
 
         } else {
 
-            setEditNameInput(false)
+            setShowEditNameInput(false)
 
         }
 
@@ -87,11 +87,11 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
     const submitValueToEdit = async () => {
 
         // Apenas salvando se existir novo valor e ele for diferente do atual
-        if (value && value !== service.value) {
+        if (value && value !== item.value) {
 
             setLoadingScreen(true)
 
-            await editItemValue(value, service)
+            await editItemValue(value, item)
 
             closeForm()
 
@@ -105,11 +105,11 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
 
     const submitStockToEdit = async () => {
 
-        if (changedValue && stock !== service.amount) {
+        if (changedValue && stock !== item.amount) {
 
             setLoadingScreen(true)
 
-            await editItemStock(stock, service)
+            await editItemStock(stock, item)
 
             closeForm()
 
@@ -135,13 +135,13 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
 
         const newReplenishOuflow: Outflow = createNewOutflow(
             replenishValueChoice, replenishValue,
-            replenishAmount, service._id,
+            replenishAmount, item._id,
             replenishDate
         )
 
-        const newResaleAmount: number = (service.amount ?? 0) + replenishAmount
+        const newResaleAmount: number = (item.amount ?? 0) + replenishAmount
 
-        await addOutflow(newReplenishOuflow, newResaleAmount, service)
+        await addOutflow(newReplenishOuflow, newResaleAmount, item)
 
         // Fechando card de reposição de estoque
         closeForm()
@@ -154,16 +154,20 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
             <FormContainer
             >
                 <FormTitle
-                    text={`Informações do ${getAboutItemCardTitle(service.category)}`}
+                    text={`Informações do ${getAboutItemCardTitle(item.category)}`}
                     textColor='#330066'
                 />
                 <View>
-                    {
-                        editNameInput
-                            ? <EditNameInput setName={setName} editName={submitNameToEdit} actualName={service._id} />
-                            : <ActualName name={name || service._id} setEditNameInput={setEditNameInput} />
-                    }
-                    {service.category !== 'budget' && (
+                    <ActualName
+                        item={item}
+                        name={name}
+                        setName={setName}
+                        editName={submitNameToEdit}
+                        showEditInput={showEditNameInput}
+                        setShowEditInput={setShowEditNameInput}
+                        isEditable={true}
+                    />
+                    {item.category !== 'budget' && (
                         <View style={styles.inputContainer}>
                             <View style={styles.infoContainer}>
                                 <Text style={styles.label}>Valor:</Text>
@@ -176,7 +180,7 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
                                             />
                                         </>
                                         : <ActualValue
-                                            value={value || service.value}
+                                            value={value || item.value}
                                             setEditValueInput={setEditValueInput}
                                         />
                                 }
@@ -184,13 +188,13 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
                             {
                                 editValueInput &&
                                 <Text style={styles.currentValueText}>
-                                    Valor atual: {moneyFormat(service.value)}
+                                    Valor atual: {moneyFormat(item.value)}
                                 </Text>
                             }
                         </View>
                     )}
                     {
-                        service.isThereAmount && (
+                        item.isThereAmount && (
                             <View style={styles.inputContainer}>
                                 <View style={styles.infoContainer}>
                                     {
@@ -199,16 +203,16 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
                                                 setStock={setStock}
                                                 editStock={submitStockToEdit}
                                                 setChangedValue={setChangedValue}
-                                                currentStock={service.amount}
+                                                currentStock={item.amount}
                                             />
-                                            : <ActualStock stock={stock || service.amount || 0} setEditStockInput={setEditStockInput} />
+                                            : <ActualStock stock={stock || item.amount || 0} setEditStockInput={setEditStockInput} />
                                     }
                                 </View>
                             </View>
                         )
                     }
                     {
-                        service.resale && (
+                        item.resale && (
                             <View style={{ marginTop: 12 }}>
                                 <View
                                     style={styles.resaleWarningCard}
@@ -230,7 +234,7 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
                 {
                     replenishForm && (
                         <ReplenishResaleStock
-                            resaleProductName={service._id}
+                            resaleProductName={item._id}
                             setReplenishDate={setReplenishDate}
                             setReplenishValue={setReplenishValue}
                             setReplenishAmount={setReplenishAmount}
@@ -253,9 +257,9 @@ export default function AboutItemCard({ service, deleteFunction, setFormOff }: A
                         submitButtonColor='darkred'
                     />
                     : <ConfirmDelete
-                        name={service._id}
+                        name={item._id}
                         deleteFunction={() => {
-                            deleteFunction(service._id)
+                            deleteFunction(item._id)
                         }}
                         setConfirmDelete={setConfirmDelete}
                     />

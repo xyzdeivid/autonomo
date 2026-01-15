@@ -1,44 +1,49 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native'
+import { Item } from '@/types'
+import { EditableProperty } from '../common/EditableProperty'
+import { EditNameField } from '../common/EditNameField'
 
 interface ActualNameProps {
+    item: Item
     name: string
-    setEditNameInput: React.Dispatch<React.SetStateAction<boolean>>
+    setName: React.Dispatch<React.SetStateAction<string>>
+    editName: () => Promise<void>
+    showEditInput: boolean
+    setShowEditInput: React.Dispatch<React.SetStateAction<boolean>>
+    isEditable: boolean
 }
 
-export default function ActualName({ name, setEditNameInput }: ActualNameProps) {
+export default function ActualName({ item, name, setName, editName, showEditInput, setShowEditInput, isEditable }: ActualNameProps) {
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Nome: </Text>
-            <Text style={{ fontSize: 16 }}>{name}</Text>
-            <Pressable
-                style={styles.editButton}
-                onPress={() => setEditNameInput(true)}
-            >
-                <Text style={{ fontSize: 16 }}>Editar</Text>
-            </Pressable>
-        </View>
+        <>
+            {
+                !showEditInput && (
+                    <EditableProperty
+                        label='Nome'
+                        propertyName={item._id}
+                        isEditable={isEditable}
+                        onEditablePropertyButtonPress={() => {
+                            setShowEditInput(true)
+                        }}
+                    />
+                )
+            }
+            {
+                showEditInput && (
+                    <EditNameField
+                        defaultValue={item._id}
+                        newName={name}
+                        setNewName={setName}
+                        onSuccessButtonPress={editName}
+                        onCancelButtonPress={() => {
+                            setShowEditInput(false)
+                            setName('')
+                        }}
+                    />
+                )
+            }
+
+        </>
     )
 
 }
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 12
-    },
-    label: {
-        fontWeight: 'bold',
-        fontSize: 16
-    },
-    editButton: {
-        backgroundColor: '#E0E0E0',
-        borderColor: 'darkgray',
-        borderWidth: 1,
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8
-    }
-})

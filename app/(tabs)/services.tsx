@@ -20,6 +20,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 import AboutServiceCard from '@/components/services/AboutItemCard'
 import ServicesContent from '@/components/services/ServicesContent'
 import useDeleteItem from '@/hooks/useDeleteItem'
+import { Item } from '@/types'
 
 export default function Services() {
 
@@ -28,7 +29,10 @@ export default function Services() {
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [aboutServiceCard, setAboutServiceCard] = useState(false)
     const [selectedItemForDeletion, setSelectedItemForDeletion] = useState('')
-    const itemForDeletion = items.find(e => e._id === selectedItemForDeletion)
+
+    // Malabarismo por que atualmente o id é o nome :)
+    const itemForDeletion: Item = items.find(e => e._id === selectedItemForDeletion) || {} as Item
+
     const [currentPage] = appDocs.currentPage
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
@@ -99,13 +103,13 @@ export default function Services() {
                     />
                 }
                 {
-                    (aboutServiceCard && itemForDeletion)
-                        ? <AboutServiceCard
-                            service={itemForDeletion}
+                    aboutServiceCard && (
+                        <AboutServiceCard
+                            item={itemForDeletion}
                             deleteFunction={deleteService}
                             setFormOff={setAboutServiceCard}
                         />
-                        : null
+                    )
                 }
             </Container>
         </>
