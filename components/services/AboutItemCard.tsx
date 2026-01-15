@@ -6,7 +6,6 @@ import SubmitFormButtons from '../common/SubmitFormButtons'
 import { useEffect, useState } from 'react'
 import ActualValue from './ActualValue'
 import ActualStock from './ActualStock'
-import EditStockInput from './EditStockInput'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
 import ActualName from './ActualName'
@@ -32,11 +31,10 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
     const [showEditValueInput, setShowEditValueInput] = useState(false)
     const [value, setValue] = useState(0)
 
-    const [editStockInput, setEditStockInput] = useState(false)
+    const [showEditStockInput, setShowEditStockInput] = useState(false)
     const [stock, setStock] = useState(0)
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
-    const [changedValue, setChangedValue] = useState(false)
 
     const [replenishForm, setReplenishForm] = useState(false)
     const [replenishDate, setReplenishDate] = useState('')
@@ -103,7 +101,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
     const submitStockToEdit = async () => {
 
-        if (changedValue && stock !== item.amount) {
+        if (stock !== item.amount) {
 
             setLoadingScreen(true)
 
@@ -113,7 +111,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
         } else {
 
-            setEditStockInput(false)
+            setShowEditStockInput(false)
 
         }
 
@@ -178,20 +176,14 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                     )}
                     {
                         item.isThereAmount && (
-                            <View style={styles.inputContainer}>
-                                <View style={styles.infoContainer}>
-                                    {
-                                        editStockInput
-                                            ? <EditStockInput
-                                                setStock={setStock}
-                                                editStock={submitStockToEdit}
-                                                setChangedValue={setChangedValue}
-                                                currentStock={item.amount}
-                                            />
-                                            : <ActualStock stock={stock || item.amount || 0} setEditStockInput={setEditStockInput} />
-                                    }
-                                </View>
-                            </View>
+                            <ActualStock
+                                item={item}
+                                showEditInput={showEditStockInput}
+                                setShowEditInput={setShowEditStockInput}
+                                setStock={setStock}
+                                editStock={submitStockToEdit}
+                                isEditable={true}
+                            />
                         )
                     }
                     {

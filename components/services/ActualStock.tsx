@@ -1,47 +1,43 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native'
+import { Item } from '@/types'
+import { EditableProperty } from '../common/EditableProperty'
+import { EditAmountField } from '../common/EditAmountField'
 
 interface ActualStockProps {
-    stock: number
-    setEditStockInput: React.Dispatch<React.SetStateAction<boolean>>
+    item: Item
+    showEditInput: boolean
+    setShowEditInput: React.Dispatch<React.SetStateAction<boolean>>
+    setStock: React.Dispatch<React.SetStateAction<number>>
+    editStock: () => Promise<void>
+    isEditable: boolean
 }
 
-export default function ActualStock({ stock, setEditStockInput }: ActualStockProps) {
+export default function ActualStock({ item, showEditInput, setShowEditInput, setStock, isEditable, editStock }: ActualStockProps) {
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Estoque: </Text>
-            <Text style={{ fontSize: 16 }}>
-                {stock === 0
-                    ? 'Sem estoque'
-                    : stock}
-            </Text>
-            <Pressable
-                style={styles.editButton}
-                onPress={() => setEditStockInput(true)}
-            >
-                <Text style={{ fontSize: 16 }}>Editar</Text>
-            </Pressable>
-        </View>
+        <>
+            {
+                !showEditInput && (
+                    <EditableProperty
+                        label='Estoque'
+                        propertyName={String(item.amount)}
+                        isEditable={isEditable}
+                        onEditablePropertyButtonPress={() => {
+                            setShowEditInput(true)
+                        }}
+                    />
+                )
+            }
+            {
+                showEditInput && (
+                    <EditAmountField
+                        setAmount={setStock}
+                        defaultValue={item.amount || 0}
+                        onSuccessButtonPress={editStock}
+                        onCancelButtonPress={() => setShowEditInput(false)}
+                    />
+                )
+            }
+        </>
     )
 
 }
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    label: {
-        fontWeight: 'bold',
-        fontSize: 16
-    },
-    editButton: {
-        backgroundColor: '#E0E0E0',
-        borderColor: 'darkgray',
-        borderWidth: 1,
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 8
-    }
-})
