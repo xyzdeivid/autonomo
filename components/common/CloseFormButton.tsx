@@ -12,7 +12,7 @@ export function CloseFormButton({ onCloseFormButtonPress }: CloseFormButtonProps
                 style={styles.button}
                 onPress={onCloseFormButtonPress}
             >
-                <Text style={styles.buttonText}>Fechar Formulário</Text>
+                <Text style={styles.buttonText}>FECHAR</Text>
             </Pressable>
         </View>
     )

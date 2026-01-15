@@ -68,7 +68,7 @@ export default function ResaleCreationForm({
     return (
         <>
             <CreateItemFormHeader
-            title='Novo Produto'
+                title='Novo Produto'
                 onComeBackButtonPress={onComeBackButtonPress}
             />
             <NameInput
