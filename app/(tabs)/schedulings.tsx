@@ -25,16 +25,17 @@ import useDeleteEntry from '@/hooks/useDeleteEntry'
 
 export default function Schedulings() {
 
-    const [addSchedulingForm, setAddSchedulingForm] = useState(false)
-    const [schedulingForDeletion, setSchedulingForDeletion] = useState({} as Entry)
-    const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
-    const [loadingScreen, setLoadingScreen] = useState(false)
-
     const appDocs = useContext(DocsContext)
-    const [schedulings] = appDocs.entries
+    const [entries] = appDocs.entries
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
+    
+    const [addSchedulingForm, setAddSchedulingForm] = useState(false)
+    const [selectedEntryForDeletion, setSelectedEntryForDeletion] = useState('')
+    const entryForDeletion = entries.find(e => e._id === selectedEntryForDeletion)
+    const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
+    const [loadingScreen, setLoadingScreen] = useState(false)
 
     const deleteEntry = useDeleteEntry().deleteEntry
 
@@ -71,10 +72,10 @@ export default function Schedulings() {
             {loadingScreen && <LoadingScreen />}
             <Container>
                 {
-                    filterSchedulings(schedulings, selectedMonth, currentYear)[0]
+                    filterSchedulings(entries, selectedMonth, currentYear)[0]
                         ? <SchedulingsList
-                            filteredSchedulings={filterSchedulings(schedulings, selectedMonth, currentYear)}
-                            setSchedulingForDeletion={setSchedulingForDeletion}
+                            filteredSchedulings={filterSchedulings(entries, selectedMonth, currentYear)}
+                            setSelectedEntryForDeletion={setSelectedEntryForDeletion}
                             setDeleteSchedulingForm={setDeleteSchedulingForm}
                         />
                         : <AnyInfoWarning
@@ -93,9 +94,9 @@ export default function Schedulings() {
                     />
                 }
                 {
-                    deleteSchedulingForm
+                    deleteSchedulingForm && entryForDeletion
                         ? <DeleteSchedulingForm
-                            scheduling={schedulingForDeletion}
+                            scheduling={entryForDeletion}
                             deleteFunction={deleteScheduling}
                             setFormOff={setDeleteSchedulingForm}
                         />

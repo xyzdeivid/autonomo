@@ -10,11 +10,11 @@ import { orderSchedulings } from '@/functions/schedulings'
 
 interface SchedulingsListProps {
     filteredSchedulings: Entry[]
-    setSchedulingForDeletion: React.Dispatch<React.SetStateAction<Entry>>
+    setSelectedEntryForDeletion: React.Dispatch<React.SetStateAction<string>>
     setDeleteSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function SchedulingsList({ filteredSchedulings, setSchedulingForDeletion, setDeleteSchedulingForm }: SchedulingsListProps) {
+export default function SchedulingsList({ filteredSchedulings, setSelectedEntryForDeletion, setDeleteSchedulingForm }: SchedulingsListProps) {
 
     const dateFormat = (date: string) => {
         const formatedDate = format(parseISO(date), 'dd/MM')
@@ -22,7 +22,7 @@ export default function SchedulingsList({ filteredSchedulings, setSchedulingForD
     }
 
     const deleteScheduling = (scheduling: Entry) => {
-        setSchedulingForDeletion(scheduling)
+        setSelectedEntryForDeletion(scheduling._id)
         setDeleteSchedulingForm(true)
     }
 
