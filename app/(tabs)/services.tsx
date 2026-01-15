@@ -7,7 +7,6 @@ import { getServicesByCategory, getCategoryAndSet } from '@/functions/services'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
-import { Item } from '@/types'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
@@ -24,11 +23,12 @@ import useDeleteItem from '@/hooks/useDeleteItem'
 
 export default function Services() {
 
+    const appDocs = useContext(DocsContext)
+    const [items] = appDocs.items
     const [addServiceForm, setAddServiceForm] = useState(false)
     const [aboutServiceCard, setAboutServiceCard] = useState(false)
-    const [serviceForDeletion, setServiceForDeletion] = useState({} as Item)
-    const appDocs = useContext(DocsContext)
-    const [services] = appDocs.items
+    const [selectedItemForDeletion, setSelectedItemForDeletion] = useState('')
+    const itemForDeletion = items.find(e => e._id === selectedItemForDeletion)
     const [currentPage] = appDocs.currentPage
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
@@ -37,8 +37,8 @@ export default function Services() {
     const deleteItem = useDeleteItem().deleteItem
 
     useEffect(() => {
-        getCategoryAndSet(services, setCategory)
-    }, [services])
+        getCategoryAndSet(items, setCategory)
+    }, [items])
 
     useEffect(() => {
         if (currentPage !== 'services') {
@@ -71,12 +71,12 @@ export default function Services() {
             {loadingScreen && <LoadingScreen />}
             <Container>
                 {
-                    services[0]
+                    items[0]
                         ? <ServicesContent
                             category={category}
                             setCategory={setCategory}
-                            services={getServicesByCategory(services, category)}
-                            setServiceForDeletion={setServiceForDeletion}
+                            services={getServicesByCategory(items, category)}
+                            setSelectedItemForDeletion={setSelectedItemForDeletion}
                             setDeleteServiceForm={setAboutServiceCard}
                         />
                         : <AnyInfoWarning
@@ -99,9 +99,9 @@ export default function Services() {
                     />
                 }
                 {
-                    aboutServiceCard
+                    (aboutServiceCard && itemForDeletion)
                         ? <AboutServiceCard
-                            service={serviceForDeletion}
+                            service={itemForDeletion}
                             deleteFunction={deleteService}
                             setFormOff={setAboutServiceCard}
                         />

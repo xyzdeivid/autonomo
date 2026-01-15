@@ -10,12 +10,12 @@ interface ServicesContentProps {
     category: string
     setCategory: React.Dispatch<React.SetStateAction<string>>
     services: Item[]
-    setServiceForDeletion: React.Dispatch<React.SetStateAction<Item>>
+    setSelectedItemForDeletion: React.Dispatch<React.SetStateAction<string>>
     setDeleteServiceForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function ServicesContent({ category, setCategory,
-    services, setServiceForDeletion, setDeleteServiceForm }: ServicesContentProps) {
+    services, setSelectedItemForDeletion, setDeleteServiceForm }: ServicesContentProps) {
 
     const [allServices] = useContext(DocsContext).items
 
@@ -42,7 +42,7 @@ export default function ServicesContent({ category, setCategory,
             )}
             {services[0] && (
                 <ServicesList
-                    setServiceForDeletion={setServiceForDeletion}
+                    setSelectedItemForDeletion={setSelectedItemForDeletion}
                     setDeleteServiceForm={setDeleteServiceForm}
                     services={services}
                 />

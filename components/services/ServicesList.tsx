@@ -6,15 +6,15 @@ import ContainerHandler from '../common/ContainerHandler'
 import { orderServices } from '@/functions/services'
 
 interface ServicesListProps {
-    setServiceForDeletion: React.Dispatch<React.SetStateAction<Item>>
+    setSelectedItemForDeletion: React.Dispatch<React.SetStateAction<string>>
     setDeleteServiceForm: React.Dispatch<React.SetStateAction<boolean>>
     services: Item[]
 }
 
-export default function ServicesList({ setServiceForDeletion, setDeleteServiceForm, services }: ServicesListProps) {
+export default function ServicesList({ setSelectedItemForDeletion, setDeleteServiceForm, services }: ServicesListProps) {
 
     const deleteService = (service: Item) => {
-        setServiceForDeletion(service)
+        setSelectedItemForDeletion(service._id)
         setDeleteServiceForm(true)
     }
 
