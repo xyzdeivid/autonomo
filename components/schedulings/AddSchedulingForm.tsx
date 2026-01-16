@@ -154,33 +154,35 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                     textColor={colors.entries.max}
                     borderBottomColor={colors.entries.min}
                 />
-                {service.category === 'product' && (
-                    <FormAmountField
-                        text='* Quantidade:'
-                        setAmount={setAmount}
-                        bgColor={colors.entries.min}
-                        textColor={colors.entries.max}
-                    />
-                )}
                 {
-                    service.category === 'budget' && (
+                    service.category === 'product' ? (
+                        <FormAmountField
+                            text='* Quantidade:'
+                            setAmount={setAmount}
+                            bgColor={colors.entries.min}
+                            textColor={colors.entries.max}
+                        />
+                    ) : null
+                }
+                {
+                    service.category === 'budget' ? (
                         <FormValueField
                             label='* Valor:'
                             setValue={setValue}
                             bgColor={colors.entries.min}
                             textColor={colors.entries.max}
                         />
-                    )
+                    ) : null
                 }
                 {
-                    service.category !== 'service' && (
+                    service.category !== 'service' ? (
                         <Text style={styles.infoText}>* campo obrigatório</Text>
-                    )
+                    ) : null
                 }
                 {
-                    checkAllInputs() && (
+                    checkAllInputs() ? (
                         <SaveButton color={colors.entries.max} onPress={addScheduling} />
-                    )
+                    ) : null
                 }
             </FormContainer>
         </>

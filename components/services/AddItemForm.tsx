@@ -94,6 +94,8 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                             setValue={setValue}
                             setStep={setStep}
                             submitService={submitNewItem}
+                            setForm={setAddServiceForm}
+                            
                         />
                     )
                 }
@@ -104,6 +106,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                             setName={setName}
                             setStep={setStep}
                             submitBudget={submitNewItem}
+                            setForm={setAddServiceForm}
                         />
                     )
                 }
@@ -114,6 +117,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                             setResale={setResale}
                             setStock={setStock}
                             setAmount={setAmount}
+                            setForm={setAddServiceForm}
                         />
                     )
                 }
@@ -134,6 +138,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                             setValueOutflowChoice={setValueOutflowChoice}
                             setName={setName}
                             setValue={setValue}
+                            setForm={setAddServiceForm}
                         />
                     )
                 }
@@ -149,6 +154,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                             setValue={setValue}
                             setName={setName}
                             submitStock={submitNewItem}
+                            setForm={setAddServiceForm}
                         />
                     )
                 }
@@ -161,6 +167,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                             setName={setName}
                             setValue={setValue}
                             submitNoStock={submitNewItem}
+                            setForm={setAddServiceForm}
                         />
                     )
                 }

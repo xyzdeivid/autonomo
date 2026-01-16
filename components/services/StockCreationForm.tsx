@@ -15,9 +15,10 @@ interface StockCreationFormProps {
     setValue: React.Dispatch<React.SetStateAction<number>>
     setAmount: React.Dispatch<React.SetStateAction<number>>
     submitStock: () => Promise<void>
+    setForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function StockCreationForm({ name, amount, value, setStep, setStock, setName, setValue, setAmount, submitStock }: StockCreationFormProps) {
+export default function StockCreationForm({ name, amount, value, setStep, setStock, setName, setValue, setAmount, submitStock, setForm }: StockCreationFormProps) {
 
     const onComeBackButtonPress = () => {
 
@@ -35,6 +36,7 @@ export default function StockCreationForm({ name, amount, value, setStep, setSto
             <CreateItemFormHeader
                 title='Novo Produto'
                 onComeBackButtonPress={onComeBackButtonPress}
+                onCloseFormButtonPress={() => setForm(false)}
             />
             <FormNameField
                 label='Nome do Produto:'

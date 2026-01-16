@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import NameInput from '../common/FormNameField'
+import { FormNameField } from '../common/FormNameField'
+import { colors } from '@/constants/appColors'
 
 interface AddCustomerButtonProps {
     setCustomer: React.Dispatch<React.SetStateAction<string>>
@@ -22,29 +23,28 @@ export default function AddCustomerButton({ setCustomer, customer, addCustomer }
                         <Text style={{
                             ...styles.text,
                             borderWidth: 1,
-                            borderColor: '#006600',
-                            color: '#006600',
+                            borderColor: colors.entries.max,
+                            color: colors.entries.max,
                         }}>Registrar Cliente</Text>
                     </Pressable>
-                    : 
+                    :
                     <View>
-                        <NameInput setName={setCustomer} />
-                        <Pressable 
-                        style={{ marginTop: -12 }}
-                        onPress={() => {
-                            if (!customer) {
-                                setActive(false)
-                            } else {
-                                addCustomer()
-                            }
-                        }}
+                        <FormNameField setName={setCustomer} />
+                        <Pressable
+                            onPress={() => {
+                                if (!customer) {
+                                    setActive(false)
+                                } else {
+                                    addCustomer()
+                                }
+                            }}
                         >
                             <Text style={{
                                 ...styles.text,
                                 marginBottom: 12,
-                                backgroundColor: '#006600',
-        color: 'white',
-                                }}>
+                                backgroundColor: colors.entries.max,
+                                color: 'white',
+                            }}>
                                 Confirmar
                             </Text>
                         </Pressable>

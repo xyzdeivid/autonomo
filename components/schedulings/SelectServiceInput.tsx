@@ -31,9 +31,9 @@ export default function SelectServiceInput({ service, setService, services, amou
                     })}
                 </Picker>
                 {
-                    amount && (
+                    amount ? (
                         <Text style={{ color: colors.entries.max, marginTop: 4 }}>Estoque: {amount}</Text>
-                    )
+                    ) : null
                 }
             </View>
         </FormFieldContainer>

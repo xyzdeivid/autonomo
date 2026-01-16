@@ -21,6 +21,7 @@ interface ResaleCreationFormProps {
     setStep: React.Dispatch<React.SetStateAction<number>>
     setResale: React.Dispatch<React.SetStateAction<boolean>>
     submitResale: () => Promise<void>
+    setForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function ResaleCreationForm({
@@ -34,7 +35,8 @@ export default function ResaleCreationForm({
     valueOutflowChoice,
     setValueOutflowChoice,
     setName,
-    setValue
+    setValue,
+    setForm
 }: ResaleCreationFormProps) {
 
     // Função do botão voltar do header
@@ -55,6 +57,7 @@ export default function ResaleCreationForm({
             <CreateItemFormHeader
                 title='Novo Produto'
                 onComeBackButtonPress={onComeBackButtonPress}
+                onCloseFormButtonPress={() => setForm(false)}
             />
             <FormNameField
                 setName={setName}

@@ -11,9 +11,10 @@ interface ServiceCreationFormProps {
     setValue: React.Dispatch<React.SetStateAction<number>>
     setStep: React.Dispatch<React.SetStateAction<number>>
     submitService: () => Promise<void>
+    setForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ServiceCreationForm({ name, value, setName, setValue, setStep, submitService }: ServiceCreationFormProps) {
+export default function ServiceCreationForm({ name, value, setName, setValue, setStep, submitService, setForm }: ServiceCreationFormProps) {
 
     const onComeBackButtonPress = () => {
 
@@ -29,6 +30,7 @@ export default function ServiceCreationForm({ name, value, setName, setValue, se
             <CreateItemFormHeader
                 title='Novo Serviço'
                 onComeBackButtonPress={onComeBackButtonPress}
+                onCloseFormButtonPress={() => setForm(false)}
             />
             <FormNameField
                 setName={setName}

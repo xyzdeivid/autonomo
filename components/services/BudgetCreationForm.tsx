@@ -9,9 +9,10 @@ interface BudgetCreationFormProps {
     setName: React.Dispatch<React.SetStateAction<string>>
     setStep: React.Dispatch<React.SetStateAction<number>>
     submitBudget: () => Promise<void>
+    setForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export function BudgetCreationForm({ name, setName, setStep, submitBudget }: BudgetCreationFormProps) {
+export function BudgetCreationForm({ name, setName, setStep, submitBudget, setForm }: BudgetCreationFormProps) {
 
     const onComeBackButtonPress = () => {
 
@@ -26,6 +27,7 @@ export function BudgetCreationForm({ name, setName, setStep, submitBudget }: Bud
             <CreateItemFormHeader
                 title='Novo Serviço'
                 onComeBackButtonPress={onComeBackButtonPress}
+                onCloseFormButtonPress={() => setForm(false)}
             />
             <FormNameField
                 setName={setName}

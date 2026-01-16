@@ -11,9 +11,10 @@ interface NoStockCreationFormProps {
     setName: React.Dispatch<React.SetStateAction<string>>
     setValue: React.Dispatch<React.SetStateAction<number>>
     submitNoStock: () => Promise<void>
+    setForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function NoStockCreationForm({ name, value, setStep, setName, setValue, submitNoStock }: NoStockCreationFormProps) {
+export default function NoStockCreationForm({ name, value, setStep, setName, setValue, submitNoStock, setForm }: NoStockCreationFormProps) {
 
     const onComeBackButtonPress = () => {
 
@@ -29,6 +30,7 @@ export default function NoStockCreationForm({ name, value, setStep, setName, set
             <ProductSubCategoryHeader
                 title='Novo Produto'
                 onComeBackButtonPress={onComeBackButtonPress}
+                onCloseFormButtonPress={() => setForm(false)}
             />
             <FormNameField
                 label='Nome do Produto:'

@@ -1,23 +1,28 @@
 import { colors } from '@/constants/appColors'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
+import { CloseFormButton } from '../common/CloseFormButton'
 
 interface CreateItemFormHeaderProps {
     title: string
     onComeBackButtonPress: () => void
+    onCloseFormButtonPress: () => void
 }
 
-export default function CreateItemFormHeader({ title, onComeBackButtonPress }: CreateItemFormHeaderProps) {
+export default function CreateItemFormHeader({ title, onComeBackButtonPress, onCloseFormButtonPress }: CreateItemFormHeaderProps) {
 
     return (
         <>
             <View style={styles.header}>
                 <Text style={styles.headerTitle}>{title}</Text>
-                <Pressable
-                    style={styles.button}
-                    onPress={onComeBackButtonPress}
-                >
-                    <Text style={styles.buttonText}>Voltar</Text>
-                </Pressable>
+                <View style={styles.closeButtonsContainer}>
+                    <Pressable
+                        style={styles.button}
+                        onPress={onComeBackButtonPress}
+                    >
+                        <Text style={styles.buttonText}>Voltar</Text>
+                    </Pressable>
+                    <CloseFormButton color='white' onPress={onCloseFormButtonPress} />
+                </View>
             </View>
             <View style={styles.hr} />
         </>
@@ -39,14 +44,20 @@ const styles = StyleSheet.create({
 
     headerTitle: {
         color: 'white',
-        fontSize: 24,
-        fontWeight: 'bold'
+        fontSize: 20,
+        fontWeight: '600'
+    },
+
+    closeButtonsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
     },
 
     button: {
         backgroundColor: colors.items.min,
         padding: 6,
-        borderRadius: 8
+        borderRadius: 8,
+        marginEnd: 24
     },
 
     buttonText: {
