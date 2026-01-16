@@ -1,46 +1,49 @@
 import { Item } from '@/types/index'
 import { Picker } from '@react-native-picker/picker'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
+import { Label } from '../common/Label'
+import { FormFieldContainer } from '../common/FormFieldContainer'
 
 interface SelectServiceInputProps {
     service: Item
     setService: React.Dispatch<React.SetStateAction<Item>>
     services: Item[]
+    amount?: number
 }
 
-export default function SelectServiceInput({ service, setService, services }: SelectServiceInputProps) {
+export default function SelectServiceInput({ service, setService, services, amount }: SelectServiceInputProps) {
 
     return (
-        <View>
-            <Text style={styles.label}>Produto ou Serviço</Text>
-            <Picker
-                style={styles.inputContainer}
-                selectedValue={service}
-                onValueChange={(itemValue) => setService(itemValue)}
-                dropdownIconColor='white'
-            >
-                {services.map(current => {
-                    return (
-                        <Picker.Item key={current._id} label={current._id} value={current} />
+        <FormFieldContainer borderBottomColor='#0066001a'>
+            <View style={{ flex: 1 }}>
+                <Label text='Produto ou Serviço:' color='#006600' />
+                <Picker
+                    style={styles.inputContainer}
+                    selectedValue={service}
+                    onValueChange={(itemValue) => setService(itemValue)}
+                    dropdownIconColor='white'
+                >
+                    {services.map(current => {
+                        return (
+                            <Picker.Item key={current._id} label={current._id} value={current} />
+                        )
+                    })}
+                </Picker>
+                {
+                    amount && (
+                        <Text style={{ color: '#006600', marginTop: 4 }}>Estoque: {amount}</Text>
                     )
-                })}
-            </Picker>
-        </View>
+                }
+            </View>
+        </FormFieldContainer>
     )
 
 }
 
 const styles = StyleSheet.create({
-    label: {
-        marginBottom: 5,
-        color: '#006600',
-        fontWeight: 'bold',
-        fontSize: 16
-    },
     inputContainer: {
-        backgroundColor: 'rgba(0, 102, 0, 0.75)', 
+        backgroundColor: 'rgba(0, 102, 0, 0.75)',
         borderRadius: 6,
-        marginBottom: 20,
         color: 'white'
     }
 })

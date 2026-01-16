@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 interface ValueOptionProps {
     choice: string
     setChoice: React.Dispatch<React.SetStateAction<string>>
-    buttonColors: string[]
+    buttonColors: [string, string]
 }
 
 export default function ValueOption({ choice, setChoice, buttonColors }: ValueOptionProps) {

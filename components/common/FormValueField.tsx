@@ -11,9 +11,10 @@ interface FormValueFieldProps {
     textColor?: string
     valueChoice?: string
     setValueChoice?: React.Dispatch<React.SetStateAction<string>>
+    valueChoiceButtonColors?: [string, string]
 }
 
-export function FormValueField({ setValue, label, bgColor, textColor, valueChoice, setValueChoice }: FormValueFieldProps) {
+export function FormValueField({ setValue, label, bgColor, textColor, valueChoice, setValueChoice, valueChoiceButtonColors }: FormValueFieldProps) {
 
     return (
         <FormFieldContainer borderBottomColor={bgColor}>
@@ -41,17 +42,17 @@ export function FormValueField({ setValue, label, bgColor, textColor, valueChoic
                     />
                 </View>
                 {
-                    valueChoice && setValueChoice && (
+                    valueChoice && setValueChoice && valueChoiceButtonColors && (
                         <View style={styles.valueChoiceContainer}>
                             <ValueOption
                                 choice={valueChoice}
                                 setChoice={setValueChoice}
-                                buttonColors={['#330066', '#6600CC']}
+                                buttonColors={valueChoiceButtonColors}
                             />
                             <Text style={{ color: textColor, marginStart: 8, flex: 1 }}>
                                 {valueChoice === 'total'
-                                    ? 'Valor total do estoque'
-                                    : 'Valor de cada unidade do estoque'
+                                    ? 'Valor de todas as unidades compradas'
+                                    : 'Valor de cada unidade comprada'
                                 }
                             </Text>
                         </View>

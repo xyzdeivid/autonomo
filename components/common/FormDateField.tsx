@@ -48,7 +48,7 @@ export function FormDateField({ setTargetDate, bgColor, label, textColor, border
 
     return (
         <FormFieldContainer borderBottomColor={borderBottomColor}>
-            <Label text={label ? label : 'Data'} color={textColor ? textColor : ''} />
+            <Label text={label ? label : 'Data:'} color={textColor ? textColor : ''} />
             <Pressable 
             style={{ 
                 backgroundColor: bgColor ? bgColor : '#00000080',

@@ -4,16 +4,15 @@ import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { DocsContext } from '@/context/DocsContext'
 import { Entry, Item } from '@/types'
-import DateInput from '../common/FormDateField'
+import { FormDateField } from '../common/FormDateField'
 import SelectServiceInput from './SelectServiceInput'
 import { warning } from '@/functions/common'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import { createNewEntry, getServices } from '@/functions/schedulings'
-import StockInfo from './StockInfo'
-import AmountInput from '../common/FormAmountField'
-import NumberInput from '../common/FormValueField'
+import { FormAmountField } from '../common/FormAmountField'
+import { FormValueField } from '../common/FormValueField'
 import LoadingScreen from '../common/LoadingScreen'
-import NameInput from '../common/FormNameField'
+import { FormNameField } from '../common/FormNameField'
 import useAddEntry from '@/hooks/useAddEntry'
 import SaveButton from '../common/SaveButton'
 
@@ -140,24 +139,23 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                     service={service}
                     setService={setService}
                     services={getServices(services)}
+                    amount={service.amount ? service.amount - amount : undefined}
                 />
-                {service.amount ? (
-                    <StockInfo amount={service.amount - amount} />
-                ) : null}
-                <NameInput
+                <FormNameField
                     setName={setCustomerName}
-                    label='Cliente'
-                    bgColor='rgba(0, 102, 0, 0.1)'
+                    label='Cliente:'
+                    bgColor='#0066001a'
                     textColor='#006600'
                 />
-                <DateInput
+                <FormDateField
                     setTargetDate={setDate}
-                    bgColor='#006600'
+                    bgColor='#00660080'
                     textColor='#006600'
+                    borderBottomColor='#0066001a'
                 />
                 {service.category === 'product' && (
-                    <AmountInput
-                        text='* Quantidade'
+                    <FormAmountField
+                        text='* Quantidade:'
                         setAmount={setAmount}
                         bgColor='rgba(0, 102, 0, 0.1)'
                         textColor='#006600'
@@ -165,8 +163,8 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                 )}
                 {
                     service.category === 'budget' && (
-                        <NumberInput
-                            label='* Valor'
+                        <FormValueField
+                            label='* Valor:'
                             setValue={setValue}
                             bgColor='rgba(0, 102, 0, 0.1)'
                             textColor='#006600'
