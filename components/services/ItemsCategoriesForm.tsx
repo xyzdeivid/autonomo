@@ -75,21 +75,5 @@ const styles = StyleSheet.create({
     },
     container: {
         marginBottom: 20
-    },
-    button: {
-        padding: 12,
-        borderRadius: 6,
-        marginBottom: 24
-    },
-    infoText: {
-        marginBottom: 6,
-        fontSize: 16
-    },
-    exampleText: {
-        backgroundColor: colors.items.max,
-        color: '#FFFFFF',
-        padding: 4,
-        borderRadius: 4,
-        alignSelf: 'flex-start'
     }
 })
