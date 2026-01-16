@@ -115,7 +115,7 @@ export default function ItemsCategoriesForm({ setCategory, setStep }: ItemsCateg
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 20,
+        fontSize: 16,
         marginBottom: 16,
         color: colors.items.max,
         fontWeight: '500',
