@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native'
 import CardWhichProductToChoose from './CardWhichProductToChoose'
 import { useState } from 'react'
 import { colors } from '@/constants/appColors'
+import { ProductCategoryButton } from './ProductCategoryButton'
 
 interface ItemsCategoriesFormProps {
     setCategory: React.Dispatch<React.SetStateAction<string>>
@@ -18,78 +19,30 @@ export default function ItemsCategoriesForm({ setCategory, setStep }: ItemsCateg
                 Selecione a categoria:
             </Text>
             <View style={styles.container}>
-                <Pressable
-                    style={{
-                        ...styles.button,
-                        backgroundColor: colors.items.min
-                    }}
+                <ProductCategoryButton 
+                    categoryName='Produto para venda.'
+                    categoryEx='Ex: Roupa, comida, eletrônico, etc.'
                     onPress={() => {
                         setCategory('product')
                         setStep(1)
                     }}
-                >
-                    <Text
-                        style={{
-                            ...styles.infoText,
-                            color: colors.items.max
-                        }}
-                    >
-                        Produto para venda.
-                    </Text>
-                    <Text
-                        style={styles.exampleText}
-                    >
-                        Ex: Roupa, comida, eletrônico, etc.
-                    </Text>
-                </Pressable>
-                <Pressable
-                    style={{
-                        ...styles.button,
-                        backgroundColor: colors.items.min
-                    }}
+                />
+                <ProductCategoryButton 
+                    categoryName='Serviço com preço fixo.'
+                    categoryEx='Ex: Corte de cabelo, maquiagem, manicure, etc.'
                     onPress={() => {
                         setCategory('service')
                         setStep(1)
                     }}
-                >
-                    <Text
-                        style={{
-                            ...styles.infoText,
-                            color: colors.items.max
-                        }}
-                    >
-                        Serviço com preço fixo.
-                    </Text>
-                    <Text
-                        style={styles.exampleText}
-                    >
-                        Ex: Corte de cabelo, maquiagem, manicure, etc.
-                    </Text>
-                </Pressable>
-                <Pressable
-                    style={{
-                        ...styles.button,
-                        backgroundColor: colors.items.min
-                    }}
+                />
+                <ProductCategoryButton 
+                    categoryName='Serviço com preço variável.'
+                    categoryEx='Ex: Conserto, pintura, etc.'
                     onPress={() => {
                         setCategory('budget')
                         setStep(1)
                     }}
-                >
-                    <Text
-                        style={{
-                            ...styles.infoText,
-                            color: colors.items.max
-                        }}
-                    >
-                        Serviço com preço variável.
-                    </Text>
-                    <Text
-                        style={styles.exampleText}
-                    >
-                        Ex: Conserto, pintura, etc.
-                    </Text>
-                </Pressable>
+                />
                 <Text>Precisa de ajuda para escolher?</Text>
                 <Pressable
                     style={{
