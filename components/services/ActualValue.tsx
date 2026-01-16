@@ -20,7 +20,7 @@ export default function ActualValue({ item, showEditInput, setShowEditInput, val
             {
                 !showEditInput && (
                     <EditableProperty
-                        label='Valor'
+                        label='Valor: '
                         propertyName={moneyFormat(item.value)}
                         isEditable={isEditable}
                         onEditButtonPress={() => {

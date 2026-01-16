@@ -17,7 +17,7 @@ export default function ActualCustomer({ customer, setNewCustomerName, newCustom
             {
                 !showEditInput
                     ? <EditableProperty
-                        label='Cliente'
+                        label='Cliente: '
                         propertyName={customer}
                         isEditable={true}
                         onEditButtonPress={() => setShowEditInput(true)}

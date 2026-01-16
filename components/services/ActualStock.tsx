@@ -18,7 +18,7 @@ export default function ActualStock({ item, showEditInput, setShowEditInput, set
             {
                 !showEditInput && (
                     <EditableProperty
-                        label='Estoque'
+                        label='Estoque: '
                         propertyName={String(item.amount)}
                         isEditable={isEditable}
                         onEditButtonPress={() => {

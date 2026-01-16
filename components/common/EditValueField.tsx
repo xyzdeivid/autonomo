@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from 'react-native'
 import { MaskedTextInput } from 'react-native-mask-text'
 import { ConfirmEditButton } from './ConfirmEditButton'
 import { CancelEditButton } from './CancelEditButton'
+import { Label } from './Label'
 
 interface EditValueInputProps {
     newValue: number
@@ -17,7 +18,7 @@ export function EditValueField({ newValue, setNewValue, onSuccessButtonPress, de
     return (
         <View>
             <View style={styles.container}>
-                <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Valor:</Text>
+                <Label text='Valor:' />
                 <MaskedTextInput
                     type='currency'
                     options={{

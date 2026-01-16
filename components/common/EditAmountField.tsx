@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
+import { StyleSheet, View, TextInput } from 'react-native'
 import { ConfirmEditButton } from './ConfirmEditButton'
 import { CancelEditButton } from './CancelEditButton'
+import { Label } from './Label'
 
 interface EditAmountFieldProps {
     setAmount: React.Dispatch<React.SetStateAction<number>>
@@ -31,7 +32,7 @@ export function EditAmountField({ setAmount, onSuccessButtonPress, defaultValue,
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Estoque:</Text>
+            <Label text='Estoque:' />
             <TextInput
                 value={textValue}
                 onChangeText={text => checkNumber(text)}

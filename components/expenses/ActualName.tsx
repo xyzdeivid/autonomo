@@ -19,7 +19,7 @@ export function ActualName({ outflow, name, setName, editName, showEditInput, se
             {
                 !showEditInput && (
                     <EditableProperty
-                        label='Nome'
+                        label='Nome: '
                         propertyName={outflow.name}
                         isEditable={isEditable}
                         onEditButtonPress={() => {

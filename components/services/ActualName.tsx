@@ -19,7 +19,7 @@ export default function ActualName({ item, name, setName, editName, showEditInpu
             {
                 !showEditInput && (
                     <EditableProperty
-                        label='Nome'
+                        label='Nome: '
                         propertyName={item._id}
                         isEditable={isEditable}
                         onEditButtonPress={() => {

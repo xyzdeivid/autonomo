@@ -1,6 +1,7 @@
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, TextInput, StyleSheet } from 'react-native'
 import { ConfirmEditButton } from './ConfirmEditButton'
 import { CancelEditButton } from './CancelEditButton'
+import { Label } from './Label'
 
 interface EditNameInputProps {
     defaultValue: string
@@ -14,7 +15,7 @@ export function EditNameField({ defaultValue, newName, setNewName, onSuccessButt
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Nome:</Text>
+            <Label text='Nome:' />
             <TextInput defaultValue={defaultValue} onChangeText={text => setNewName(text.trim())} style={styles.input} />
             {
                 newName && newName !== defaultValue && (

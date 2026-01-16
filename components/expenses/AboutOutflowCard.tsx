@@ -135,7 +135,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                     {
                         outflow.amount && (
                             <EditableProperty
-                                label='Valor (un)'
+                                label='Valor (un): '
                                 propertyName={moneyFormat(outflow.value / outflow.amount)}
                                 isEditable={isEditable()}
                             />
@@ -144,7 +144,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                     {
                         outflow.amount && (
                             <EditableProperty
-                                label='Quantidade'
+                                label='Quantidade: '
                                 propertyName={String(outflow.amount)}
                                 isEditable={isEditable()}
                             />

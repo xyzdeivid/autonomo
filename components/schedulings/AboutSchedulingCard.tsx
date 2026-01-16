@@ -100,7 +100,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                             />
                     }
                     <EditableProperty
-                        label='Produto/Serviço'
+                        label='Produto/Serviço: '
                         propertyName={scheduling.serviceId}
                         isEditable={false}
                     />
@@ -109,7 +109,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                         editDate={editDate}
                     />
                     <EditableProperty
-                        label='Valor'
+                        label='Valor: '
                         propertyName={moneyFormat(scheduling.serviceValue)}
                         isEditable={false}
                     />
@@ -117,12 +117,12 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                         (scheduling.serviceAmount && scheduling.serviceCategory === 'product') ? (
                             <>
                                 <EditableProperty
-                                    label='Valor (un)'
+                                    label='Valor (un): '
                                     propertyName={moneyFormat(scheduling.serviceValue / scheduling.serviceAmount)}
                                     isEditable={false}
                                 />
                                 <EditableProperty
-                                    label='Quantidade'
+                                    label='Quantidade: '
                                     propertyName={String(scheduling.serviceAmount)}
                                     isEditable={false}
                                 />

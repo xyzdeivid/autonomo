@@ -20,7 +20,7 @@ export function ActualValue({ outflow, showEditInput, setShowEditInput, value, s
             {
                 !showEditInput && (
                     <EditableProperty
-                        label='Valor'
+                        label='Valor: '
                         propertyName={moneyFormat(outflow.value)}
                         isEditable={isEditable}
                         onEditButtonPress={() => {

@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Label } from './Label'
 
 interface EditablePropertyProps {
     label: string
@@ -11,7 +12,7 @@ export function EditableProperty({ label, propertyName, isEditable, onEditButton
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>{label}: </Text>
+            <Label text={label} />
             <Text style={styles.propertyName}>{propertyName}</Text>
             {
                 isEditable && (
@@ -35,11 +36,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 24
-    },
-
-    label: {
-        fontSize: 16,
-        fontWeight: 'bold'
     },
 
     propertyName: {

@@ -37,7 +37,7 @@ export function EditDateField({ defaultValue, editDate }: EditDateFieldProps) {
     return (
         <>
             <EditableProperty
-                label='Data'
+                label='Data: '
                 propertyName={format(parseISO(defaultValue), 'dd/MM')}
                 isEditable={true}
                 onEditButtonPress={() => setShowDateTimePicker(true)}
