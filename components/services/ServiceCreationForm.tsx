@@ -2,6 +2,7 @@ import { FormNameField } from '../common/FormNameField'
 import { FormValueField } from '../common/FormValueField'
 import CreateItemFormHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
+import { colors } from '@/constants/appColors'
 
 interface ServiceCreationFormProps {
     name: string
@@ -31,18 +32,18 @@ export default function ServiceCreationForm({ name, value, setName, setValue, se
             />
             <FormNameField
                 setName={setName}
-                textColor='#330066'
-                bgColor='rgba(51, 0, 102, 0.1)'
+                textColor={colors.items.max}
+                bgColor={colors.items.min}
                 label='Nome do Serviço:'
             />
             <FormValueField
                 setValue={setValue}
-                bgColor='rgba(51, 0, 102, 0.1)'
-                textColor='#330066'
+                bgColor={colors.items.min}
+                textColor={colors.items.max}
             />
             {
                 (name && value) ? (
-                    <SubmitItemButton color='#330066' onPress={submitService} />
+                    <SubmitItemButton color={colors.items.max} onPress={submitService} />
                 ) : null
             }
         </>

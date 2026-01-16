@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useState } from 'react'
+import { colors } from '@/constants/appColors'
 
 interface IntegrateStockButtonProps {
     setStockIntegrate: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,7 +17,7 @@ export default function IntegrateStockButton({ setStockIntegrate }: IntegrateSto
                 <Pressable
                     style={{
                         ...styles.box,
-                        backgroundColor: active ? '#660000' : 'transparent'
+                        backgroundColor: active ? colors.outflows.max : 'transparent'
                     }}
                     onPress={() => {
                         setActive(!active)
@@ -39,16 +40,16 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         borderWidth: 1,
-        borderColor: '#660000',
+        borderColor: colors.outflows.max,
         marginStart: 4,
         borderRadius: 5
     },
     buttonText: {
         fontWeight: 'bold',
-        color: '#660000'
+        color: colors.outflows.max
     },
     warningText: {
-        color: 'rgba(139, 0, 0, 0.5)',
+        color: colors.outflows.mid,
         fontSize: 12,
         marginTop: 2
     }

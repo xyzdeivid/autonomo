@@ -2,6 +2,7 @@ import { Text } from 'react-native'
 import { FormNameField } from '../common/FormNameField'
 import CreateItemFormHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
+import { colors } from '@/constants/appColors'
 
 interface BudgetCreationFormProps {
     name: string
@@ -28,16 +29,16 @@ export function BudgetCreationForm({ name, setName, setStep, submitBudget }: Bud
             />
             <FormNameField
                 setName={setName}
-                textColor='#330066'
-                bgColor='rgba(51, 0, 102, 0.1)'
+                textColor={colors.items.max}
+                bgColor={colors.items.min}
                 label='Nome do Serviço:'
             />
-            <Text style={{ marginBottom: 20, color: '#330066' }}>
+            <Text style={{ marginBottom: 20, color: colors.items.max }}>
                 O valor será definido ao registrar entrada.
             </Text>
             {
                 name && (
-                    <SubmitItemButton color='#330066' onPress={submitBudget} />
+                    <SubmitItemButton color={colors.items.max} onPress={submitBudget} />
                 )
             }
         </>

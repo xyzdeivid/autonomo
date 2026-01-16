@@ -7,6 +7,7 @@ import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/functions/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { orderExpenses } from '@/functions/expenses'
+import { colors } from '@/constants/appColors'
 
 interface ExpensesListProps {
     filteredExpenses: Outflow[]
@@ -38,7 +39,7 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
         <View>
             <ListInfoTitle
                 text='despesas'
-                color='#660000'
+                color={colors.outflows.max}
             />
             <ContainerHandler filteredTargets={filteredExpenses}>
                 <DataTable>

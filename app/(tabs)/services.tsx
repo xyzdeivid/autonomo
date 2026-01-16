@@ -21,6 +21,7 @@ import AboutServiceCard from '@/components/services/AboutItemCard'
 import ServicesContent from '@/components/services/ServicesContent'
 import useDeleteItem from '@/hooks/useDeleteItem'
 import { Item } from '@/types'
+import { colors } from '@/constants/appColors'
 
 export default function Services() {
 
@@ -85,16 +86,16 @@ export default function Services() {
                         />
                         : <AnyInfoWarning
                             text='listamos todos os seus produtos ou serviços.'
-                            titleBgColor='#330066'
-                            textBgColor='rgba(51, 0, 102, 0.1)'
+                            titleBgColor={colors.items.max}
+                            textBgColor={colors.items.min}
                         />
                 }
 
                 <AddItemButton
                     setForm={setAddServiceForm}
                     text='Registrar Produto/Serviço'
-                    mainColor='#330066'
-                    bgColor='rgba(51, 0, 102, 0.1)'
+                    mainColor={colors.items.max}
+                    bgColor={colors.items.min}
                 />
                 {
                     addServiceForm

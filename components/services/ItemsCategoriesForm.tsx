@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import CardWhichProductToChoose from './CardWhichProductToChoose'
 import { useState } from 'react'
+import { colors } from '@/constants/appColors'
 
 interface ItemsCategoriesFormProps {
     setCategory: React.Dispatch<React.SetStateAction<string>>
@@ -20,7 +21,7 @@ export default function ItemsCategoriesForm({ setCategory, setStep }: ItemsCateg
                 <Pressable
                     style={{
                         ...styles.button,
-                        backgroundColor: '#6600CC1A',
+                        backgroundColor: colors.items.min
                     }}
                     onPress={() => {
                         setCategory('product')
@@ -30,7 +31,7 @@ export default function ItemsCategoriesForm({ setCategory, setStep }: ItemsCateg
                     <Text
                         style={{
                             ...styles.infoText,
-                            color: '#6600CC',
+                            color: colors.items.max
                         }}
                     >
                         Produto para venda.
@@ -44,7 +45,7 @@ export default function ItemsCategoriesForm({ setCategory, setStep }: ItemsCateg
                 <Pressable
                     style={{
                         ...styles.button,
-                        backgroundColor: '#6600CC1A'
+                        backgroundColor: colors.items.min
                     }}
                     onPress={() => {
                         setCategory('service')
@@ -54,7 +55,7 @@ export default function ItemsCategoriesForm({ setCategory, setStep }: ItemsCateg
                     <Text
                         style={{
                             ...styles.infoText,
-                            color: '#6600CC'
+                            color: colors.items.max
                         }}
                     >
                         Serviço com preço fixo.
@@ -68,7 +69,7 @@ export default function ItemsCategoriesForm({ setCategory, setStep }: ItemsCateg
                 <Pressable
                     style={{
                         ...styles.button,
-                        backgroundColor: '#6600CC1A'
+                        backgroundColor: colors.items.min
                     }}
                     onPress={() => {
                         setCategory('budget')
@@ -78,7 +79,7 @@ export default function ItemsCategoriesForm({ setCategory, setStep }: ItemsCateg
                     <Text
                         style={{
                             ...styles.infoText,
-                            color: '#6600CC'
+                            color: colors.items.max
                         }}
                     >
                         Serviço com preço variável.
@@ -92,7 +93,7 @@ export default function ItemsCategoriesForm({ setCategory, setStep }: ItemsCateg
                 <Text>Precisa de ajuda para escolher?</Text>
                 <Pressable
                     style={{
-                        backgroundColor: 'rgba(51, 0, 102, 0.75)',
+                        backgroundColor: colors.items.max,
                         padding: 6,
                         alignSelf: 'flex-start',
                         borderRadius: 4,
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         marginBottom: 16,
-        color: '#330066',
+        color: colors.items.max,
         fontWeight: '500',
     },
     container: {
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     exampleText: {
-        backgroundColor: 'rgba(102, 0, 204, 0.75)',
+        backgroundColor: colors.items.max,
         color: '#FFFFFF',
         padding: 4,
         borderRadius: 4,

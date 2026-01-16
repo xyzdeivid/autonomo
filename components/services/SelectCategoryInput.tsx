@@ -1,3 +1,4 @@
+import { colors } from '@/constants/appColors'
 import { DocsContext } from '@/context/DocsContext'
 import { Picker } from '@react-native-picker/picker'
 import { useContext } from 'react'
@@ -50,7 +51,7 @@ export default function SelectCategoryInput({ category, setCategory }: SelectCat
 
 const styles = StyleSheet.create({
     input: {
-        backgroundColor: 'rgba(51, 0, 102, 0.75)',
+        backgroundColor: colors.items.mid,
         color: 'white'
     }
 })

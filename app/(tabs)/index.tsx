@@ -26,6 +26,7 @@ import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
 
 // expense components
 import AddExpenseForm from '@/components/expenses/AddExpenseForm'
+import { colors } from '@/constants/appColors'
 
 export default function Info() {
 
@@ -80,7 +81,7 @@ export default function Info() {
     return (
         <Container>
             {
-                yearEntries[0] && (<MonthInput dropdownIconColor='rgba(8, 129, 155, 0.75)' />)
+                yearEntries[0] && (<MonthInput dropdownIconColor={colors.home.mid} />)
             }
             {
                 filterSchedulings(schedulings, selectedMonth, currentYear)[0]
@@ -88,8 +89,8 @@ export default function Info() {
                     ? <Revenue />
                     : <AnyInfoWarning
                         text='te informamos sobre seu balanço financeiro mensal.'
-                        titleBgColor='#08819B'
-                        textBgColor='rgba(8, 129, 155, 0.1)'
+                        titleBgColor={colors.home.max}
+                        textBgColor={colors.home.min}
                     />
             }
             {

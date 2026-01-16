@@ -14,6 +14,7 @@ import { EditableProperty } from '../common/EditableProperty'
 import { DeleteButton } from '../common/DeleteButton'
 import { EditDateField } from '../common/EditDateField'
 import useEditOutflowDate from '@/hooks/useEditOutflowDate'
+import { colors } from '@/constants/appColors'
 
 
 interface AboutOutflowCardProps {
@@ -102,7 +103,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                 <FormTitle
                     text='Informações de Despesa'
                     onCloseFormButtonPress={() => setFormOff(false)}
-                    textColor='#660000'
+                    textColor={colors.outflows.max}
                 />
                 <View>
                     {
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
 
     replenishLabel: {
         fontSize: 16,
-        color: '#660000',
+        color: colors.outflows.max,
         fontWeight: 'bold',
         marginBottom: 24
     },

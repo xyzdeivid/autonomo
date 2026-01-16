@@ -1,3 +1,4 @@
+import { colors } from '@/constants/appColors'
 import { Modal, View, Text, StyleSheet, Pressable } from 'react-native'
 
 interface CardWhichProductToChooseProps {
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#330066',
+    color: colors.items.max,
     textAlign: 'center'
   },
   section: {
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   closeButton: {
-    backgroundColor: '#330066',
+    backgroundColor: colors.items.max,
     padding: 15,
     borderRadius: 6,
     alignItems: 'center',

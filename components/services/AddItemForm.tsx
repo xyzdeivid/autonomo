@@ -13,6 +13,7 @@ import ResaleCreationForm from './ResaleCreationForm'
 import ResaleOrStockButtons from './ResaleOrStockButtons'
 import StockCreationForm from './StockCreationForm'
 import NoStockCreationForm from './NoStockCreationForm'
+import { colors } from '@/constants/appColors'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -75,7 +76,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                             <FormTitle
                                 text='Novo Produto ou Serviço'
                                 onCloseFormButtonPress={() => setAddServiceForm(false)}
-                                textColor='#330066'
+                                textColor={colors.items.max}
                             />
                             <ItemsCategoriesForm
                                 setCategory={setCategory}

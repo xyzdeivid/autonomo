@@ -21,6 +21,7 @@ import AddExpenseForm from '@/components/expenses/AddExpenseForm'
 import ExpensesList from '@/components/expenses/ExpensesList'
 import AboutOutflowCard from '@/components/expenses/AboutOutflowCard'
 import useDeleteOutflow from '@/hooks/useDeleteOutflow'
+import { colors } from '@/constants/appColors'
 
 export default function Expenses() {
 
@@ -79,14 +80,14 @@ export default function Expenses() {
                         />
                         : <AnyInfoWarning
                             text='listamos todas as suas despesas financeiras do mês.'
-                            titleBgColor='#660000'
-                            textBgColor='rgba(139, 0, 0, 0.1)'
+                            titleBgColor={colors.outflows.max}
+                            textBgColor={colors.outflows.min}
                         />
                 }
                 <AddItemButton
                     setForm={setAddExpenseForm}
-                    mainColor='#660000'
-                    bgColor='rgba(139, 0, 0, 0.1)'
+                    mainColor={colors.outflows.max}
+                    bgColor={colors.outflows.min}
                     text='Registrar Despesa' />
                 {
                     addExpenseForm

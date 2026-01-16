@@ -5,6 +5,7 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import { ContentContext } from '@/context/InfoContent'
 import { Keyboard } from 'react-native'
 import { DocsContext } from '@/context/DocsContext'
+import { colors } from '@/constants/appColors'
 
 export default function TabLayout() {
 
@@ -47,7 +48,7 @@ export default function TabLayout() {
                 })}
                 options={{
                     title: 'Balanço',
-                    tabBarActiveTintColor: '#08819B',
+                    tabBarActiveTintColor: colors.home.max,
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='chart-simple' size={24} color={color} />
                     ),
@@ -63,7 +64,7 @@ export default function TabLayout() {
                 })}
                 options={{
                     title: 'Receitas',
-                    tabBarActiveTintColor: '#006600',
+                    tabBarActiveTintColor: colors.entries.max,
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='money-bill-trend-up' size={24} color={color} />
                     )
@@ -78,7 +79,7 @@ export default function TabLayout() {
                 })}
                 options={{
                     title: 'Despesas',
-                    tabBarActiveTintColor: '#660000',
+                    tabBarActiveTintColor: colors.outflows.max,
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='receipt' size={24} color={color} />
                     )
@@ -93,7 +94,7 @@ export default function TabLayout() {
                 })}
                 options={{
                     title: 'Catálogo',
-                    tabBarActiveTintColor: '#330066',
+                    tabBarActiveTintColor: colors.items.max,
                     tabBarIcon: ({ color }) => (
                         <FontAwesome6 name='bag-shopping' size={24} color={color} />
                     )

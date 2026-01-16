@@ -4,6 +4,7 @@ import { FormNameField } from '../common/FormNameField'
 import { FormValueField } from '../common/FormValueField'
 import CreateItemFormHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
+import { colors } from '@/constants/appColors'
 
 interface ResaleCreationFormProps {
     name: string
@@ -57,40 +58,41 @@ export default function ResaleCreationForm({
             />
             <FormNameField
                 setName={setName}
-                textColor='#330066'
-                bgColor='#3300661A'
+                textColor={colors.items.max}
+                bgColor={colors.items.min}
                 label='Nome do Produto:'
             />
             <FormDateField
                 setTargetDate={setPurchaseDate}
-                bgColor='#33006680'
+                bgColor={colors.items.max}
                 label='Data de Compra:'
-                textColor='#330066'
-                borderBottomColor='#3300661A'
+                textColor={colors.items.max}
+                borderBottomColor={colors.items.min}
             />
             <FormAmountField
                 text='Estoque:'
                 setAmount={setAmount}
-                bgColor='rgba(51, 0, 102, 0.1)'
-                textColor='#330066'
+                bgColor={colors.items.min}
+                textColor={colors.items.max}
             />
             <FormValueField
                 setValue={setPurchaseValue}
-                bgColor='rgba(51, 0, 102, 0.1)'
+                bgColor={colors.items.min}
                 label={valueOutflowChoice === 'total' ? 'Valor de Compra (total):' : 'Valor de Compra (un):'}
-                textColor='#330066'
+                textColor={colors.items.max}
                 valueChoice={valueOutflowChoice}
                 setValueChoice={setValueOutflowChoice}
+                valueChoiceButtonColors={[colors.items.max, colors.items.mid]}
             />
             <FormValueField
                 setValue={setValue}
-                bgColor='rgba(51, 0, 102, 0.1)'
-                textColor='#330066'
+                bgColor={colors.items.min}
+                textColor={colors.items.max}
                 label='Valor de Venda (un):'
             />
             {
                 (name && amount && purchaseValue && value) ? (
-                    <SubmitItemButton color='#330066' onPress={submitResale} />
+                    <SubmitItemButton color={colors.items.max} onPress={submitResale} />
                 ) : null
             }
         </>

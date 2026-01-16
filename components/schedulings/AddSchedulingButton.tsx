@@ -3,6 +3,7 @@ import { Alert, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import { getServices } from '@/functions/schedulings'
+import { colors } from '@/constants/appColors'
 
 interface AddSchedulingButtonProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -28,7 +29,7 @@ export default function AddSchedulingButton({ setAddSchedulingForm }: AddSchedul
                     checkServices()
                 }}
             >
-                <Text style={{ color: '#006600' }}>Registrar Receita</Text>
+                <Text style={{ color: colors.entries.max }}>Registrar Receita</Text>
             </Pressable>
         </View>
     )
@@ -46,8 +47,8 @@ const styles = StyleSheet.create({
     button: {
         padding: 10,
         borderWidth: 1,
-        borderColor: '#006600',
+        borderColor: colors.entries.max,
         borderRadius: 5,
-        backgroundColor: 'rgba(0, 102, 0, 0.1)'
+        backgroundColor: colors.entries.min
     }
 })

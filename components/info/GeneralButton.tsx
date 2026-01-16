@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import YearOptions from './YearOptions'
 import { availableYears } from '@/functions/info'
+import { colors } from '@/constants/appColors'
 
 interface GeneralButtonProps {
     setAddItemsForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -35,7 +36,7 @@ export default function GeneralButton({ setAddItemsForm, setGeneralButton }: Gen
                     setGeneralButton(false)
                 }}
             >
-                <Entypo name='add-to-list' size={28} color='#08819B' />
+                <Entypo name='add-to-list' size={28} color={colors.home.max} />
             </Pressable>
         </View>
     )
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: '#08819B',
-        backgroundColor: 'rgba(8, 129, 155, 0.1)'
+        borderColor: colors.home.max,
+        backgroundColor: colors.home.min
     }
 })

@@ -14,6 +14,7 @@ import useEditEntryDate from '@/hooks/useEditEntryDate'
 import { EditableProperty } from '../common/EditableProperty'
 import { EditDateField } from '../common/EditDateField'
 import { DeleteButton } from '../common/DeleteButton'
+import { colors } from '@/constants/appColors'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -80,7 +81,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                 <FormTitle
                     text='Informações de Receita'
                     onCloseFormButtonPress={() => setFormOff(false)}
-                    textColor='#006600'
+                    textColor={colors.entries.max}
                 />
                 <View>
                     {

@@ -1,3 +1,4 @@
+import { colors } from '@/constants/appColors'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface ProductSubCategoryButtonProps {
@@ -19,7 +20,7 @@ export default function ProductSubCategoryButton({ subCategoryName, subCategoryT
                     if (setSubCategory) setSubCategory(true)
                 }}
             >
-                <Text style={{ color: '#330066', fontWeight: 'bold', fontSize: 20 }}>{subCategoryName}</Text>
+                <Text style={{ color: colors.items.max, fontWeight: 'bold', fontSize: 20 }}>{subCategoryName}</Text>
                 <Text style={styles.text}>
                     {subCategoryText}
                 </Text>
@@ -34,13 +35,13 @@ const styles = StyleSheet.create({
 
     container: {
         display: 'flex',
-        backgroundColor: '#6600CC1A',
+        backgroundColor: colors.items.min,
         padding: 12,
         borderRadius: 6
     },
 
     text: {
-        color: '#330066',
+        color: colors.items.max,
         marginTop: 2
     },
 
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     },
 
     comeBackButtonText: {
-        backgroundColor: '#330066',
+        backgroundColor: colors.items.max,
         padding: 4,
         borderRadius: 4,
         fontWeight: 'bold',

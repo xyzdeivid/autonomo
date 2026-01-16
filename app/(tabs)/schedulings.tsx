@@ -22,6 +22,7 @@ import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
 
 import { Entry } from '@/types'
 import useDeleteEntry from '@/hooks/useDeleteEntry'
+import { colors } from '@/constants/appColors'
 
 export default function Schedulings() {
 
@@ -80,8 +81,8 @@ export default function Schedulings() {
                         />
                         : <AnyInfoWarning
                             text='listamos todas as suas receitas financeiras do mês.'
-                            titleBgColor='#006600'
-                            textBgColor='rgba(0, 102, 0, 0.1)'
+                            titleBgColor={colors.entries.max}
+                            textBgColor={colors.entries.min}
                         />
                 }
                 <AddSchedulingButton

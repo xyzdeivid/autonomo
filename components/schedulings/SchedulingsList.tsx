@@ -7,6 +7,7 @@ import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/functions/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { orderSchedulings } from '@/functions/schedulings'
+import { colors } from '@/constants/appColors'
 
 interface SchedulingsListProps {
     filteredSchedulings: Entry[]
@@ -30,7 +31,7 @@ export default function SchedulingsList({ filteredSchedulings, setSelectedEntryF
         <View>
             <ListInfoTitle
                 text='receitas'
-                color='#006600'
+                color={colors.entries.max}
             />
             <ContainerHandler filteredTargets={filteredSchedulings}>
                 <DataTable>

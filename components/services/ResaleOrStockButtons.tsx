@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
 import ProductSubCategoryButton from './ProductSubCategoryButton'
+import { colors } from '@/constants/appColors'
 
 interface ResaleOrStockButtonsProps {
     setStep: React.Dispatch<React.SetStateAction<number>>
@@ -50,7 +51,7 @@ export default function ResaleOrStockButtons({
 const styles = StyleSheet.create({
 
     comeBackButton: {
-        backgroundColor: '#330066',
+        backgroundColor: colors.items.max,
         alignSelf: 'flex-start',
         marginBottom: 20,
         padding: 6,

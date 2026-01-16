@@ -2,6 +2,7 @@ import { FormNameField } from '../common/FormNameField'
 import { FormValueField } from '../common/FormValueField'
 import ProductSubCategoryHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
+import { colors } from '@/constants/appColors'
 
 interface NoStockCreationFormProps {
     name: string
@@ -32,18 +33,18 @@ export default function NoStockCreationForm({ name, value, setStep, setName, set
             <FormNameField
                 label='Nome do Produto:'
                 setName={setName}
-                textColor='#330066'
-                bgColor='rgba(51, 0, 102, 0.1)'
+                textColor={colors.items.max}
+                bgColor={colors.items.min}
             />
             <FormValueField
                 label='Valor de Venda (un):'
                 setValue={setValue}
-                bgColor='rgba(51, 0, 102, 0.1)'
-                textColor='#330066'
+                bgColor={colors.items.min}
+                textColor={colors.items.max}
             />
             {
                 (name && value) ? (
-                    <SubmitItemButton color='#330066' onPress={submitNoStock} />
+                    <SubmitItemButton color={colors.items.max} onPress={submitNoStock} />
                 ) : null
             }
         </>

@@ -1,3 +1,4 @@
+import { colors } from '@/constants/appColors'
 import { Item } from '@/types'
 import { Picker } from '@react-native-picker/picker'
 
@@ -15,7 +16,7 @@ export default function ProductOptionsInput({ product, setProduct, products }: P
             onValueChange={itemValue => setProduct(itemValue)}
             dropdownIconColor='white'
             style={{
-                backgroundColor: 'rgba(139, 0, 0, 0.75)',
+                backgroundColor: colors.outflows.max,
                 marginBottom: 20,
                 color: 'white'
             }}

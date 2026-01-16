@@ -15,6 +15,7 @@ import LoadingScreen from '../common/LoadingScreen'
 import { FormNameField } from '../common/FormNameField'
 import useAddEntry from '@/hooks/useAddEntry'
 import SaveButton from '../common/SaveButton'
+import { colors } from '@/constants/appColors'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -133,7 +134,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                 <FormTitle
                     text='Nova Receita'
                     onCloseFormButtonPress={() => setAddSchedulingForm(false)}
-                    textColor='#006600'
+                    textColor={colors.entries.max}
                 />
                 <SelectServiceInput
                     service={service}
@@ -144,21 +145,21 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                 <FormNameField
                     setName={setCustomerName}
                     label='Cliente:'
-                    bgColor='#0066001a'
-                    textColor='#006600'
+                    bgColor={colors.entries.min}
+                    textColor={colors.entries.max}
                 />
                 <FormDateField
                     setTargetDate={setDate}
-                    bgColor='#00660080'
-                    textColor='#006600'
-                    borderBottomColor='#0066001a'
+                    bgColor={colors.entries.mid}
+                    textColor={colors.entries.max}
+                    borderBottomColor={colors.entries.min}
                 />
                 {service.category === 'product' && (
                     <FormAmountField
                         text='* Quantidade:'
                         setAmount={setAmount}
-                        bgColor='rgba(0, 102, 0, 0.1)'
-                        textColor='#006600'
+                        bgColor={colors.entries.min}
+                        textColor={colors.entries.max}
                     />
                 )}
                 {
@@ -166,8 +167,8 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                         <FormValueField
                             label='* Valor:'
                             setValue={setValue}
-                            bgColor='rgba(0, 102, 0, 0.1)'
-                            textColor='#006600'
+                            bgColor={colors.entries.min}
+                            textColor={colors.entries.max}
                         />
                     )
                 }
@@ -178,7 +179,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                 }
                 {
                     checkAllInputs() && (
-                        <SaveButton color='#006600' onPress={addScheduling} />
+                        <SaveButton color={colors.entries.max} onPress={addScheduling} />
                     )
                 }
             </FormContainer>
@@ -189,7 +190,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
 
 const styles = StyleSheet.create({
     infoText: {
-        color: 'rgba(0, 102, 0, 0.5)',
+        color: colors.entries.mid,
         fontSize: 12,
         marginBottom: 20
     }

@@ -16,6 +16,7 @@ import ReplenishResaleStock from './ReplenishResaleStock'
 import { createNewOutflow } from '@/functions/createNewOutflow'
 import useAddOutflow from '@/hooks/useAddOutflow'
 import { DeleteButton } from '../common/DeleteButton'
+import { colors } from '@/constants/appColors'
 
 interface AboutItemCardProps {
     item: Item
@@ -152,7 +153,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                 <FormTitle
                     text={`Informações do ${getAboutItemCardTitle(item.category)}`}
                     onCloseFormButtonPress={() => setFormOff(false)}
-                    textColor='#330066'
+                    textColor={colors.items.max}
                 />
                 <View>
                     <ActualName
@@ -242,7 +243,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 const styles = StyleSheet.create({
 
     resaleWarningCard: {
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        backgroundColor: colors.items.min,
         borderWidth: 0.5,
         borderColor: 'black',
         padding: 16,
@@ -253,9 +254,9 @@ const styles = StyleSheet.create({
     resaleButton: {
         padding: 8,
         borderRadius: 4,
-        backgroundColor: 'rgba(51, 0, 102, 0.75)',
+        backgroundColor: colors.items.mid,
         borderWidth: 1,
-        borderColor: '#330066',
+        borderColor: colors.items.max,
         alignSelf: 'center',
         marginTop: 8
     }
