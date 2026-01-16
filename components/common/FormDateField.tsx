@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { format, parseISO } from 'date-fns'
-import { View, Button, Platform, Text, StyleSheet } from 'react-native'
+import { Platform, Text, Pressable } from 'react-native'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
+import { Label } from './Label'
+import { FormFieldContainer } from './FormFieldContainer'
 
-interface DateInputProps {
+interface FormDateFieldProps {
     setTargetDate: React.Dispatch<React.SetStateAction<string>>
     bgColor?: string
     label?: string
     textColor?: string
+    borderBottomColor?: string
 }
 
-export default function DateInput({ setTargetDate, bgColor, label, textColor }: DateInputProps) {
+export function FormDateField({ setTargetDate, bgColor, label, textColor, borderBottomColor }: FormDateFieldProps) {
 
     const [date, setDate] = useState(new Date())
     const [show, setShow] = useState(false)
@@ -44,17 +47,19 @@ export default function DateInput({ setTargetDate, bgColor, label, textColor }: 
     }, [date])
 
     return (
-        <View>
-            <View style={styles.container}>
-                <Text style={{
-                    marginEnd: 8, color: textColor ? textColor : 'black',
-                    fontWeight: 'bold',
-                    fontSize: 16
-                }}>
-                    {label ? label : 'Data'}
-                </Text>
-                <Button color={bgColor ? bgColor : '#000000'} onPress={showDatepicker} title={dateFormat(getDate())} />
-            </View>
+        <FormFieldContainer borderBottomColor={borderBottomColor}>
+            <Label text={label ? label : 'Data'} color={textColor ? textColor : ''} />
+            <Pressable 
+            style={{ 
+                backgroundColor: bgColor ? bgColor : '#00000080',
+                padding: 8,
+                borderRadius: 4,
+                marginStart: 8
+            }}
+            onPress={showDatepicker}
+            >
+                <Text style={{ color: 'white' }}>{dateFormat(getDate())}</Text>
+            </Pressable>
             {show && (
                 <DateTimePicker
                     value={date}
@@ -63,15 +68,6 @@ export default function DateInput({ setTargetDate, bgColor, label, textColor }: 
                     onChange={onChange}
                 />
             )}
-        </View>
+        </FormFieldContainer>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20
-    }
-})

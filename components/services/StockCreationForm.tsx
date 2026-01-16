@@ -1,6 +1,6 @@
-import AmountInput from '../common/AmountInput'
-import NameInput from '../common/NameInput'
-import NumberInput from '../common/NumberInput'
+import { FormAmountField } from '../common/FormAmountField'
+import { FormNameField } from '../common/FormNameField'
+import { FormValueField } from '../common/FormValueField'
 import CreateItemFormHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
 
@@ -32,23 +32,23 @@ export default function StockCreationForm({ name, amount, value, setStep, setSto
     return (
         <>
             <CreateItemFormHeader
-            title='Novo Produto'
+                title='Novo Produto'
                 onComeBackButtonPress={onComeBackButtonPress}
             />
-            <NameInput
-                label='Nome do Produto'
+            <FormNameField
+                label='Nome do Produto:'
                 setName={setName}
                 textColor='#330066'
                 bgColor='rgba(51, 0, 102, 0.1)'
             />
-            <NumberInput
+            <FormValueField
                 setValue={setValue}
                 bgColor='rgba(51, 0, 102, 0.1)'
                 textColor='#330066'
-                label='Valor de Venda (un)'
+                label='Valor de Venda (un):'
             />
-            <AmountInput
-                text='Estoque Atual'
+            <FormAmountField
+                text='Estoque Atual:'
                 setAmount={setAmount}
                 bgColor='rgba(51, 0, 102, 0.1)'
                 textColor='#330066'

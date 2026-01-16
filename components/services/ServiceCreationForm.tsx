@@ -1,5 +1,5 @@
-import NameInput from '../common/NameInput'
-import NumberInput from '../common/NumberInput'
+import { FormNameField } from '../common/FormNameField'
+import { FormValueField } from '../common/FormValueField'
 import CreateItemFormHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
 
@@ -29,12 +29,13 @@ export default function ServiceCreationForm({ name, value, setName, setValue, se
                 title='Novo Serviço'
                 onComeBackButtonPress={onComeBackButtonPress}
             />
-            <NameInput
+            <FormNameField
                 setName={setName}
                 textColor='#330066'
                 bgColor='rgba(51, 0, 102, 0.1)'
+                label='Nome do Serviço:'
             />
-            <NumberInput
+            <FormValueField
                 setValue={setValue}
                 bgColor='rgba(51, 0, 102, 0.1)'
                 textColor='#330066'

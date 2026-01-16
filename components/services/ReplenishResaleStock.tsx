@@ -1,7 +1,7 @@
 import { Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
-import DateInput from '../common/DateInput'
-import NumberInput from '../common/NumberInput'
-import AmountInput from '../common/AmountInput'
+import DateInput from '../common/FormDateField'
+import NumberInput from '../common/FormValueField'
+import AmountInput from '../common/FormAmountField'
 import ValueOption from '../common/ValueOption'
 
 interface ReplenishResaleStockProps {

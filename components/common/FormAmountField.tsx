@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { TextInput, StyleSheet } from 'react-native'
+import { Label } from './Label'
+import { FormFieldContainer } from './FormFieldContainer'
 
-interface AmountInputProps {
+interface FormAmountFieldProps {
     text: string
     setAmount: React.Dispatch<React.SetStateAction<number>>
     defaultValue?: number
@@ -9,7 +11,7 @@ interface AmountInputProps {
     textColor?: string
 }
 
-export default function AmountInput({ text, setAmount, defaultValue, bgColor, textColor }: AmountInputProps) {
+export function FormAmountField({ text, setAmount, defaultValue, bgColor, textColor }: FormAmountFieldProps) {
 
     const [textValue, setTextValue] = useState('')
 
@@ -23,16 +25,8 @@ export default function AmountInput({ text, setAmount, defaultValue, bgColor, te
     }
 
     return (
-        <View style={styles.inputContainer}>
-            <Text
-                style={{
-                    color: textColor ? textColor : 'black',
-                    fontWeight: 'bold',
-                    fontSize: 16
-                }}
-            >
-                {text}
-            </Text>
+        <FormFieldContainer borderBottomColor={bgColor}>
+            <Label text={text} color={textColor} />
             <TextInput
                 value={defaultValue ? String(defaultValue) : textValue}
                 onChangeText={text => {
@@ -49,24 +43,20 @@ export default function AmountInput({ text, setAmount, defaultValue, bgColor, te
                 }}
                 keyboardType='numeric'
             />
-        </View>
+        </FormFieldContainer>
     )
 
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20
-    },
+
     input: {
-        width: '25%',
+        width: 60,
         color: 'black',
         padding: 8,
         textAlign: 'center',
         marginStart: 8,
         borderRadius: 3
     }
+
 })

@@ -1,5 +1,5 @@
-import NameInput from '../common/NameInput'
-import NumberInput from '../common/NumberInput'
+import { FormNameField } from '../common/FormNameField'
+import { FormValueField } from '../common/FormValueField'
 import ProductSubCategoryHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
 
@@ -13,7 +13,7 @@ interface NoStockCreationFormProps {
 }
 
 export default function NoStockCreationForm({ name, value, setStep, setName, setValue, submitNoStock }: NoStockCreationFormProps) {
-    
+
     const onComeBackButtonPress = () => {
 
         // Zerando estados ao sair do formulário
@@ -26,17 +26,17 @@ export default function NoStockCreationForm({ name, value, setStep, setName, set
     return (
         <>
             <ProductSubCategoryHeader
-            title='Novo Produto'
+                title='Novo Produto'
                 onComeBackButtonPress={onComeBackButtonPress}
             />
-            <NameInput
-                label='Nome do Produto'
+            <FormNameField
+                label='Nome do Produto:'
                 setName={setName}
                 textColor='#330066'
                 bgColor='rgba(51, 0, 102, 0.1)'
             />
-            <NumberInput
-                label='Valor de Venda (un)'
+            <FormValueField
+                label='Valor de Venda (un):'
                 setValue={setValue}
                 bgColor='rgba(51, 0, 102, 0.1)'
                 textColor='#330066'

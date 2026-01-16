@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import NameInput from '../common/NameInput'
+import NameInput from '../common/FormNameField'
 
 interface AddCustomerButtonProps {
     setCustomer: React.Dispatch<React.SetStateAction<string>>

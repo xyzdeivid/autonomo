@@ -1,5 +1,5 @@
 import { Text } from 'react-native'
-import NameInput from '../common/NameInput'
+import { FormNameField } from '../common/FormNameField'
 import CreateItemFormHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
 
@@ -26,10 +26,11 @@ export function BudgetCreationForm({ name, setName, setStep, submitBudget }: Bud
                 title='Novo Serviço'
                 onComeBackButtonPress={onComeBackButtonPress}
             />
-            <NameInput
+            <FormNameField
                 setName={setName}
                 textColor='#330066'
                 bgColor='rgba(51, 0, 102, 0.1)'
+                label='Nome do Serviço:'
             />
             <Text style={{ marginBottom: 20, color: '#330066' }}>
                 O valor será definido ao registrar entrada.

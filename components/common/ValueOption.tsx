@@ -34,7 +34,7 @@ export default function ValueOption({ choice, setChoice, buttonColors }: ValueOp
             }}
                 onPress={() => setChoice('un')}
             >
-                <Text style={styles.textButton}>Unidade</Text>
+                <Text style={styles.textButton}>Un</Text>
             </Pressable>
         </View>
     )
@@ -45,9 +45,7 @@ const styles = StyleSheet.create({
 
     buttonsContainer: {
         display: 'flex',
-        flexDirection: 'row',
-        marginTop: -18,
-        marginBottom: 20
+        flexDirection: 'row'
     },
 
     button: {
@@ -56,8 +54,7 @@ const styles = StyleSheet.create({
     },
 
     textButton: {
-        color: 'white',
-        fontSize: 12
+        color: 'white'
     }
 
 })
