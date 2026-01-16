@@ -112,7 +112,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 }
                 <FormDateField
                     setTargetDate={setDate}
-                    bgColor={colors.outflows.mid}
+                    bgColor={colors.outflows.max}
                     textColor={colors.outflows.max}
                     borderBottomColor={colors.outflows.min}
                 />

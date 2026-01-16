@@ -43,7 +43,7 @@ export default function SelectServiceInput({ service, setService, services, amou
 
 const styles = StyleSheet.create({
     inputContainer: {
-        backgroundColor: colors.entries.mid,
+        backgroundColor: colors.entries.max,
         borderRadius: 6,
         color: 'white'
     }

@@ -150,7 +150,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                 />
                 <FormDateField
                     setTargetDate={setDate}
-                    bgColor={colors.entries.mid}
+                    bgColor={colors.entries.max}
                     textColor={colors.entries.max}
                     borderBottomColor={colors.entries.min}
                 />
