@@ -6,14 +6,22 @@ interface EditablePropertyProps {
     propertyName: string
     isEditable: boolean
     onEditButtonPress?: () => void
+    bgColor: string
+    borderColor: string
 }
 
-export function EditableProperty({ label, propertyName, isEditable, onEditButtonPress }: EditablePropertyProps) {
+export function EditableProperty({ label, propertyName, isEditable, onEditButtonPress, bgColor, borderColor }: EditablePropertyProps) {
 
     return (
-        <View style={styles.container}>
+        <View style={{
+            ...styles.container,
+            backgroundColor: bgColor,
+            borderColor: borderColor
+        }}>
             <Label text={label} />
-            <Text style={styles.propertyName}>{propertyName}</Text>
+            <Text style={styles.propertyName}>
+                {propertyName}
+            </Text>
             {
                 isEditable && (
                     <Pressable
@@ -29,13 +37,18 @@ export function EditableProperty({ label, propertyName, isEditable, onEditButton
 
 }
 
+const mainColor = '#066C9180'
+
 const styles = StyleSheet.create({
 
     container: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 24
+        marginBottom: 24,
+        padding: 16,
+        borderRadius: 8,
+        borderWidth: StyleSheet.hairlineWidth
     },
 
     propertyName: {
@@ -43,15 +56,15 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: '#E0E0E0',
-        padding: 8,
-        borderRadius: 4,
-        marginStart: 16
+        borderLeftColor: mainColor,
+        borderLeftWidth: StyleSheet.hairlineWidth,
+        marginLeft: 8,
+        paddingLeft: 8
     },
 
     buttonText: {
         fontSize: 16,
-        color: 'rgba(0, 0, 0, 0.5)'
+        color: mainColor
     }
 
 })

@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, BackHandler, Pressable, Alert } from 'react-native'
-import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { Item, Outflow } from '@/types'
 import { useEffect, useState } from 'react'
@@ -15,8 +14,9 @@ import { getAboutItemCardTitle } from '@/functions/getAboutItemCardTitle'
 import ReplenishResaleStock from './ReplenishResaleStock'
 import { createNewOutflow } from '@/functions/createNewOutflow'
 import useAddOutflow from '@/hooks/useAddOutflow'
-import { DeleteButton } from '../common/DeleteButton'
+import { DeleteButton } from '../common/DeleteListItemButton'
 import { colors } from '@/constants/appColors'
+import { ListItemCardContainer } from '../common/ListItemCardContainer'
 
 interface AboutItemCardProps {
     item: Item
@@ -148,7 +148,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer
+            <ListItemCardContainer borderTopColor={colors.items.min}
             >
                 <FormTitle
                     text={`Informações do ${getAboutItemCardTitle(item.category)}`}
@@ -190,12 +190,10 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                     }
                     {
                         item.resale && (
-                            <View style={{ marginTop: 12 }}>
-                                <View
-                                    style={styles.resaleWarningCard}
-                                >
-                                    <View><Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginBottom: 8 }}>Evite erros no seu saldo!</Text></View>
-                                    <Text style={{ textAlign: 'justify' }}>Para produtos que são revendidos, não recomendamos editar estoque manualmente. Ao clicar em <Text style={{ fontWeight: 'bold' }}>Repor Estoque</Text>,
+                            <View>
+                                <View>
+                                    <View><Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Evite erros no seu saldo!</Text></View>
+                                    <Text>Para produtos que são revendidos, não recomendamos editar estoque manualmente. Ao clicar em <Text style={{ fontWeight: 'bold' }}>Repor Estoque</Text>,
                                         você atualiza o estoque e registra a despesa da compra do produto de uma só vez.</Text>
                                 </View>
                                 <Pressable
@@ -222,8 +220,10 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                         />
                     )
                 }
-            </FormContainer>
-            <DeleteButton onPress={() => setConfirmDelete(true)} />
+                <View style={{ marginTop: 16 }}>
+                    <DeleteButton onPress={() => setConfirmDelete(true)} />
+                </View>
+            </ListItemCardContainer>
             {
                 confirmDelete && (
                     <ConfirmDelete
@@ -242,21 +242,10 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
 const styles = StyleSheet.create({
 
-    resaleWarningCard: {
-        backgroundColor: colors.items.min,
-        borderWidth: 0.5,
-        borderColor: 'black',
-        padding: 16,
-        borderRadius: 4,
-        marginTop: 12
-    },
-
     resaleButton: {
         padding: 8,
         borderRadius: 4,
         backgroundColor: colors.items.mid,
-        borderWidth: 1,
-        borderColor: colors.items.max,
         alignSelf: 'center',
         marginTop: 8
     }

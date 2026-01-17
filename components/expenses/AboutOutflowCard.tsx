@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, BackHandler } from 'react-native'
-import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { Outflow } from '@/types'
 import { moneyFormat } from '@/functions/common'
@@ -11,10 +10,11 @@ import { ActualValue } from './ActualValue'
 import useEditOutflowName from '@/hooks/useEditOutflowName'
 import useEditOutflowValue from '@/hooks/useEditOutflowValue'
 import { EditableProperty } from '../common/EditableProperty'
-import { DeleteButton } from '../common/DeleteButton'
+import { DeleteButton } from '../common/DeleteListItemButton'
 import { EditDateField } from '../common/EditDateField'
 import useEditOutflowDate from '@/hooks/useEditOutflowDate'
 import { colors } from '@/constants/appColors'
+import { ListItemCardContainer } from '../common/ListItemCardContainer'
 
 
 interface AboutOutflowCardProps {
@@ -98,7 +98,8 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <FormContainer
+            <ListItemCardContainer
+            borderTopColor={colors.outflows.min}
             >
                 <FormTitle
                     text='Informações de Despesa'
@@ -152,8 +153,8 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                         )
                     }
                 </View>
-            </FormContainer>
-            <DeleteButton onPress={() => setConfirmDelete(true)} />
+                <DeleteButton onPress={() => setConfirmDelete(true)} />
+            </ListItemCardContainer>
             {
                 confirmDelete &&
                 <ConfirmDelete

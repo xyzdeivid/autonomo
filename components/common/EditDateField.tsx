@@ -7,9 +7,11 @@ import { Platform } from 'react-native'
 interface EditDateFieldProps {
     defaultValue: string
     editDate: (newDate: string) => Promise<void>
+    bgColor: string
+    borderColor: string
 }
 
-export function EditDateField({ defaultValue, editDate }: EditDateFieldProps) {
+export function EditDateField({ defaultValue, editDate, bgColor, borderColor }: EditDateFieldProps) {
     const [showDateTimePicker, setShowDateTimePicker] = useState(false)
 
     const formatDateToISO = (date: Date) => {
@@ -41,6 +43,8 @@ export function EditDateField({ defaultValue, editDate }: EditDateFieldProps) {
                 propertyName={format(parseISO(defaultValue), 'dd/MM')}
                 isEditable={true}
                 onEditButtonPress={() => setShowDateTimePicker(true)}
+                bgColor={bgColor}
+                borderColor={borderColor}
             />
             {showDateTimePicker && (
                 <DateTimePicker

@@ -1,9 +1,7 @@
-import { View, BackHandler } from 'react-native'
-import FormContainer from '../common/FormContainer'
-import FormTitle from '../common/FormTitle'
+import { Animated, BackHandler, Dimensions } from 'react-native'
 import { Entry } from '@/types'
 import { moneyFormat } from '@/functions/common'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
 import AddClienteButton from './AddClienteButton'
@@ -13,8 +11,13 @@ import useEditCustomerName from '@/hooks/useEditCustomerName'
 import useEditEntryDate from '@/hooks/useEditEntryDate'
 import { EditableProperty } from '../common/EditableProperty'
 import { EditDateField } from '../common/EditDateField'
-import { DeleteButton } from '../common/DeleteButton'
+import { DeleteListItemButton } from '../common/DeleteListItemButton'
 import { colors } from '@/constants/appColors'
+import { ListItemCardContainer } from '../common/ListItemCardContainer'
+import { ListItemCardHeader } from '../common/ListItemCardHeader'
+import { ListItemCardBody } from '../common/ListItemCardBody'
+
+const { height } = Dimensions.get('window')
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -23,6 +26,16 @@ interface AboutSchedulingCardProps {
 }
 
 export default function AboutSchedulingCard({ scheduling, deleteFunction, setFormOff }: AboutSchedulingCardProps) {
+
+    const slideAnim = useRef(new Animated.Value(height)).current
+
+    useEffect(() => {
+        Animated.timing(slideAnim, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true
+        }).start()
+    }, [slideAnim])
 
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [loadingPage, setLoadingPage] = useState(false)
@@ -76,63 +89,76 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     return (
         <>
             {loadingPage && <LoadingScreen />}
-            <FormContainer
-            >
-                <FormTitle
-                    text='Informações de Receita'
-                    onCloseFormButtonPress={() => setFormOff(false)}
-                    textColor={colors.entries.max}
-                />
-                <View>
-                    {
-                        scheduling.customer
-                            ? <ActualCustomer
-                                customer={scheduling.customer}
-                                setNewCustomerName={setCustomer}
-                                newCustomerName={customer}
-                                editCustomerName={submitCustomerNameToEdit}
-                                showEditInput={showEditCustomerInput}
-                                setShowEditInput={setShowEditCustomerInput}
-                            />
-                            : <AddClienteButton
-                                setCustomer={setCustomer}
-                                customer={customer}
-                                addCustomer={submitCustomerName}
-                            />
-                    }
-                    <EditableProperty
-                        label='Produto/Serviço: '
-                        propertyName={scheduling.serviceId}
-                        isEditable={false}
+            <ListItemCardContainer bgColor={colors.entries.min}>
+                <Animated.View
+                    style={{ transform: [{ translateY: slideAnim }] }}
+                >
+                    <ListItemCardHeader
+                        text='Detalhes de Receita'
+                        bgColor={colors.entries.max}
+                        onCloseCardButton={() => setFormOff(false)}
                     />
-                    <EditDateField
-                        defaultValue={scheduling.date}
-                        editDate={editDate}
-                    />
-                    <EditableProperty
-                        label='Valor: '
-                        propertyName={moneyFormat(scheduling.serviceValue)}
-                        isEditable={false}
-                    />
-                    {
-                        (scheduling.serviceAmount && scheduling.serviceCategory === 'product') ? (
-                            <>
-                                <EditableProperty
-                                    label='Valor (un): '
-                                    propertyName={moneyFormat(scheduling.serviceValue / scheduling.serviceAmount)}
-                                    isEditable={false}
+                    <ListItemCardBody>
+                        {
+                            scheduling.customer
+                                ? <ActualCustomer
+                                    customer={scheduling.customer}
+                                    setNewCustomerName={setCustomer}
+                                    newCustomerName={customer}
+                                    editCustomerName={submitCustomerNameToEdit}
+                                    showEditInput={showEditCustomerInput}
+                                    setShowEditInput={setShowEditCustomerInput}
                                 />
-                                <EditableProperty
-                                    label='Quantidade: '
-                                    propertyName={String(scheduling.serviceAmount)}
-                                    isEditable={false}
+                                : <AddClienteButton
+                                    setCustomer={setCustomer}
+                                    customer={customer}
+                                    addCustomer={submitCustomerName}
                                 />
-                            </>
-                        ) : null
-                    }
-                </View>
-            </FormContainer>
-            <DeleteButton onPress={() => setConfirmDelete(true)} />
+                        }
+                        <EditableProperty
+                            label='Produto/Serviço: '
+                            propertyName={scheduling.serviceId}
+                            isEditable={false}
+                            bgColor={colors.entries.min}
+                            borderColor={colors.entries.mid}
+                        />
+                        <EditDateField
+                            defaultValue={scheduling.date}
+                            editDate={editDate}
+                            bgColor={colors.entries.min}
+                            borderColor={colors.entries.mid}
+                        />
+                        <EditableProperty
+                            label='Valor: '
+                            propertyName={moneyFormat(scheduling.serviceValue)}
+                            isEditable={false}
+                            bgColor={colors.entries.min}
+                            borderColor={colors.entries.mid}
+                        />
+                        {
+                            (scheduling.serviceAmount && scheduling.serviceCategory === 'product') ? (
+                                <>
+                                    <EditableProperty
+                                        label='Valor (un): '
+                                        propertyName={moneyFormat(scheduling.serviceValue / scheduling.serviceAmount)}
+                                        isEditable={false}
+                                        bgColor={colors.entries.min}
+                                        borderColor={colors.entries.mid}
+                                    />
+                                    <EditableProperty
+                                        label='Quantidade: '
+                                        propertyName={String(scheduling.serviceAmount)}
+                                        isEditable={false}
+                                        bgColor={colors.entries.min}
+                                        borderColor={colors.entries.mid}
+                                    />
+                                </>
+                            ) : null
+                        }
+                        <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
+                    </ListItemCardBody>
+                </Animated.View>
+            </ListItemCardContainer>
             {
                 confirmDelete && (
                     <ConfirmDelete

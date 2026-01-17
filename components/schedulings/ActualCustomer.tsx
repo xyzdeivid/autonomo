@@ -1,3 +1,4 @@
+import { colors } from '@/constants/appColors'
 import { EditableProperty } from '../common/EditableProperty'
 import { EditNameField } from '../common/EditNameField'
 
@@ -21,6 +22,8 @@ export default function ActualCustomer({ customer, setNewCustomerName, newCustom
                         propertyName={customer}
                         isEditable={true}
                         onEditButtonPress={() => setShowEditInput(true)}
+                        bgColor={colors.entries.min}
+                        borderColor={colors.entries.mid}
                     />
                     : <EditNameField
                         defaultValue={customer}
