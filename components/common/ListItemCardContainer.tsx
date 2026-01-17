@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Animated, Dimensions, StyleSheet, View } from 'react-native'
+import { Animated, Dimensions, StyleSheet } from 'react-native'
 
 interface ListItemCardContainerProps {
     children: React.ReactNode
@@ -36,9 +36,9 @@ export function ListItemCardContainer({ children, bgColor }: ListItemCardContain
                 { backgroundColor: bgColor, opacity: fadeAnim }
             ]}
         >
-            <View style={styles.body}>
+            <Animated.View style={[styles.body, { transform: [{ translateY: slideAnim }] }]}>
                 {children}
-            </View>
+            </Animated.View>
         </Animated.View>
 
     )
@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
         zIndex: 1,
-        justifyContent: 'center'
+        justifyContent: 'flex-end'
     },
 
     body: {
-        borderRadius: 20,
-        margin: 16,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
         overflow: 'hidden'
     }
 

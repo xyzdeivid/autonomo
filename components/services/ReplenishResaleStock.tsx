@@ -2,7 +2,6 @@ import { Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import { FormDateField } from '../common/FormDateField'
 import { FormValueField } from '../common/FormValueField'
 import { FormAmountField } from '../common/FormAmountField'
-import ValueOption from '../common/ValueOption'
 
 interface ReplenishResaleStockProps {
     resaleProductName: string
@@ -47,16 +46,16 @@ const ReplenishResaleStock = ({ resaleProductName, setReplenishDate,
                     style={styles.card}
                 >
                     <View>
-                        <Text style={styles.cardTitle}>Reposição de Estoque</Text>
+                        <Text style={styles.cardTitle}>Reposição de {resaleProductName}</Text>
                         <View style={{ width: '100%', height: 1, backgroundColor: 'black', marginBottom: 24 }} />
                     </View>
-                    <Text style={{ fontSize: 16, marginBottom: 20 }}><Text style={{ fontWeight: 'bold' }} >Produto:</Text> {resaleProductName}</Text>
                     <FormDateField setTargetDate={setReplenishDate} />
-                    <FormValueField label={valueLabelChoice()} setValue={setReplenishValue} />
-                    <ValueOption
-                        choice={replenishValueChoice}
-                        setChoice={setReplenishValueChoice}
-                        buttonColors={['black', 'rgba(0,0,0,0.6)']}
+                    <FormValueField
+                        label={valueLabelChoice()}
+                        setValue={setReplenishValue}
+                        valueChoice={replenishValueChoice}
+                        setValueChoice={setReplenishValueChoice}
+                        valueChoiceButtonColors={['black', 'rgba(0,0,0,0.6)']}
                     />
                     <FormAmountField text='Quantidade' setAmount={setReplenishAmount} />
                     <View style={styles.buttonsContainer}>

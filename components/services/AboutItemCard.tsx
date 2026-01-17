@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, BackHandler, Pressable, Alert } from 'react-native'
+import { View, BackHandler, Alert } from 'react-native'
 import { Item, Outflow } from '@/types'
 import { useEffect, useState } from 'react'
 import ActualValue from './ActualValue'
@@ -18,6 +18,7 @@ import { colors } from '@/constants/appColors'
 import { ListItemCardContainer } from '../common/ListItemCardContainer'
 import { ListItemCardHeader } from '../common/ListItemCardHeader'
 import { ListItemCardBody } from '../common/ListItemCardBody'
+import { StockWarningForResale } from './StockWarningForResale'
 
 interface AboutItemCardProps {
     item: Item
@@ -149,8 +150,8 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <ListItemCardContainer 
-            bgColor={colors.items.min}
+            <ListItemCardContainer
+                bgColor={colors.items.min}
             >
                 <ListItemCardHeader
                     text={`Informações do ${getAboutItemCardTitle(item.category)}`}
@@ -192,22 +193,10 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                     }
                     {
                         item.resale && (
-                            <View>
-                                <View>
-                                    <View><Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 8 }}>Evite erros no seu saldo!</Text></View>
-                                    <Text>Para produtos que são revendidos, não recomendamos editar estoque manualmente. Ao clicar em <Text style={{ fontWeight: 'bold' }}>Repor Estoque</Text>,
-                                        você atualiza o estoque e registra a despesa da compra do produto de uma só vez.</Text>
-                                </View>
-                                <Pressable
-                                    style={styles.resaleButton}
-                                    onPress={() => setReplenishForm(true)}
-                                >
-                                    <Text style={{ color: 'white' }}>Repor Estoque</Text>
-                                </Pressable>
-                            </View>
+                            <StockWarningForResale onRestockButtonPress={() => setReplenishForm(true)} />
                         )
                     }
-                    <View style={{ marginTop: 16 }}>
+                    <View style={{ marginTop: item.resale ? 16 : 0 }}>
                         <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
                     </View>
                 </ListItemCardBody>
@@ -241,15 +230,3 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
     )
 
 }
-
-const styles = StyleSheet.create({
-
-    resaleButton: {
-        padding: 8,
-        borderRadius: 4,
-        backgroundColor: colors.items.mid,
-        alignSelf: 'center',
-        marginTop: 8
-    }
-
-})
