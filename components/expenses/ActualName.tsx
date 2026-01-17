@@ -1,6 +1,6 @@
 import { Outflow } from '@/types'
 import { ListItemCardProperty } from '../common/ListItemCardProperty'
-import { EditNameField } from '../common/EditNameField'
+import { EditNameField } from '../common/EditNameCard'
 import { colors } from '@/constants/appColors'
 
 interface ActualNameProps {

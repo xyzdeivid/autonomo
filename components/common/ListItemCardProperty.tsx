@@ -1,27 +1,25 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { Label } from './Label'
 
 interface ListItemCardPropertyProps {
     label: string
-    propertyName: string
-    isEditable: boolean
-    onEditButtonPress?: () => void
+    text: string
     bgColor: string
+    onEditButtonPress?: () => void
 }
 
-export function ListItemCardProperty({ label, propertyName, isEditable, onEditButtonPress, bgColor }: ListItemCardPropertyProps) {
+export function ListItemCardProperty({ label, text, bgColor, onEditButtonPress }: ListItemCardPropertyProps) {
 
     return (
         <View style={{
             ...styles.container,
             backgroundColor: bgColor
         }}>
-            <Label text={label} />
-            <Text style={styles.propertyName}>
-                {propertyName}
+            <Text style={styles.label}>{label}: </Text>
+            <Text style={styles.text}>
+                {text}
             </Text>
             {
-                isEditable && (
+                onEditButtonPress && (
                     <Pressable
                         style={styles.button}
                         onPress={onEditButtonPress}
@@ -48,7 +46,12 @@ const styles = StyleSheet.create({
         borderRadius: 8
     },
 
-    propertyName: {
+    label: {
+        fontSize: 16,
+        fontWeight: '500'
+    },
+
+    text: {
         fontSize: 16
     },
 

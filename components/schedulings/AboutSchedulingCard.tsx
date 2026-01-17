@@ -1,21 +1,22 @@
-import { BackHandler } from 'react-native'
+import { BackHandler, Platform } from 'react-native'
 import { Entry } from '@/types'
-import { moneyFormat } from '@/functions/common'
-import { useEffect, useState } from 'react'
+import { dateFormat, moneyFormat } from '@/functions/common'
+import React, { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
 import AddClienteButton from './AddClienteButton'
-import ActualCustomer from './ActualCustomer'
 import useAddCustomerName from '@/hooks/useAddCustomerName'
 import useEditCustomerName from '@/hooks/useEditCustomerName'
 import useEditEntryDate from '@/hooks/useEditEntryDate'
 import { ListItemCardProperty } from '../common/ListItemCardProperty'
-import { EditDateField } from '../common/EditDateField'
 import { DeleteListItemButton } from '../common/DeleteListItemButton'
 import { colors } from '@/constants/appColors'
 import { ListItemCardContainer } from '../common/ListItemCardContainer'
 import { ListItemCardHeader } from '../common/ListItemCardHeader'
 import { ListItemCardBody } from '../common/ListItemCardBody'
+import { parseISO } from 'date-fns'
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
+import { EditNameCard } from '../common/EditNameCard'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -25,15 +26,19 @@ interface AboutSchedulingCardProps {
 
 export default function AboutSchedulingCard({ scheduling, deleteFunction, setFormOff }: AboutSchedulingCardProps) {
 
+    const [showDateTimePicker, setShowDateTimePicker] = useState(false)
+    const [showEditNameCard, setShowEditNameCard] = useState(false)
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [loadingPage, setLoadingPage] = useState(false)
     const [customer, setCustomer] = useState('')
 
-    const [showEditCustomerInput, setShowEditCustomerInput] = useState(false)
-
     const addCustomerName = useAddCustomerName().addCustomerName
     const editCustomerName = useEditCustomerName().editCustomerName
     const editEntryDate = useEditEntryDate().editEntryDate
+
+    const formatDateToISO = (date: Date) => {
+        return date.toISOString().split('T')[0]
+    }
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
@@ -60,7 +65,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         await editCustomerName(scheduling._id, customer)
 
         setLoadingPage(false)
-        setShowEditCustomerInput(false)
 
     }
 
@@ -71,6 +75,24 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         await editEntryDate(newDate, scheduling._id)
 
         setLoadingPage(false)
+
+    }
+
+    const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+
+        setShowDateTimePicker(false)
+
+        if (event.type === 'set' && selectedDate) {
+
+            const dateString = formatDateToISO(selectedDate)
+
+            if (dateString !== scheduling.date) {
+
+                editDate(dateString)
+
+            }
+
+        }
 
     }
 
@@ -86,13 +108,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                 <ListItemCardBody>
                     {
                         scheduling.customer
-                            ? <ActualCustomer
-                                customer={scheduling.customer}
-                                setNewCustomerName={setCustomer}
-                                newCustomerName={customer}
-                                editCustomerName={submitCustomerNameToEdit}
-                                showEditInput={showEditCustomerInput}
-                                setShowEditInput={setShowEditCustomerInput}
+                            ? <ListItemCardProperty
+                                label='Cliente'
+                                text={scheduling.customer}
+                                bgColor={colors.entries.min}
+                                onEditButtonPress={() => setShowEditNameCard(true)}
                             />
                             : <AddClienteButton
                                 setCustomer={setCustomer}
@@ -100,36 +120,57 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                 addCustomer={submitCustomerName}
                             />
                     }
+                    {
+                        showEditNameCard && scheduling.customer && (
+                            <EditNameCard
+                                visible={showEditNameCard}
+                                currentName={scheduling.customer}
+                                newName={customer}
+                                setNewName={setCustomer}
+                                onConfirmButtonPress={() => {
+                                    submitCustomerNameToEdit()
+                                    setShowEditNameCard(false)
+                                }}
+                                onCancelButtonPress={() => setShowEditNameCard(false)}
+                            />
+
+                        )
+                    }
                     <ListItemCardProperty
-                        label='Produto/Serviço: '
-                        propertyName={scheduling.serviceId}
-                        isEditable={false}
+                        label='Produto/Serviço'
+                        text={scheduling.serviceId}
                         bgColor={colors.entries.min}
                     />
-                    <EditDateField
-                        defaultValue={scheduling.date}
-                        editDate={editDate}
-                        bgColor={colors.entries.min}
-                    />
                     <ListItemCardProperty
-                        label='Valor: '
-                        propertyName={moneyFormat(scheduling.serviceValue)}
-                        isEditable={false}
+                        label='Data'
+                        text={dateFormat(scheduling.date)}
+                        bgColor={colors.entries.min}
+                        onEditButtonPress={() => setShowDateTimePicker(true)}
+                    />
+                    {showDateTimePicker && (
+                        <DateTimePicker
+                            value={parseISO(scheduling.date)}
+                            mode='date'
+                            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                            onChange={onChange}
+                        />
+                    )}
+                    <ListItemCardProperty
+                        label='Valor'
+                        text={moneyFormat(scheduling.serviceValue)}
                         bgColor={colors.entries.min}
                     />
                     {
                         (scheduling.serviceAmount && scheduling.serviceCategory === 'product') ? (
                             <>
                                 <ListItemCardProperty
-                                    label='Valor (un): '
-                                    propertyName={moneyFormat(scheduling.serviceValue / scheduling.serviceAmount)}
-                                    isEditable={false}
+                                    label='Valor (un)'
+                                    text={moneyFormat(scheduling.serviceValue / scheduling.serviceAmount)}
                                     bgColor={colors.entries.min}
                                 />
                                 <ListItemCardProperty
-                                    label='Quantidade: '
-                                    propertyName={String(scheduling.serviceAmount)}
-                                    isEditable={false}
+                                    label='Quantidade'
+                                    text={String(scheduling.serviceAmount)}
                                     bgColor={colors.entries.min}
                                 />
                             </>

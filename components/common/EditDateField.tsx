@@ -38,11 +38,10 @@ export function EditDateField({ defaultValue, editDate, bgColor }: EditDateField
     return (
         <>
             <ListItemCardProperty
-                label='Data: '
-                propertyName={format(parseISO(defaultValue), 'dd/MM')}
-                isEditable={true}
-                onEditButtonPress={() => setShowDateTimePicker(true)}
+                label='Data'
+                text={format(parseISO(defaultValue), 'dd/MM')}
                 bgColor={bgColor}
+                onEditButtonPress={() => setShowDateTimePicker(true)}
             />
             {showDateTimePicker && (
                 <DateTimePicker

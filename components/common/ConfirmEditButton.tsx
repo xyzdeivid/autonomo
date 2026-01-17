@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
 
 interface ConfirmEditButtonProps {
-    onPress: () => Promise<void>
+    onPress: () => void
 }
 
 export function ConfirmEditButton({ onPress }: ConfirmEditButtonProps) {
