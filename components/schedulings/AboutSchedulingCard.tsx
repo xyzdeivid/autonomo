@@ -125,10 +125,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                             <EditNameCard
                                 visible={showEditNameCard}
                                 currentName={scheduling.customer}
-                                newName={customer}
                                 setNewName={setCustomer}
                                 onConfirmButtonPress={() => {
-                                    submitCustomerNameToEdit()
+                                    if (customer && customer !== scheduling.customer) {
+                                        submitCustomerNameToEdit()
+                                    }
                                     setShowEditNameCard(false)
                                 }}
                                 onCancelButtonPress={() => setShowEditNameCard(false)}

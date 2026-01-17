@@ -1,21 +1,22 @@
-import { Text, StyleSheet, BackHandler } from 'react-native'
+import { Text, StyleSheet, BackHandler, Platform } from 'react-native'
 import { Outflow } from '@/types'
-import { moneyFormat } from '@/functions/common'
-import { useEffect, useState } from 'react'
+import { dateFormat, moneyFormat } from '@/functions/common'
+import React, { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
-import { ActualName } from './ActualName'
 import LoadingScreen from '../common/LoadingScreen'
-import { ActualValue } from './ActualValue'
 import useEditOutflowName from '@/hooks/useEditOutflowName'
 import useEditOutflowValue from '@/hooks/useEditOutflowValue'
 import { ListItemCardProperty } from '../common/ListItemCardProperty'
 import { DeleteListItemButton } from '../common/DeleteListItemButton'
-import { EditDateField } from '../common/EditDateField'
 import useEditOutflowDate from '@/hooks/useEditOutflowDate'
 import { colors } from '@/constants/appColors'
 import { ListItemCardContainer } from '../common/ListItemCardContainer'
 import { ListItemCardHeader } from '../common/ListItemCardHeader'
 import { ListItemCardBody } from '../common/ListItemCardBody'
+import { EditNameCard } from '../common/EditNameCard'
+import { parseISO } from 'date-fns'
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
+import { EditValueCard } from '../common/EditValueCard'
 
 
 interface AboutOutflowCardProps {
@@ -26,16 +27,21 @@ interface AboutOutflowCardProps {
 
 export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }: AboutOutflowCardProps) {
 
+    const [showDateTimePicker, setShowDateTimePicker] = useState(false)
     const [confirmDelete, setConfirmDelete] = useState(false)
-    const [showEditValueInput, setShowEditValueInput] = useState(false)
+    const [showEditValueCard, setShowEditValueCard] = useState(false)
     const [newName, setNewName] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [newValue, setNewValue] = useState(0)
-    const [showEditNameInput, setShowEditNameInput] = useState(false)
+    const [showEditNameCard, setShowEditNameCard] = useState(false)
 
     const editOutflowName = useEditOutflowName().editOutflowName
     const editOutflowValue = useEditOutflowValue().editOutflowValue
     const editOutflowDate = useEditOutflowDate().editOutflowDate
+
+    const formatDateToISO = (date: Date) => {
+        return date.toISOString().split('T')[0]
+    }
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
@@ -43,13 +49,6 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
             return null
         })
     }, [setFormOff])
-
-    const isEditable = () => {
-
-        if (outflow.amount) return false
-        return true
-
-    }
 
     const submitNameToEdit = async () => {
 
@@ -60,7 +59,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
             await editOutflowName(outflow, newName)
 
             setLoadingScreen(false)
-            setShowEditNameInput(false)
+            setShowEditNameCard(false)
             setNewName('')
 
         }
@@ -86,11 +85,29 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
             await editOutflowValue(outflow, newValue)
 
             setLoadingScreen(false)
-            setShowEditValueInput(false)
+            setShowEditValueCard(false)
 
         } else {
 
-            setShowEditValueInput(false)
+            setShowEditValueCard(false)
+
+        }
+
+    }
+
+    const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+
+        setShowDateTimePicker(false)
+
+        if (event.type === 'set' && selectedDate) {
+
+            const dateString = formatDateToISO(selectedDate)
+
+            if (dateString !== outflow.date) {
+
+                submitDateToEdit(dateString)
+
+            }
 
         }
 
@@ -100,7 +117,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
         <>
             {loadingScreen && <LoadingScreen />}
             <ListItemCardContainer
-            bgColor={colors.outflows.min}
+                bgColor={colors.outflows.min}
             >
                 <ListItemCardHeader
                     text='Detalhes de Despesa'
@@ -113,47 +130,83 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                             <Text style={styles.replenishLabel}>Reposição de Estoque</Text>
                         )
                     }
-                    <ActualName
-                        outflow={outflow}
-                        name={newName}
-                        setName={setNewName}
-                        editName={submitNameToEdit}
-                        showEditInput={showEditNameInput}
-                        setShowEditInput={setShowEditNameInput}
-                        isEditable={isEditable()}
-                    />
-                    <EditDateField
-                        defaultValue={outflow.date}
-                        editDate={submitDateToEdit}
+                    <ListItemCardProperty
+                        label='Nome'
+                        text={outflow.name}
+                        // Só permitindo edição se não for uma revenda
+                        onEditButtonPress={!outflow.amount ? () => {
+                            setShowEditNameCard(true)
+                        } : undefined}
                         bgColor={colors.outflows.min}
                     />
-                    <ActualValue
-                        outflow={outflow}
-                        showEditInput={showEditValueInput}
-                        setShowEditInput={setShowEditValueInput}
-                        value={newValue}
-                        setValue={setNewValue}
-                        editValue={submitValueToEdit}
-                        isEditable={isEditable()}
-                    />
                     {
-                        outflow.amount && (
-                            <ListItemCardProperty
-                                label='Valor (un): '
-                                propertyName={moneyFormat(outflow.value / outflow.amount)}
-                                isEditable={isEditable()}
-                                bgColor={colors.outflows.min}
+                        showEditNameCard && (
+                            <EditNameCard
+                                visible={showEditNameCard}
+                                currentName={outflow.name}
+                                setNewName={setNewName}
+                                onConfirmButtonPress={() => {
+                                    if (newName && newName !== outflow.name) {
+                                        submitNameToEdit()
+                                    }
+                                    setShowEditNameCard(false)
+                                }}
+                                onCancelButtonPress={() => {
+                                    setShowEditNameCard(false)
+                                    setNewName('')
+                                }}
                             />
                         )
                     }
+                    <ListItemCardProperty
+                        label='Data'
+                        text={dateFormat(outflow.date)}
+                        bgColor={colors.outflows.min}
+                        onEditButtonPress={() => setShowDateTimePicker(true)}
+                    />
+                    {showDateTimePicker && (
+                        <DateTimePicker
+                            value={parseISO(outflow.date)}
+                            mode='date'
+                            display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                            onChange={onChange}
+                        />
+                    )}
+                    <ListItemCardProperty
+                        label='Valor'
+                        text={moneyFormat(outflow.value)}
+                        bgColor={colors.outflows.min}
+                        onEditButtonPress={!outflow.amount ? () => setShowEditValueCard(true)
+                            : undefined
+                        }
+                    />
+                    {showEditValueCard && (
+                        <EditValueCard 
+                        visible={showEditValueCard}
+                        setNewValue={setNewValue}
+                        onSuccessButtonPress={() => {
+                            if (newValue !== outflow.value) {
+                                submitValueToEdit()
+                            }
+                            setShowEditValueCard(false)
+                        }}
+                        onCancelButtonPress={() => setShowEditValueCard(false)}
+                        />
+                    )}
                     {
                         outflow.amount && (
-                            <ListItemCardProperty
-                                label='Quantidade: '
-                                propertyName={String(outflow.amount)}
-                                isEditable={isEditable()}
-                                bgColor={colors.outflows.min}
-                            />
+                            <>
+                                <ListItemCardProperty
+                                    label='Valor (un)'
+                                    text={moneyFormat(outflow.value / outflow.amount)}
+                                    bgColor={colors.outflows.min}
+                                />
+                                <ListItemCardProperty
+                                    label='Quantidade'
+                                    text={String(outflow.amount)}
+                                    bgColor={colors.outflows.min}
+                                />
+                            </>
                         )
                     }
                     <DeleteListItemButton onPress={() => setConfirmDelete(true)} />

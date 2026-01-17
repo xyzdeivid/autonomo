@@ -18,10 +18,9 @@ export function ConfirmEditButton({ onPress }: ConfirmEditButtonProps) {
 const styles = StyleSheet.create({
 
     button: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: '#5764EF',
         padding: 8,
-        borderRadius: 4,
-        marginStart: 8
+        borderRadius: 4
     }
 
 })

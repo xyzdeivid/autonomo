@@ -1,11 +1,8 @@
 import { View, BackHandler, Alert } from 'react-native'
 import { Item, Outflow } from '@/types'
 import { useEffect, useState } from 'react'
-import ActualValue from './ActualValue'
-import ActualStock from './ActualStock'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
-import ActualName from './ActualName'
 import useEditItemName from '@/hooks/useEditItemName'
 import useEditItemValue from '@/hooks/useEditItemValue'
 import useEditStockItem from '@/hooks/useEditStockItem'
@@ -19,6 +16,11 @@ import { ListItemCardContainer } from '../common/ListItemCardContainer'
 import { ListItemCardHeader } from '../common/ListItemCardHeader'
 import { ListItemCardBody } from '../common/ListItemCardBody'
 import { StockWarningForResale } from './StockWarningForResale'
+import { ListItemCardProperty } from '../common/ListItemCardProperty'
+import { moneyFormat } from '@/functions/common'
+import { EditNameCard } from '../common/EditNameCard'
+import { EditValueCard } from '../common/EditValueCard'
+import { EditAmountCard } from '../common/EditAmountCard'
 
 interface AboutItemCardProps {
     item: Item
@@ -28,14 +30,13 @@ interface AboutItemCardProps {
 
 export default function AboutItemCard({ item, deleteFunction, setFormOff }: AboutItemCardProps) {
 
-    const [showEditNameInput, setShowEditNameInput] = useState(false)
+    const [showEditNameCard, setShowEditNameCard] = useState(false)
     const [name, setName] = useState('')
 
-    const [showEditValueInput, setShowEditValueInput] = useState(false)
+    const [showEditValueCard, setShowEditValueCard] = useState(false)
     const [value, setValue] = useState(0)
 
-    const [showEditStockInput, setShowEditStockInput] = useState(false)
-    const [stock, setStock] = useState(0)
+    const [showEditStockCard, setShowEditStockCard] = useState(false)
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
 
@@ -57,13 +58,6 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
         })
     }, [setFormOff])
 
-    const closeForm = () => {
-
-        setFormOff(false)
-        setLoadingScreen(false)
-
-    }
-
     const submitNameToEdit = async () => {
 
         if (name) {
@@ -77,7 +71,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
         } else {
 
-            setShowEditNameInput(false)
+            setShowEditNameCard(false)
 
         }
 
@@ -92,31 +86,32 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
             await editItemValue(value, item)
 
-            closeForm()
+            setShowEditValueCard(false)
+            setLoadingScreen(false)
 
         } else {
 
-            setShowEditValueInput(false)
+            setShowEditValueCard(false)
 
         }
 
     }
 
-    const submitStockToEdit = async () => {
+    const submitStockToEdit = async (newStock: number) => {
 
-        if (stock !== item.amount) {
+        if (newStock === item.amount) {
 
-            setLoadingScreen(true)
-
-            await editItemStock(stock, item)
-
-            closeForm()
-
-        } else {
-
-            setShowEditStockInput(false)
+            setShowEditStockCard(false)
+            return
 
         }
+
+        setLoadingScreen(true)
+
+        await editItemStock(newStock, item)
+
+        setShowEditStockCard(false)
+        setLoadingScreen(false)
 
     }
 
@@ -143,7 +138,8 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
         await addOutflow(newReplenishOuflow, newResaleAmount, item)
 
         // Fechando card de reposição de estoque
-        closeForm()
+        setLoadingScreen(false)
+        setReplenishForm(false)
 
     }
 
@@ -154,43 +150,80 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                 bgColor={colors.items.min}
             >
                 <ListItemCardHeader
-                    text={`Informações do ${getAboutItemCardTitle(item.category)}`}
+                    text={`Detalhes do ${getAboutItemCardTitle(item.category)}`}
                     onCloseCardButton={() => setFormOff(false)}
                     bgColor={colors.items.max}
                 />
                 <ListItemCardBody>
-                    <ActualName
-                        item={item}
-                        name={name}
-                        setName={setName}
-                        editName={submitNameToEdit}
-                        showEditInput={showEditNameInput}
-                        setShowEditInput={setShowEditNameInput}
-                        isEditable={true}
+                    <ListItemCardProperty
+                        label='Nome'
+                        text={item._id}
+                        bgColor={colors.items.min}
+                        onEditButtonPress={() => setShowEditNameCard(true)}
                     />
+                    {showEditNameCard && (
+                        <EditNameCard
+                            visible={showEditNameCard}
+                            currentName={item._id}
+                            setNewName={setName}
+                            onConfirmButtonPress={() => {
+                                if (name && name !== item._id) {
+                                    submitNameToEdit()
+                                }
+                                setShowEditNameCard(false)
+                            }}
+                            onCancelButtonPress={() => setShowEditNameCard(false)}
+                        />
+                    )}
                     {item.category !== 'budget' && (
-                        <ActualValue
-                            item={item}
-                            showEditInput={showEditValueInput}
-                            value={value}
-                            setValue={setValue}
-                            setShowEditInput={setShowEditValueInput}
-                            editValue={submitValueToEdit}
-                            isEditable={true}
+                        <ListItemCardProperty
+                            label='Valor'
+                            text={moneyFormat(item.value)}
+                            bgColor={colors.items.min}
+                            onEditButtonPress={() => setShowEditValueCard(true)}
+                        />
+                    )}
+                    {showEditValueCard && (
+                        <EditValueCard
+                            visible={showEditValueCard}
+                            setNewValue={setValue}
+                            onSuccessButtonPress={() => {
+                                if (value && value !== item.value) {
+                                    submitValueToEdit()
+                                }
+                                setShowEditValueCard(false)
+                            }}
+                            onCancelButtonPress={() => setShowEditValueCard(false)}
                         />
                     )}
                     {
                         item.isThereAmount && (
-                            <ActualStock
-                                item={item}
-                                showEditInput={showEditStockInput}
-                                setShowEditInput={setShowEditStockInput}
-                                setStock={setStock}
-                                editStock={submitStockToEdit}
-                                isEditable={true}
+                            <ListItemCardProperty
+                                label='Estoque'
+                                text={String(item.amount)}
+                                bgColor={colors.items.min}
+                                onEditButtonPress={() => setShowEditStockCard(true)}
                             />
                         )
                     }
+                    {showEditStockCard ? (
+                        <EditAmountCard
+                            visible={showEditStockCard}
+                            currentValue={item.amount || 0}
+                            onSuccessButtonPress={newStock => {
+                                if (newStock.trim() === '') {
+                                    setShowEditStockCard(false)
+                                    return
+                                }
+                                const parsed = Number(newStock)
+                                if (!Number.isNaN(parsed) && parsed !== item.amount) {
+                                    submitStockToEdit(parsed)
+                                }
+                                setShowEditStockCard(false)
+                            }}
+                            onCancelButtonPress={() => setShowEditStockCard(false)}
+                        />
+                    ) : null}
                     {
                         item.resale && (
                             <StockWarningForResale onRestockButtonPress={() => setReplenishForm(true)} />

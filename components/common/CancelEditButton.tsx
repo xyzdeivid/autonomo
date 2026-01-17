@@ -11,7 +11,7 @@ export function CancelEditButton({ onCancelButtonPress }: CancelEditButtonProps)
             style={styles.cancelButton}
             onPress={onCancelButtonPress}
         >
-            <Text style={{ color: 'white' }}>Cancelar</Text>
+            <Text style={{ color: 'darkred' }}>Cancelar</Text>
         </Pressable>
     )
 
@@ -20,10 +20,9 @@ export function CancelEditButton({ onCancelButtonPress }: CancelEditButtonProps)
 const styles = StyleSheet.create({
 
     cancelButton: {
-        backgroundColor: 'rgba(102, 0, 0, 0.5)',
         padding: 8,
         borderRadius: 4,
-        marginStart: 8
+        backgroundColor: '#6600001a'
     }
 
 })

@@ -1,24 +1,26 @@
-import { moneyFormat } from '@/functions/common'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { MaskedTextInput } from 'react-native-mask-text'
 import { ConfirmEditButton } from './ConfirmEditButton'
 import { CancelEditButton } from './CancelEditButton'
-import { Label } from './Label'
+import { EditCardContainer } from './EditCardContainer'
+import { EditCardButtonsContainer } from './EditCardButtonsContainer'
 
 interface EditValueInputProps {
-    newValue: number
+    visible: boolean
     setNewValue: React.Dispatch<React.SetStateAction<number>>
-    onSuccessButtonPress: () => Promise<void>
+    onSuccessButtonPress: () => void
     onCancelButtonPress: () => void
-    defaultValue: number
 }
 
-export function EditValueField({ newValue, setNewValue, onSuccessButtonPress, defaultValue, onCancelButtonPress }: EditValueInputProps) {
+export function EditValueCard({ visible, setNewValue, onSuccessButtonPress, onCancelButtonPress }: EditValueInputProps) {
 
     return (
-        <View>
+        <EditCardContainer
+            visible={visible}
+            onCancelButtonPress={onCancelButtonPress}
+            label='Novo Valor:'
+        >
             <View style={styles.container}>
-                <Label text='Valor:' />
                 <MaskedTextInput
                     type='currency'
                     options={{
@@ -36,34 +38,23 @@ export function EditValueField({ newValue, setNewValue, onSuccessButtonPress, de
                         setNewValue(Number(value))
                     }}
                 />
-                {
-                    newValue && newValue !== defaultValue ? (
-                        <ConfirmEditButton
-                            onPress={onSuccessButtonPress}
-                        />
-                    ) : null
-                }
-                {
-                    (!newValue || newValue === defaultValue) ? (
-                        <CancelEditButton
-                            onCancelButtonPress={onCancelButtonPress}
-                        />
-                    ) : null
-                }
+                <EditCardButtonsContainer>
+                    <CancelEditButton
+                        onCancelButtonPress={onCancelButtonPress}
+                    />
+                    <ConfirmEditButton
+                        onPress={onSuccessButtonPress}
+                    />
+                </EditCardButtonsContainer>
             </View>
-            <Text style={styles.currentValueText}>
-                Valor atual: {moneyFormat(defaultValue)}
-            </Text>
-        </View>
+        </EditCardContainer>
     )
 
 }
 
 const styles = StyleSheet.create({
+
     container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
     },
 
     editInput: {
@@ -72,7 +63,6 @@ const styles = StyleSheet.create({
         color: 'black',
         padding: 8,
         textAlign: 'center',
-        marginStart: 8,
         borderRadius: 3
 
     },

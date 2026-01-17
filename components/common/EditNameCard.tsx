@@ -1,11 +1,12 @@
-import { View, TextInput, StyleSheet, Modal, Text } from 'react-native'
+import { TextInput, StyleSheet } from 'react-native'
 import { ConfirmEditButton } from './ConfirmEditButton'
 import { CancelEditButton } from './CancelEditButton'
+import { EditCardContainer } from './EditCardContainer'
+import { EditCardButtonsContainer } from './EditCardButtonsContainer'
 
 interface EditNameCardProps {
     visible: boolean
     currentName: string
-    newName: string
     setNewName: React.Dispatch<React.SetStateAction<string>>
     onConfirmButtonPress: () => void
     onCancelButtonPress: () => void
@@ -14,58 +15,32 @@ interface EditNameCardProps {
 export function EditNameCard({
     visible,
     currentName,
-    newName,
     setNewName,
     onConfirmButtonPress,
     onCancelButtonPress
 }: EditNameCardProps) {
 
     return (
-        <Modal
-            visible={visible}
-            transparent
-            animationType='fade'
-            onRequestClose={onCancelButtonPress}
+        <EditCardContainer
+        visible={visible}
+        onCancelButtonPress={onCancelButtonPress}
+        label='Novo Nome:'
         >
-            <View style={styles.overlay}>
-                <View style={styles.card}>
-                    <Text>Novo nome:</Text>
-                    <TextInput
+            <TextInput
                         defaultValue={currentName}
                         onChangeText={text => setNewName(text.trim())}
                         style={styles.input}
                     />
 
-                    <View style={styles.buttonContainer}>
-                        {newName && newName !== currentName ? (
-                            <ConfirmEditButton onPress={onConfirmButtonPress} />
-                        ) : (
-                            <CancelEditButton onCancelButtonPress={onCancelButtonPress} />
-                        )}
-                    </View>
-                </View>
-            </View>
-        </Modal>
+                    <EditCardButtonsContainer>
+                        <CancelEditButton onCancelButtonPress={onCancelButtonPress} />
+                        <ConfirmEditButton onPress={onConfirmButtonPress} />
+                    </EditCardButtonsContainer>
+        </EditCardContainer>
     )
 }
 
 const styles = StyleSheet.create({
-
-    overlay: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.4)',
-    },
-
-    card: {
-        width: '90%',
-        maxWidth: 400,
-        backgroundColor: '#FFF',
-        padding: 16,
-        borderRadius: 8,
-        elevation: 5
-    },
 
     input: {
         backgroundColor: '#E0E0E0',
