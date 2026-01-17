@@ -1,7 +1,8 @@
 import { moneyFormat } from '@/functions/common'
 import { Item } from '@/types'
-import { EditableProperty } from '../common/EditableProperty'
+import { ListItemCardProperty } from '../common/ListItemCardProperty'
 import { EditValueField } from '../common/EditValueField'
+import { colors } from '@/constants/appColors'
 
 interface ActualValueProps {
     item: Item
@@ -19,13 +20,14 @@ export default function ActualValue({ item, showEditInput, setShowEditInput, val
         <>
             {
                 !showEditInput && (
-                    <EditableProperty
+                    <ListItemCardProperty
                         label='Valor: '
                         propertyName={moneyFormat(item.value)}
                         isEditable={isEditable}
                         onEditButtonPress={() => {
                             setShowEditInput(true)
                         }}
+                        bgColor={colors.items.min}
                     />
                 )
             }

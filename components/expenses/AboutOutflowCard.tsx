@@ -1,5 +1,4 @@
-import { View, Text, StyleSheet, BackHandler } from 'react-native'
-import FormTitle from '../common/FormTitle'
+import { Text, StyleSheet, BackHandler } from 'react-native'
 import { Outflow } from '@/types'
 import { moneyFormat } from '@/functions/common'
 import { useEffect, useState } from 'react'
@@ -9,12 +8,14 @@ import LoadingScreen from '../common/LoadingScreen'
 import { ActualValue } from './ActualValue'
 import useEditOutflowName from '@/hooks/useEditOutflowName'
 import useEditOutflowValue from '@/hooks/useEditOutflowValue'
-import { EditableProperty } from '../common/EditableProperty'
-import { DeleteButton } from '../common/DeleteListItemButton'
+import { ListItemCardProperty } from '../common/ListItemCardProperty'
+import { DeleteListItemButton } from '../common/DeleteListItemButton'
 import { EditDateField } from '../common/EditDateField'
 import useEditOutflowDate from '@/hooks/useEditOutflowDate'
 import { colors } from '@/constants/appColors'
 import { ListItemCardContainer } from '../common/ListItemCardContainer'
+import { ListItemCardHeader } from '../common/ListItemCardHeader'
+import { ListItemCardBody } from '../common/ListItemCardBody'
 
 
 interface AboutOutflowCardProps {
@@ -99,14 +100,14 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
         <>
             {loadingScreen && <LoadingScreen />}
             <ListItemCardContainer
-            borderTopColor={colors.outflows.min}
+            bgColor={colors.outflows.min}
             >
-                <FormTitle
-                    text='Informações de Despesa'
-                    onCloseFormButtonPress={() => setFormOff(false)}
-                    textColor={colors.outflows.max}
+                <ListItemCardHeader
+                    text='Detalhes de Despesa'
+                    onCloseCardButton={() => setFormOff(false)}
+                    bgColor={colors.outflows.max}
                 />
-                <View>
+                <ListItemCardBody>
                     {
                         outflow.amount && (
                             <Text style={styles.replenishLabel}>Reposição de Estoque</Text>
@@ -124,6 +125,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                     <EditDateField
                         defaultValue={outflow.date}
                         editDate={submitDateToEdit}
+                        bgColor={colors.outflows.min}
                     />
                     <ActualValue
                         outflow={outflow}
@@ -136,24 +138,26 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                     />
                     {
                         outflow.amount && (
-                            <EditableProperty
+                            <ListItemCardProperty
                                 label='Valor (un): '
                                 propertyName={moneyFormat(outflow.value / outflow.amount)}
                                 isEditable={isEditable()}
+                                bgColor={colors.outflows.min}
                             />
                         )
                     }
                     {
                         outflow.amount && (
-                            <EditableProperty
+                            <ListItemCardProperty
                                 label='Quantidade: '
                                 propertyName={String(outflow.amount)}
                                 isEditable={isEditable()}
+                                bgColor={colors.outflows.min}
                             />
                         )
                     }
-                </View>
-                <DeleteButton onPress={() => setConfirmDelete(true)} />
+                    <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
+                </ListItemCardBody>
             </ListItemCardContainer>
             {
                 confirmDelete &&

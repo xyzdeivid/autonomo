@@ -1,22 +1,20 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Label } from './Label'
 
-interface EditablePropertyProps {
+interface ListItemCardPropertyProps {
     label: string
     propertyName: string
     isEditable: boolean
     onEditButtonPress?: () => void
     bgColor: string
-    borderColor: string
 }
 
-export function EditableProperty({ label, propertyName, isEditable, onEditButtonPress, bgColor, borderColor }: EditablePropertyProps) {
+export function ListItemCardProperty({ label, propertyName, isEditable, onEditButtonPress, bgColor }: ListItemCardPropertyProps) {
 
     return (
         <View style={{
             ...styles.container,
-            backgroundColor: bgColor,
-            borderColor: borderColor
+            backgroundColor: bgColor
         }}>
             <Label text={label} />
             <Text style={styles.propertyName}>
@@ -47,8 +45,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 24,
         padding: 16,
-        borderRadius: 8,
-        borderWidth: StyleSheet.hairlineWidth
+        borderRadius: 8
     },
 
     propertyName: {

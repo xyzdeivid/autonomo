@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, BackHandler, Pressable, Alert } from 'react-native'
-import FormTitle from '../common/FormTitle'
 import { Item, Outflow } from '@/types'
 import { useEffect, useState } from 'react'
 import ActualValue from './ActualValue'
@@ -14,9 +13,11 @@ import { getAboutItemCardTitle } from '@/functions/getAboutItemCardTitle'
 import ReplenishResaleStock from './ReplenishResaleStock'
 import { createNewOutflow } from '@/functions/createNewOutflow'
 import useAddOutflow from '@/hooks/useAddOutflow'
-import { DeleteButton } from '../common/DeleteListItemButton'
+import { DeleteListItemButton } from '../common/DeleteListItemButton'
 import { colors } from '@/constants/appColors'
 import { ListItemCardContainer } from '../common/ListItemCardContainer'
+import { ListItemCardHeader } from '../common/ListItemCardHeader'
+import { ListItemCardBody } from '../common/ListItemCardBody'
 
 interface AboutItemCardProps {
     item: Item
@@ -148,14 +149,15 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            <ListItemCardContainer borderTopColor={colors.items.min}
+            <ListItemCardContainer 
+            bgColor={colors.items.min}
             >
-                <FormTitle
+                <ListItemCardHeader
                     text={`Informações do ${getAboutItemCardTitle(item.category)}`}
-                    onCloseFormButtonPress={() => setFormOff(false)}
-                    textColor={colors.items.max}
+                    onCloseCardButton={() => setFormOff(false)}
+                    bgColor={colors.items.max}
                 />
-                <View>
+                <ListItemCardBody>
                     <ActualName
                         item={item}
                         name={name}
@@ -205,7 +207,10 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                             </View>
                         )
                     }
-                </View>
+                    <View style={{ marginTop: 16 }}>
+                        <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
+                    </View>
+                </ListItemCardBody>
                 {
                     replenishForm && (
                         <ReplenishResaleStock
@@ -220,9 +225,6 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                         />
                     )
                 }
-                <View style={{ marginTop: 16 }}>
-                    <DeleteButton onPress={() => setConfirmDelete(true)} />
-                </View>
             </ListItemCardContainer>
             {
                 confirmDelete && (

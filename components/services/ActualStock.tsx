@@ -1,6 +1,7 @@
 import { Item } from '@/types'
-import { EditableProperty } from '../common/EditableProperty'
+import { ListItemCardProperty } from '../common/ListItemCardProperty'
 import { EditAmountField } from '../common/EditAmountField'
+import { colors } from '@/constants/appColors'
 
 interface ActualStockProps {
     item: Item
@@ -17,13 +18,14 @@ export default function ActualStock({ item, showEditInput, setShowEditInput, set
         <>
             {
                 !showEditInput && (
-                    <EditableProperty
+                    <ListItemCardProperty
                         label='Estoque: '
                         propertyName={String(item.amount)}
                         isEditable={isEditable}
                         onEditButtonPress={() => {
                             setShowEditInput(true)
                         }}
+                        bgColor={colors.items.min}
                     />
                 )
             }

@@ -1,4 +1,4 @@
-import { EditableProperty } from './EditableProperty'
+import { ListItemCardProperty } from './ListItemCardProperty'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import { useState } from 'react'
 import { format, parseISO } from 'date-fns'
@@ -8,10 +8,9 @@ interface EditDateFieldProps {
     defaultValue: string
     editDate: (newDate: string) => Promise<void>
     bgColor: string
-    borderColor: string
 }
 
-export function EditDateField({ defaultValue, editDate, bgColor, borderColor }: EditDateFieldProps) {
+export function EditDateField({ defaultValue, editDate, bgColor }: EditDateFieldProps) {
     const [showDateTimePicker, setShowDateTimePicker] = useState(false)
 
     const formatDateToISO = (date: Date) => {
@@ -38,13 +37,12 @@ export function EditDateField({ defaultValue, editDate, bgColor, borderColor }: 
 
     return (
         <>
-            <EditableProperty
+            <ListItemCardProperty
                 label='Data: '
                 propertyName={format(parseISO(defaultValue), 'dd/MM')}
                 isEditable={true}
                 onEditButtonPress={() => setShowDateTimePicker(true)}
                 bgColor={bgColor}
-                borderColor={borderColor}
             />
             {showDateTimePicker && (
                 <DateTimePicker

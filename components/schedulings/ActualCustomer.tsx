@@ -1,5 +1,5 @@
 import { colors } from '@/constants/appColors'
-import { EditableProperty } from '../common/EditableProperty'
+import { ListItemCardProperty } from '../common/ListItemCardProperty'
 import { EditNameField } from '../common/EditNameField'
 
 interface ActualCustomerProps {
@@ -17,13 +17,12 @@ export default function ActualCustomer({ customer, setNewCustomerName, newCustom
         <>
             {
                 !showEditInput
-                    ? <EditableProperty
+                    ? <ListItemCardProperty
                         label='Cliente: '
                         propertyName={customer}
                         isEditable={true}
                         onEditButtonPress={() => setShowEditInput(true)}
                         bgColor={colors.entries.min}
-                        borderColor={colors.entries.mid}
                     />
                     : <EditNameField
                         defaultValue={customer}

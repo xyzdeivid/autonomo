@@ -1,6 +1,7 @@
 import { Outflow } from '@/types'
-import { EditableProperty } from '../common/EditableProperty'
+import { ListItemCardProperty } from '../common/ListItemCardProperty'
 import { EditNameField } from '../common/EditNameField'
+import { colors } from '@/constants/appColors'
 
 interface ActualNameProps {
     outflow: Outflow
@@ -18,13 +19,14 @@ export function ActualName({ outflow, name, setName, editName, showEditInput, se
         <>
             {
                 !showEditInput && (
-                    <EditableProperty
+                    <ListItemCardProperty
                         label='Nome: '
                         propertyName={outflow.name}
                         isEditable={isEditable}
                         onEditButtonPress={() => {
                             setShowEditInput(true)
                         }}
+                        bgColor={colors.outflows.min}
                     />
                 )
             }

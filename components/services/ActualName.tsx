@@ -1,6 +1,7 @@
 import { Item } from '@/types'
-import { EditableProperty } from '../common/EditableProperty'
+import { ListItemCardProperty } from '../common/ListItemCardProperty'
 import { EditNameField } from '../common/EditNameField'
+import { colors } from '@/constants/appColors'
 
 interface ActualNameProps {
     item: Item
@@ -18,13 +19,14 @@ export default function ActualName({ item, name, setName, editName, showEditInpu
         <>
             {
                 !showEditInput && (
-                    <EditableProperty
+                    <ListItemCardProperty
                         label='Nome: '
                         propertyName={item._id}
                         isEditable={isEditable}
                         onEditButtonPress={() => {
                             setShowEditInput(true)
                         }}
+                        bgColor={colors.items.min}
                     />
                 )
             }

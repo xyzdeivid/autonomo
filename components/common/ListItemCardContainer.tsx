@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Animated, Dimensions, KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native'
+import { Animated, Dimensions, StyleSheet, View } from 'react-native'
 
 interface ListItemCardContainerProps {
     children: React.ReactNode
@@ -36,14 +36,10 @@ export function ListItemCardContainer({ children, bgColor }: ListItemCardContain
                 { backgroundColor: bgColor, opacity: fadeAnim }
             ]}
         >
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={{ ...styles.container, backgroundColor: bgColor }}
-            >
-                <View style={styles.body}>
-                    {children}
-                </View>
-            </KeyboardAvoidingView></Animated.View>
+            <View style={styles.body}>
+                {children}
+            </View>
+        </Animated.View>
 
     )
 

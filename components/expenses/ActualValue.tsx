@@ -1,7 +1,8 @@
 import { moneyFormat } from '@/functions/common'
 import { Outflow } from '@/types'
-import { EditableProperty } from '../common/EditableProperty'
+import { ListItemCardProperty } from '../common/ListItemCardProperty'
 import { EditValueField } from '../common/EditValueField'
+import { colors } from '@/constants/appColors'
 
 interface ActualValueProps {
     outflow: Outflow
@@ -19,13 +20,14 @@ export function ActualValue({ outflow, showEditInput, setShowEditInput, value, s
         <>
             {
                 !showEditInput && (
-                    <EditableProperty
+                    <ListItemCardProperty
                         label='Valor: '
                         propertyName={moneyFormat(outflow.value)}
                         isEditable={isEditable}
                         onEditButtonPress={() => {
                             setShowEditInput(true)
                         }}
+                        bgColor={colors.outflows.min}
                     />
                 )
             }
