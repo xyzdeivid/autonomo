@@ -1,47 +1,53 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Item, Outflow } from '@/types'
 import { useContext } from 'react'
-import { Alert } from 'react-native'
-import { addOutflowToDb } from '@/database/outflowRepositories'
-import useEditStockItem from './useEditStockItem'
+import { addOutflowUseCase } from '@/services/addOutflowUseCase'
 
 const useAddOutflow = () => {
 
-    const [outflows, setOutflows] = useContext(DocsContext).outflows
+    const useDocs = useContext(DocsContext)
+    const [, setOutflows] = useDocs.outflows
+    const [, setItems] = useDocs.items
 
-    const editStockItem = useEditStockItem().editStockItem
 
-    const addOutflow = async (outflow: Outflow, newStock?: number, item?: Item): Promise<boolean> => {
+    const addOutflow = async (outflow: Outflow, item?: Item): Promise<{ success: boolean, error?: string }> => {
 
-        try {
+        // Mandando dados para avaliação e inserção ao DB
+        const result = await addOutflowUseCase(outflow, item)
 
-            let success: boolean = true
+        if (result.success) {
 
-            // Atualizando estoque de produto caso seja uma reposição de estoque
-            if (newStock && item) success = await editStockItem(newStock, item)
+            // Atualizando despesas na UI
+            setOutflows(prev => [...prev, outflow])
 
-            // Impedindo inserção de nova despesa caso reposição falhe
-            if (!success) return false
+            // Atualizando produto na UI se necessário
+            if (item && result.newStock) {
 
-            // Inserindo nova despesa no banco de dados
-            await addOutflowToDb(outflow)
+                setItems(prev =>
 
-            // Atualizando estado na UI
-            const updatedOutflows = [...outflows, outflow]
-            setOutflows(updatedOutflows)
+                    prev.map(current => {
 
-            return true
+                        if (current._id === item._id) {
 
-        } catch {
+                            return { ...current, amount: result.newStock }
 
-            Alert.alert(
-                'Erro ao acessar banco de dados',
-                'Por favor, tente novamente mais tarde.'
-            )
+                        }
 
-            return false
+                        return current
+
+                    })
+
+                )
+
+            }
+
+            return {
+                success: true
+            }
 
         }
+
+        return result
 
     }
 

@@ -40,3 +40,38 @@ export async function addOutflowAndItemToDb(outflow: Outflow, item: Item): Promi
     }
 
 }
+
+export async function addOutflowAndEditItemStockToDb(outflow: Outflow, newStock: number, itemId: string): Promise<void> {
+
+    try {
+
+        await db.runAsync('BEGIN TRANSACTION')
+
+        await db.runAsync(
+            'INSERT INTO outflows (_id, name, date, value, amount) VALUES (?, ?, ?, ?, ?)',
+            [
+                outflow._id,
+                outflow.name,
+                outflow.date,
+                outflow.value,
+                outflow.amount ?? null
+            ]
+        )
+
+        await db.runAsync(
+            `UPDATE items
+        SET amount = ?
+        WHERE _id = ?`,
+            [newStock, itemId]
+        )
+
+        await db.runAsync('COMMIT')
+
+    } catch (error) {
+
+        await db.runAsync('ROLLBACK')
+        throw error
+
+    }
+
+}

@@ -62,13 +62,19 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
         setLoadingScreen(true)
 
-        const newOutflowName = stockIntegrate ? product._id : name
+        const newOutflowName: string = stockIntegrate ? product._id : name
         const newOutflow: Outflow = createNewOutflow(valueChoice, value, amount, newOutflowName, date)
 
-        await addOutflow(
-            newOutflow, stockIntegrate ? (product.amount || 0) + amount : undefined,
+        const result = await addOutflow(
+            newOutflow,
             stockIntegrate ? product : undefined
         )
+
+        if (!result.success) {
+
+            Alert.alert('ERRO', result.error)
+
+        }
 
         setAddExpenseForm(false)
         setLoadingScreen(false)
