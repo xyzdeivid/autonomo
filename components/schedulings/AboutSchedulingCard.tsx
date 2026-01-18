@@ -5,8 +5,6 @@ import React, { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
 import AddClienteButton from './AddClienteButton'
-import useAddCustomerName from '@/hooks/useAddCustomerName'
-import useEditCustomerName from '@/hooks/useEditCustomerName'
 import useEditEntryDate from '@/hooks/useEditEntryDate'
 import { ListItemCardProperty } from '../common/ListItemCardProperty'
 import { DeleteListItemButton } from '../common/DeleteListItemButton'
@@ -17,6 +15,7 @@ import { ListItemCardBody } from '../common/ListItemCardBody'
 import { parseISO } from 'date-fns'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import { EditNameCard } from '../common/EditNameCard'
+import useEditCustomerName from '@/hooks/useEditCustomerName'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -32,7 +31,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [loadingPage, setLoadingPage] = useState(false)
     const [customer, setCustomer] = useState('')
 
-    const addCustomerName = useAddCustomerName().addCustomerName
     const editCustomerName = useEditCustomerName().editCustomerName
     const editEntryDate = useEditEntryDate().editEntryDate
 
@@ -51,7 +49,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
         setLoadingPage(true)
 
-        const result = await addCustomerName(scheduling._id, customer)
+        const result = await editCustomerName(scheduling._id, customer)
 
         if (!result.success && result.error) {
 
@@ -60,17 +58,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         } 
 
         setLoadingPage(false)
-        setFormOff(false)
-
-    }
-
-    const submitCustomerNameToEdit = async () => {
-
-        setLoadingPage(true)
-
-        await editCustomerName(scheduling._id, customer)
-
-        setLoadingPage(false)
+        setShowEditNameCard(false)
 
     }
 
@@ -132,7 +120,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                 setNewName={setCustomer}
                                 onConfirmButtonPress={() => {
                                     if (customer && customer !== scheduling.customer) {
-                                        submitCustomerNameToEdit()
+                                        submitCustomerName()
                                     }
                                     setShowEditNameCard(false)
                                 }}

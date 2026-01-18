@@ -1,55 +1,42 @@
 import { DocsContext } from '@/context/DocsContext'
-import { editCustomerNameToDb } from '@/database/entryRepositories'
-import { Entry } from '@/types'
+import { editCustomerNameUseCase } from '@/services/editCustomerNameUseCase'
 import { useContext } from 'react'
-import { Alert } from 'react-native'
 
 const useEditCustomerName = () => {
 
-    const [entries, setEntries] = useContext(DocsContext).entries
+    const [, setEntries] = useContext(DocsContext).entries
 
-    const updateEntriesInUI = (id: string, customerName: string) => {
+    const editCustomerName = async (id: string, customerName: string): Promise<{ success: boolean, error?: string }> => {
 
-        const newEntries: Entry[] = entries.map(entry => {
+        const result = await editCustomerNameUseCase(customerName, id)
 
-            if (entry._id === id) {
+        if (result.success) {
 
-                return {
-                    ...entry, customer: customerName
-                }
+            // Atualizado receita editada na UI
+            setEntries(prev =>
 
-            }
+                prev.map(entry => {
 
-            return entry
+                    if (entry._id === id) {
 
-        })
+                        return {
+                            ...entry, customer: customerName
+                        }
 
-        setEntries(newEntries)
+                    }
 
-    }
+                    return entry
 
-    const editCustomerName = async (id: string, customerName: string): Promise<boolean> => {
-
-        try {
-
-            // Editando nome de cliente ao banco de dados
-            await editCustomerNameToDb(customerName, id)
-
-            // Atualizando UI
-            updateEntriesInUI(id, customerName)
-
-            return true
-
-        } catch {
-
-            Alert.alert(
-                'Erro ao acessar banco de dados',
-                'Por favor, tente novamente mais tarde.'
+                })
             )
 
-            return false
+            return {
+                success: true
+            }
 
         }
+
+        return result
 
     }
 
