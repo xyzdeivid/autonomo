@@ -30,10 +30,6 @@ const useEditCustomerName = () => {
                 })
             )
 
-            return {
-                success: true
-            }
-
         }
 
         return result

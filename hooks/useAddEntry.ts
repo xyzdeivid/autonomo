@@ -39,10 +39,6 @@ const useAddEntry = () => {
 
             }
 
-            return {
-                success: true
-            }
-
         }
 
         return result

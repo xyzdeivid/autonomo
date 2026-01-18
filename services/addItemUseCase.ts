@@ -1,9 +1,9 @@
 import { addItemToDb } from '@/database/itemRepositories'
 import { addOutflowAndItemToDb } from '@/database/transactionRepositories'
 import { canAddItem, needResaleOutflow } from '@/rules/itemRules'
-import { AddUseCase, Item, Outflow } from '@/types'
+import { UseCase, Item, Outflow } from '@/types'
 
-export async function addItemUseCase(items: Item[], item: Item, resaleOutflow?: Outflow): Promise<AddUseCase> {
+export async function addItemUseCase(items: Item[], item: Item, resaleOutflow?: Outflow): Promise<UseCase> {
 
     /* *****REGRAS DE NEGÓCIO***** */
     

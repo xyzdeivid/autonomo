@@ -26,8 +26,6 @@ const useAddItem = () => {
                 setOutflows(updatedOutflows)
             }
 
-            return { success: true }
-
         }
 
         return result

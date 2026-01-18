@@ -1,5 +1,5 @@
 import { isTodayOrPast } from '@/functions/common'
-import { CanAdd, Entry, Item } from '@/types'
+import { CanDo, Entry, Item } from '@/types'
 
 function isStockEnough(selectedProductStock: number, amountPurchased: number): boolean {
 
@@ -7,7 +7,7 @@ function isStockEnough(selectedProductStock: number, amountPurchased: number): b
 
 }
 
-export function canAddEntry(entry: Entry, selectedProduct?: Item): CanAdd {
+export function canAddEntry(entry: Entry, selectedProduct?: Item): CanDo {
 
     // Verificando se foi criado em data futura
     const todayOrPast = isTodayOrPast(entry.date)
@@ -41,8 +41,22 @@ export function needReduceStock(entry: Entry): boolean {
 
 }
 
-export function newProductStock(currentStock: number, reduceAmount: number) {
+export function newProductStock(currentStock: number, reduceAmount: number): number {
 
     return currentStock - reduceAmount
+
+}
+
+export function canEditEntryDate(newDate: string):CanDo  {
+
+    // Verificando se data editada é futura
+    const todayOrPast = isTodayOrPast(newDate)
+    if (!todayOrPast) return {
+        valid: false, reason: 'FUTURE_DATE'
+    }
+
+    return {
+        valid: true
+    }
 
 }

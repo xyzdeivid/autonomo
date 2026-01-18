@@ -1,9 +1,9 @@
 import { addOutflowToDb } from '@/database/outflowRepositories'
 import { addOutflowAndEditItemStockToDb } from '@/database/transactionRepositories'
 import { canAddOutflow, isStockIntegrate, newProductStock } from '@/rules/outflowRules'
-import { AddUseCase, Item, Outflow } from '@/types'
+import { UseCase, Item, Outflow } from '@/types'
 
-export async function addOutflowUseCase(outflow: Outflow, item?: Item): Promise<AddUseCase & { newStock?: number }> {
+export async function addOutflowUseCase(outflow: Outflow, item?: Item): Promise<UseCase & { newStock?: number }> {
 
     /* *****REGRAS DE NEGÓCIO***** */
 

@@ -66,7 +66,13 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
         setLoadingPage(true)
 
-        await editEntryDate(newDate, scheduling._id)
+        const result = await editEntryDate(newDate, scheduling._id)
+
+        if (!result.success && result.error) {
+
+            Alert.alert('Erro', getErrorMessage(result.error))
+            
+        }
 
         setLoadingPage(false)
 

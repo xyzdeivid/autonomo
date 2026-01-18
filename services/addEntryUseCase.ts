@@ -1,9 +1,9 @@
 import { addEntryToDb } from '@/database/entryRepositories'
 import { addEntryAndReduceItemStockToDb } from '@/database/transactionRepositories'
 import { canAddEntry, needReduceStock, newProductStock } from '@/rules/entryRules'
-import { AddUseCase, Entry, Item } from '@/types'
+import { UseCase, Entry, Item } from '@/types'
 
-export async function addEntryUseCase(entry: Entry, selectedProduct?: Item): Promise<AddUseCase & { newStock?: number }> {
+export async function addEntryUseCase(entry: Entry, selectedProduct?: Item): Promise<UseCase & { newStock?: number }> {
 
     /* *****REGRAS DE NEGÓCIO***** */
 

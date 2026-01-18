@@ -41,10 +41,6 @@ const useAddOutflow = () => {
 
             }
 
-            return {
-                success: true
-            }
-
         }
 
         return result

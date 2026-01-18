@@ -1,5 +1,5 @@
 import { isTodayOrPast } from '@/functions/common'
-import { CanAdd, Item, Outflow } from '@/types'
+import { CanDo, Item, Outflow } from '@/types'
 
 function isThereAnotherItem(items: Item[], name: string) {
 
@@ -14,7 +14,7 @@ function isThereAnotherItem(items: Item[], name: string) {
 }
 
 
-export function canAddItem(items: Item[], itemId: string, resaleOutflow?: Outflow): CanAdd {
+export function canAddItem(items: Item[], itemId: string, resaleOutflow?: Outflow): CanDo {
 
     // Verificando se existe outro item com o mesmo nome
     const anotherItem = isThereAnotherItem(items, itemId)

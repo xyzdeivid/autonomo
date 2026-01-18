@@ -19,7 +19,7 @@ export function getErrorMessage(error: string): string {
             return 'Erro ao acessar banco de dados.'
 
         case 'FUTURE_DATE':
-            return 'Não é possível registrar revenda em datas futuras.'
+            return 'Não é possível registrar em datas futuras.'
 
         case 'INSUFFICIENT_STOCK':
             return 'Estoque insuficiente.'

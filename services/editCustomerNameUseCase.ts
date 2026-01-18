@@ -1,7 +1,7 @@
 import { editCustomerNameToDb } from '@/database/entryRepositories'
-import { AddUseCase } from '@/types'
+import { UseCase } from '@/types'
 
-export async function editCustomerNameUseCase(customerName: string, entryId: string): Promise<AddUseCase> {
+export async function editCustomerNameUseCase(customerName: string, entryId: string): Promise<UseCase> {
 
     /* *****INSERÇÃO NO DB***** */
 
