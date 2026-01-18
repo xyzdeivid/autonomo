@@ -28,11 +28,9 @@ const useAddItem = () => {
 
             return { success: true }
 
-        } else {
-
-            return result
-
         }
+
+        return result
 
     }
 
