@@ -1,6 +1,26 @@
 import { Entry } from '@/types/index'
 import { db } from './db'
 
+export async function insertEntry(entry: Entry) {
+
+    await db.runAsync(
+        `INSERT INTO entries
+           (_id, serviceId, serviceCategory, serviceValue, serviceIsThereAmount, serviceAmount, date, customer)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+            entry._id,
+            entry.serviceId,
+            entry.serviceCategory,
+            entry.serviceValue,
+            entry.serviceIsThereAmount ? 1 : 0,
+            entry.serviceAmount ?? null,
+            entry.date,
+            entry.customer ?? null
+        ]
+    )
+
+}
+
 export async function getAllEntries(): Promise<Entry[]> {
 
     const rows = await db.getAllAsync<Entry>('SELECT * FROM entries')
@@ -20,21 +40,7 @@ export async function getAllEntries(): Promise<Entry[]> {
 
 export async function addEntryToDb(entry: Entry): Promise<void> {
 
-    await db.runAsync(
-        `INSERT INTO entries
-           (_id, serviceId, serviceCategory, serviceValue, serviceIsThereAmount, serviceAmount, date, customer)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-            entry._id,
-            entry.serviceId,
-            entry.serviceCategory,
-            entry.serviceValue,
-            entry.serviceIsThereAmount ? 1 : 0,
-            entry.serviceAmount ?? null,
-            entry.date,
-            entry.customer ?? null
-        ]
-    )
+    await insertEntry(entry)
 
 }
 

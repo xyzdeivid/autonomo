@@ -1,5 +1,5 @@
 import { isTodayOrPast } from '@/functions/common'
-import { Outflow } from '@/types'
+import { CanAdd, Outflow } from '@/types'
 
 export function isStockIntegrate(outflow: Outflow): boolean {
 
@@ -15,7 +15,7 @@ export function newProductStock(currentStock: number, integrateAmount: number): 
 
 }
 
-export function canAddOutflow(outflowDate: string): { valid: boolean, reason?: string } {
+export function canAddOutflow(outflowDate: string): CanAdd {
 
     // Verificando se foi criado em data futura
     const todayOrPast = isTodayOrPast(outflowDate)

@@ -21,6 +21,9 @@ export function getErrorMessage(error: string): string {
         case 'FUTURE_DATE':
             return 'Não é possível registrar revenda em datas futuras.'
 
+        case 'INSUFFICIENT_STOCK':
+            return 'Estoque insuficiente.'
+
         default:
             return 'Erro não tratado'
 

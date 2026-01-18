@@ -32,3 +32,7 @@ export interface OldEntry {
     date: string
     customer?: string
 }
+
+export type CanAdd = { valid: boolean, reason?: string }
+
+export type AddUseCase = { success: boolean, error?: string }

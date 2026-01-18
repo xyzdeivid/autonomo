@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { StyleSheet, Text, Alert } from 'react-native'
+import { Alert, StyleSheet, Text } from 'react-native'
 import FormContainer from '../common/FormContainer'
 import FormTitle from '../common/FormTitle'
 import { DocsContext } from '@/context/DocsContext'
 import { Entry, Item } from '@/types'
 import { FormDateField } from '../common/FormDateField'
 import SelectServiceInput from './SelectServiceInput'
-import { isTodayOrPast, warning } from '@/functions/common'
-import { MainDisplaysContext } from '@/context/MainDisplays'
 import { createNewEntry, getServices } from '@/functions/schedulings'
 import { FormAmountField } from '../common/FormAmountField'
 import { FormValueField } from '../common/FormValueField'
@@ -16,6 +14,7 @@ import { FormNameField } from '../common/FormNameField'
 import useAddEntry from '@/hooks/useAddEntry'
 import SaveButton from '../common/SaveButton'
 import { colors } from '@/constants/appColors'
+import { getErrorMessage } from '@/functions/common'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -23,7 +22,6 @@ interface AddSchedulingFormProps {
 
 export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
 
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [services] = useContext(DocsContext).items
     const [service, setService] = useState<Item>(getServices(services)[0])
 
@@ -57,50 +55,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
 
     }
 
-    const checkAmount = (product: Item) => {
-
-        if (product.isThereAmount) {
-
-            let actualServiceAmount = 0
-            if (service.amount) {
-                actualServiceAmount = service.amount - amount
-            }
-
-            if (actualServiceAmount < 0) {
-
-                return false
-
-            }
-
-            return true
-
-        }
-
-        return true
-
-    }
-
     const addScheduling = async () => {
-
-        if (!checkAllInputs()) {
-
-            Alert.alert('Todos os campos precisam ser preenchidos')
-            return
-
-        }
-
-        if (!isTodayOrPast(date)) {
-
-            warning('Não é possível registrar entradas em datas futuras', setLoadingScreen)
-            return
-
-        }
-
-        if (!checkAmount(service)) {
-
-            warning('Produto sem estoque', setLoadingScreen)
-            return
-        }
 
         setLoadingScreen(true)
 
@@ -108,10 +63,15 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
 
         const productToUpdate = services.find(service => service._id === newScheduling.serviceId)
 
-        await addEntry(newScheduling, productToUpdate)
+        const result = await addEntry(newScheduling, productToUpdate)
+
+        if (!result.success && result.error) {
+
+            Alert.alert('Erro', getErrorMessage(result.error))
+
+        }
 
         setAddSchedulingForm(false)
-        setHideTabBar(false)
         setLoadingScreen(false)
 
     }

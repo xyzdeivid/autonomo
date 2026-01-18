@@ -21,7 +21,7 @@ const useAddOutflow = () => {
             setOutflows(prev => [...prev, outflow])
 
             // Atualizando produto na UI se necessário
-            if (item && result.newStock) {
+            if (item) {
 
                 setItems(prev =>
 

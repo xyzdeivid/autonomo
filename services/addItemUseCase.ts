@@ -1,20 +1,25 @@
 import { addItemToDb } from '@/database/itemRepositories'
 import { addOutflowAndItemToDb } from '@/database/transactionRepositories'
 import { canAddItem, needResaleOutflow } from '@/rules/itemRules'
-import { Item, Outflow } from '@/types'
+import { AddUseCase, Item, Outflow } from '@/types'
 
-export async function addItemUseCase(items: Item[], item: Item, resaleOutflow?: Outflow): Promise<{ success: boolean, error?: string }> {
+export async function addItemUseCase(items: Item[], item: Item, resaleOutflow?: Outflow): Promise<AddUseCase> {
 
+    /* *****REGRAS DE NEGÓCIO***** */
+    
     // Verificando se posso adicionar novo item
     const addItem = canAddItem(items, item._id, resaleOutflow)
     if (!addItem.valid) return { success: false, error: addItem.reason }
 
+    
+    /* *****INSERÇÃO NO DB***** */
+    
     try {
 
-        if (needResaleOutflow(item)) {
+        if (needResaleOutflow(item) && resaleOutflow) {
 
             // Salvando novo produto e nova despesa caso seja revenda
-            if (resaleOutflow) await addOutflowAndItemToDb(resaleOutflow, item)
+            await addOutflowAndItemToDb(resaleOutflow, item)
 
         } else {
 
