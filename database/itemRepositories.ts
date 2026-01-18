@@ -1,6 +1,33 @@
 import { db } from './db'
 import { Item } from '@/types/index'
 
+export async function insertItem(item: Item) {
+
+    await db.runAsync(
+        `INSERT INTO items
+        (_id, category, value, isThereAmount, resale, amount)
+        VALUES (?, ?, ?, ?, ?, ?)`,
+        [
+            item._id,
+            item.category,
+            item.value,
+            item.isThereAmount ? 1 : 0,
+            item.resale ? 1 : 0,
+            item.amount ?? null
+        ]
+    )
+
+}
+
+export async function updateItemStock(newStock: number, name: string) {
+    await db.runAsync(
+        `UPDATE items
+        SET amount = ?
+        WHERE _id = ?`,
+        [newStock, name]
+    )
+}
+
 export async function getAllItems(): Promise<Item[]> {
 
     const rows = await db.getAllAsync<Item>('SELECT * FROM items')
@@ -18,19 +45,7 @@ export async function getAllItems(): Promise<Item[]> {
 
 export async function addItemToDb(item: Item): Promise<void> {
 
-    await db.runAsync(
-        `INSERT INTO items 
-        (_id, category, value, isThereAmount, resale, amount)
-        VALUES (?, ?, ?, ?, ?, ?)`,
-        [
-            item._id,
-            item.category,
-            item.value,
-            item.isThereAmount ? 1 : 0,
-            item.resale ? 1 : 0,
-            item.amount ?? null
-        ]
-    )
+    await insertItem(item)
 
 }
 
@@ -67,11 +82,6 @@ export async function updateNewValuedItemToDB(newValue: number, name: string): P
 
 export async function updateNewStockedItemToDB(newStock: number, name: string): Promise<void> {
 
-    await db.runAsync(
-        `UPDATE items
-        SET amount = ?
-        WHERE _id = ?`,
-        [newStock, name]
-    )
+    await updateItemStock(newStock, name)
 
 }

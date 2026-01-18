@@ -1,5 +1,7 @@
 import { Item, Outflow } from '@/types'
 import { db } from './db'
+import { insertOutflow } from './outflowRepositories'
+import { insertItem, updateItemStock } from './itemRepositories'
 
 export async function addOutflowAndItemToDb(outflow: Outflow, item: Item): Promise<void> {
 
@@ -7,28 +9,9 @@ export async function addOutflowAndItemToDb(outflow: Outflow, item: Item): Promi
 
         await db.runAsync('BEGIN TRANSACTION')
 
-        await db.runAsync(
-            'INSERT INTO outflows (_id, name, date, value, amount) VALUES (?, ?, ?, ?, ?)',
-            [
-                outflow._id,
-                outflow.name,
-                outflow.date,
-                outflow.value,
-                outflow.amount ?? null
-            ]
-        )
+        await insertOutflow(outflow)
 
-        await db.runAsync(
-            'INSERT INTO items (_id, category, value, isThereAmount, resale, amount) VALUES (?, ?, ?, ?, ?, ?)',
-            [
-                item._id,
-                item.category,
-                item.value,
-                item.isThereAmount ? 1 : 0,
-                item.resale ? 1 : 0,
-                item.amount ?? null
-            ]
-        )
+        await insertItem(item)
 
         await db.runAsync('COMMIT')
 
@@ -47,23 +30,9 @@ export async function addOutflowAndEditItemStockToDb(outflow: Outflow, newStock:
 
         await db.runAsync('BEGIN TRANSACTION')
 
-        await db.runAsync(
-            'INSERT INTO outflows (_id, name, date, value, amount) VALUES (?, ?, ?, ?, ?)',
-            [
-                outflow._id,
-                outflow.name,
-                outflow.date,
-                outflow.value,
-                outflow.amount ?? null
-            ]
-        )
+        await insertOutflow(outflow)
 
-        await db.runAsync(
-            `UPDATE items
-        SET amount = ?
-        WHERE _id = ?`,
-            [newStock, itemId]
-        )
+        await updateItemStock(newStock, itemId)
 
         await db.runAsync('COMMIT')
 
