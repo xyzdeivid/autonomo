@@ -6,7 +6,7 @@ import { DocsContext } from '@/context/DocsContext'
 import { Entry, Item } from '@/types'
 import { FormDateField } from '../common/FormDateField'
 import SelectServiceInput from './SelectServiceInput'
-import { warning } from '@/functions/common'
+import { isTodayOrPast, warning } from '@/functions/common'
 import { MainDisplaysContext } from '@/context/MainDisplays'
 import { createNewEntry, getServices } from '@/functions/schedulings'
 import { FormAmountField } from '../common/FormAmountField'
@@ -80,13 +80,6 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
 
     }
 
-    const getCurrentDate = () => {
-        const year = new Date().getFullYear()
-        const month = String(new Date().getMonth() + 1).padStart(2, '0')
-        const day = String(new Date().getDate()).padStart(2, '0')
-        return `${year}-${month}-${day}`
-    }
-
     const addScheduling = async () => {
 
         if (!checkAllInputs()) {
@@ -96,10 +89,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
 
         }
 
-        const currentDate = new Date(getCurrentDate())
-        const entryDate = new Date(date)
-
-        if (entryDate > currentDate) {
+        if (!isTodayOrPast(date)) {
 
             warning('Não é possível registrar entradas em datas futuras', setLoadingScreen)
             return

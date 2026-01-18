@@ -8,6 +8,17 @@ export const moneyFormat = (value: number) => {
     return formatedData
 }
 
+export function isTodayOrPast(date: string) {
+
+    const inputDate = new Date(date + 'T00:00:00')
+
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    return inputDate <= today
+
+}
+
 export const dateFormat = (date: string) => {
     const formatedDate = format(parseISO(date), 'dd/MM')
     return formatedDate

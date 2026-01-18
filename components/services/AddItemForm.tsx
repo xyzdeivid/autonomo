@@ -37,13 +37,20 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     const addItem = useAddItem().addItem
 
     const getErrorMessage = (error: string) => {
+
         switch (error) {
+
             case 'DUPLICATE_ITEM':
                 return 'Já existe um item com esse nome.'
-        
+
             case 'DB_ERROR':
-                return 'Erro ao acessar banco de dados'
+                return 'Erro ao acessar banco de dados.'
+
+            case 'FUTURE_DATE':
+                return 'Não é possível registrar revenda em datas futuras.'
+
         }
+
     }
 
     const submitNewItem = async (): Promise<void> => {
@@ -75,10 +82,12 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
             Alert.alert('Erro', getErrorMessage(result.error))
 
+        } else {
+
+            setAddServiceForm(false)
+
         }
 
-        // close form
-        setAddServiceForm(false)
         setLoadingScreen(false)
 
     }
