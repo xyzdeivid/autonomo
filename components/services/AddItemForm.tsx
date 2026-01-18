@@ -14,6 +14,7 @@ import ResaleOrStockButtons from './ResaleOrStockButtons'
 import StockCreationForm from './StockCreationForm'
 import NoStockCreationForm from './NoStockCreationForm'
 import { colors } from '@/constants/appColors'
+import { Alert } from 'react-native'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -34,6 +35,16 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     const [step, setStep] = useState(0)
 
     const addItem = useAddItem().addItem
+
+    const getErrorMessage = (error: string) => {
+        switch (error) {
+            case 'DUPLICATE_ITEM':
+                return 'Já existe um item com esse nome.'
+        
+            case 'DB_ERROR':
+                return 'Erro ao acessar banco de dados'
+        }
+    }
 
     const submitNewItem = async (): Promise<void> => {
 
@@ -58,7 +69,13 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
         const item: Item = createItem(category, name, value, amount, resale, stock)
 
         // add data to database and context
-        await addItem(item, resaleOutflow)
+        const result = await addItem(item, resaleOutflow)
+
+        if (!result.success && result.error) {
+
+            Alert.alert('Erro', getErrorMessage(result.error))
+
+        }
 
         // close form
         setAddServiceForm(false)
@@ -95,7 +112,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                             setStep={setStep}
                             submitService={submitNewItem}
                             setForm={setAddServiceForm}
-                            
+
                         />
                     )
                 }

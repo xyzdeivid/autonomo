@@ -1,67 +1,36 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Item, Outflow } from '@/types/index'
-import { addItemToDb } from '@/database/itemRepositories'
 import { orderServices } from '@/functions/services'
 import { useContext } from 'react'
-import { Alert } from 'react-native'
-import useAddOutflow from './useAddOutflow'
+import { addItemUseCase } from '@/services/addItemUseCase'
 
 const useAddItem = () => {
 
-    const [items, setItems] = useContext(DocsContext).items
-    const addOutflow = useAddOutflow().addOutflow
+    const appDocs = useContext(DocsContext)
+    const [items, setItems] = appDocs.items
+    const [outflows, setOutflows] = appDocs.outflows
 
-    const checkIfThereIsAnotherItem = (items: Item[], name: string): boolean => {
+    const addItem = async (item: Item, resaleOutflow?: Outflow): Promise<{ success: boolean, error?: string }> => {
 
-        const isThereAnotherItem = items.filter(item => {
-            const serviceName = item._id.toLocaleLowerCase()
-            const nameToCompare = name.toLocaleLowerCase()
-            return serviceName === nameToCompare
-        })[0]
+        const result = await addItemUseCase(items, item, resaleOutflow)
 
-        return isThereAnotherItem
-            ? true
-            : false
+        if (result.success) {
 
-    }
-
-    const addItem = async (item: Item, resaleOutflow?: Outflow): Promise<boolean> => {
-
-        if (checkIfThereIsAnotherItem(items, item._id)) {
-
-            Alert.alert(
-                'Item existente', 
-                'Já existe um item com este nome. Por favor, escolha outro nome para continuar.'
-            )
-            return false
-
-        }
-
-        try {
-
-            let success: boolean = true
-
-            // add resale outflow if needed
-            if (item.resale && resaleOutflow) success = await addOutflow(resaleOutflow)
-
-            // if adding resale outflow failed, do not proceed
-            if (!success) return false
-
-            await addItemToDb(item)
-
+            // Atualizando itens na UI
             const updatedServices = orderServices([...items, item])
             setItems(updatedServices)
 
-            return true
+            // Atualizando despesas na UI se necessário
+            if (resaleOutflow) {
+                const updatedOutflows = [...outflows, resaleOutflow]
+                setOutflows(updatedOutflows)
+            }
 
-        } catch {
+            return { success: true }
 
-            Alert.alert(
-                'Erro ao acessar banco de dados', 
-                'Por favor, tente novamente mais tarde.'
-            )
+        } else {
 
-            return false
+            return result
 
         }
 
