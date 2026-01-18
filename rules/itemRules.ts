@@ -14,10 +14,10 @@ function isThereAnotherItem(items: Item[], name: string) {
 }
 
 
-export function canAddItem(items: Item[], item: Item, resaleOutflow?: Outflow): { valid: boolean, reason?: string } {
+export function canAddItem(items: Item[], itemId: string, resaleOutflow?: Outflow): { valid: boolean, reason?: string } {
 
     // Verificando se existe outro item com o mesmo nome
-    const anotherItem = isThereAnotherItem(items, item._id)
+    const anotherItem = isThereAnotherItem(items, itemId)
     if (anotherItem) return {
         valid: false, reason: 'DUPLICATE_ITEM'
     }

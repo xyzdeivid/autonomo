@@ -6,7 +6,7 @@ import { Item, Outflow } from '@/types'
 export async function addItemUseCase(items: Item[], item: Item, resaleOutflow?: Outflow): Promise<{ success: boolean, error?: string }> {
 
     // Verificando se posso adicionar novo item
-    const addItem = canAddItem(items, item, resaleOutflow)
+    const addItem = canAddItem(items, item._id, resaleOutflow)
     if (!addItem.valid) return { success: false, error: addItem.reason }
 
     try {

@@ -1,10 +1,16 @@
 import { addOutflowToDb } from '@/database/outflowRepositories'
 import { addOutflowAndEditItemStockToDb } from '@/database/transactionRepositories'
-import { isStockIntegrate, newProductStock } from '@/rules/outflowRules'
+import { canAddOutflow, isStockIntegrate, newProductStock } from '@/rules/outflowRules'
 import { Item, Outflow } from '@/types'
 
 export async function addOutflowUseCase(outflow: Outflow, item?: Item): Promise<{ success: boolean, newStock?: number, error?: string }> {
 
+    // Verificando se posso adicionar nova despesa
+    const addOutflow = canAddOutflow(outflow.date)
+    if (!addOutflow.valid) return {
+        success: false, error: addOutflow.reason
+    }
+    
     try {
 
         // Atualizando estoque de produto caso seja uma reposição de estoque

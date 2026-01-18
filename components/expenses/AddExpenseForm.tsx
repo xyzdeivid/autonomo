@@ -15,6 +15,7 @@ import { Outflow } from '@/types'
 import { createNewOutflow } from '@/functions/createNewOutflow'
 import SaveButton from '../common/SaveButton'
 import { colors } from '@/constants/appColors'
+import { getErrorMessage } from '@/functions/common'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -49,17 +50,6 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
     const addExpense = async () => {
 
-        if (!checkAllInputs()) {
-
-            Alert.alert(
-                'Preencha todos os campos',
-                'Todos os campos do formulário precisam ser preenchidos'
-            )
-
-            return
-
-        }
-
         setLoadingScreen(true)
 
         const newOutflowName: string = stockIntegrate ? product._id : name
@@ -70,9 +60,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
             stockIntegrate ? product : undefined
         )
 
-        if (!result.success) {
+        if (!result.success && result.error) {
 
-            Alert.alert('ERRO', result.error)
+            Alert.alert('Erro', getErrorMessage(result.error))
 
         }
 

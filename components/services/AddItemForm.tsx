@@ -15,6 +15,7 @@ import StockCreationForm from './StockCreationForm'
 import NoStockCreationForm from './NoStockCreationForm'
 import { colors } from '@/constants/appColors'
 import { Alert } from 'react-native'
+import { getErrorMessage } from '@/functions/common'
 
 interface AddServiceFormProps {
     setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -35,23 +36,6 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
     const [step, setStep] = useState(0)
 
     const addItem = useAddItem().addItem
-
-    const getErrorMessage = (error: string) => {
-
-        switch (error) {
-
-            case 'DUPLICATE_ITEM':
-                return 'Já existe um item com esse nome.'
-
-            case 'DB_ERROR':
-                return 'Erro ao acessar banco de dados.'
-
-            case 'FUTURE_DATE':
-                return 'Não é possível registrar revenda em datas futuras.'
-
-        }
-
-    }
 
     const submitNewItem = async (): Promise<void> => {
 

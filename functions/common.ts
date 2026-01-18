@@ -8,6 +8,26 @@ export const moneyFormat = (value: number) => {
     return formatedData
 }
 
+export function getErrorMessage(error: string): string {
+
+    switch (error) {
+
+        case 'DUPLICATE_ITEM':
+            return 'Já existe um item com esse nome.'
+
+        case 'DB_ERROR':
+            return 'Erro ao acessar banco de dados.'
+
+        case 'FUTURE_DATE':
+            return 'Não é possível registrar revenda em datas futuras.'
+
+        default:
+            return 'Erro não tratado'
+
+    }
+
+}
+
 export function isTodayOrPast(date: string) {
 
     const inputDate = new Date(date + 'T00:00:00')
@@ -109,7 +129,7 @@ export const getAvailableMonths = (
 }
 
 export const warning = (
-    warningText: string, 
+    warningText: string,
     setLoadingScreen: (value: React.SetStateAction<boolean>) => void
 ) => {
 
