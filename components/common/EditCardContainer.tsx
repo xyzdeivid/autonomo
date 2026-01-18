@@ -13,7 +13,6 @@ export function EditCardContainer({ children, visible, onCancelButtonPress, labe
         <Modal
             visible={visible}
             transparent
-            animationType='fade'
             onRequestClose={onCancelButtonPress}
         >
             <View style={styles.overlay}>

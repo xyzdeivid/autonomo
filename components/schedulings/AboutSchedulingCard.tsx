@@ -1,6 +1,6 @@
-import { BackHandler, Platform } from 'react-native'
+import { Alert, BackHandler, Platform } from 'react-native'
 import { Entry } from '@/types'
-import { dateFormat, moneyFormat } from '@/functions/common'
+import { dateFormat, getErrorMessage, moneyFormat } from '@/functions/common'
 import React, { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
@@ -51,7 +51,13 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
         setLoadingPage(true)
 
-        await addCustomerName(scheduling._id, customer)
+        const result = await addCustomerName(scheduling._id, customer)
+
+        if (!result.success && result.error) {
+
+            Alert.alert('Erro', getErrorMessage(result.error))
+
+        } 
 
         setLoadingPage(false)
         setFormOff(false)
@@ -106,19 +112,17 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                     onCloseCardButton={() => setFormOff(false)}
                 />
                 <ListItemCardBody>
-                    {
-                        scheduling.customer
-                            ? <ListItemCardProperty
-                                label='Cliente'
-                                text={scheduling.customer}
-                                bgColor={colors.entries.min}
-                                onEditButtonPress={() => setShowEditNameCard(true)}
-                            />
-                            : <AddClienteButton
-                                setCustomer={setCustomer}
-                                customer={customer}
-                                addCustomer={submitCustomerName}
-                            />
+                    {scheduling.customer
+                        ? <ListItemCardProperty
+                            label='Cliente'
+                            text={scheduling.customer}
+                            bgColor={colors.entries.min}
+                            onEditButtonPress={() => setShowEditNameCard(true)}
+                        />
+                        : <AddClienteButton
+                            setCustomer={setCustomer}
+                            addCustomer={submitCustomerName}
+                        />
                     }
                     {
                         showEditNameCard && scheduling.customer && (

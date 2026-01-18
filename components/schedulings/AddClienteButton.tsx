@@ -1,21 +1,20 @@
 import { useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { FormNameField } from '../common/FormNameField'
 import { colors } from '@/constants/appColors'
+import { EditNameCard } from '../common/EditNameCard'
 
 interface AddCustomerButtonProps {
     setCustomer: React.Dispatch<React.SetStateAction<string>>
-    customer: string
     addCustomer: () => Promise<void>
 }
 
-export default function AddCustomerButton({ setCustomer, customer, addCustomer }: AddCustomerButtonProps) {
+export default function AddCustomerButton({ setCustomer, addCustomer }: AddCustomerButtonProps) {
 
     const [active, setActive] = useState(false)
 
     return (
         <View style={{
-            marginBottom: !active ? 12 : null
+            marginBottom: !active ? 24 : null
         }}>
             {
                 !active
@@ -25,30 +24,17 @@ export default function AddCustomerButton({ setCustomer, customer, addCustomer }
                             borderWidth: 1,
                             borderColor: colors.entries.max,
                             color: colors.entries.max,
+                            fontSize: 16
                         }}>Registrar Cliente</Text>
                     </Pressable>
                     :
-                    <View>
-                        <FormNameField setName={setCustomer} />
-                        <Pressable
-                            onPress={() => {
-                                if (!customer) {
-                                    setActive(false)
-                                } else {
-                                    addCustomer()
-                                }
-                            }}
-                        >
-                            <Text style={{
-                                ...styles.text,
-                                marginBottom: 12,
-                                backgroundColor: colors.entries.max,
-                                color: 'white',
-                            }}>
-                                Confirmar
-                            </Text>
-                        </Pressable>
-                    </View>
+                    <EditNameCard
+                        visible={active}
+                        currentName=''
+                        setNewName={setCustomer}
+                        onConfirmButtonPress={addCustomer}
+                        onCancelButtonPress={() => setActive(false)}
+                    />
             }
         </View>
     )

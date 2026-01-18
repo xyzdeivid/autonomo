@@ -1,55 +1,42 @@
 import { DocsContext } from '@/context/DocsContext'
-import { addCustomerNameToDb } from '@/database/entryRepositories'
-import { Entry } from '@/types'
+import { addCustomerUseCase } from '@/services/addCustomerUseCase'
 import { useContext } from 'react'
-import { Alert } from 'react-native'
 
 const useAddCustomerName = () => {
 
-    const [entries, setEntries] = useContext(DocsContext).entries
+    const [, setEntries] = useContext(DocsContext).entries
 
-    const updateEntriesInUI = (id: string, customerName: string) => {
+    const addCustomerName = async (id: string, customerName: string): Promise<{ success: boolean, error?: string }> => {
 
-        const newEntries: Entry[] = entries.map(entry => {
+        const result = await addCustomerUseCase(customerName, id)
 
-            if (entry._id === id) {
+        if (result.success) {
 
-                return {
-                    ...entry, customer: customerName
-                }
+            // Atualizado receita editada na UI
+            setEntries(prev =>
 
-            }
+                prev.map(entry => {
 
-            return entry
+                    if (entry._id === id) {
 
-        })
+                        return {
+                            ...entry, customer: customerName
+                        }
 
-        setEntries(newEntries)
+                    }
 
-    }
+                    return entry
 
-    const addCustomerName = async (id: string, customerName: string): Promise<boolean> => {
-
-        try {
-
-            // Adicionando nome de cliente ao banco de dados
-            await addCustomerNameToDb(customerName, id)
-
-            // Atualizando UI
-            updateEntriesInUI(id, customerName)
-
-            return true
-
-        } catch {
-
-            Alert.alert(
-                'Erro ao acessar banco de dados',
-                'Por favor, tente novamente mais tarde.'
+                })
             )
 
-            return false
+            return {
+                success: true
+            }
 
         }
+
+        return result
 
     }
 

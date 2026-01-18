@@ -44,17 +44,6 @@ export async function addEntryToDb(entry: Entry): Promise<void> {
 
 }
 
-export async function addCustomerNameToDb(customerName: string, id: string): Promise<void> {
-
-    await db.runAsync(
-        `UPDATE entries
-        SET customer = ?
-        WHERE _id = ?`,
-        [customerName, id]
-    )
-
-}
-
 export async function editCustomerNameToDb(customerName: string, id: string): Promise<void> {
 
     await db.runAsync(
