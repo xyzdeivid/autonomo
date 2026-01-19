@@ -28,3 +28,17 @@ export function canAddOutflow(outflowDate: string): CanDo {
     }
 
 }
+
+export function canEditOutflowDate(outflowDate: string): CanDo {
+
+    // Verificando se data editada é futura
+    const todayOrPast = isTodayOrPast(outflowDate)
+    if (!todayOrPast) return {
+        valid: false, reason: 'FUTURE_DATE'
+    }
+
+    return {
+        valid: true
+    }
+
+}

@@ -32,10 +32,11 @@ export function EditValueCard({ visible, setNewValue, onSuccessButtonPress, onCa
                     keyboardType='numeric'
                     onChangeText={text => {
                         // Removendo pontos e vírgulas do valor
-                        let value = text.replace(',', '.')
-                            .replace(/\.(?=.*\.)/g, '')
-
-                        setNewValue(Number(value))
+                        const cleaned = text
+                            .replace(/[^\d,]/g, '')
+                            .replace(',', '.')
+                        const numericValue = Number(cleaned)
+                        setNewValue(Number.isFinite(numericValue) ? numericValue : 0)
                     }}
                 />
                 <EditCardButtonsContainer>

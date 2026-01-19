@@ -1,51 +1,37 @@
 import { DocsContext } from '@/context/DocsContext'
-import { updateNewValuedOutflowToDb } from '@/database/outflowRepositories'
-import { Outflow } from '@/types'
+import { editOutflowValueUseCase } from '@/services/editOutflowValueUseCase'
 import { useContext } from 'react'
-import { Alert } from 'react-native'
 
 const useEditOutflowValue = () => {
 
-    const [outflows, setOutflows] = useContext(DocsContext).outflows
+    const [, setOutflows] = useContext(DocsContext).outflows
 
-    const updateOutflowsInUI = (outflow: Outflow, newValue: number) => {
+    const editOutflowValue = async (newValue: number, outflowId: string): Promise<{ success: boolean, error?: string }> => {
 
-        const newOutflows = outflows.map(current => {
+        const result = await editOutflowValueUseCase(newValue, outflowId)
 
-            if (current._id === outflow._id) {
+        if (result.success) {
 
-                return { ...current, value: newValue }
+            // Atualizando despesa na UI
+            setOutflows(prev =>
 
-            }
+                prev.map(current => {
 
-            return current
+                    if (current._id === outflowId) {
 
-        })
+                        return { ...current, value: newValue }
 
-        setOutflows(newOutflows)
+                    }
 
-    }
+                    return current
 
-    const editOutflowValue = async (outflow: Outflow, newValue: number): Promise<boolean> => {
+                })
 
-        try {
-
-            await updateNewValuedOutflowToDb(newValue, outflow._id)
-
-            updateOutflowsInUI(outflow, newValue)
-
-            return true
-
-        } catch {
-
-            Alert.alert(
-                'Erro ao acessar banco de dados',
-                'Por favor, tente novamente mais tarde.'
             )
 
-            return false
-
         }
+
+        return result
 
     }
 

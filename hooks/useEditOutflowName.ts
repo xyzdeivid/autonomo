@@ -1,51 +1,37 @@
 import { DocsContext } from '@/context/DocsContext'
-import { updateNewNamedOutflowToDb } from '@/database/outflowRepositories'
-import { Outflow } from '@/types'
+import { editOutflowNameUseCase } from '@/services/editOutflowNameUseCase'
 import { useContext } from 'react'
-import { Alert } from 'react-native'
 
 const useEditOutflowName = () => {
 
-    const [outflows, setOutflows] = useContext(DocsContext).outflows
+    const [, setOutflows] = useContext(DocsContext).outflows
 
-    const updateOutflowsInUI = (outflow: Outflow, newName: string) => {
+    const editOutflowName = async (newName: string, outflowId: string): Promise<{ success: boolean, error?: string }> => {
 
-        const newOutflows = outflows.map(current => {
+        const result = await editOutflowNameUseCase(newName, outflowId)
 
-            if (current._id === outflow._id) {
+        if (result.success) {
 
-                return { ...current, name: newName }
+            // Atualizando despesas na UI
+            setOutflows(prev =>
 
-            }
+                prev.map(current => {
 
-            return current
+                    if (current._id === outflowId) {
 
-        })
+                        return { ...current, name: newName }
 
-        setOutflows(newOutflows)
+                    }
 
-    }
+                    return current
 
-    const editOutflowName = async (outflow: Outflow, newName: string): Promise<boolean> => {
+                })
 
-        try {
-
-            await updateNewNamedOutflowToDb(newName, outflow._id)
-
-            updateOutflowsInUI(outflow, newName)
-
-            return true
-
-        } catch {
-
-            Alert.alert(
-                'Erro ao acessar banco de dados',
-                'Por favor, tente novamente mais tarde.'
             )
 
-            return false
-
         }
+
+        return result
 
     }
 

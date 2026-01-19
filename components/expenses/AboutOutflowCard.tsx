@@ -1,6 +1,6 @@
-import { Text, StyleSheet, BackHandler, Platform } from 'react-native'
+import { Text, StyleSheet, BackHandler, Platform, Alert } from 'react-native'
 import { Outflow } from '@/types'
-import { dateFormat, moneyFormat } from '@/functions/common'
+import { dateFormat, getErrorMessage, moneyFormat } from '@/functions/common'
 import React, { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
@@ -52,17 +52,19 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
 
     const submitNameToEdit = async () => {
 
-        if (newName) {
+        setLoadingScreen(true)
 
-            setLoadingScreen(true)
+        const result = await editOutflowName(newName, outflow._id)
 
-            await editOutflowName(outflow, newName)
+        if (!result.success && result.error) {
 
-            setLoadingScreen(false)
-            setShowEditNameCard(false)
-            setNewName('')
+            Alert.alert('Erro', getErrorMessage(result.error))
 
         }
+
+        setLoadingScreen(false)
+        setShowEditNameCard(false)
+        setNewName('')
 
     }
 
@@ -70,7 +72,13 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
 
         setLoadingScreen(true)
 
-        await editOutflowDate(outflow, newDate)
+        const result = await editOutflowDate(newDate, outflow._id)
+
+        if (!result.success && result.error) {
+
+            Alert.alert('Erro', getErrorMessage(result.error))
+
+        }
 
         setLoadingScreen(false)
 
@@ -78,20 +86,19 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
 
     const submitValueToEdit = async () => {
 
-        if (newValue) {
+        setLoadingScreen(true)
 
-            setLoadingScreen(true)
+        console.log('hi')
 
-            await editOutflowValue(outflow, newValue)
+        const result = await editOutflowValue(newValue, outflow._id)
 
-            setLoadingScreen(false)
-            setShowEditValueCard(false)
+        if (!result.success && result.error) {
 
-        } else {
-
-            setShowEditValueCard(false)
+            Alert.alert('Erro', getErrorMessage(result.error))
 
         }
+
+        setLoadingScreen(false)
 
     }
 
@@ -185,7 +192,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                         visible={showEditValueCard}
                         setNewValue={setNewValue}
                         onSuccessButtonPress={() => {
-                            if (newValue !== outflow.value) {
+                            if (newValue > 0 && newValue !== outflow.value) {
                                 submitValueToEdit()
                             }
                             setShowEditValueCard(false)
