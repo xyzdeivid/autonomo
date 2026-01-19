@@ -15,7 +15,7 @@ function areAllTheFieldsCorrect(outflow: Outflow): boolean {
 
 export function isStockIntegrate(outflow: Outflow): boolean {
 
-    if (outflow.amount) return true
+    if (outflow.amount !== undefined) return true
 
     return false
 
@@ -54,7 +54,7 @@ export function canAddOutflow(outflow: Outflow): CanDo {
     }
 
     // Verificando se estoque é válido caso tenha sido reposição
-    if (outflow.amount != null) {
+    if (outflow.amount !== undefined) {
 
         if (!isStockValid(outflow.amount)) return {
             valid: false, reason: 'INVALID_STOCK'

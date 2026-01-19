@@ -63,8 +63,8 @@ export function canAddItem(items: Item[], item: Item): CanDo {
     }
 
     // Verificando se estoque é valido caso tenha sido produto
-    if (item.isThereAmount) {
-        if (!isStockValid(item.amount!)) {
+    if (item.isThereAmount  && item.amount !== undefined) {
+        if (!isStockValid(item.amount)) {
             return { valid: false, reason: 'INVALID_STOCK' }
         }
     }

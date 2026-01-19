@@ -20,8 +20,8 @@ export async function addEntryUseCase(entry: Entry, selectedProduct?: Item): Pro
         // Atualizando estoque de produto caso a receita tenha sido a venda de algum
         if (
             needReduceStock(entry)
-            && selectedProduct?.amount
-            && entry.serviceAmount
+            && selectedProduct?.amount !== undefined
+            && entry.serviceAmount !== undefined
         ) {
 
             const newStock = newProductStock(selectedProduct.amount, entry.serviceAmount)
