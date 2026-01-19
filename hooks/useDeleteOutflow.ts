@@ -2,7 +2,7 @@ import { DocsContext } from '@/context/DocsContext'
 import { Outflow } from '@/types'
 import { useContext } from 'react'
 import { Alert } from 'react-native'
-import useEditStockItem from './useEditStockItem'
+import useEditStockItem from './useEditItemStock'
 import { deleteOutflowToDb } from '@/database/outflowRepositories'
 
 const useDeleteOutflow = () => {

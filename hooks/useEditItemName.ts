@@ -1,58 +1,37 @@
 import { DocsContext } from '@/context/DocsContext'
-import { Item } from '@/types'
-import { updateNewNamedItemToDb } from '@/database/itemRepositories'
 import { useContext } from 'react'
-import { Alert } from 'react-native'
+import { editItemNameUseCase } from '@/services/editItemNameUseCase'
 
 const useEditItemName = () => {
 
     const [items, setItems] = useContext(DocsContext).items
 
-    const updateItemsInUI = (item: Item, newName: string) => {
+    const editItemName = async (newName: string, oldName: string): Promise<{ success: boolean, error?: string }> => {
 
-        const newItems = items.map(current => {
+        const result = await editItemNameUseCase(items, newName, oldName)
 
-            if (current._id === item._id) {
+        if (result.success) {
 
-                return { ...current, _id: newName }
+            // Atualizando item editado na UI
+            setItems(prev =>
 
-            }
-            
-            return current
+                prev.map(current => {
 
-        })
+                    if (current._id === oldName) {
 
-        setItems(newItems)
+                        return { ...current, _id: newName }
 
-    }
+                    }
 
-    const editItemName = async (newName: string, item: Item): Promise<boolean> => {
+                    return current
 
-        // Verificando se existe algum outro serviço com o mesmo nome
-        if (items.find(current => current._id === newName)) {
-            Alert.alert('Já existe um serviço com esse nome.')
-            return false
-        }
+                })
 
-        try {
-
-            // Salvando item editado no banco de dados
-            await updateNewNamedItemToDb(newName, item._id)
-
-            // Atualizando estado no UI
-            updateItemsInUI(item, newName)
-
-            return true
-
-        } catch {
-
-            Alert.alert(
-                'Erro ao acessar banco de dados',
-                'Por favor, tente novamente mais tarde.'
             )
-            return false
 
         }
+
+        return result
 
     }
 

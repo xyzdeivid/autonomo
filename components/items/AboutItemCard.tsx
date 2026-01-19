@@ -5,7 +5,7 @@ import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'
 import useEditItemName from '@/hooks/useEditItemName'
 import useEditItemValue from '@/hooks/useEditItemValue'
-import useEditStockItem from '@/hooks/useEditStockItem'
+import useEditItemStock from '@/hooks/useEditItemStock'
 import { getAboutItemCardTitle } from '@/functions/getAboutItemCardTitle'
 import ReplenishResaleStock from './ReplenishResaleStock'
 import { createNewOutflow } from '@/functions/createNewOutflow'
@@ -17,7 +17,7 @@ import { ListItemCardHeader } from '../common/ListItemCardHeader'
 import { ListItemCardBody } from '../common/ListItemCardBody'
 import { StockWarningForResale } from './StockWarningForResale'
 import { ListItemCardProperty } from '../common/ListItemCardProperty'
-import { moneyFormat } from '@/functions/common'
+import { getErrorMessage, moneyFormat } from '@/functions/common'
 import { EditNameCard } from '../common/EditNameCard'
 import { EditValueCard } from '../common/EditValueCard'
 import { EditAmountCard } from '../common/EditAmountCard'
@@ -29,7 +29,7 @@ interface AboutItemCardProps {
 }
 
 export default function AboutItemCard({ item, deleteFunction, setFormOff }: AboutItemCardProps) {
-
+    
     const [showEditNameCard, setShowEditNameCard] = useState(false)
     const [name, setName] = useState('')
 
@@ -48,7 +48,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
     const editItemName = useEditItemName().editItemName
     const editItemValue = useEditItemValue().editItemValue
-    const editItemStock = useEditStockItem().editStockItem
+    const editItemStock = useEditItemStock().editItemStock
     const addOutflow = useAddOutflow().addOutflow
 
     useEffect(() => {
@@ -60,55 +60,49 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
     const submitNameToEdit = async () => {
 
-        if (name) {
+        setLoadingScreen(true)
 
-            setLoadingScreen(true)
+        const result = await editItemName(name, item._id)
 
-            await editItemName(name, item)
+        if (!result.success && result.error) {
 
-            setFormOff(false)
-            setLoadingScreen(false)
-
-        } else {
-
-            setShowEditNameCard(false)
+            Alert.alert('Erro', getErrorMessage(result.error))
 
         }
+
+        setFormOff(false)
+        setLoadingScreen(false)
 
     }
 
     const submitValueToEdit = async () => {
 
-        // Apenas salvando se existir novo valor e ele for diferente do atual
-        if (value && value !== item.value) {
+        setLoadingScreen(true)
 
-            setLoadingScreen(true)
+        const result = await editItemValue(value, item._id)
 
-            await editItemValue(value, item)
+        if (!result.success && result.error) {
 
-            setShowEditValueCard(false)
-            setLoadingScreen(false)
-
-        } else {
-
-            setShowEditValueCard(false)
+            Alert.alert('Erro', getErrorMessage(result.error))
 
         }
+
+        setShowEditValueCard(false)
+        setLoadingScreen(false)
 
     }
 
     const submitStockToEdit = async (newStock: number) => {
 
-        if (newStock === item.amount) {
-
-            setShowEditStockCard(false)
-            return
-
-        }
-
         setLoadingScreen(true)
 
-        await editItemStock(newStock, item)
+        const result = await editItemStock(newStock, item._id)
+
+        if (!result.success && result.error) {
+
+            Alert.alert('Erro', getErrorMessage(result.error))
+
+        }
 
         setShowEditStockCard(false)
         setLoadingScreen(false)
@@ -133,9 +127,13 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
             replenishDate
         )
 
-        const newResaleAmount: number = (item.amount ?? 0) + replenishAmount
+        const result = await addOutflow(newReplenishOuflow, item)
 
-        await addOutflow(newReplenishOuflow, newResaleAmount, item)
+        if(!result.success && result.error) {
+
+            Alert.alert('Erro', getErrorMessage(result.error))
+
+        }
 
         // Fechando card de reposição de estoque
         setLoadingScreen(false)
@@ -188,7 +186,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                             visible={showEditValueCard}
                             setNewValue={setValue}
                             onSuccessButtonPress={() => {
-                                if (value && value !== item.value) {
+                                if (value > 0 && value !== item.value) {
                                     submitValueToEdit()
                                 }
                                 setShowEditValueCard(false)

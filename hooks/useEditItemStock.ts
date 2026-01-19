@@ -1,14 +1,14 @@
 import { DocsContext } from '@/context/DocsContext'
-import { editItemValueUseCase } from '@/services/editItemValueUseCase'
+import { editItemStockUseCase } from '@/services/editItemStockUseCase'
 import { useContext } from 'react'
 
-const useEditItemValue = () => {
+const useEditItemStock = () => {
 
     const [, setItems] = useContext(DocsContext).items
 
-    const editItemValue = async (newValue: number, itemId: string): Promise<{ success: boolean, error?: string }> => {
+    const editItemStock = async (newStock: number, itemId: string): Promise<{ success: boolean, error?: string }> => {
 
-        const result = await editItemValueUseCase(newValue, itemId)
+        const result = await editItemStockUseCase(newStock, itemId)
 
         if (result.success) {
 
@@ -17,7 +17,7 @@ const useEditItemValue = () => {
                 prev.map(current => {
 
                     if (current._id === itemId) {
-                        return { ...current, value: newValue }
+                        return { ...current, amount: newStock }
                     }
                     return current
 
@@ -31,8 +31,8 @@ const useEditItemValue = () => {
 
     }
 
-    return { editItemValue }
+    return { editItemStock }
 
 }
 
-export default useEditItemValue
+export default useEditItemStock

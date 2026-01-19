@@ -45,3 +45,14 @@ export function needResaleOutflow(item: Item): boolean {
     return !!item.resale
 
 }
+
+export function canEditItemName(items: Item[], newName: string): CanDo {
+
+    // Verificando se existe algum outro serviço com o mesmo nome
+    if (items.find(current => current._id === newName)) return { valid: false, reason: 'DUPLICATE_ITEM' }
+
+    return {
+        valid: true
+    }
+
+}

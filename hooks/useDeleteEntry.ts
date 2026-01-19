@@ -1,7 +1,7 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Entry } from '@/types'
 import { useContext } from 'react'
-import useEditStockItem from './useEditStockItem'
+import useEditStockItem from './useEditItemStock'
 import { deleteEntryToDb } from '@/database/entryRepositories'
 import { Alert } from 'react-native'
 
