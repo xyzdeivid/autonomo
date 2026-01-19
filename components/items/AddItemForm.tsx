@@ -59,8 +59,6 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
         // create item to submit
         const item: Item = createItem(category, name, value, amount, resale, stock)
 
-        console.log(item)
-
         // add data to database and context
         const result = await addItem(item, resaleOutflow)
 
