@@ -1,87 +1,45 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Outflow } from '@/types'
 import { useContext } from 'react'
-import { Alert } from 'react-native'
-import useEditStockItem from './useEditItemStock'
-import { deleteOutflowToDb } from '@/database/outflowRepositories'
+import { deleteOutflowUseCase } from '@/services/deleteOutflowUseCase'
 
 const useDeleteOutflow = () => {
 
-    const [items] = useContext(DocsContext).items
-    const [outflows, setOutflows] = useContext(DocsContext).outflows
+    const [items, setItems] = useContext(DocsContext).items
+    const [, setOutflows] = useContext(DocsContext).outflows
 
-    const editItemStock = useEditStockItem().editItemStock
+    const deleteOutflow = async (outflow: Outflow): Promise<{ success: boolean, error?: string }> => {
 
-    const updateOutflowsInUI = (id: string) => {
+        // Procurando item caso seja reposição de estoque
+        const itemToReduceStock = items.find(current => current._id === outflow.name)
 
-        const remainingOutflows = outflows.filter(current => {
+        const result = await deleteOutflowUseCase(outflow, itemToReduceStock)
 
-            return current._id !== id
+        if (result.success) {
 
-        })
-
-        setOutflows(remainingOutflows)
-
-    }
-
-    const updateItemStock = async (outflow: Outflow): Promise<boolean> => {
-
-        const product = items.find(current =>
-            current._id === outflow.name
-        )
-
-        if (product?.amount && outflow.amount) {
-
-            let newAmount: number = 0
-
-            if (product.amount > outflow.amount) {
-
-                newAmount = product.amount - outflow.amount
-
-            }
-
-            const success = await editItemStock(newAmount, product._id)
-
-            if (!success) return false
-
-            return true
-
-        }
-
-        return true
-
-    }
-
-    const deleteOutflow = async (outflow: Outflow): Promise<boolean> => {
-
-        try {
-
-            let success: boolean = true
-
-            // Atualizando estoque de produto caso tenha algum vinculado
-            if (outflow.amount) success = await updateItemStock(outflow)
-
-            // Parando operação caso atualização de estoque falhe
-            if (!success) return false
-
-            // Excluindo despesa
-            await deleteOutflowToDb(outflow._id)
-
-            // Atualizando estado na UI
-            updateOutflowsInUI(outflow._id)
-
-            return true
-
-        } catch {
-
-            Alert.alert(
-                'Erro ao acessar banco de dados',
-                'Por favor, tente novamente mais tarde.'
+            // Atualizando despesas na UI
+            setOutflows(prev =>
+                prev.filter(current => {
+                    return current._id !== outflow._id
+                })
             )
 
-            return false
+            // Atualizando estoque de item na UI caso seja necessário
+            if (itemToReduceStock) {
+                const newStock = result.newStock
+                setItems(prev =>
+                    prev.map(current => {
+                        if (current._id === itemToReduceStock._id) {
+                            return { ...current, amount: newStock }
+                        }
+                        return current
+                    })
+                )
+            }
 
         }
+
+        return result
 
     }
 

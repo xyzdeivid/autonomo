@@ -17,6 +17,15 @@ export async function insertOutflow(outflow: Outflow) {
 
 }
 
+export async function deleteOutflow(id: string) {
+
+    await db.runAsync(
+        'DELETE FROM outflows WHERE _id = ?',
+        [id]
+    )
+
+}
+
 export async function getAllOutflows(): Promise<Outflow[]> {
 
     const rows = await db.getAllAsync<Outflow>('SELECT * FROM outflows')
@@ -39,10 +48,7 @@ export async function addOutflowToDb(outflow: Outflow): Promise<void> {
 
 export async function deleteOutflowToDb(_id: string): Promise<void> {
 
-    await db.runAsync(
-        'DELETE FROM outflows WHERE _id = ?',
-        [_id]
-    )
+    await deleteOutflow(_id)
 
 }
 

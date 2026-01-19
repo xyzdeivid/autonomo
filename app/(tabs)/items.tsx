@@ -1,13 +1,12 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
-import { BackHandler } from 'react-native'
+import { Alert, BackHandler } from 'react-native'
 
 // custom functions
 import { getServicesByCategory, getCategoryAndSet } from '@/utils/services'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
-import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
 import AddItemButton from '@/components/common/AddItemButton'
@@ -22,6 +21,7 @@ import ServicesContent from '@/components/items/ServicesContent'
 import useDeleteItem from '@/hooks/useDeleteItem'
 import { Item } from '@/types'
 import { colors } from '@/constants/appColors'
+import { getErrorMessage } from '@/utils/common'
 
 export default function Services() {
 
@@ -37,7 +37,6 @@ export default function Services() {
     const [currentPage] = appDocs.currentPage
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
 
     const deleteItem = useDeleteItem().deleteItem
 
@@ -63,11 +62,14 @@ export default function Services() {
 
         setLoadingScreen(true)
 
-        await deleteItem(id)
+        const result = await deleteItem(id)
+
+        if (!result.success && result.error) {
+            Alert.alert('Erro', getErrorMessage(result.error))
+        }
 
         setAboutServiceCard(false)
         setLoadingScreen(false)
-        setHideTabBar(false)
 
     }
 

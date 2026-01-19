@@ -1,6 +1,6 @@
 import { addOutflowToDb } from '@/database/outflowRepositories'
 import { addOutflowAndEditItemStockToDb } from '@/database/transactionRepositories'
-import { canAddOutflow, isStockIntegrate, newProductStock } from '@/rules/outflowRules'
+import { canAddOutflow, isStockIntegrate, newProductStockOnIncrement } from '@/rules/outflowRules'
 import { UseCase, Item, Outflow } from '@/types'
 
 export async function addOutflowUseCase(outflow: Outflow, item?: Item): Promise<UseCase & { newStock?: number }> {
@@ -18,10 +18,10 @@ export async function addOutflowUseCase(outflow: Outflow, item?: Item): Promise<
     try {
 
         // Atualizando estoque de produto caso seja uma reposição de estoque
-        if (isStockIntegrate(outflow) && item?.amount && outflow.amount) {
+        if (isStockIntegrate(outflow) && item && item.amount !== undefined && outflow.amount !== undefined) {
 
             // Novo estoque do produto
-            const newStock = newProductStock(item.amount, outflow.amount)
+            const newStock = newProductStockOnIncrement(item.amount, outflow.amount)
 
             // Salvar os dois no db
             await addOutflowAndEditItemStockToDb(outflow, newStock, item._id)

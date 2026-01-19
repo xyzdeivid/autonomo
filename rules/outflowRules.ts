@@ -21,10 +21,17 @@ export function isStockIntegrate(outflow: Outflow): boolean {
 
 }
 
-export function newProductStock(currentStock: number, integrateAmount: number): number {
+/* Função que retorna nova quantidade de estoque do produto
+ao criar uma reposição de estoque */
+export function newProductStockOnIncrement(currentStock: number, incrementAmount: number): number {
+    return currentStock + incrementAmount
+}
 
-    return currentStock + integrateAmount
-
+/* Função que retorna nova quantidade de estoque do produto
+ao excluir uma reposição de estoque */
+export function newProductStockOnDecrement(currentStock: number, decrementAmount: number): number {
+    if (currentStock > 0) return currentStock - decrementAmount
+    return currentStock
 }
 
 export function canAddOutflow(outflow: Outflow): CanDo {
@@ -34,7 +41,7 @@ export function canAddOutflow(outflow: Outflow): CanDo {
     if (!allTheFieldsCorrect) return {
         valid: false, reason: 'INVALID_FIELD'
     }
-    
+
     // Verificando se foi criado em data futura
     const todayOrPast = isTodayOrPast(outflow.date)
     if (!todayOrPast) return {

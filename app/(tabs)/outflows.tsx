@@ -1,9 +1,9 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
-import { BackHandler } from 'react-native'
+import { Alert, BackHandler } from 'react-native'
 
 // custom functions
-import { filterExpenses } from '@/utils/common'
+import { filterExpenses, getErrorMessage } from '@/utils/common'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
@@ -44,7 +44,11 @@ export default function Expenses() {
 
         setLoadingScreen(true)
 
-        await deleteOutflow(expense)
+        const result = await deleteOutflow(expense)
+
+        if (!result.success && result.error) {
+            Alert.alert('Erro', getErrorMessage(result.error))
+        }
 
         setDeleteExpenseForm(false)
         setLoadingScreen(false)
