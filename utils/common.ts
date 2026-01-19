@@ -24,8 +24,8 @@ export function getErrorMessage(error: string): string {
 
     switch (error) {
 
-        case 'EMPTY_FIELD':
-            return 'Campo vazio.'
+        case 'INVALID_FIELD':
+            return 'Campo vazio ou inválido.'
         
         case 'DUPLICATE_ITEM':
             return 'Já existe um item com esse nome.'

@@ -1,21 +1,20 @@
-import { CanDo, Item, Outflow } from '@/types'
-import { canAddOutflow } from './outflowRules'
+import { CanDo, Item } from '@/types'
 import { isStockValid, isStringValid } from '@/utils/common'
 
-function hasEmptyField(item: Item): boolean {
+function areAllTheFieldsCorrect(item: Item): boolean {
 
-    if (item._id == null || !isStringValid(item._id)) return true
-    if (item.category == null || !isStringValid(item.category)) return true
-    if (item.value == null) return true
-    if (item.resale == null) return true
-    if (item.isThereAmount == null) return true
+    if (typeof item._id !== 'string' || !isStringValid(item._id)) return false
+    if (typeof item.category !== 'string' || !isStringValid(item.category)) return false
+    if (typeof item.value !== 'number') return false
+    if (typeof item.resale !== 'boolean') return false
+    if (typeof item.isThereAmount !== 'boolean') return false
     if (item.isThereAmount) {
-        if (item.amount == null) {
-            return true
+        if (typeof item.amount !== 'number') {
+            return false
         }
     }
 
-    return false
+    return true
 
 }
 
@@ -49,12 +48,12 @@ function isValueValid(category: string, value: number): boolean {
 
 }
 
-export function canAddItem(items: Item[], item: Item, resaleOutflow?: Outflow): CanDo {
+export function canAddItem(items: Item[], item: Item): CanDo {
 
-    // Verificando se há campo vazio obrigatório
-    const emptyField = hasEmptyField(item)
-    if (emptyField) return {
-        valid: false, reason: 'EMPTY_FIELD'
+    // Verificando se há campo vazio ou inválido
+    const allTheFieldsCorrect = areAllTheFieldsCorrect(item)
+    if (!allTheFieldsCorrect) return {
+        valid: false, reason: 'INVALID_FIELD'
     }
 
     // Verificando se existe outro item com o mesmo nome
@@ -74,16 +73,6 @@ export function canAddItem(items: Item[], item: Item, resaleOutflow?: Outflow): 
     const valueValid = isValueValid(item.category, item.value)
     if (!valueValid) return {
         valid: false, reason: 'INVALID_VALUE'
-    }
-
-
-    // Verificando despesa criada, caso seja uma revenda
-    if (resaleOutflow) {
-
-        const addOutflow = canAddOutflow(resaleOutflow)
-
-        if (!addOutflow.valid) return addOutflow
-
     }
 
     return {

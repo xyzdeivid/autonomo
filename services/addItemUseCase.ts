@@ -1,6 +1,7 @@
 import { addItemToDb } from '@/database/itemRepositories'
-import { addOutflowAndItemToDb } from '@/database/transactionRepositories'
+import { addItemAndOutflowToDb } from '@/database/transactionRepositories'
 import { canAddItem, needResaleOutflow } from '@/rules/itemRules'
+import { canAddOutflow } from '@/rules/outflowRules'
 import { UseCase, Item, Outflow } from '@/types'
 
 export async function addItemUseCase(items: Item[], item: Item, resaleOutflow?: Outflow): Promise<UseCase> {
@@ -8,8 +9,16 @@ export async function addItemUseCase(items: Item[], item: Item, resaleOutflow?: 
     /* *****REGRAS DE NEGÓCIO***** */
     
     // Verificando se posso adicionar novo item
-    const addItem = canAddItem(items, item, resaleOutflow)
+    const addItem = canAddItem(items, item)
     if (!addItem.valid) return { success: false, error: addItem.reason }
+
+    // Verificando se posso adicionar nova despesa caso seja revenda
+    if (needResaleOutflow(item) && resaleOutflow) {
+        const addOutflow = canAddOutflow(resaleOutflow)
+        if (!addOutflow.valid) return {
+            success: false, error: addOutflow.reason
+        }
+    }
 
     
     /* *****INSERÇÃO NO DB***** */
@@ -19,7 +28,7 @@ export async function addItemUseCase(items: Item[], item: Item, resaleOutflow?: 
         if (needResaleOutflow(item) && resaleOutflow) {
 
             // Salvando novo produto e nova despesa caso seja revenda
-            await addOutflowAndItemToDb(resaleOutflow, item)
+            await addItemAndOutflowToDb(resaleOutflow, item)
 
         } else {
 

@@ -1,14 +1,15 @@
 import { isStockValid, isStringValid, isTodayOrPast } from '@/utils/common'
 import { CanDo, Outflow } from '@/types'
 
-function hasEmptyField(outflow: Outflow): boolean {
+function areAllTheFieldsCorrect(outflow: Outflow): boolean {
 
-    if (outflow._id == null || !isStringValid(outflow._id)) return true
-    if (outflow.name == null || !isStringValid(outflow.name)) return true
-    if (outflow.date == null || !isStringValid(outflow.date)) return true
-    if (outflow.value == null) return true
+    if (typeof outflow._id !== 'string' || !isStringValid(outflow._id)) return false
+    if (typeof outflow.name !== 'string' || !isStringValid(outflow.name)) return false
+    if (typeof outflow.date !== 'string' || !isStringValid(outflow.date)) return false
+    if (typeof outflow.value !== 'number') return false
+    if (outflow.amount != null && typeof outflow.amount !== 'number') return false
 
-    return false
+    return true
 
 }
 
@@ -26,14 +27,12 @@ export function newProductStock(currentStock: number, integrateAmount: number): 
 
 }
 
-
-
 export function canAddOutflow(outflow: Outflow): CanDo {
 
-    // Verificando se há campo vazio obrigatório
-    const emptyField = hasEmptyField(outflow)
-    if (emptyField) return {
-        valid: false, reason: 'EMPTY_FIELD'
+    // Verificando se há campo vazio ou inválido
+    const allTheFieldsCorrect = areAllTheFieldsCorrect(outflow)
+    if (!allTheFieldsCorrect) return {
+        valid: false, reason: 'INVALID_FIELD'
     }
     
     // Verificando se foi criado em data futura

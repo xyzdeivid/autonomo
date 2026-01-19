@@ -4,7 +4,7 @@ import { insertOutflow } from './outflowRepositories'
 import { insertItem, updateItemStock } from './itemRepositories'
 import { insertEntry } from './entryRepositories'
 
-export async function addOutflowAndItemToDb(outflow: Outflow, item: Item): Promise<void> {
+export async function addItemAndOutflowToDb(outflow: Outflow, item: Item): Promise<void> {
 
     try {
 
