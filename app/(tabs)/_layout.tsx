@@ -54,7 +54,7 @@ export default function TabLayout() {
                     ),
                 }}
             />
-            <Tabs.Screen name='schedulings'
+            <Tabs.Screen name='entries'
                 listeners={() => ({
                     tabPress: () => {
                         setAddItemsForm(false)
@@ -69,7 +69,7 @@ export default function TabLayout() {
                         <FontAwesome6 name='money-bill-trend-up' size={24} color={color} />
                     )
                 }} />
-            <Tabs.Screen name='expenses'
+            <Tabs.Screen name='outflows'
                 listeners={() => ({
                     tabPress: () => {
                         setAddItemsForm(false)
@@ -84,7 +84,7 @@ export default function TabLayout() {
                         <FontAwesome6 name='receipt' size={24} color={color} />
                     )
                 }} />
-            <Tabs.Screen name='services'
+            <Tabs.Screen name='items'
                 listeners={() => ({
                     tabPress: () => {
                         setAddItemsForm(false)

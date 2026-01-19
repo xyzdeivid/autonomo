@@ -17,9 +17,9 @@ import LoadingScreen from '@/components/common/LoadingScreen'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // expenses components
-import AddExpenseForm from '@/components/expenses/AddExpenseForm'
-import ExpensesList from '@/components/expenses/ExpensesList'
-import AboutOutflowCard from '@/components/expenses/AboutOutflowCard'
+import AddExpenseForm from '@/components/outflows/AddOutflowForm'
+import ExpensesList from '@/components/outflows/OutflowsList'
+import AboutOutflowCard from '@/components/outflows/AboutOutflowCard'
 import useDeleteOutflow from '@/hooks/useDeleteOutflow'
 import { colors } from '@/constants/appColors'
 

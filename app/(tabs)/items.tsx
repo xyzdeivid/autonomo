@@ -11,14 +11,14 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
 import AddItemButton from '@/components/common/AddItemButton'
-import AddServiceForm from '@/components/services/AddItemForm'
+import AddServiceForm from '@/components/items/AddItemForm'
 import Container from '@/components/common/Container'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // service components
-import AboutServiceCard from '@/components/services/AboutItemCard'
-import ServicesContent from '@/components/services/ServicesContent'
+import AboutServiceCard from '@/components/items/AboutItemCard'
+import ServicesContent from '@/components/items/ServicesContent'
 import useDeleteItem from '@/hooks/useDeleteItem'
 import { Item } from '@/types'
 import { colors } from '@/constants/appColors'

@@ -15,10 +15,10 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 import LoadingScreen from '@/components/common/LoadingScreen'
 
 // scheduling components
-import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
-import SchedulingsList from '@/components/schedulings/SchedulingsList'
-import AddSchedulingButton from '@/components/schedulings/AddSchedulingButton'
-import DeleteSchedulingForm from '@/components/schedulings/AboutSchedulingCard'
+import AddSchedulingForm from '@/components/entries/AddEntryForm'
+import SchedulingsList from '@/components/entries/EntriesList'
+import AddSchedulingButton from '@/components/entries/AddEntryButton'
+import DeleteSchedulingForm from '@/components/entries/AboutEntryCard'
 
 import { Entry } from '@/types'
 import useDeleteEntry from '@/hooks/useDeleteEntry'

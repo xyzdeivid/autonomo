@@ -22,10 +22,10 @@ import GeneralButton from '@/components/info/GeneralButton'
 import AddItemForm from '@/components/info/AddItemForm'
 
 // scheduling components
-import AddSchedulingForm from '@/components/schedulings/AddSchedulingForm'
+import AddSchedulingForm from '@/components/entries/AddEntryForm'
 
 // expense components
-import AddExpenseForm from '@/components/expenses/AddExpenseForm'
+import AddExpenseForm from '@/components/outflows/AddOutflowForm'
 import { colors } from '@/constants/appColors'
 
 export default function Info() {
