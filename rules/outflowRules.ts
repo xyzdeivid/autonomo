@@ -1,5 +1,16 @@
-import { isTodayOrPast } from '@/utils/common'
+import { isStockValid, isStringValid, isTodayOrPast } from '@/utils/common'
 import { CanDo, Outflow } from '@/types'
+
+function hasEmptyField(outflow: Outflow): boolean {
+
+    if (outflow._id == null || !isStringValid(outflow._id)) return true
+    if (outflow.name == null || !isStringValid(outflow.name)) return true
+    if (outflow.date == null || !isStringValid(outflow.date)) return true
+    if (outflow.value == null) return true
+
+    return false
+
+}
 
 export function isStockIntegrate(outflow: Outflow): boolean {
 
@@ -15,12 +26,34 @@ export function newProductStock(currentStock: number, integrateAmount: number): 
 
 }
 
-export function canAddOutflow(outflowDate: string): CanDo {
 
+
+export function canAddOutflow(outflow: Outflow): CanDo {
+
+    // Verificando se há campo vazio obrigatório
+    const emptyField = hasEmptyField(outflow)
+    if (emptyField) return {
+        valid: false, reason: 'EMPTY_FIELD'
+    }
+    
     // Verificando se foi criado em data futura
-    const todayOrPast = isTodayOrPast(outflowDate)
+    const todayOrPast = isTodayOrPast(outflow.date)
     if (!todayOrPast) return {
         valid: false, reason: 'FUTURE_DATE'
+    }
+
+    // Verificando se valor é valido
+    if (outflow.value <= 0) return {
+        valid: false, reason: 'INVALID_VALUE'
+    }
+
+    // Verificando se estoque é válido caso tenha sido reposição
+    if (outflow.amount != null) {
+
+        if (!isStockValid(outflow.amount)) return {
+            valid: false, reason: 'INVALID_STOCK'
+        }
+
     }
 
     return {

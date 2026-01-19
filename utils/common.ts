@@ -2,6 +2,18 @@ import { Outflow, Entry } from '@/types/index'
 import { format, parseISO } from 'date-fns'
 import { Alert } from 'react-native'
 
+export function isStringValid(name: string): boolean {
+
+    return name.trim().length > 0
+
+}
+
+export function isStockValid(stock: number): boolean {
+
+    return stock >= 0
+
+}
+
 export const moneyFormat = (value: number) => {
     const formatedData = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
         .format(Number(value)).replace('R$', '').trim()
@@ -12,6 +24,9 @@ export function getErrorMessage(error: string): string {
 
     switch (error) {
 
+        case 'EMPTY_FIELD':
+            return 'Campo vazio.'
+        
         case 'DUPLICATE_ITEM':
             return 'Já existe um item com esse nome.'
 
@@ -29,6 +44,9 @@ export function getErrorMessage(error: string): string {
 
         case 'INVALID_STOCK':
             return 'Estoque inválido.'
+
+        case 'INVALID_NAME':
+            return 'Nome inválido.'
 
         default:
             return 'Erro não tratado'

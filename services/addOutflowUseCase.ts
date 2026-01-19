@@ -8,7 +8,7 @@ export async function addOutflowUseCase(outflow: Outflow, item?: Item): Promise<
     /* *****REGRAS DE NEGÓCIO***** */
 
     // Verificando se posso adicionar nova despesa
-    const addOutflow = canAddOutflow(outflow.date)
+    const addOutflow = canAddOutflow(outflow)
     if (!addOutflow.valid) return {
         success: false, error: addOutflow.reason
     }

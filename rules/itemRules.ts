@@ -1,7 +1,25 @@
-import { isTodayOrPast } from '@/utils/common'
 import { CanDo, Item, Outflow } from '@/types'
+import { canAddOutflow } from './outflowRules'
+import { isStockValid, isStringValid } from '@/utils/common'
 
-function isThereAnotherItem(items: Item[], name: string) {
+function hasEmptyField(item: Item): boolean {
+
+    if (item._id == null || !isStringValid(item._id)) return true
+    if (item.category == null || !isStringValid(item.category)) return true
+    if (item.value == null) return true
+    if (item.resale == null) return true
+    if (item.isThereAmount == null) return true
+    if (item.isThereAmount) {
+        if (item.amount == null) {
+            return true
+        }
+    }
+
+    return false
+
+}
+
+function hasAnotherItem(items: Item[], name: string): boolean {
 
     const isThereAnotherItem = items.find(item =>
         item._id.toLocaleLowerCase() === name.toLocaleLowerCase()
@@ -13,55 +31,58 @@ function isThereAnotherItem(items: Item[], name: string) {
 
 }
 
-function isValueValid(value: number): boolean {
+function isValueValid(category: string, value: number): boolean {
+    
+    if (category === 'budget') {
 
-    return value > 0
+        // Categoria orçamento é salvo com valor 0
+        if (value !== 0) return false
+
+    } else {
+
+        // Outras categorias só valor positivo
+        if (value <= 0) return false
+
+    }
+
+    return true
 
 }
-
-function isStockValid(stock: number): boolean {
-
-    return stock >= 0
-
-}
-
 
 export function canAddItem(items: Item[], item: Item, resaleOutflow?: Outflow): CanDo {
 
+    // Verificando se há campo vazio obrigatório
+    const emptyField = hasEmptyField(item)
+    if (emptyField) return {
+        valid: false, reason: 'EMPTY_FIELD'
+    }
+
     // Verificando se existe outro item com o mesmo nome
-    const anotherItem = isThereAnotherItem(items, item._id)
+    const anotherItem = hasAnotherItem(items, item._id)
     if (anotherItem) return {
         valid: false, reason: 'DUPLICATE_ITEM'
     }
 
-    // Verificando se valor do item é valido
-    const valueValid = isValueValid(item.value)
+    // Verificando se estoque é valido caso tenha sido produto
+    if (item.isThereAmount) {
+        if (!isStockValid(item.amount!)) {
+            return { valid: false, reason: 'INVALID_STOCK' }
+        }
+    }
+
+    // Verificando se valor é válido
+    const valueValid = isValueValid(item.category, item.value)
     if (!valueValid) return {
         valid: false, reason: 'INVALID_VALUE'
     }
 
-    // Verificando se estoque é valido caso tenha sido produto
-    if (item.isThereAmount) {
 
-        if (item.amount === undefined || item.amount === null) {
-            return { valid: false, reason: 'INVALID_STOCK' }
-        }
-
-        if (!isStockValid(item.amount)) {
-            return { valid: false, reason: 'INVALID_STOCK' }
-        }
-
-    }
-
-    // Verificando se caso revenda, tenha sido criado em data futura
+    // Verificando despesa criada, caso seja uma revenda
     if (resaleOutflow) {
 
-        const todayOrPast = isTodayOrPast(resaleOutflow.date)
+        const addOutflow = canAddOutflow(resaleOutflow)
 
-        // Retornando erro caso revenda tenha sido criada em data futura
-        if (!todayOrPast) return {
-            valid: false, reason: 'FUTURE_DATE'
-        }
+        if (!addOutflow.valid) return addOutflow
 
     }
 
@@ -78,6 +99,11 @@ export function needResaleOutflow(item: Item): boolean {
 }
 
 export function canEditItemName(items: Item[], newName: string): CanDo {
+
+    // Verificando se nome não é vazio
+    if (!isStringValid(newName)) {
+        return { valid: false, reason: 'INVALID_NAME' }
+    }
 
     // Verificando se existe algum outro serviço com o mesmo nome
     if (items.find(current => current._id === newName)) return { valid: false, reason: 'DUPLICATE_ITEM' }

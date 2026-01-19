@@ -10,7 +10,7 @@ const useDeleteOutflow = () => {
     const [items] = useContext(DocsContext).items
     const [outflows, setOutflows] = useContext(DocsContext).outflows
 
-    const editStockItem = useEditStockItem().editStockItem
+    const editItemStock = useEditStockItem().editItemStock
 
     const updateOutflowsInUI = (id: string) => {
 
@@ -40,7 +40,7 @@ const useDeleteOutflow = () => {
 
             }
 
-            const success = await editStockItem(newAmount, product)
+            const success = await editItemStock(newAmount, product._id)
 
             if (!success) return false
 
