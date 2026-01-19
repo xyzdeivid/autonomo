@@ -3,7 +3,7 @@ import Entypo from '@expo/vector-icons/Entypo'
 import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import YearOptions from './YearOptions'
-import { availableYears } from '@/functions/info'
+import { availableYears } from '@/utils/info'
 import { colors } from '@/constants/appColors'
 
 interface GeneralButtonProps {

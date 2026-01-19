@@ -3,7 +3,7 @@ import { DataTable } from 'react-native-paper'
 import { Item } from '@/types/index'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import ContainerHandler from '../common/ContainerHandler'
-import { orderServices } from '@/functions/services'
+import { orderServices } from '@/utils/services'
 
 interface ServicesListProps {
     setSelectedItemForDeletion: React.Dispatch<React.SetStateAction<string>>

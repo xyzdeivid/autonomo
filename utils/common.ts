@@ -24,6 +24,12 @@ export function getErrorMessage(error: string): string {
         case 'INSUFFICIENT_STOCK':
             return 'Estoque insuficiente.'
 
+        case 'INVALID_VALUE':
+            return 'Valor inválido.'
+
+        case 'INVALID_STOCK':
+            return 'Estoque inválido.'
+
         default:
             return 'Erro não tratado'
 

@@ -1,6 +1,6 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Item, Outflow } from '@/types/index'
-import { orderServices } from '@/functions/services'
+import { orderServices } from '@/utils/services'
 import { useContext } from 'react'
 import { addItemUseCase } from '@/services/addItemUseCase'
 

@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { BackHandler } from 'react-native'
 
 // custom functions
-import { getServicesByCategory, getCategoryAndSet } from '@/functions/services'
+import { getServicesByCategory, getCategoryAndSet } from '@/utils/services'
 
 // context
 import { DocsContext } from '@/context/DocsContext'

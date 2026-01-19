@@ -1,5 +1,5 @@
 import { Item } from '@/types/index'
-import { getServices } from '@/functions/schedulings'
+import { getServices } from '@/utils/schedulings'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { StyleSheet, Pressable, Text, Alert, View } from 'react-native'
 

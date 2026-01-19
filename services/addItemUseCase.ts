@@ -8,7 +8,7 @@ export async function addItemUseCase(items: Item[], item: Item, resaleOutflow?: 
     /* *****REGRAS DE NEGÓCIO***** */
     
     // Verificando se posso adicionar novo item
-    const addItem = canAddItem(items, item._id, resaleOutflow)
+    const addItem = canAddItem(items, item, resaleOutflow)
     if (!addItem.valid) return { success: false, error: addItem.reason }
 
     

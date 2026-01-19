@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { filterSchedulings, moneyFormat } from '@/functions/common'
-import { getDays } from '@/functions/info'
+import { filterSchedulings, moneyFormat } from '@/utils/common'
+import { getDays } from '@/utils/info'
 
 import { View, Text, StyleSheet } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'

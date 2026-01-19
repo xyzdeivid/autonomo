@@ -1,4 +1,4 @@
-import { isTodayOrPast } from '@/functions/common'
+import { isTodayOrPast } from '@/utils/common'
 import { CanDo, Entry, Item } from '@/types'
 
 function isStockEnough(selectedProductStock: number, amountPurchased: number): boolean {

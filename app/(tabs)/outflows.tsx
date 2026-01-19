@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { BackHandler } from 'react-native'
 
 // custom functions
-import { filterExpenses } from '@/functions/common'
+import { filterExpenses } from '@/utils/common'
 
 // context
 import { DocsContext } from '@/context/DocsContext'

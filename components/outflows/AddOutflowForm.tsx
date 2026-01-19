@@ -12,10 +12,10 @@ import ProductOptionsInput from './ProductOptionsInput'
 import { FormAmountField } from '../common/FormAmountField'
 import useAddOutflow from '@/hooks/useAddOutflow'
 import { Outflow } from '@/types'
-import { createNewOutflow } from '@/functions/createNewOutflow'
+import { createNewOutflow } from '@/utils/createNewOutflow'
 import SaveButton from '../common/SaveButton'
 import { colors } from '@/constants/appColors'
-import { getErrorMessage } from '@/functions/common'
+import { getErrorMessage } from '@/utils/common'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>

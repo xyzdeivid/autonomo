@@ -1,6 +1,6 @@
 import { Outflow, Entry } from '@/types/index'
-import { findGreaterData } from '@/functions/info'
-import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
+import { findGreaterData } from '@/utils/info'
+import { getExpenses, getProfit, getSchedulingsRevenue } from '@/utils/revenue'
 import { StyleSheet, View } from 'react-native'
 import { BarChart } from 'react-native-gifted-charts'
 

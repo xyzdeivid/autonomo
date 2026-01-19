@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react'
 
 // custom functions
-import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/functions/common'
+import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/utils/common'
 
 // context
 import { DocsContext } from '@/context/DocsContext'

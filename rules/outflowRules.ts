@@ -1,4 +1,4 @@
-import { isTodayOrPast } from '@/functions/common'
+import { isTodayOrPast } from '@/utils/common'
 import { CanDo, Outflow } from '@/types'
 
 export function isStockIntegrate(outflow: Outflow): boolean {

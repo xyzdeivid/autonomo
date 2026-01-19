@@ -1,6 +1,6 @@
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
-import { getMonthName } from '@/functions/common'
+import { getMonthName } from '@/utils/common'
 import { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 

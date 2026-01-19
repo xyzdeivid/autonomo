@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { useContext } from 'react'
 import { months } from '@/constants/common'
-import { getMonthName } from '@/functions/common'
+import { getMonthName } from '@/utils/common'
 import { DocsContext } from '@/context/DocsContext'
 
 interface InfoTitleProps {

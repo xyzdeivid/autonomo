@@ -1,6 +1,6 @@
 import { Outflow, Entry } from '@/types/index'
-import { moneyFormat } from '@/functions/common'
-import { getExpenses, getProfit, getSchedulingsRevenue } from '@/functions/revenue'
+import { moneyFormat } from '@/utils/common'
+import { getExpenses, getProfit, getSchedulingsRevenue } from '@/utils/revenue'
 import { StyleSheet, Text, View } from 'react-native'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 

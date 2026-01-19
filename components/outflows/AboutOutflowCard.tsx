@@ -1,6 +1,6 @@
 import { Text, StyleSheet, BackHandler, Platform, Alert } from 'react-native'
 import { Outflow } from '@/types'
-import { dateFormat, getErrorMessage, moneyFormat } from '@/functions/common'
+import { dateFormat, getErrorMessage, moneyFormat } from '@/utils/common'
 import React, { useEffect, useState } from 'react'
 import ConfirmDelete from '../common/ConfirmDelete'
 import LoadingScreen from '../common/LoadingScreen'

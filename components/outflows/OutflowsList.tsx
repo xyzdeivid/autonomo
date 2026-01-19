@@ -4,9 +4,9 @@ import { View, StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
 import ContainerHandler from '../common/ContainerHandler'
 import MoreInfoWarning from '../common/MoreInfoWarning'
-import { moneyFormat } from '@/functions/common'
+import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
-import { orderExpenses } from '@/functions/expenses'
+import { orderExpenses } from '@/utils/expenses'
 import { colors } from '@/constants/appColors'
 
 interface ExpensesListProps {

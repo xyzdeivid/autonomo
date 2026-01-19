@@ -6,7 +6,7 @@ import { DocsContext } from '@/context/DocsContext'
 import { Entry, Item } from '@/types'
 import { FormDateField } from '../common/FormDateField'
 import SelectServiceInput from './SelectItemInput'
-import { createNewEntry, getServices } from '@/functions/schedulings'
+import { createNewEntry, getServices } from '@/utils/schedulings'
 import { FormAmountField } from '../common/FormAmountField'
 import { FormValueField } from '../common/FormValueField'
 import LoadingScreen from '../common/LoadingScreen'
@@ -14,7 +14,7 @@ import { FormNameField } from '../common/FormNameField'
 import useAddEntry from '@/hooks/useAddEntry'
 import SaveButton from '../common/SaveButton'
 import { colors } from '@/constants/appColors'
-import { getErrorMessage } from '@/functions/common'
+import { getErrorMessage } from '@/utils/common'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>

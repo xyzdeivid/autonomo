@@ -2,7 +2,7 @@ import { Alert, Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
-import { getServices } from '@/functions/schedulings'
+import { getServices } from '@/utils/schedulings'
 import { colors } from '@/constants/appColors'
 
 interface AddSchedulingButtonProps {

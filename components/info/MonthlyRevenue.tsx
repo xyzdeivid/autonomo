@@ -6,7 +6,7 @@ import RevenueList from './MonthlyRevenueList'
 
 import { DocsContext } from '@/context/DocsContext'
 
-import { filterSchedulings, filterExpenses } from '@/functions/common'
+import { filterSchedulings, filterExpenses } from '@/utils/common'
 import FinancePeriodButtons from './FinancePeriodButtons'
 import InfoTitle from '../common/InfoTitle'
 
