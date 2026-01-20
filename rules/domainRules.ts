@@ -5,3 +5,11 @@ export function isStringValid(string: string): boolean {
     return true
 
 }
+
+export function isNewValueValid(value: number): boolean {
+
+    if (typeof value !== 'number' || value <= 0) return false
+
+    return true
+
+}

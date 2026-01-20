@@ -1,6 +1,6 @@
 import { isStockValid, isTodayOrPast } from '@/utils/common'
 import { CanDo, Outflow } from '@/types'
-import { isStringValid } from './domainRules'
+import { isNewValueValid, isStringValid } from './domainRules'
 
 function areAllTheFieldsCorrect(outflow: Outflow): boolean {
 
@@ -95,6 +95,20 @@ export function canEditOutflowDate(outflowDate: string): CanDo {
     const todayOrPast = isTodayOrPast(outflowDate)
     if (!todayOrPast) return {
         valid: false, reason: 'FUTURE_DATE'
+    }
+
+    return {
+        valid: true
+    }
+
+}
+
+export function canEditOutflowValue(newOutflowValue: number): CanDo {
+
+    // Verificando se campo é válido
+    const validField = isNewValueValid(newOutflowValue)
+    if (!validField) return {
+        valid: false, reason: 'INVALID_FIELD'
     }
 
     return {

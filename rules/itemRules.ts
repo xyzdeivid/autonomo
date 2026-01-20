@@ -1,6 +1,6 @@
 import { CanDo, Item } from '@/types'
 import { isStockValid } from '@/utils/common'
-import { isStringValid } from './domainRules'
+import { isNewValueValid, isStringValid } from './domainRules'
 
 function areAllTheFieldsCorrect(item: Item): boolean {
 
@@ -97,6 +97,20 @@ export function canEditItemName(items: Item[], newName: string): CanDo {
 
     // Verificando se existe algum outro serviço com o mesmo nome
     if (items.find(current => current._id === newName)) return { valid: false, reason: 'DUPLICATE_ITEM' }
+
+    return {
+        valid: true
+    }
+
+}
+
+export function canEditItemValue(newValue: number): CanDo {
+
+    // Verificando se campo é válido
+    const validField = isNewValueValid(newValue)
+    if (!validField) return {
+        valid: false, reason: 'INVALID_FIELD'
+    }
 
     return {
         valid: true
