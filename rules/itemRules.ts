@@ -32,7 +32,7 @@ function hasAnotherItem(items: Item[], name: string): boolean {
 }
 
 function isValueValid(category: string, value: number): boolean {
-    
+
     if (category === 'budget') {
 
         // Categoria orçamento é salvo com valor 0
@@ -64,7 +64,7 @@ export function canAddItem(items: Item[], item: Item): CanDo {
     }
 
     // Verificando se estoque é valido caso tenha sido produto
-    if (item.isThereAmount  && item.amount !== undefined) {
+    if (item.isThereAmount && item.amount !== undefined) {
         if (!isStockValid(item.amount)) {
             return { valid: false, reason: 'INVALID_STOCK' }
         }
@@ -110,6 +110,24 @@ export function canEditItemValue(newValue: number): CanDo {
     const validField = isNewValueValid(newValue)
     if (!validField) return {
         valid: false, reason: 'INVALID_FIELD'
+    }
+
+    return {
+        valid: true
+    }
+
+}
+
+export function canEditItemStock(newStock: number): CanDo {
+
+    // Verificando se campo é valido
+    if (typeof newStock !== 'number') return {
+        valid: false, reason: 'INVALID_FIELD'
+    }
+
+    // Verificando se estoque é válido
+    if (!isStockValid(newStock)) return {
+        valid: false, reason: 'INVALID_STOCK'
     }
 
     return {
