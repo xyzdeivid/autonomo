@@ -92,7 +92,7 @@ export function canEditItemName(items: Item[], newName: string): CanDo {
 
     // Verificando se nome não é vazio
     if (!isStringValid(newName)) {
-        return { valid: false, reason: 'INVALID_NAME' }
+        return { valid: false, reason: 'INVALID_FIELD' }
     }
 
     // Verificando se existe algum outro serviço com o mesmo nome

@@ -69,8 +69,28 @@ export function canAddOutflow(outflow: Outflow): CanDo {
 
 }
 
+export function canEditOutflowName(name: string): CanDo {
+
+    // Verificando se campo é valido
+    const nameValid = isStringValid(name)
+    if (!nameValid) return {
+        valid: false, reason: 'INVALID_FIELD'
+    }
+
+    return {
+        valid: true
+    }
+
+}
+
 export function canEditOutflowDate(outflowDate: string): CanDo {
 
+    // Verificando se campo é valido
+    const validField = isStringValid(outflowDate)
+    if (!validField) return {
+        valid: false, reason: 'INVALID_FIELD'
+    }
+    
     // Verificando se data editada é futura
     const todayOrPast = isTodayOrPast(outflowDate)
     if (!todayOrPast) return {
