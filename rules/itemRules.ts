@@ -4,12 +4,12 @@ import { isStringValid } from './domainRules'
 
 function areAllTheFieldsCorrect(item: Item): boolean {
 
-    if (typeof item._id !== 'string' || !isStringValid(item._id)) return false
-    if (typeof item.category !== 'string' || !isStringValid(item.category)) return false
+    if (!isStringValid(item._id)) return false
+    if (!isStringValid(item.category)) return false
     if (typeof item.value !== 'number') return false
     if (typeof item.resale !== 'boolean') return false
     if (typeof item.isThereAmount !== 'boolean') return false
-    if (item.isThereAmount) {
+    if (item.isThereAmount === true) {
         if (typeof item.amount !== 'number') {
             return false
         }

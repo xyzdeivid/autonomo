@@ -4,9 +4,9 @@ import { isStringValid } from './domainRules'
 
 function areAllTheFieldsCorrect(outflow: Outflow): boolean {
 
-    if (typeof outflow._id !== 'string' || !isStringValid(outflow._id)) return false
-    if (typeof outflow.name !== 'string' || !isStringValid(outflow.name)) return false
-    if (typeof outflow.date !== 'string' || !isStringValid(outflow.date)) return false
+    if (!isStringValid(outflow._id)) return false
+    if (!isStringValid(outflow.name)) return false
+    if (!isStringValid(outflow.date)) return false
     if (typeof outflow.value !== 'number') return false
     if (outflow.amount != null && typeof outflow.amount !== 'number') return false
 
