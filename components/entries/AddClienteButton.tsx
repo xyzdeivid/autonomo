@@ -4,11 +4,10 @@ import { colors } from '@/constants/appColors'
 import { EditNameCard } from '../common/EditNameCard'
 
 interface AddCustomerButtonProps {
-    setCustomer: React.Dispatch<React.SetStateAction<string>>
-    addCustomer: () => Promise<void>
+    addCustomer: (customer: string) => Promise<void>
 }
 
-export default function AddCustomerButton({ setCustomer, addCustomer }: AddCustomerButtonProps) {
+export default function AddCustomerButton({ addCustomer }: AddCustomerButtonProps) {
 
     const [active, setActive] = useState(false)
 
@@ -31,8 +30,7 @@ export default function AddCustomerButton({ setCustomer, addCustomer }: AddCusto
                     <EditNameCard
                         visible={active}
                         currentName=''
-                        setNewName={setCustomer}
-                        onConfirmButtonPress={addCustomer}
+                        onConfirmButtonPress={customer => addCustomer(customer)}
                         onCancelButtonPress={() => setActive(false)}
                     />
             }

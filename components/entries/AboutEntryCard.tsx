@@ -31,7 +31,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [showEditNameCard, setShowEditNameCard] = useState(false)
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [loadingPage, setLoadingPage] = useState(false)
-    const [customer, setCustomer] = useState('')
     const [showEditAmountCard, setShowEditAmountCard] = useState(false)
 
     const editCustomerName = useEditCustomerName().editCustomerName
@@ -49,7 +48,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         })
     }, [setFormOff])
 
-    const submitCustomerName = async () => {
+    const submitCustomerName = async (customer: string) => {
 
         setLoadingPage(true)
 
@@ -136,8 +135,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                             onEditButtonPress={() => setShowEditNameCard(true)}
                         />
                         : <AddClienteButton
-                            setCustomer={setCustomer}
-                            addCustomer={submitCustomerName}
+                            addCustomer={customer => submitCustomerName(customer)}
                         />
                     }
                     {
@@ -145,13 +143,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                             <EditNameCard
                                 visible={showEditNameCard}
                                 currentName={scheduling.customer}
-                                setNewName={setCustomer}
-                                onConfirmButtonPress={() => {
-                                    if (customer && customer !== scheduling.customer) {
-                                        submitCustomerName()
-                                    }
-                                    setShowEditNameCard(false)
-                                }}
+                                onConfirmButtonPress={customer => submitCustomerName(customer)}
                                 onCancelButtonPress={() => setShowEditNameCard(false)}
                             />
 

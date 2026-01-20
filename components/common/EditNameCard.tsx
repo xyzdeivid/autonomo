@@ -3,39 +3,47 @@ import { ConfirmEditButton } from './ConfirmEditButton'
 import { CancelEditButton } from './CancelEditButton'
 import { EditCardContainer } from './EditCardContainer'
 import { EditCardButtonsContainer } from './EditCardButtonsContainer'
+import { useState } from 'react'
 
 interface EditNameCardProps {
     visible: boolean
     currentName: string
-    setNewName: React.Dispatch<React.SetStateAction<string>>
-    onConfirmButtonPress: () => void
+    onConfirmButtonPress: (newName: string) => void
     onCancelButtonPress: () => void
 }
 
 export function EditNameCard({
     visible,
     currentName,
-    setNewName,
     onConfirmButtonPress,
     onCancelButtonPress
 }: EditNameCardProps) {
 
+    const [newName, setNewName] = useState('')
+
     return (
         <EditCardContainer
-        visible={visible}
-        onCancelButtonPress={onCancelButtonPress}
-        label='Novo Nome:'
+            visible={visible}
+            onCancelButtonPress={onCancelButtonPress}
+            label='Novo Nome:'
         >
             <TextInput
-                        defaultValue={currentName}
-                        onChangeText={text => setNewName(text.trim())}
-                        style={styles.input}
-                    />
-
-                    <EditCardButtonsContainer>
-                        <CancelEditButton onCancelButtonPress={onCancelButtonPress} />
-                        <ConfirmEditButton onPress={onConfirmButtonPress} />
-                    </EditCardButtonsContainer>
+                defaultValue={currentName}
+                onChangeText={text => setNewName(text.trim())}
+                style={styles.input}
+            />
+            <EditCardButtonsContainer>
+                <CancelEditButton
+                    onCancelButtonPress={onCancelButtonPress}
+                />
+                {
+                    newName && newName !== currentName && (
+                        <ConfirmEditButton
+                            onPress={() => onConfirmButtonPress(newName)}
+                        />
+                    )
+                }
+            </EditCardButtonsContainer>
         </EditCardContainer>
     )
 }

@@ -31,7 +31,6 @@ interface AboutItemCardProps {
 export default function AboutItemCard({ item, deleteFunction, setFormOff }: AboutItemCardProps) {
     
     const [showEditNameCard, setShowEditNameCard] = useState(false)
-    const [name, setName] = useState('')
 
     const [showEditValueCard, setShowEditValueCard] = useState(false)
     const [value, setValue] = useState(0)
@@ -58,11 +57,11 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
         })
     }, [setFormOff])
 
-    const submitNameToEdit = async () => {
+    const submitNameToEdit = async (newName: string) => {
 
         setLoadingScreen(true)
 
-        const result = await editItemName(name, item._id)
+        const result = await editItemName(newName, item._id)
 
         if (!result.success && result.error) {
 
@@ -164,13 +163,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                         <EditNameCard
                             visible={showEditNameCard}
                             currentName={item._id}
-                            setNewName={setName}
-                            onConfirmButtonPress={() => {
-                                if (name && name !== item._id) {
-                                    submitNameToEdit()
-                                }
-                                setShowEditNameCard(false)
-                            }}
+                            onConfirmButtonPress={newName => submitNameToEdit(newName)}
                             onCancelButtonPress={() => setShowEditNameCard(false)}
                         />
                     )}

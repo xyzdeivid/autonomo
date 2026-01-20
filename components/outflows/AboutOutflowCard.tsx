@@ -30,7 +30,6 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
     const [showDateTimePicker, setShowDateTimePicker] = useState(false)
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [showEditValueCard, setShowEditValueCard] = useState(false)
-    const [newName, setNewName] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [newValue, setNewValue] = useState(0)
     const [showEditNameCard, setShowEditNameCard] = useState(false)
@@ -50,7 +49,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
         })
     }, [setFormOff])
 
-    const submitNameToEdit = async () => {
+    const submitNameToEdit = async (newName: string) => {
 
         setLoadingScreen(true)
 
@@ -64,7 +63,6 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
 
         setLoadingScreen(false)
         setShowEditNameCard(false)
-        setNewName('')
 
     }
 
@@ -152,17 +150,8 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                             <EditNameCard
                                 visible={showEditNameCard}
                                 currentName={outflow.name}
-                                setNewName={setNewName}
-                                onConfirmButtonPress={() => {
-                                    if (newName && newName !== outflow.name) {
-                                        submitNameToEdit()
-                                    }
-                                    setShowEditNameCard(false)
-                                }}
-                                onCancelButtonPress={() => {
-                                    setShowEditNameCard(false)
-                                    setNewName('')
-                                }}
+                                onConfirmButtonPress={newName => submitNameToEdit(newName)}
+                                onCancelButtonPress={() => setShowEditNameCard(false)}
                             />
                         )
                     }
