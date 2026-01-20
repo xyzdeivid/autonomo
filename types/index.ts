@@ -17,12 +17,12 @@ export interface Outflow {
 
 export interface Entry {
     _id: string
+    date: string
     serviceId: string
     serviceCategory: string
     serviceValue: number
     serviceIsThereAmount: boolean
     serviceAmount?: number
-    date: string
     customer?: string
 }
 

@@ -1,7 +1,7 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Entry } from '@/types'
 import { useContext } from 'react'
-import useEditStockItem from './useEditItemStock'
+import useEditItemStock from './useEditItemStock'
 import { deleteEntryToDb } from '@/database/entryRepositories'
 import { Alert } from 'react-native'
 
@@ -10,7 +10,7 @@ const useDeleteEntry = () => {
     const [entries, setEntries] = useContext(DocsContext).entries
     const [items] = useContext(DocsContext).items
 
-    const editStockItem = useEditStockItem().editStockItem
+    const editItemStock = useEditItemStock().editItemStock
 
     const updateEntriesInUI = (id: string) => {
 
@@ -36,7 +36,7 @@ const useDeleteEntry = () => {
                 ? product.amount + entry.serviceAmount
                 : 0 + entry.serviceAmount
 
-            const success = await editStockItem(newProductAmount, product)
+            const success = await editItemStock(newProductAmount, product._id)
 
             if (!success) return false
 

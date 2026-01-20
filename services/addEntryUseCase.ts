@@ -1,26 +1,38 @@
 import { addEntryToDb } from '@/database/entryRepositories'
 import { addEntryAndReduceItemStockToDb } from '@/database/transactionRepositories'
-import { canAddEntry, needReduceStock, newProductStock } from '@/rules/entryRules'
+import { canAddEntry, isStockEnough, newProductStock } from '@/rules/entryRules'
 import { UseCase, Entry, Item } from '@/types'
 
 export async function addEntryUseCase(entry: Entry, selectedProduct?: Item): Promise<UseCase & { newStock?: number }> {
 
-    /* *****REGRAS DE NEGÓCIO***** */
+    // *****REGRAS DE NEGÓCIO*****
 
     // Verificando se posso adicionar nova receita
-    const addEntry = canAddEntry(entry, selectedProduct)
+    const addEntry = canAddEntry(entry)
     if (!addEntry.valid) return {
         success: false, error: addEntry.reason
     }
 
-    /* *****INSERÇÃO NO DB***** */
+    // Verificando se operação de estoque é valida 
+    // caso tenha sido produto comprado
+    if (
+        selectedProduct?.amount !== undefined
+        && entry.serviceAmount !== undefined
+    ) {
+        const stockEnough = isStockEnough(selectedProduct.amount, entry.serviceAmount)
+        if (!stockEnough) return {
+            success: false, error: 'INSUFFICIENT_STOCK'
+        }
+    }
+
+    // *****INSERÇÃO NO DB*****
 
     try {
 
-        // Atualizando estoque de produto caso a receita tenha sido a venda de algum
+        // Atualizando estoque de produto 
+        // caso a receita tenha sido a venda de algum
         if (
-            needReduceStock(entry)
-            && selectedProduct?.amount !== undefined
+            selectedProduct?.amount !== undefined
             && entry.serviceAmount !== undefined
         ) {
 
