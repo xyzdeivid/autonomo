@@ -13,7 +13,7 @@ const useEditEntryAmount = () => {
 
         const product = items.find(current => current._id === entry.serviceId)
 
-        if (entry.serviceAmount && product?.amount !== undefined) {
+        if (entry.serviceAmount !== undefined && product?.amount !== undefined) {
 
             const result = await editEntryAmountUseCase(newAmount, entry.serviceAmount,
                 product.amount, entry._id, product._id)

@@ -4,15 +4,18 @@ import { ConfirmEditButton } from './ConfirmEditButton'
 import { CancelEditButton } from './CancelEditButton'
 import { EditCardContainer } from './EditCardContainer'
 import { EditCardButtonsContainer } from './EditCardButtonsContainer'
+import { useState } from 'react'
 
 interface EditValueInputProps {
     visible: boolean
-    setNewValue: React.Dispatch<React.SetStateAction<number>>
-    onSuccessButtonPress: () => void
+    currentValue: number
+    onSuccessButtonPress: (newValue: number) => void
     onCancelButtonPress: () => void
 }
 
-export function EditValueCard({ visible, setNewValue, onSuccessButtonPress, onCancelButtonPress }: EditValueInputProps) {
+export function EditValueCard({ visible, currentValue, onSuccessButtonPress, onCancelButtonPress }: EditValueInputProps) {
+
+    const [newValue, setNewValue] = useState(0)
 
     return (
         <EditCardContainer
@@ -43,9 +46,11 @@ export function EditValueCard({ visible, setNewValue, onSuccessButtonPress, onCa
                     <CancelEditButton
                         onCancelButtonPress={onCancelButtonPress}
                     />
-                    <ConfirmEditButton
-                        onPress={onSuccessButtonPress}
-                    />
+                    {newValue && newValue !== currentValue ? (
+                        <ConfirmEditButton
+                            onPress={() => onSuccessButtonPress(newValue)}
+                        />
+                    ): null}
                 </EditCardButtonsContainer>
             </View>
         </EditCardContainer>

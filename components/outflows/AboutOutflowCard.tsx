@@ -31,7 +31,6 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [showEditValueCard, setShowEditValueCard] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
-    const [newValue, setNewValue] = useState(0)
     const [showEditNameCard, setShowEditNameCard] = useState(false)
 
     const editOutflowName = useEditOutflowName().editOutflowName
@@ -82,11 +81,9 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
 
     }
 
-    const submitValueToEdit = async () => {
+    const submitValueToEdit = async (newValue: number) => {
 
         setLoadingScreen(true)
-
-        console.log('hi')
 
         const result = await editOutflowValue(newValue, outflow._id)
 
@@ -97,6 +94,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
         }
 
         setLoadingScreen(false)
+        setShowEditValueCard(false)
 
     }
 
@@ -180,13 +178,8 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                     {showEditValueCard && (
                         <EditValueCard 
                         visible={showEditValueCard}
-                        setNewValue={setNewValue}
-                        onSuccessButtonPress={() => {
-                            if (newValue > 0 && newValue !== outflow.value) {
-                                submitValueToEdit()
-                            }
-                            setShowEditValueCard(false)
-                        }}
+                        currentValue={outflow.value}
+                        onSuccessButtonPress={newValue => submitValueToEdit(newValue)}
                         onCancelButtonPress={() => setShowEditValueCard(false)}
                         />
                     )}

@@ -33,7 +33,6 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
     const [showEditNameCard, setShowEditNameCard] = useState(false)
 
     const [showEditValueCard, setShowEditValueCard] = useState(false)
-    const [value, setValue] = useState(0)
 
     const [showEditStockCard, setShowEditStockCard] = useState(false)
     const [confirmDelete, setConfirmDelete] = useState(false)
@@ -74,11 +73,11 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
     }
 
-    const submitValueToEdit = async () => {
+    const submitValueToEdit = async (newValue: number) => {
 
         setLoadingScreen(true)
 
-        const result = await editItemValue(value, item._id)
+        const result = await editItemValue(newValue, item._id)
 
         if (!result.success && result.error) {
 
@@ -178,13 +177,8 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                     {showEditValueCard && (
                         <EditValueCard
                             visible={showEditValueCard}
-                            setNewValue={setValue}
-                            onSuccessButtonPress={() => {
-                                if (value > 0 && value !== item.value) {
-                                    submitValueToEdit()
-                                }
-                                setShowEditValueCard(false)
-                            }}
+                            currentValue={item.value}
+                            onSuccessButtonPress={newValue => submitValueToEdit(newValue)}
                             onCancelButtonPress={() => setShowEditValueCard(false)}
                         />
                     )}
@@ -198,21 +192,11 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                             />
                         )
                     }
-                    {showEditStockCard ? (
+                    {showEditStockCard && item.amount !== undefined ? (
                         <EditAmountCard
                             visible={showEditStockCard}
-                            currentValue={item.amount || 0}
-                            onSuccessButtonPress={newStock => {
-                                if (newStock.trim() === '') {
-                                    setShowEditStockCard(false)
-                                    return
-                                }
-                                const parsed = Number(newStock)
-                                if (!Number.isNaN(parsed) && parsed !== item.amount) {
-                                    submitStockToEdit(parsed)
-                                }
-                                setShowEditStockCard(false)
-                            }}
+                            currentValue={item.amount}
+                            onSuccessButtonPress={newStock => submitStockToEdit(newStock)}
                             onCancelButtonPress={() => setShowEditStockCard(false)}
                         />
                     ) : null}

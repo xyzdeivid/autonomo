@@ -8,7 +8,7 @@ import { EditCardButtonsContainer } from './EditCardButtonsContainer'
 interface EditAmountCardProps {
     visible: boolean
     currentValue: number
-    onSuccessButtonPress: (newAmount: string) => void
+    onSuccessButtonPress: (newAmount: number) => void
     onCancelButtonPress: () => void
 }
 
@@ -44,7 +44,8 @@ export function EditAmountCard({
 
             <EditCardButtonsContainer>
                 <CancelEditButton onCancelButtonPress={onCancelButtonPress} />
-                <ConfirmEditButton onPress={() => onSuccessButtonPress(textValue)} />
+                {textValue && Number(textValue) !== currentValue ?
+                    <ConfirmEditButton onPress={() => onSuccessButtonPress(Number(textValue))} /> : null}
             </EditCardButtonsContainer>
         </EditCardContainer>
     )
