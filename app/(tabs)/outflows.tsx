@@ -89,10 +89,10 @@ export default function Expenses() {
                         />
                 }
                 <AddItemButton
-                    setForm={setAddExpenseForm}
                     mainColor={colors.outflows.max}
                     bgColor={colors.outflows.min}
-                    text='Registrar Despesa' />
+                    onPress={() => setAddExpenseForm(true)}
+                />
                 {
                     addExpenseForm
                     && <AddExpenseForm

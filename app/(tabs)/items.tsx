@@ -94,10 +94,9 @@ export default function Services() {
                 }
 
                 <AddItemButton
-                    setForm={setAddServiceForm}
-                    text='Registrar Produto/Serviço'
                     mainColor={colors.items.max}
                     bgColor={colors.items.min}
+                    onPress={() => setAddServiceForm(true)}
                 />
                 {
                     addServiceForm

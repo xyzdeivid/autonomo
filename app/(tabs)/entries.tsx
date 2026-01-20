@@ -1,6 +1,6 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
-import { BackHandler } from 'react-native'
+import { Alert, BackHandler } from 'react-native'
 
 // custom functions
 import { filterSchedulings } from '@/utils/common'
@@ -17,17 +17,19 @@ import LoadingScreen from '@/components/common/LoadingScreen'
 // scheduling components
 import AddSchedulingForm from '@/components/entries/AddEntryForm'
 import SchedulingsList from '@/components/entries/EntriesList'
-import AddSchedulingButton from '@/components/entries/AddEntryButton'
 import DeleteSchedulingForm from '@/components/entries/AboutEntryCard'
 
 import { Entry } from '@/types'
 import useDeleteEntry from '@/hooks/useDeleteEntry'
 import { colors } from '@/constants/appColors'
+import { getServices } from '@/utils/schedulings'
+import AddItemButton from '@/components/common/AddItemButton'
 
 export default function Schedulings() {
 
     const appDocs = useContext(DocsContext)
     const [entries] = appDocs.entries
+    const [items] = appDocs.items
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
@@ -68,6 +70,14 @@ export default function Schedulings() {
         })
     }, [])
 
+    const checkServices = () => {
+        if (getServices(items)[0]) {
+            setAddSchedulingForm(true)
+        } else {
+            Alert.alert('Sem produto ou serviço disponível', 'Verifique se você tem algum produto ou serviço registrado. Caso tenha produto, verifique se tem estoque disponível.')
+        }
+    }
+
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -85,8 +95,10 @@ export default function Schedulings() {
                             textBgColor={colors.entries.min}
                         />
                 }
-                <AddSchedulingButton
-                    setAddSchedulingForm={setAddSchedulingForm}
+                <AddItemButton
+                    mainColor={colors.entries.max}
+                    bgColor={colors.entries.min}
+                    onPress={() => checkServices()}
                 />
                 {
                     addSchedulingForm

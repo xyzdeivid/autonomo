@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 10,
+        zIndex: 1000,
         position: 'absolute'
     }
 })

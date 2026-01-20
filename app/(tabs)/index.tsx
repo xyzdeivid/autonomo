@@ -6,7 +6,6 @@ import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/utils/c
 
 // context
 import { DocsContext } from '@/context/DocsContext'
-import { ContentContext } from '@/context/InfoContent'
 
 // constants
 import { months } from '@/constants/common'
@@ -18,8 +17,6 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // info components
 import Revenue from '@/components/info/Revenue'
-import GeneralButton from '@/components/info/GeneralButton'
-import AddItemForm from '@/components/info/AddItemForm'
 
 // scheduling components
 import AddSchedulingForm from '@/components/entries/AddEntryForm'
@@ -36,14 +33,9 @@ export default function Info() {
     const appDocs = useContext(DocsContext)
     const [schedulings] = appDocs.entries
     const [expenses] = appDocs.outflows
-    const [services] = appDocs.items
     const [currentYear, setCurrentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
     const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
-
-    const infoContent = useContext(ContentContext)
-    const [addItemsForm, setAddItemsForm] = infoContent.form
-    const [generalButton, setGeneralButton] = infoContent.button
 
     const filteredEntries = filterSchedulings(schedulings, selectedMonth, currentYear)
     const filteredExpenses = filterExpenses(expenses, selectedMonth, currentYear)
@@ -74,7 +66,6 @@ export default function Info() {
         if (currentPage !== 'index') {
             setAddSchedulingForm(false)
             setAddExpenseForm(false)
-            setGeneralButton(true)
         }
     }, [currentPage])
 
@@ -92,23 +83,6 @@ export default function Info() {
                         titleBgColor={colors.home.max}
                         textBgColor={colors.home.min}
                     />
-            }
-            {
-                generalButton
-                && <GeneralButton
-                    setAddItemsForm={setAddItemsForm}
-                    setGeneralButton={setGeneralButton}
-                />
-            }
-            {
-                addItemsForm
-                && <AddItemForm
-                    setGeneralButton={setGeneralButton}
-                    setAddItemsForm={setAddItemsForm}
-                    setAddExpenseForm={setAddExpenseForm}
-                    setAddSchedulingForm={setAddSchedulingForm}
-                    services={services}
-                />
             }
             {
                 addExpenseForm

@@ -33,7 +33,7 @@ export function ListItemCardProperty({ label, text, bgColor, onEditButtonPress }
             </View>
             <FontAwesome6
                 name='circle'
-                size={16}
+                size={12}
                 color='white'
             />
         </View>

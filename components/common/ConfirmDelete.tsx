@@ -13,17 +13,17 @@ export default function ConfirmDelete({ name, deleteFunction, setConfirmDelete }
             <View style={styles.card}>
                 <Text style={styles.text}>Tem certeza que deseja excluir {name}?</Text>
                 <View style={styles.buttonsContainer}>
-                    <Button
-                        color='darkred'
-                        title='Excluir'
-                        onPress={() => deleteFunction()}
-                    />
                     <Pressable
                         style={styles.cancelButton}
                         onPress={() => setConfirmDelete(false)}
                     >
                         <Text style={{ color: 'darkred' }}>Cancelar</Text>
                     </Pressable>
+                    <Button
+                        color='darkred'
+                        title='Excluir'
+                        onPress={() => deleteFunction()}
+                    />
                 </View>
             </View>
         </View>

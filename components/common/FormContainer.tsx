@@ -1,19 +1,34 @@
-import { StyleSheet, View } from 'react-native'
+import { useEffect, useRef } from 'react'
+import { Animated, Dimensions, StyleSheet, View } from 'react-native'
 
 interface FormContainerProps {
     children: React.ReactNode
 }
 
+const { height } = Dimensions.get('window')
+
 export default function FormContainer({ children }: FormContainerProps) {
 
+    const slideAnim = useRef(new Animated.Value(height)).current
+
+    useEffect(() => {
+        Animated.parallel([
+            Animated.timing(slideAnim, {
+                toValue: 0,
+                duration: 400,
+                useNativeDriver: true,
+            })
+        ]).start()
+    }, [slideAnim])
+
     return (
-        <View
-            style={styles.container}
+        <Animated.View
+            style={[styles.container, { transform: [{ translateX: slideAnim }] }]}
         >
             <View>
                 {children}
             </View>
-        </View>
+        </Animated.View>
     )
 }
 
