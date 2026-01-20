@@ -14,14 +14,6 @@ function areAllTheFieldsCorrect(outflow: Outflow): boolean {
 
 }
 
-export function isStockIntegrate(outflow: Outflow): boolean {
-
-    if (outflow.amount !== undefined) return true
-
-    return false
-
-}
-
 /* Função que retorna nova quantidade de estoque do produto
 ao criar uma reposição de estoque */
 export function newProductStockOnIncrement(currentStock: number, incrementAmount: number): number {
