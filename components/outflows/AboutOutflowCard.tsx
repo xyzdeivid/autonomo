@@ -125,6 +125,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
             {loadingScreen && <LoadingScreen />}
             <ListItemCardContainer
                 bgColor={colors.outflows.min}
+                setShowCard={setFormOff}
             >
                 <ListItemCardHeader
                     text='Detalhes de Despesa'

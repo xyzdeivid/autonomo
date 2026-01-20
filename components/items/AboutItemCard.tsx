@@ -146,6 +146,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
             {loadingScreen && <LoadingScreen />}
             <ListItemCardContainer
                 bgColor={colors.items.min}
+                setShowCard={setFormOff}
             >
                 <ListItemCardHeader
                     text={`Detalhes do ${getAboutItemCardTitle(item.category)}`}

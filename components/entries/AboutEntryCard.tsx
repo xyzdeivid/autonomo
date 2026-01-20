@@ -55,7 +55,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
             Alert.alert('Erro', getErrorMessage(result.error))
 
-        } 
+        }
 
         setLoadingPage(false)
         setShowEditNameCard(false)
@@ -71,7 +71,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         if (!result.success && result.error) {
 
             Alert.alert('Erro', getErrorMessage(result.error))
-            
+
         }
 
         setLoadingPage(false)
@@ -99,7 +99,10 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     return (
         <>
             {loadingPage && <LoadingScreen />}
-            <ListItemCardContainer bgColor={colors.entries.min}>
+            <ListItemCardContainer
+                bgColor={colors.entries.min}
+                setShowCard={setFormOff}
+            >
                 <ListItemCardHeader
                     text='Detalhes de Receita'
                     bgColor={colors.entries.max}

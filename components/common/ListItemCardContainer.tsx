@@ -1,20 +1,20 @@
 import { useEffect, useRef } from 'react'
-import { Animated, Dimensions, StyleSheet } from 'react-native'
+import { Animated, Dimensions, Pressable, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 
 interface ListItemCardContainerProps {
     children: React.ReactNode
     bgColor: string
+    setShowCard: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const { height } = Dimensions.get('window')
 
-export function ListItemCardContainer({ children, bgColor }: ListItemCardContainerProps) {
+export function ListItemCardContainer({ children, bgColor, setShowCard }: ListItemCardContainerProps) {
 
     const slideAnim = useRef(new Animated.Value(height)).current
     const fadeAnim = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
-        // Dispara o Fade e o Slide juntos
         Animated.parallel([
             Animated.timing(fadeAnim, {
                 toValue: 1,
@@ -23,23 +23,31 @@ export function ListItemCardContainer({ children, bgColor }: ListItemCardContain
             }),
             Animated.timing(slideAnim, {
                 toValue: 0,
-                duration: 450,
+                duration: 400,
                 useNativeDriver: true,
             })
         ]).start()
     }, [fadeAnim, slideAnim])
 
+    function closeCard(close: boolean) {
+        if (close) setShowCard(false)
+    }
+
     return (
-        <Animated.View
-            style={[
-                styles.container,
-                { backgroundColor: bgColor, opacity: fadeAnim }
-            ]}
-        >
-            <Animated.View style={[styles.body, { transform: [{ translateY: slideAnim }] }]}>
-                {children}
+        <TouchableWithoutFeedback onPress={() => closeCard(true)}>
+            <Animated.View
+                style={[
+                    styles.container,
+                    { backgroundColor: bgColor, opacity: fadeAnim }
+                ]}
+            >
+                <Pressable onPress={() => closeCard(false)}>
+                    <Animated.View style={[styles.body, { transform: [{ translateY: slideAnim }] }]}>
+                        {children}
+                    </Animated.View>
+                </Pressable>
             </Animated.View>
-        </Animated.View>
+        </TouchableWithoutFeedback>
 
     )
 

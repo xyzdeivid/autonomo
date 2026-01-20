@@ -1,3 +1,4 @@
+import { FontAwesome6 } from '@expo/vector-icons'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface ListItemCardPropertyProps {
@@ -14,20 +15,27 @@ export function ListItemCardProperty({ label, text, bgColor, onEditButtonPress }
             ...styles.container,
             backgroundColor: bgColor
         }}>
-            <Text style={styles.label}>{label}: </Text>
-            <Text style={styles.text}>
-                {text}
-            </Text>
-            {
-                onEditButtonPress && (
-                    <Pressable
-                        style={styles.button}
-                        onPress={onEditButtonPress}
-                    >
-                        <Text style={styles.buttonText}>Editar</Text>
-                    </Pressable>
-                )
-            }
+            <View style={styles.infoContainer}>
+                <Text style={styles.label}>{label}: </Text>
+                <Text style={styles.text}>
+                    {text}
+                </Text>
+                {
+                    onEditButtonPress && (
+                        <Pressable
+                            style={styles.button}
+                            onPress={onEditButtonPress}
+                        >
+                            <Text style={styles.buttonText}>Editar</Text>
+                        </Pressable>
+                    )
+                }
+            </View>
+            <FontAwesome6
+                name='circle'
+                size={16}
+                color='white'
+            />
         </View>
     )
 
@@ -38,12 +46,17 @@ const mainColor = '#066C9180'
 const styles = StyleSheet.create({
 
     container: {
-        display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: 24,
         padding: 16,
         borderRadius: 8
+    },
+
+    infoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
     },
 
     label: {
