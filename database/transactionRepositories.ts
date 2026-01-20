@@ -2,7 +2,7 @@ import { Entry, Item, Outflow } from '@/types'
 import { db } from './db'
 import { deleteOutflow, insertOutflow } from './outflowRepositories'
 import { insertItem, updateItemStock } from './itemRepositories'
-import { insertEntry } from './entryRepositories'
+import { deleteEntry, insertEntry } from './entryRepositories'
 
 export async function addItemAndOutflowToDb(outflow: Outflow, item: Item): Promise<void> {
 
@@ -74,6 +74,27 @@ export async function deleteOutflowAndReduceItemStockToDb(outflowId: string, new
         await db.runAsync('BEGIN TRANSACTION')
 
         await deleteOutflow(outflowId)
+
+        await updateItemStock(newStock, itemId)
+
+        await db.runAsync('COMMIT')
+
+    } catch (error) {
+
+        await db.runAsync('ROLLBACK')
+        throw error
+
+    }
+
+}
+
+export async function deleteEntryAndIncrementItemStockToDb(entryId: string, newStock: number, itemId: string): Promise<void> {
+
+    try {
+
+        await db.runAsync('BEGIN TRANSACTION')
+
+        await deleteEntry(entryId)
 
         await updateItemStock(newStock, itemId)
 

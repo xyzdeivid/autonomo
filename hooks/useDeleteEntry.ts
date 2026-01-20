@@ -1,83 +1,45 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Entry } from '@/types'
 import { useContext } from 'react'
-import useEditItemStock from './useEditItemStock'
-import { deleteEntryToDb } from '@/database/entryRepositories'
-import { Alert } from 'react-native'
+import { deleteEntryUseCase } from '@/services/deleteEntryUseCase'
 
 const useDeleteEntry = () => {
 
-    const [entries, setEntries] = useContext(DocsContext).entries
-    const [items] = useContext(DocsContext).items
+    const appDocs = useContext(DocsContext)
+    const [, setEntries] = appDocs.entries
+    const [items, setItems] = appDocs.items
 
-    const editItemStock = useEditItemStock().editItemStock
+    const deleteEntry = async (entry: Entry): Promise<{ success: boolean, error?: string }> => {
 
-    const updateEntriesInUI = (id: string) => {
+        // Buscando produto caso receita tenha sido a venda de um
+        const product = items.find(current => current._id === entry.serviceId)
 
-        const remainingEntries = entries.filter(entry => {
+        const result = await deleteEntryUseCase(entry, product)
 
-            return entry._id !== id
+        if (result.success) {
 
-        })
-
-        setEntries(remainingEntries)
-
-    }
-
-    const updateItemStock = async (entry: Entry): Promise<boolean> => {
-
-        const product = items.find(current => {
-            return current._id === entry.serviceId
-        })
-
-        if (product && entry.serviceIsThereAmount && entry.serviceAmount) {
-
-            const newProductAmount = product.amount
-                ? product.amount + entry.serviceAmount
-                : 0 + entry.serviceAmount
-
-            const success = await editItemStock(newProductAmount, product._id)
-
-            if (!success) return false
-
-            return true
-
-        }
-
-        return true
-
-    }
-
-    const deleteEntry = async (entry: Entry): Promise<boolean> => {
-
-        try {
-
-            let success: boolean = true
-
-            // Atualizando estoque de produto caso tenha algum vinculado
-            if (entry.serviceIsThereAmount) success = await updateItemStock(entry)
-
-            // Parando operação caso atualização de estoque falhe
-            if (!success) return false
-
-            // Excluindo receita
-            await deleteEntryToDb(entry._id)
-
-            // Atualizando estado na UI
-            updateEntriesInUI(entry._id)
-
-            return true
-
-        } catch {
-
-            Alert.alert(
-                'Erro ao acessar banco de dados',
-                'Por favor, tente novamente mais tarde.'
+            // Atualizando receitas na UI
+            setEntries(prev =>
+                prev.filter(current => {
+                    return current._id !== entry._id
+                })
             )
 
-            return false
+            // Atualizando produtos na UI caso necessário
+            if (product && result.newStock) {
+                setItems(prev =>
+                    prev.map(current => {
+                        if (current._id === product._id) return {
+                            ...current, amount: result.newStock
+                        }
+                        return current
+                    })
+                )
+            }
 
         }
+
+        return result
 
     }
 

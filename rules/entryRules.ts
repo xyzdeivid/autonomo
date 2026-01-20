@@ -49,7 +49,7 @@ export function canAddEntry(entry: Entry): CanDo {
 
 }
 
-export function newProductStock(currentStock: number, reduceAmount: number): number {
+export function newProductStockOnNewEntry(currentStock: number, reduceAmount: number): number {
 
     return currentStock - reduceAmount
 
@@ -86,5 +86,11 @@ export function canEditEntryDate(newDate: string): CanDo {
     return {
         valid: true
     }
+
+}
+
+export function newProductStockOnDeleteEntry(currentStock: number, incrementAmount: number): number {
+
+    return currentStock + incrementAmount
 
 }

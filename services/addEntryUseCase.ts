@@ -1,6 +1,6 @@
 import { addEntryToDb } from '@/database/entryRepositories'
 import { addEntryAndReduceItemStockToDb } from '@/database/transactionRepositories'
-import { canAddEntry, isStockEnough, newProductStock } from '@/rules/entryRules'
+import { canAddEntry, isStockEnough, newProductStockOnNewEntry } from '@/rules/entryRules'
 import { UseCase, Entry, Item } from '@/types'
 
 export async function addEntryUseCase(entry: Entry, selectedProduct?: Item): Promise<UseCase & { newStock?: number }> {
@@ -36,7 +36,7 @@ export async function addEntryUseCase(entry: Entry, selectedProduct?: Item): Pro
             && entry.serviceAmount !== undefined
         ) {
 
-            const newStock = newProductStock(selectedProduct.amount, entry.serviceAmount)
+            const newStock = newProductStockOnNewEntry(selectedProduct.amount, entry.serviceAmount)
 
             await addEntryAndReduceItemStockToDb(entry, newStock, selectedProduct._id)
 

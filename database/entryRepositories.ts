@@ -1,7 +1,7 @@
 import { Entry } from '@/types/index'
 import { db } from './db'
 
-export async function insertEntry(entry: Entry) {
+export async function insertEntry(entry: Entry): Promise<void> {
 
     await db.runAsync(
         `INSERT INTO entries
@@ -17,6 +17,15 @@ export async function insertEntry(entry: Entry) {
             entry.date,
             entry.customer ?? null
         ]
+    )
+
+}
+
+export async function deleteEntry(id: string): Promise<void> {
+
+    await db.runAsync(
+        'DELETE FROM entries WHERE _id = ?',
+        [id]
     )
 
 }
@@ -68,9 +77,6 @@ export async function editEntryDateToDb(newDate: string, id: string): Promise<vo
 
 export async function deleteEntryToDb(_id: string): Promise<void> {
 
-    await db.runAsync(
-        'DELETE FROM entries WHERE _id = ?',
-        [_id]
-    )
+    await deleteEntry(_id)
 
 }
