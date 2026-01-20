@@ -1,5 +1,6 @@
-import { isStockValid, isStringValid, isTodayOrPast } from '@/utils/common'
+import { isStockValid, isTodayOrPast } from '@/utils/common'
 import { CanDo, Outflow } from '@/types'
+import { isStringValid } from './domainRules'
 
 function areAllTheFieldsCorrect(outflow: Outflow): boolean {
 

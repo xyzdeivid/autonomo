@@ -1,5 +1,6 @@
 import { CanDo, Item } from '@/types'
-import { isStockValid, isStringValid } from '@/utils/common'
+import { isStockValid } from '@/utils/common'
+import { isStringValid } from './domainRules'
 
 function areAllTheFieldsCorrect(item: Item): boolean {
 

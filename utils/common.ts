@@ -2,12 +2,6 @@ import { Outflow, Entry } from '@/types/index'
 import { format, parseISO } from 'date-fns'
 import { Alert } from 'react-native'
 
-export function isStringValid(name: string): boolean {
-
-    return name.trim().length > 0
-
-}
-
 export function isStockValid(stock: number): boolean {
 
     return stock >= 0

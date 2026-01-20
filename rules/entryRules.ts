@@ -1,5 +1,6 @@
-import { isStringValid, isTodayOrPast } from '@/utils/common'
+import { isTodayOrPast } from '@/utils/common'
 import { CanDo, Entry } from '@/types'
+import { canEditName, isStringValid } from './domainRules'
 
 function areAllTheFieldsCorrect(entry: Entry): boolean {
 
@@ -54,6 +55,19 @@ export function newProductStock(currentStock: number, reduceAmount: number): num
 
 }
 
+export function canEditCustomerName(customerName: string): CanDo {
+
+    // Verificando se nome é valido
+    const editName = canEditName(customerName)
+    if (!editName) return {
+        valid: false, reason: 'INVALID_FIELD'
+    }
+
+    return {
+        valid: true
+    }
+
+}
 export function canEditEntryDate(newDate: string): CanDo {
 
     // Verificando se data editada é futura
