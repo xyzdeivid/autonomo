@@ -108,3 +108,29 @@ export async function deleteEntryAndIncrementItemStockToDb(entryId: string, newS
     }
 
 }
+
+export async function editEntryAmountAndItemStockToDb(newAmount: number, entryId: string, newProductStock: number, productId: string): Promise<void> {
+
+    try {
+
+        await db.runAsync('BEGIN TRANSACTION')
+
+        await db.runAsync(
+            `UPDATE entries
+            SET serviceAmount = ?
+            WHERE _id = ?`,
+            [newAmount, entryId]
+        )
+
+        await updateItemStock(newProductStock, productId)
+
+        await db.runAsync('COMMIT')
+
+    } catch (error) {
+
+        await db.runAsync('ROLLBACK')
+        throw error
+
+    }
+
+}

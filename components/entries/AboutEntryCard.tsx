@@ -16,6 +16,8 @@ import { parseISO } from 'date-fns'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import { EditNameCard } from '../common/EditNameCard'
 import useEditCustomerName from '@/hooks/useEditCustomerName'
+import { EditAmountCard } from '../common/EditAmountCard'
+import useEditEntryAmount from '@/hooks/useEditEntryAmount'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -30,9 +32,11 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [loadingPage, setLoadingPage] = useState(false)
     const [customer, setCustomer] = useState('')
+    const [showEditAmountCard, setShowEditAmountCard] = useState(false)
 
     const editCustomerName = useEditCustomerName().editCustomerName
     const editEntryDate = useEditEntryDate().editEntryDate
+    const editEntryAmount = useEditEntryAmount().editEntryAmount
 
     const formatDateToISO = (date: Date) => {
         return date.toISOString().split('T')[0]
@@ -62,7 +66,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     }
 
-    const editDate = async (newDate: string) => {
+    const submitDate = async (newDate: string) => {
 
         setLoadingPage(true)
 
@@ -78,6 +82,21 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     }
 
+    const submitAmount = async (newAmount: number) => {
+
+        setLoadingPage(true)
+
+        const result = await editEntryAmount(newAmount, scheduling)
+
+        if (!result.success && result.error) {
+            Alert.alert('Erro', getErrorMessage(result.error))
+        }
+
+        setLoadingPage(false)
+        setShowEditAmountCard(false)
+
+    }
+
     const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
 
         setShowDateTimePicker(false)
@@ -88,7 +107,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
             if (dateString !== scheduling.date) {
 
-                editDate(dateString)
+                submitDate(dateString)
 
             }
 
@@ -174,9 +193,20 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                     label='Quantidade'
                                     text={String(scheduling.serviceAmount)}
                                     bgColor={colors.entries.min}
+                                    onEditButtonPress={() => setShowEditAmountCard(true)}
                                 />
                             </>
                         ) : null
+                    }
+                    {
+                        showEditAmountCard && scheduling.serviceAmount && (
+                            <EditAmountCard
+                                visible={showEditAmountCard}
+                                currentValue={scheduling.serviceAmount}
+                                onSuccessButtonPress={newAmount => submitAmount(Number(newAmount))}
+                                onCancelButtonPress={() => setShowEditAmountCard(false)}
+                            />
+                        )
                     }
                     <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
                 </ListItemCardBody>

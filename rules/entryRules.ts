@@ -94,3 +94,30 @@ export function newProductStockOnDeleteEntry(currentStock: number, incrementAmou
     return currentStock + incrementAmount
 
 }
+
+export function newProductStockOnEditEntryAmount(newAmount: number, oldAmount: number, productAmount: number) {
+    return (productAmount + oldAmount) - newAmount
+}
+
+export function canEditEntryAmount(newAmount: number, oldAmount: number, productAmount: number): CanDo {
+
+    // Verificando se campos são válidos
+    if (
+        typeof newAmount !== 'number' 
+        || newAmount <= 0
+        || typeof oldAmount !== 'number' 
+        || typeof productAmount !== 'number'
+    ) return {
+        valid: false, reason: 'INVALID_FIELD'
+    }
+
+    const newProductStock = newProductStockOnEditEntryAmount(newAmount, oldAmount, productAmount)
+    if (newProductStock < 0) return {
+        valid: false, reason: 'INSUFFICIENT_STOCK'
+    }
+
+    return {
+        valid: true
+    }
+
+}
