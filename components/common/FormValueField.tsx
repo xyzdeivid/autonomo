@@ -6,21 +6,25 @@ import { FormFieldContainer } from './FormFieldContainer'
 
 interface FormValueFieldProps {
     setValue: React.Dispatch<React.SetStateAction<number>>
-    label?: string
-    bgColor?: string
-    textColor?: string
+    label: string
+    labelBgColor: string
+    inputBgColor: string
     valueChoice?: string
     setValueChoice?: React.Dispatch<React.SetStateAction<string>>
     valueChoiceButtonColors?: [string, string]
 }
 
-export function FormValueField({ setValue, label, bgColor, textColor, valueChoice, setValueChoice, valueChoiceButtonColors }: FormValueFieldProps) {
+export function FormValueField({ setValue, label, labelBgColor, inputBgColor, valueChoice, setValueChoice, valueChoiceButtonColors }: FormValueFieldProps) {
 
     return (
-        <FormFieldContainer borderBottomColor={bgColor}>
-            <View style={{ flex: 1 }}>
-                <View style={styles.inputFieldContainer}>
-                    <Label text={label ? label : 'Valor:'} color={textColor} />
+        <FormFieldContainer>
+            <View>
+                <View style={{ flexDirection: 'row' }}>
+                    <View
+                    style={{...styles.labelContainer, backgroundColor: labelBgColor}}
+                    >
+                        <Label text={label}/>
+                    </View>
                     <MaskedTextInput
                         type='currency'
                         options={{
@@ -30,7 +34,7 @@ export function FormValueField({ setValue, label, bgColor, textColor, valueChoic
                         }}
                         style={{
                             ...styles.input,
-                            backgroundColor: bgColor ? bgColor : '#E0E0E0'
+                            backgroundColor: inputBgColor
                         }}
                         keyboardType='numeric'
                         onChangeText={text => {
@@ -49,7 +53,7 @@ export function FormValueField({ setValue, label, bgColor, textColor, valueChoic
                                 setChoice={setValueChoice}
                                 buttonColors={valueChoiceButtonColors}
                             />
-                            <Text style={{ color: textColor, marginStart: 8, flex: 1 }}>
+                            <Text style={{ marginStart: 8, flex: 1 }}>
                                 {valueChoice === 'total'
                                     ? 'Valor de todas as unidades compradas'
                                     : 'Valor de cada unidade comprada'
@@ -67,24 +71,22 @@ export function FormValueField({ setValue, label, bgColor, textColor, valueChoic
 
 const styles = StyleSheet.create({
 
-    inputFieldContainer: {
-        flexDirection: 'row',
-        alignItems: 'center'
+    labelContainer: {
+        justifyContent: 'center'
     },
 
     input: {
         width: 80,
+        height: 40,
         color: 'black',
-        padding: 8,
         textAlign: 'center',
-        marginStart: 8,
-        borderRadius: 3
+        borderTopRightRadius: 6,
+        borderBottomRightRadius: 6
     },
 
     valueChoiceContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 12,
         flexWrap: 'wrap'
     }
 

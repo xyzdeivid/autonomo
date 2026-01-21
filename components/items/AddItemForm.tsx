@@ -35,6 +35,9 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
     const [stock, setStock] = useState(false)
     const [step, setStep] = useState(0)
 
+    const labelBgColor = colors.items.max
+    const inputBgColor = colors.items.min
+
     const addItem = useAddItem().addItem
 
     const submitNewItem = async (): Promise<void> => {
@@ -97,7 +100,8 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             setName={setName}
                             setValue={setValue}
                             submitService={submitNewItem}
-
+                            labelBgColor={labelBgColor}
+                            inputBgColor={inputBgColor}
                         />
                     )
                 }
@@ -107,6 +111,8 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             name={name}
                             setName={setName}
                             submitBudget={submitNewItem}
+                            labelBgColor={labelBgColor}
+                            inputBgColor={inputBgColor}
                         />
                     )
                 }
@@ -136,6 +142,8 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             setValueOutflowChoice={setValueOutflowChoice}
                             setName={setName}
                             setValue={setValue}
+                            labelBgColor={labelBgColor}
+                            inputBgColor={inputBgColor}
                         />
                     )
                 }
@@ -150,6 +158,8 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             setValue={setValue}
                             setName={setName}
                             submitStock={submitNewItem}
+                            labelBgColor={labelBgColor}
+                            inputBgColor={inputBgColor}
                         />
                     )
                 }
@@ -161,6 +171,8 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             setName={setName}
                             setValue={setValue}
                             submitNoStock={submitNewItem}
+                            labelBgColor={labelBgColor}
+                            inputBgColor={inputBgColor}
                         />
                     )
                 }

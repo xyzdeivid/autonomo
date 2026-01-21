@@ -9,22 +9,25 @@ interface ServiceCreationFormProps {
     setName: React.Dispatch<React.SetStateAction<string>>
     setValue: React.Dispatch<React.SetStateAction<number>>
     submitService: () => Promise<void>
+    labelBgColor: string
+    inputBgColor: string
 }
 
-export default function ServiceCreationForm({ name, value, setName, setValue, submitService }: ServiceCreationFormProps) {
+export default function ServiceCreationForm({ name, value, setName, setValue, submitService, labelBgColor, inputBgColor }: ServiceCreationFormProps) {
 
     return (
         <>
             <FormNameField
                 setName={setName}
-                textColor={colors.items.max}
-                bgColor={colors.items.min}
-                label='Nome do Serviço:'
+                label='Nome do Serviço'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             <FormValueField
                 setValue={setValue}
-                bgColor={colors.items.min}
-                textColor={colors.items.max}
+                label='Valor'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             {
                 (name && value) ? (

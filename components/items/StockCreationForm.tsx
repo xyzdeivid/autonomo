@@ -13,29 +13,31 @@ interface StockCreationFormProps {
     setValue: React.Dispatch<React.SetStateAction<number>>
     setAmount: React.Dispatch<React.SetStateAction<number>>
     submitStock: () => Promise<void>
+    labelBgColor: string
+    inputBgColor: string
 }
 
-export default function StockCreationForm({ name, amount, value, setStock, setName, setValue, setAmount, submitStock }: StockCreationFormProps) {
+export default function StockCreationForm({ name, amount, value, setStock, setName, setValue, setAmount, submitStock, labelBgColor, inputBgColor }: StockCreationFormProps) {
 
     return (
         <>
             <FormNameField
-                label='Nome do Produto:'
-                setName={setName}
-                textColor={colors.items.max}
-                bgColor={colors.items.min}
+            setName={setName}
+                label='Nome do Produto'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             <FormValueField
                 setValue={setValue}
-                bgColor={colors.items.min}
-                textColor={colors.items.max}
-                label='Valor de Venda (un):'
+                label='Valor de Venda (un)'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             <FormAmountField
-                text='Estoque Atual:'
                 setAmount={setAmount}
-                bgColor={colors.items.min}
-                textColor={colors.items.max}
+                label='Quantidade'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             {
                 (name && amount && value) ? (

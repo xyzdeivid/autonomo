@@ -1,17 +1,16 @@
 import { useState } from 'react'
-import { TextInput, StyleSheet } from 'react-native'
-import { Label } from './Label'
+import { TextInput, StyleSheet, View } from 'react-native'
 import { FormFieldContainer } from './FormFieldContainer'
+import { Label } from './Label'
 
 interface FormAmountFieldProps {
-    text: string
     setAmount: React.Dispatch<React.SetStateAction<number>>
-    defaultValue?: number
-    bgColor?: string
-    textColor?: string
+    label: string
+    labelBgColor: string
+    inputBgColor: string
 }
 
-export function FormAmountField({ text, setAmount, defaultValue, bgColor, textColor }: FormAmountFieldProps) {
+export function FormAmountField({ setAmount, label, labelBgColor, inputBgColor }: FormAmountFieldProps) {
 
     const [textValue, setTextValue] = useState('')
 
@@ -25,24 +24,31 @@ export function FormAmountField({ text, setAmount, defaultValue, bgColor, textCo
     }
 
     return (
-        <FormFieldContainer borderBottomColor={bgColor}>
-            <Label text={text} color={textColor} />
-            <TextInput
-                value={defaultValue ? String(defaultValue) : textValue}
-                onChangeText={text => {
-                    if (text) {
-                        checkNumber(text)
-                    } else {
-                        setTextValue('')
-                        setAmount(0)
-                    }
-                }}
-                style={{
-                    ...styles.input,
-                    backgroundColor: bgColor ? bgColor : '#E0E0E0'
-                }}
-                keyboardType='numeric'
-            />
+        <FormFieldContainer>
+            <View style={{ flexDirection: 'row' }}>
+                <View style={{
+                    ...styles.labelContainer,
+                    backgroundColor: labelBgColor
+                }}>
+                    <Label text={label} />
+                </View>
+                <TextInput
+                    value={textValue}
+                    onChangeText={text => {
+                        if (text) {
+                            checkNumber(text)
+                        } else {
+                            setTextValue('')
+                            setAmount(0)
+                        }
+                    }}
+                    style={{
+                        ...styles.input,
+                        backgroundColor: inputBgColor
+                    }}
+                    keyboardType='numeric'
+                />
+            </View>
         </FormFieldContainer>
     )
 
@@ -50,13 +56,17 @@ export function FormAmountField({ text, setAmount, defaultValue, bgColor, textCo
 
 const styles = StyleSheet.create({
 
+    labelContainer: {
+        justifyContent: 'center',
+    },
+
     input: {
-        width: 60,
+        width: 80,
+        height: 40,
         color: 'black',
-        padding: 8,
         textAlign: 'center',
-        marginStart: 8,
-        borderRadius: 3
+        borderTopRightRadius: 6,
+        borderBottomRightRadius: 6
     }
 
 })

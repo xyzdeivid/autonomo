@@ -9,23 +9,25 @@ interface NoStockCreationFormProps {
     setName: React.Dispatch<React.SetStateAction<string>>
     setValue: React.Dispatch<React.SetStateAction<number>>
     submitNoStock: () => Promise<void>
+    labelBgColor: string
+    inputBgColor: string
 }
 
-export default function NoStockCreationForm({ name, value, setName, setValue, submitNoStock }: NoStockCreationFormProps) {
+export default function NoStockCreationForm({ name, value, setName, setValue, submitNoStock, labelBgColor, inputBgColor }: NoStockCreationFormProps) {
 
     return (
         <>
             <FormNameField
-                label='Nome do Produto:'
                 setName={setName}
-                textColor={colors.items.max}
-                bgColor={colors.items.min}
+                label='Nome do Produto'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             <FormValueField
-                label='Valor de Venda (un):'
                 setValue={setValue}
-                bgColor={colors.items.min}
-                textColor={colors.items.max}
+                label='Valor de Venda (un)'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             {
                 (name && value) ? (

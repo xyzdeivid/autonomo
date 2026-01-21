@@ -1,7 +1,6 @@
 import { Item } from '@/types/index'
 import { Picker } from '@react-native-picker/picker'
-import { StyleSheet, View, Text } from 'react-native'
-import { Label } from '../common/Label'
+import { StyleSheet, Text } from 'react-native'
 import { FormFieldContainer } from '../common/FormFieldContainer'
 import { colors } from '@/constants/appColors'
 
@@ -15,9 +14,8 @@ interface SelectServiceInputProps {
 export default function SelectServiceInput({ service, setService, services, amount }: SelectServiceInputProps) {
 
     return (
-        <FormFieldContainer borderBottomColor={colors.entries.min}>
-            <View style={{ flex: 1 }}>
-                <Label text='Produto ou Serviço:' color={colors.entries.max} />
+        <FormFieldContainer>
+                <Text>Produto ou Serviço</Text>
                 <Picker
                     style={styles.inputContainer}
                     selectedValue={service}
@@ -35,7 +33,6 @@ export default function SelectServiceInput({ service, setService, services, amou
                         <Text style={{ color: colors.entries.max, marginTop: 4 }}>Estoque: {amount}</Text>
                     ) : null
                 }
-            </View>
         </FormFieldContainer>
     )
 

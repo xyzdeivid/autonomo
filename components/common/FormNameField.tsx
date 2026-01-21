@@ -1,28 +1,29 @@
-import { StyleSheet, TextInput } from 'react-native'
-import { Label } from './Label'
+import { StyleSheet, TextInput, View } from 'react-native'
 import { FormFieldContainer } from './FormFieldContainer'
+import { Label } from './Label'
 
 interface FormNameFieldProps {
     setName: React.Dispatch<React.SetStateAction<string>>
-    label?: string
-    bgColor?: string
-    textColor?: string
-    defaultValue?: string
+    label: string
+    labelBgColor: string
+    inputBgColor: string
 }
 
-export function FormNameField({ setName, label, bgColor, textColor, defaultValue }: FormNameFieldProps) {
+export function FormNameField({ setName, label, labelBgColor, inputBgColor }: FormNameFieldProps) {
     return (
-        <FormFieldContainer borderBottomColor={bgColor ? bgColor : ''}>
-            <Label
-                text={label || 'Nome:'}
-                color={textColor}
-            />
+        <FormFieldContainer>
+            <View
+                style={{
+                    ...styles.labelContainer,
+                    backgroundColor: labelBgColor
+                }}
+            >
+                <Label text={label} />
+            </View>
             <TextInput
-                defaultValue={defaultValue}
                 style={{
                     ...styles.input,
-                    backgroundColor: bgColor ? bgColor : '#E0E0E0',
-                    textAlign: 'center'
+                    backgroundColor: inputBgColor
                 }}
                 onChangeText={text => setName(text.trim())}
             />
@@ -32,11 +33,15 @@ export function FormNameField({ setName, label, bgColor, textColor, defaultValue
 
 const styles = StyleSheet.create({
 
+    labelContainer: {
+        fontSize: 16,
+        paddingVertical: 6,
+    },
+
     input: {
-        flex: 1,
         color: 'black',
-        borderRadius: 3,
-        marginStart: 8
+        height: 40,
+        textAlign: 'center'
     }
 
 })

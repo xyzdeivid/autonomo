@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { format, parseISO } from 'date-fns'
-import { Platform, Text, Pressable } from 'react-native'
+import { Platform, Text, Pressable, View, StyleSheet } from 'react-native'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
-import { Label } from './Label'
 import { FormFieldContainer } from './FormFieldContainer'
+import { Label } from './Label'
 
 interface FormDateFieldProps {
     setTargetDate: React.Dispatch<React.SetStateAction<string>>
-    bgColor?: string
-    label?: string
-    textColor?: string
-    borderBottomColor?: string
+    label: string
+    labelBgColor: string
+    buttonBgColor: string
 }
 
-export function FormDateField({ setTargetDate, bgColor, label, textColor, borderBottomColor }: FormDateFieldProps) {
+export function FormDateField({ setTargetDate, label, labelBgColor, buttonBgColor }: FormDateFieldProps) {
 
     const [date, setDate] = useState(new Date())
     const [show, setShow] = useState(false)
@@ -34,40 +33,61 @@ export function FormDateField({ setTargetDate, bgColor, label, textColor, border
     }
 
 
-    const getDate = () => {
+    const getDate = useCallback(() => {
         const year = date.getFullYear()
         const month = String(date.getMonth() + 1).padStart(2, '0')
         const day = String(date.getDate()).padStart(2, '0')
         return `${year}-${month}-${day}`
-    }
-
+    }, [date])
 
     useEffect(() => {
         setTargetDate(getDate())
-    }, [date])
+    }, [getDate, setTargetDate])
+
 
     return (
-        <FormFieldContainer borderBottomColor={borderBottomColor}>
-            <Label text={label ? label : 'Data:'} color={textColor ? textColor : ''} />
-            <Pressable 
-            style={{ 
-                backgroundColor: bgColor ? bgColor : '#00000080',
-                padding: 8,
-                borderRadius: 4,
-                marginStart: 8
-            }}
-            onPress={showDatepicker}
-            >
-                <Text style={{ color: 'white' }}>{dateFormat(getDate())}</Text>
-            </Pressable>
-            {show && (
-                <DateTimePicker
-                    value={date}
-                    mode='date'
-                    display='default'
-                    onChange={onChange}
-                />
-            )}
+        <FormFieldContainer>
+            <View style={{ flexDirection: 'row' }} >
+                <View style={{
+                    ...styles.labelContainer,
+                    backgroundColor: labelBgColor
+                }}>
+                    <Label text={label} />
+                </View>
+                <Pressable
+                    style={{
+                        ...styles.button,
+                        backgroundColor: buttonBgColor,
+                    }}
+                    onPress={showDatepicker}
+                >
+                    <Text>{dateFormat(getDate())}</Text>
+                </Pressable>
+                {show && (
+                    <DateTimePicker
+                        value={date}
+                        mode='date'
+                        display='default'
+                        onChange={onChange}
+                    />
+                )}
+            </View>
         </FormFieldContainer>
     )
 }
+
+const styles = StyleSheet.create({
+
+    labelContainer: {
+        justifyContent: 'center',
+    },
+
+    button: {
+        height: 40,
+        paddingHorizontal: 16,
+        justifyContent: 'center',
+        borderTopRightRadius: 6,
+        borderBottomRightRadius: 6
+    }
+
+})

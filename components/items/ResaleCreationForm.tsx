@@ -18,6 +18,8 @@ interface ResaleCreationFormProps {
     setName: React.Dispatch<React.SetStateAction<string>>
     setValue: React.Dispatch<React.SetStateAction<number>>
     submitResale: () => Promise<void>
+    labelBgColor: string
+    inputBgColor: string
 }
 
 export default function ResaleCreationForm({
@@ -30,43 +32,43 @@ export default function ResaleCreationForm({
     setValueOutflowChoice,
     setName,
     setValue,
+    labelBgColor, inputBgColor
 }: ResaleCreationFormProps) {
 
     return (
         <>
             <FormNameField
                 setName={setName}
-                textColor={colors.items.max}
-                bgColor={colors.items.min}
-                label='Nome do Produto:'
+                label='Nome do Produto'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             <FormDateField
                 setTargetDate={setPurchaseDate}
-                bgColor={colors.items.max}
-                label='Data de Compra:'
-                textColor={colors.items.max}
-                borderBottomColor={colors.items.min}
+                label='Data de Compra'
+                labelBgColor={labelBgColor}
+                buttonBgColor={inputBgColor}
             />
             <FormAmountField
-                text='Estoque:'
                 setAmount={setAmount}
-                bgColor={colors.items.min}
-                textColor={colors.items.max}
+                label='Quantidade'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             <FormValueField
                 setValue={setPurchaseValue}
-                bgColor={colors.items.min}
-                label={valueOutflowChoice === 'total' ? 'Valor de Compra (total):' : 'Valor de Compra (un):'}
-                textColor={colors.items.max}
+                label={valueOutflowChoice === 'total' ? 'Valor de Compra (total)' : 'Valor de Compra (un)'}
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
                 valueChoice={valueOutflowChoice}
                 setValueChoice={setValueOutflowChoice}
-                valueChoiceButtonColors={[colors.items.max, colors.items.mid]}
+                valueChoiceButtonColors={[labelBgColor, inputBgColor]}
             />
             <FormValueField
                 setValue={setValue}
-                bgColor={colors.items.min}
-                textColor={colors.items.max}
-                label='Valor de Venda (un):'
+                label='Valor de Venda (un)'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             {
                 (name && amount && purchaseValue && value) ? (

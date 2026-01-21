@@ -31,6 +31,9 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [costumerName, setCustomerName] = useState('')
 
+    const labelBgColor = colors.entries.max
+    const inputBgColor = colors.entries.min
+
     const addEntry = useAddEntry().addEntry
 
     const checkAllInputs = (): boolean => {
@@ -94,33 +97,33 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                 />
                 <FormNameField
                     setName={setCustomerName}
-                    label='Cliente:'
-                    bgColor={colors.entries.min}
-                    textColor={colors.entries.max}
+                    label='Cliente'
+                    labelBgColor={labelBgColor}
+                    inputBgColor={inputBgColor}
                 />
                 <FormDateField
                     setTargetDate={setDate}
-                    bgColor={colors.entries.max}
-                    textColor={colors.entries.max}
-                    borderBottomColor={colors.entries.min}
+                    label='Data'
+                    labelBgColor={labelBgColor}
+                    buttonBgColor={inputBgColor}
                 />
                 {
                     service.category === 'product' ? (
                         <FormAmountField
-                            text='* Quantidade:'
                             setAmount={setAmount}
-                            bgColor={colors.entries.min}
-                            textColor={colors.entries.max}
+                            label='* Quantidade'
+                            labelBgColor={labelBgColor}
+                            inputBgColor={inputBgColor}
                         />
                     ) : null
                 }
                 {
                     service.category === 'budget' ? (
                         <FormValueField
-                            label='* Valor:'
                             setValue={setValue}
-                            bgColor={colors.entries.min}
-                            textColor={colors.entries.max}
+                            label='* Valor'
+                            labelBgColor={labelBgColor}
+                            inputBgColor={inputBgColor}
                         />
                     ) : null
                 }

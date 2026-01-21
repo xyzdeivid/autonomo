@@ -34,6 +34,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const [product, setProduct] = useState(products[0])
     const [valueChoice, setValueChoice] = useState('total')
 
+    const labelBgColor = colors.outflows.max
+    const inputBgColor = colors.outflows.min
+
     const addOutflow = useAddOutflow().addOutflow
 
     const checkAllInputs = (): boolean => {
@@ -74,7 +77,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
     const checkResaleButtonText = () => {
         return !stockIntegrate
-            ? ''
+            ? 'Valor'
             : valueChoice === 'total' ? 'Valor de Compra (total):' : 'Valor de Compra (un):'
     }
 
@@ -97,8 +100,9 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     !stockIntegrate
                         ? <FormNameField
                             setName={setName}
-                            bgColor={colors.outflows.min}
-                            textColor={colors.outflows.max}
+                            label='Nome'
+                            labelBgColor={labelBgColor}
+                            inputBgColor={inputBgColor}
                         />
                         : <ProductOptionsInput
                             product={product}
@@ -108,28 +112,28 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                 }
                 <FormDateField
                     setTargetDate={setDate}
-                    bgColor={colors.outflows.max}
-                    textColor={colors.outflows.max}
-                    borderBottomColor={colors.outflows.min}
+                    label='Data'
+                    labelBgColor={labelBgColor}
+                    buttonBgColor={inputBgColor}
                 />
                 {
                     stockIntegrate && (
                         <FormAmountField
                             setAmount={setAmount}
-                            text='Quantidade:'
-                            bgColor={colors.outflows.min}
-                            textColor={colors.outflows.max}
+                            label='Quantidade'
+                            labelBgColor={labelBgColor}
+                            inputBgColor={inputBgColor}
                         />
                     )
                 }
                 <FormValueField
                     setValue={setValue}
-                    bgColor={colors.outflows.min}
-                    textColor={colors.outflows.max}
                     label={checkResaleButtonText()}
+                    labelBgColor={labelBgColor}
+                    inputBgColor={inputBgColor}
                     valueChoice={stockIntegrate ? valueChoice : undefined}
                     setValueChoice={setValueChoice}
-                    valueChoiceButtonColors={[colors.outflows.max, colors.outflows.mid]}
+                    valueChoiceButtonColors={[labelBgColor, inputBgColor]}
                 />
                 {
                     checkAllInputs() && (

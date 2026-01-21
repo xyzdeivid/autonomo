@@ -7,17 +7,19 @@ interface BudgetCreationFormProps {
     name: string
     setName: React.Dispatch<React.SetStateAction<string>>
     submitBudget: () => Promise<void>
+    labelBgColor: string
+    inputBgColor: string
 }
 
-export function BudgetCreationForm({ name, setName, submitBudget }: BudgetCreationFormProps) {
+export function BudgetCreationForm({ name, setName, submitBudget, labelBgColor, inputBgColor }: BudgetCreationFormProps) {
 
     return (
         <>
             <FormNameField
                 setName={setName}
-                textColor={colors.items.max}
-                bgColor={colors.items.min}
-                label='Nome do Serviço:'
+                label='Nome do Serviço'
+                labelBgColor={labelBgColor}
+                inputBgColor={inputBgColor}
             />
             <Text style={{ marginBottom: 20, color: colors.items.max }}>
                 O valor será definido ao registrar entrada.

@@ -2,15 +2,13 @@ import { StyleSheet, Text } from 'react-native'
 
 interface LabelProps {
     text: string
-    color?: string
 }
 
-export function Label({ text, color }: LabelProps) {
+export function Label({ text }: LabelProps) {
 
     return (
         <Text style={{
-            ...styles.label,
-            color: color ? color : '#000'
+            ...styles.label
         }}>
             {text}
         </Text>
@@ -20,7 +18,9 @@ export function Label({ text, color }: LabelProps) {
 
 const styles = StyleSheet.create({
     label: {
-        fontWeight: 'bold',
-        fontSize: 16
+        fontSize: 16,
+        paddingHorizontal: 8,
+        color: 'white',
+        fontWeight: '500'
     }
 })

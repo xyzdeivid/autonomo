@@ -8,33 +8,36 @@ interface ValueOptionProps {
 
 export default function ValueOption({ choice, setChoice, buttonColors }: ValueOptionProps) {
 
-    const checkChoice = (button: string) => {
+    const checkBackgroundChoice = (button: string) => {
         return choice === button
             ? buttonColors[0]
             : buttonColors[1]
+    }
+
+    const checkColorChoice = (button: string) => {
+        return choice === button
+            ? 'white'
+            : buttonColors[0]
     }
 
     return (
         <View style={styles.buttonsContainer}>
             <Pressable style={{
                 ...styles.button,
-                borderTopLeftRadius: 4,
-                borderBottomLeftRadius: 4,
-                backgroundColor: checkChoice('total')
+                backgroundColor: checkBackgroundChoice('total')
             }}
                 onPress={() => setChoice('total')}
             >
-                <Text style={styles.textButton}>Total</Text>
+                <Text style={{ color: checkColorChoice('total') }}>Total</Text>
             </Pressable>
             <Pressable style={{
                 ...styles.button,
-                borderTopRightRadius: 4,
-                borderBottomRightRadius: 4,
-                backgroundColor: checkChoice('un')
+                borderBottomRightRadius: 6,
+                backgroundColor: checkBackgroundChoice('un')
             }}
                 onPress={() => setChoice('un')}
             >
-                <Text style={styles.textButton}>Un</Text>
+                <Text style={{ color: checkColorChoice('un') }}>Un</Text>
             </Pressable>
         </View>
     )
