@@ -7,29 +7,29 @@ interface ProductCategoryButtonProps {
     categoryEx: string
 }
 
-export function ProductCategoryButton({ onPress, categoryName, categoryEx }: ProductCategoryButtonProps) {
+export function ProductCategoryButton({
+    onPress,
+    categoryName,
+    categoryEx,
+}: ProductCategoryButtonProps) {
 
     return (
         <Pressable
-            style={{
-                ...styles.button,
-                backgroundColor: colors.items.min
-            }}
             onPress={onPress}
+            style={({ pressed }) => [
+                styles.button,
+                {
+                    backgroundColor: pressed
+                        ? 'white'
+                        : `${colors.items.min}`,
+                },
+            ]}
         >
-            <Text
-                style={{
-                    ...styles.infoText,
-                    color: colors.items.max
-                }}
-            >
+            <Text style={[styles.infoText, { color: colors.items.max }]}>
                 {categoryName}
             </Text>
-            <Text
-                style={styles.exampleText}
-            >
-                {categoryEx}
-            </Text>
+
+            <Text style={styles.exampleText}>{categoryEx}</Text>
         </Pressable>
     )
 
@@ -38,9 +38,9 @@ export function ProductCategoryButton({ onPress, categoryName, categoryEx }: Pro
 const styles = StyleSheet.create({
 
     button: {
-        padding: 12,
-        borderRadius: 6,
-        marginBottom: 24
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#FFF'
     },
 
     infoText: {

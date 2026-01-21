@@ -1,33 +1,43 @@
-import { useEffect, useRef } from 'react'
-import { Animated, Dimensions, StyleSheet, View } from 'react-native'
+import React, { useEffect, useRef } from 'react'
+import { StyleSheet, View, Animated, Easing } from 'react-native'
 
 interface FormContainerProps {
     children: React.ReactNode
 }
 
-const { height } = Dimensions.get('window')
-
 export default function FormContainer({ children }: FormContainerProps) {
 
-    const slideAnim = useRef(new Animated.Value(height)).current
+    const scale = useRef(new Animated.Value(0.6)).current
+    const opacity = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
         Animated.parallel([
-            Animated.timing(slideAnim, {
-                toValue: 0,
-                duration: 400,
+            Animated.timing(scale, {
+                toValue: 1,
+                duration: 100,
+                easing: Easing.out(Easing.cubic),
                 useNativeDriver: true,
             })
+            ,
+            Animated.timing(opacity, {
+                toValue: 1,
+                duration: 150,
+                useNativeDriver: true,
+            }),
         ]).start()
-    }, [slideAnim])
+    }, [opacity, scale])
 
     return (
         <Animated.View
-            style={[styles.container, { transform: [{ translateX: slideAnim }] }]}
+            style={[
+                styles.container,
+                {
+                    opacity,
+                    transform: [{ scale }],
+                },
+            ]}
         >
-            <View>
-                {children}
-            </View>
+            <View>{children}</View>
         </Animated.View>
     )
 }
@@ -38,7 +48,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         position: 'absolute',
-        display: 'flex',
-        padding: 16
-    }
+        padding: 16,
+        zIndex: 2,
+    },
 })

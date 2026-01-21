@@ -21,14 +21,14 @@ export function FormFieldContainer({ children, borderBottomColor }: FieldContain
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 24,
+        marginBottom: 16,
         width: '100%'
     },
 
     inputRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 12
+        marginBottom: 16
     },
 
     hr: {

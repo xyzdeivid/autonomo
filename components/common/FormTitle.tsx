@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
 
     container: {
         width: '100%',
-        marginBottom: 20,
+        marginBottom: 24,
         paddingBottom: 12, 
-        borderBottomWidth: StyleSheet.hairlineWidth
+        borderBottomWidth: 2
     },
 
     topRow: {

@@ -10,7 +10,6 @@ import { ListItemCardProperty } from '../common/ListItemCardProperty'
 import { DeleteListItemButton } from '../common/DeleteListItemButton'
 import { colors } from '@/constants/appColors'
 import { ListItemCardContainer } from '../common/ListItemCardContainer'
-import { ListItemCardHeader } from '../common/ListItemCardHeader'
 import { ListItemCardBody } from '../common/ListItemCardBody'
 import { parseISO } from 'date-fns'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
@@ -121,11 +120,6 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                 bgColor={colors.entries.min}
                 setShowCard={setFormOff}
             >
-                <ListItemCardHeader
-                    text='Detalhes de Receita'
-                    bgColor={colors.entries.max}
-                    onCloseCardButton={() => setFormOff(false)}
-                />
                 <ListItemCardBody>
                     {scheduling.customer
                         ? <ListItemCardProperty

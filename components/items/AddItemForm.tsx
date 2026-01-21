@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Item, Outflow } from '@/types/index'
 import FormTitle from '../common/FormTitle'
 import LoadingScreen from '../common/LoadingScreen'
-import ItemsCategoriesForm from './ItemsCategoriesForm'
 import ServiceCreationForm from './ServiceCreationForm'
 import FormContainer from '../common/FormContainer'
 import useAddItem from '@/hooks/useAddItem'
@@ -18,15 +17,16 @@ import { Alert } from 'react-native'
 import { getErrorMessage } from '@/utils/common'
 
 interface AddServiceFormProps {
-    setAddServiceForm: React.Dispatch<React.SetStateAction<boolean>>
+    categorySelected: string
+    setShowItemCategoryCard: React.Dispatch<React.SetStateAction<boolean>>
+    setShowAddItemForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProps) {
+export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShowAddItemForm }: AddServiceFormProps) {
 
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
     const [amount, setAmount] = useState(0)
-    const [category, setCategory] = useState('')
     const [valueOutflowChoice, setValueOutflowChoice] = useState('total')
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [resale, setResale] = useState(false)
@@ -57,7 +57,7 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
         }
 
         // create item to submit
-        const item: Item = createItem(category, name, value, amount, resale, stock)
+        const item: Item = createItem(categorySelected, name, value, amount, resale, stock)
 
         // add data to database and context
         const result = await addItem(item, resaleOutflow)
@@ -68,7 +68,8 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
 
         } else {
 
-            setAddServiceForm(false)
+            setShowItemCategoryCard(false)
+            setShowAddItemForm(false)
 
         }
 
@@ -80,63 +81,50 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
         <>
             {loadingScreen && <LoadingScreen />}
             <FormContainer>
+                <FormTitle
+                    text='Novo Item'
+                    onCloseFormButtonPress={() => {
+                        setShowItemCategoryCard(false)
+                        setShowAddItemForm(false)
+                    }}
+                    textColor={colors.items.max}
+                />
                 {
-                    step === 0 && (
-                        <>
-                            <FormTitle
-                                text='Novo Produto ou Serviço'
-                                onCloseFormButtonPress={() => setAddServiceForm(false)}
-                                textColor={colors.items.max}
-                            />
-                            <ItemsCategoriesForm
-                                setCategory={setCategory}
-                                setStep={setStep}
-                            />
-                        </>
-                    )
-                }
-                {
-                    step === 1 && category === 'service' && (
+                    step === 0 && categorySelected === 'service' && (
                         <ServiceCreationForm
                             name={name}
                             value={value}
                             setName={setName}
                             setValue={setValue}
-                            setStep={setStep}
                             submitService={submitNewItem}
-                            setForm={setAddServiceForm}
 
                         />
                     )
                 }
                 {
-                    step === 1 && category === 'budget' && (
+                    step === 0 && categorySelected === 'budget' && (
                         <BudgetCreationForm
                             name={name}
                             setName={setName}
-                            setStep={setStep}
                             submitBudget={submitNewItem}
-                            setForm={setAddServiceForm}
                         />
                     )
                 }
                 {
-                    step === 1 && category === 'product' && (
+                    step === 0 && categorySelected === 'product' && (
                         <ResaleOrStockButtons
                             setStep={setStep}
                             setResale={setResale}
                             setStock={setStock}
                             setAmount={setAmount}
-                            setForm={setAddServiceForm}
+                            setForm={setShowAddItemForm}
                         />
                     )
                 }
                 {
-                    step === 2 && resale && (
+                    step === 1 && resale && (
                         <ResaleCreationForm
                             submitResale={submitNewItem}
-                            setResale={setResale}
-                            setStep={setStep}
                             name={name}
                             amount={amount}
                             purchaseValue={purchaseValue}
@@ -148,36 +136,31 @@ export default function AddServiceForm({ setAddServiceForm }: AddServiceFormProp
                             setValueOutflowChoice={setValueOutflowChoice}
                             setName={setName}
                             setValue={setValue}
-                            setForm={setAddServiceForm}
                         />
                     )
                 }
                 {
-                    step === 2 && stock && (
+                    step === 1 && stock && (
                         <StockCreationForm
                             name={name}
                             amount={amount}
                             value={value}
-                            setStep={setStep}
                             setStock={setStock}
                             setAmount={setAmount}
                             setValue={setValue}
                             setName={setName}
                             submitStock={submitNewItem}
-                            setForm={setAddServiceForm}
                         />
                     )
                 }
                 {
-                    step === 2 && !resale && !stock && (
+                    step === 1 && !resale && !stock && (
                         <NoStockCreationForm
                             name={name}
                             value={value}
-                            setStep={setStep}
                             setName={setName}
                             setValue={setValue}
                             submitNoStock={submitNewItem}
-                            setForm={setAddServiceForm}
                         />
                     )
                 }

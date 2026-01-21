@@ -10,25 +10,27 @@ import { DocsContext } from '@/context/DocsContext'
 
 // common components
 import AddItemButton from '@/components/common/AddItemButton'
-import AddServiceForm from '@/components/items/AddItemForm'
+import { AddItemForm } from '@/components/items/AddItemForm'
 import Container from '@/components/common/Container'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // service components
-import AboutServiceCard from '@/components/items/AboutItemCard'
+import AboutItemCard from '@/components/items/AboutItemCard'
 import ServicesContent from '@/components/items/ServicesContent'
 import useDeleteItem from '@/hooks/useDeleteItem'
 import { Item } from '@/types'
 import { colors } from '@/constants/appColors'
 import { getErrorMessage } from '@/utils/common'
+import { ItemCategoryCard } from '@/components/items/ItemCategoryCard'
 
 export default function Services() {
 
     const appDocs = useContext(DocsContext)
     const [items] = appDocs.items
-    const [addServiceForm, setAddServiceForm] = useState(false)
-    const [aboutServiceCard, setAboutServiceCard] = useState(false)
+    const [showItemCategoryCard, setShowItemCategoryCard] = useState(false)
+    const [showaddItemForm, setShowAddItemForm] = useState(false)
+    const [showAboutItemCard, setShowAboutItemCard] = useState(false)
     const [selectedItemForDeletion, setSelectedItemForDeletion] = useState('')
 
     // Malabarismo por que atualmente o id é o nome :)
@@ -38,6 +40,8 @@ export default function Services() {
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
 
+    const [newItemCategory, setNewItemCategory] = useState('')
+
     const deleteItem = useDeleteItem().deleteItem
 
     useEffect(() => {
@@ -46,14 +50,14 @@ export default function Services() {
 
     useEffect(() => {
         if (currentPage !== 'services') {
-            setAddServiceForm(false)
-            setAboutServiceCard(false)
+            setShowAddItemForm(false)
+            setShowAboutItemCard(false)
         }
     }, [currentPage])
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
-            setAddServiceForm(false)
+            setShowAddItemForm(false)
             return null
         })
     }, [])
@@ -68,7 +72,7 @@ export default function Services() {
             Alert.alert('Erro', getErrorMessage(result.error))
         }
 
-        setAboutServiceCard(false)
+        setShowAboutItemCard(false)
         setLoadingScreen(false)
 
     }
@@ -84,7 +88,7 @@ export default function Services() {
                             setCategory={setCategory}
                             services={getServicesByCategory(items, category)}
                             setSelectedItemForDeletion={setSelectedItemForDeletion}
-                            setDeleteServiceForm={setAboutServiceCard}
+                            setDeleteServiceForm={setShowAboutItemCard}
                         />
                         : <AnyInfoWarning
                             text='listamos todos os seus produtos ou serviços.'
@@ -92,24 +96,33 @@ export default function Services() {
                             textBgColor={colors.items.min}
                         />
                 }
-
                 <AddItemButton
                     mainColor={colors.items.max}
                     bgColor={colors.items.min}
-                    onPress={() => setAddServiceForm(true)}
+                    onPress={() => setShowItemCategoryCard(true)}
                 />
                 {
-                    addServiceForm
-                    && <AddServiceForm
-                        setAddServiceForm={setAddServiceForm}
+                    showItemCategoryCard
+                    && <ItemCategoryCard
+                        setShowItemCategoryCard={setShowItemCategoryCard}
+                        setCategory={setNewItemCategory}
+                        setShowAddItemForm={setShowAddItemForm}
                     />
                 }
                 {
-                    aboutServiceCard && (
-                        <AboutServiceCard
+                    showaddItemForm
+                    && <AddItemForm
+                        categorySelected={newItemCategory}
+                        setShowItemCategoryCard={setShowItemCategoryCard}
+                        setShowAddItemForm={setShowAddItemForm}
+                    />
+                }
+                {
+                    showAboutItemCard && (
+                        <AboutItemCard
                             item={itemForDeletion}
                             deleteFunction={deleteService}
-                            setFormOff={setAboutServiceCard}
+                            setFormOff={setShowAboutItemCard}
                         />
                     )
                 }

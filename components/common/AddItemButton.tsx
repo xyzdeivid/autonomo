@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        paddingVertical: 12,
-        paddingHorizontal: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 18,
         borderRadius: 5,
         marginEnd: 16,
         borderWidth: StyleSheet.hairlineWidth

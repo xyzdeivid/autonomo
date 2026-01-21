@@ -11,7 +11,6 @@ import { DeleteListItemButton } from '../common/DeleteListItemButton'
 import useEditOutflowDate from '@/hooks/useEditOutflowDate'
 import { colors } from '@/constants/appColors'
 import { ListItemCardContainer } from '../common/ListItemCardContainer'
-import { ListItemCardHeader } from '../common/ListItemCardHeader'
 import { ListItemCardBody } from '../common/ListItemCardBody'
 import { EditNameCard } from '../common/EditNameCard'
 import { parseISO } from 'date-fns'
@@ -123,11 +122,6 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                 bgColor={colors.outflows.min}
                 setShowCard={setFormOff}
             >
-                <ListItemCardHeader
-                    text='Detalhes de Despesa'
-                    onCloseCardButton={() => setFormOff(false)}
-                    bgColor={colors.outflows.max}
-                />
                 <ListItemCardBody>
                     {
                         outflow.amount && (

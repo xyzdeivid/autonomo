@@ -1,34 +1,18 @@
 import { Text } from 'react-native'
 import { FormNameField } from '../common/FormNameField'
-import CreateItemFormHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
 import { colors } from '@/constants/appColors'
 
 interface BudgetCreationFormProps {
     name: string
     setName: React.Dispatch<React.SetStateAction<string>>
-    setStep: React.Dispatch<React.SetStateAction<number>>
     submitBudget: () => Promise<void>
-    setForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export function BudgetCreationForm({ name, setName, setStep, submitBudget, setForm }: BudgetCreationFormProps) {
-
-    const onComeBackButtonPress = () => {
-
-        // Zerando estados ao sair do formulário
-        setName('')
-        setStep(0)
-
-    }
+export function BudgetCreationForm({ name, setName, submitBudget }: BudgetCreationFormProps) {
 
     return (
         <>
-            <CreateItemFormHeader
-                title='Novo Serviço'
-                onComeBackButtonPress={onComeBackButtonPress}
-                onCloseFormButtonPress={() => setForm(false)}
-            />
             <FormNameField
                 setName={setName}
                 textColor={colors.items.max}

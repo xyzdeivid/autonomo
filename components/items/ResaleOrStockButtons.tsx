@@ -1,7 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
 import ProductSubCategoryButton from './ProductSubCategoryButton'
-import { colors } from '@/constants/appColors'
-import { CloseFormButton } from '../common/CloseFormButton'
 
 interface ResaleOrStockButtonsProps {
     setStep: React.Dispatch<React.SetStateAction<number>>
@@ -20,15 +17,6 @@ export default function ResaleOrStockButtons({
 
     return (
         <>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Pressable
-                    style={styles.comeBackButton}
-                    onPress={() => setStep(0)}
-                >
-                    <Text style={{ color: 'white' }}>Voltar</Text>
-                </Pressable>
-                <CloseFormButton color={colors.items.mid} onPress={() => setForm(false)} />
-            </View>
             {/* botão de revenda */}
             <ProductSubCategoryButton
                 subCategoryName='Revenda'
@@ -53,15 +41,3 @@ export default function ResaleOrStockButtons({
     )
 
 }
-
-const styles = StyleSheet.create({
-
-    comeBackButton: {
-        backgroundColor: colors.items.max,
-        alignSelf: 'flex-start',
-        marginBottom: 20,
-        padding: 6,
-        borderRadius: 4
-    }
-
-})

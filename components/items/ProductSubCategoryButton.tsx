@@ -14,9 +14,16 @@ export default function ProductSubCategoryButton({ subCategoryName, subCategoryT
     return (
         <View style={{ marginBottom: 20 }}>
             <Pressable
-                style={styles.container}
+                style={({ pressed }) => [
+                    styles.container,
+                    {
+                        backgroundColor: pressed
+                            ? 'white'
+                            : `${colors.items.min}`,
+                    },
+                ]}
                 onPress={() => {
-                    setStep(2)
+                    setStep(1)
                     if (setSubCategory) setSubCategory(true)
                 }}
             >
@@ -34,8 +41,6 @@ export default function ProductSubCategoryButton({ subCategoryName, subCategoryT
 const styles = StyleSheet.create({
 
     container: {
-        display: 'flex',
-        backgroundColor: colors.items.min,
         padding: 12,
         borderRadius: 6
     },

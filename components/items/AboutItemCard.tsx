@@ -6,14 +6,12 @@ import LoadingScreen from '../common/LoadingScreen'
 import useEditItemName from '@/hooks/useEditItemName'
 import useEditItemValue from '@/hooks/useEditItemValue'
 import useEditItemStock from '@/hooks/useEditItemStock'
-import { getAboutItemCardTitle } from '@/utils/getAboutItemCardTitle'
 import ReplenishResaleStock from './ReplenishResaleStock'
 import { createNewOutflow } from '@/utils/createNewOutflow'
 import useAddOutflow from '@/hooks/useAddOutflow'
 import { DeleteListItemButton } from '../common/DeleteListItemButton'
 import { colors } from '@/constants/appColors'
 import { ListItemCardContainer } from '../common/ListItemCardContainer'
-import { ListItemCardHeader } from '../common/ListItemCardHeader'
 import { ListItemCardBody } from '../common/ListItemCardBody'
 import { StockWarningForResale } from './StockWarningForResale'
 import { ListItemCardProperty } from '../common/ListItemCardProperty'
@@ -146,11 +144,6 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                 bgColor={colors.items.min}
                 setShowCard={setFormOff}
             >
-                <ListItemCardHeader
-                    text={`Detalhes do ${getAboutItemCardTitle(item.category)}`}
-                    onCloseCardButton={() => setFormOff(false)}
-                    bgColor={colors.items.max}
-                />
                 <ListItemCardBody>
                     <ListItemCardProperty
                         label='Nome'

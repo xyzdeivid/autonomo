@@ -1,6 +1,5 @@
 import { FormNameField } from '../common/FormNameField'
 import { FormValueField } from '../common/FormValueField'
-import CreateItemFormHeader from './CreateItemFormHeader'
 import SubmitItemButton from '../common/SaveButton'
 import { colors } from '@/constants/appColors'
 
@@ -9,29 +8,13 @@ interface ServiceCreationFormProps {
     value: number
     setName: React.Dispatch<React.SetStateAction<string>>
     setValue: React.Dispatch<React.SetStateAction<number>>
-    setStep: React.Dispatch<React.SetStateAction<number>>
     submitService: () => Promise<void>
-    setForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ServiceCreationForm({ name, value, setName, setValue, setStep, submitService, setForm }: ServiceCreationFormProps) {
-
-    const onComeBackButtonPress = () => {
-
-        // Zerando estados ao sair do formulário
-        setName('')
-        setValue(0)
-        setStep(0)
-
-    }
+export default function ServiceCreationForm({ name, value, setName, setValue, submitService }: ServiceCreationFormProps) {
 
     return (
         <>
-            <CreateItemFormHeader
-                title='Novo Serviço'
-                onComeBackButtonPress={onComeBackButtonPress}
-                onCloseFormButtonPress={() => setForm(false)}
-            />
             <FormNameField
                 setName={setName}
                 textColor={colors.items.max}
