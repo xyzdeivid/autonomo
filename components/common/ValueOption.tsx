@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useRef } from 'react'
+import {
+    Animated,
+    Pressable,
+    StyleSheet,
+    Text,
+    View
+} from 'react-native'
 
 interface ValueOptionProps {
     choice: string
@@ -6,58 +13,85 @@ interface ValueOptionProps {
     buttonColors: [string, string]
 }
 
-export default function ValueOption({ choice, setChoice, buttonColors }: ValueOptionProps) {
+export default function ValueOption({
+    choice,
+    setChoice,
+    buttonColors
+}: ValueOptionProps) {
 
-    const checkBackgroundChoice = (button: string) => {
-        return choice === button
-            ? buttonColors[0]
-            : buttonColors[1]
-    }
+    const translateX = useRef(new Animated.Value(0)).current
 
-    const checkColorChoice = (button: string) => {
-        return choice === button
-            ? 'white'
-            : buttonColors[0]
-    }
+    useEffect(() => {
+        Animated.spring(translateX, {
+            toValue: choice === 'total' ? 0 : 1,
+            useNativeDriver: true
+        }).start()
+    }, [choice, translateX])
+
+    const sliderTranslate = translateX.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 50] // largura do botão
+    })
 
     return (
-        <View style={styles.buttonsContainer}>
-            <Pressable style={{
-                ...styles.button,
-                backgroundColor: checkBackgroundChoice('total')
-            }}
+        <View style={[styles.wrapper, { backgroundColor: buttonColors[1] }]}>
+            {/* Slider animado */}
+            <Animated.View
+                style={[
+                    styles.slider,
+                    {
+                        backgroundColor: buttonColors[0],
+                        transform: [{ translateX: sliderTranslate }]
+                    }
+                ]}
+            />
+
+            <Pressable
+                style={styles.button}
                 onPress={() => setChoice('total')}
             >
-                <Text style={{ color: checkColorChoice('total') }}>Total</Text>
+                <Text style={
+                    { color: choice === 'total' ? 'white' : buttonColors[0] }
+                }>
+                    Total
+                </Text>
             </Pressable>
-            <Pressable style={{
-                ...styles.button,
-                borderBottomRightRadius: 6,
-                backgroundColor: checkBackgroundChoice('un')
-            }}
+
+            <Pressable
+                style={styles.button}
                 onPress={() => setChoice('un')}
             >
-                <Text style={{ color: checkColorChoice('un') }}>Un</Text>
+                <Text style={
+                    { color: choice === 'un' ? 'white' : buttonColors[0] }
+                }>
+                    Un
+                </Text>
             </Pressable>
         </View>
     )
-
 }
+const BUTTON_WIDTH = 50
 
 const styles = StyleSheet.create({
+    wrapper: {
+        flexDirection: 'row',
+        position: 'relative',
+        borderBottomLeftRadius: 6,
+        borderBottomRightRadius: 6,
+        overflow: 'hidden'
+    },
 
-    buttonsContainer: {
-        display: 'flex',
-        flexDirection: 'row'
+    slider: {
+        position: 'absolute',
+        width: BUTTON_WIDTH,
+        height: '100%',
     },
 
     button: {
-        paddingHorizontal: 8,
-        paddingVertical: 4
-    },
-
-    textButton: {
-        color: 'white'
+        width: BUTTON_WIDTH,
+        paddingVertical: 6,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 
 })

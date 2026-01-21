@@ -31,7 +31,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [costumerName, setCustomerName] = useState('')
 
-    const labelBgColor = colors.entries.max
+    const labelBgColor = colors.entries.midMax
     const inputBgColor = colors.entries.min
 
     const addEntry = useAddEntry().addEntry

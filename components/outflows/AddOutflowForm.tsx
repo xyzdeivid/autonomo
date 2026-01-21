@@ -34,7 +34,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
     const [product, setProduct] = useState(products[0])
     const [valueChoice, setValueChoice] = useState('total')
 
-    const labelBgColor = colors.outflows.max
+    const labelBgColor = colors.outflows.midMax
     const inputBgColor = colors.outflows.min
 
     const addOutflow = useAddOutflow().addOutflow

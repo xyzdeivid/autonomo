@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 16,
         paddingHorizontal: 8,
-        color: 'white',
-        fontWeight: '500'
+        color: 'white'
     }
 })

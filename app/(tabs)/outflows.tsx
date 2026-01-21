@@ -89,8 +89,9 @@ export default function Expenses() {
                         />
                 }
                 <AddItemButton
-                    mainColor={colors.outflows.max}
+                    iconColor={colors.outflows.max}
                     bgColor={colors.outflows.min}
+                    borderColor={colors.outflows.midMin}
                     onPress={() => setAddExpenseForm(true)}
                 />
                 {

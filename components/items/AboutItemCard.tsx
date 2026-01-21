@@ -141,7 +141,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
         <>
             {loadingScreen && <LoadingScreen />}
             <ListItemCardContainer
-                bgColor={colors.items.min}
+                bgColor={colors.items.midMin}
                 setShowCard={setFormOff}
             >
                 <ListItemCardBody>

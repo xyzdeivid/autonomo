@@ -1,6 +1,6 @@
 import { Item } from '@/types/index'
 import { Picker } from '@react-native-picker/picker'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { FormFieldContainer } from '../common/FormFieldContainer'
 import { colors } from '@/constants/appColors'
 
@@ -15,7 +15,7 @@ export default function SelectServiceInput({ service, setService, services, amou
 
     return (
         <FormFieldContainer>
-                <Text>Produto ou Serviço</Text>
+            <View style={{ borderRadius: 6, overflow: 'hidden' }}>
                 <Picker
                     style={styles.inputContainer}
                     selectedValue={service}
@@ -28,20 +28,22 @@ export default function SelectServiceInput({ service, setService, services, amou
                         )
                     })}
                 </Picker>
-                {
-                    amount ? (
-                        <Text style={{ color: colors.entries.max, marginTop: 4 }}>Estoque: {amount}</Text>
-                    ) : null
-                }
+            </View>
+            {
+                amount ? (
+                    <Text style={{ color: colors.entries.max, marginTop: 4 }}>Estoque: {amount}</Text>
+                ) : null
+            }
         </FormFieldContainer>
     )
 
 }
 
 const styles = StyleSheet.create({
+
     inputContainer: {
-        backgroundColor: colors.entries.max,
-        borderRadius: 6,
+        backgroundColor: colors.entries.midMax,
         color: 'white'
     }
+
 })

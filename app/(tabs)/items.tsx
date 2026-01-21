@@ -97,8 +97,9 @@ export default function Services() {
                         />
                 }
                 <AddItemButton
-                    mainColor={colors.items.max}
+                    iconColor={colors.items.max}
                     bgColor={colors.items.min}
+                    borderColor={colors.items.midMin}
                     onPress={() => setShowItemCategoryCard(true)}
                 />
                 {

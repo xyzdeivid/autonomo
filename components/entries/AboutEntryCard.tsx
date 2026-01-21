@@ -117,7 +117,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         <>
             {loadingPage && <LoadingScreen />}
             <ListItemCardContainer
-                bgColor={colors.entries.min}
+                bgColor={colors.entries.midMin}
                 setShowCard={setFormOff}
             >
                 <ListItemCardBody>

@@ -52,7 +52,7 @@ export function ItemCategoryCard({ setShowItemCategoryCard, setCategory, setShow
             <Animated.View
                 style={[
                     styles.container,
-                    { backgroundColor: colors.items.min, opacity: fadeAnim }
+                    { backgroundColor: colors.items.midMin, opacity: fadeAnim }
                 ]}
             >
                 <TouchableWithoutFeedback onPress={() => closeForm(false)}>

@@ -1,6 +1,7 @@
 import { colors } from '@/constants/appColors'
 import { Item } from '@/types'
 import { Picker } from '@react-native-picker/picker'
+import { View } from 'react-native'
 
 interface ProductOptionsInputProps {
     product: Item
@@ -8,26 +9,37 @@ interface ProductOptionsInputProps {
     products: Item[]
 }
 
-export default function ProductOptionsInput({ product, setProduct, products }: ProductOptionsInputProps) {
+export default function ProductOptionsInput({
+    product,
+    setProduct,
+    products
+}: ProductOptionsInputProps) {
 
     return (
-        <Picker
-            selectedValue={product}
-            onValueChange={itemValue => setProduct(itemValue)}
-            dropdownIconColor='white'
+        <View
             style={{
-                backgroundColor: colors.outflows.max,
-                marginBottom: 20,
-                color: 'white'
+                borderRadius: 6,
+                overflow: 'hidden',
+                backgroundColor: colors.outflows.midMax,
+                marginBottom: 20
             }}
         >
-            {products.map(product => (
-                <Picker.Item
-                    key={product._id}
-                    label={product._id}
-                    value={product}
-                />
-            ))}
-        </Picker>
+            <Picker
+                selectedValue={product}
+                onValueChange={itemValue => setProduct(itemValue)}
+                dropdownIconColor="white"
+                style={{
+                    color: 'white'
+                }}
+            >
+                {products.map(product => (
+                    <Picker.Item
+                        key={product._id}
+                        label={product._id}
+                        value={product}
+                    />
+                ))}
+            </Picker>
+        </View>
     )
 }

@@ -119,7 +119,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
         <>
             {loadingScreen && <LoadingScreen />}
             <ListItemCardContainer
-                bgColor={colors.outflows.min}
+                bgColor={colors.outflows.midMin}
                 setShowCard={setFormOff}
             >
                 <ListItemCardBody>

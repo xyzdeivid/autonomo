@@ -12,21 +12,21 @@ interface FormNameFieldProps {
 export function FormNameField({ setName, label, labelBgColor, inputBgColor }: FormNameFieldProps) {
     return (
         <FormFieldContainer>
-            <View
-                style={{
-                    ...styles.labelContainer,
-                    backgroundColor: labelBgColor
-                }}
-            >
-                <Label text={label} />
-            </View>
-            <TextInput
-                style={{
-                    ...styles.input,
-                    backgroundColor: inputBgColor
-                }}
-                onChangeText={text => setName(text.trim())}
-            />
+                <View
+                    style={{
+                        ...styles.labelContainer,
+                        backgroundColor: labelBgColor
+                    }}
+                >
+                    <Label text={label} />
+                </View>
+                <TextInput
+                    style={{
+                        ...styles.input,
+                        backgroundColor: inputBgColor
+                    }}
+                    onChangeText={text => setName(text.trim())}
+                />
         </FormFieldContainer>
     )
 }
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
     labelContainer: {
         fontSize: 16,
-        paddingVertical: 6,
+        paddingVertical: 6
     },
 
     input: {

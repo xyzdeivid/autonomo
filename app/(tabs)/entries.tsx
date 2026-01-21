@@ -96,8 +96,9 @@ export default function Schedulings() {
                         />
                 }
                 <AddItemButton
-                    mainColor={colors.entries.max}
+                    iconColor={colors.entries.max}
                     bgColor={colors.entries.min}
+                    borderColor={colors.entries.midMin}
                     onPress={() => checkServices()}
                 />
                 {

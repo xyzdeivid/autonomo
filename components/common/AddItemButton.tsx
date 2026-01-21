@@ -8,14 +8,16 @@ import { useRef } from 'react'
 import { FontAwesome6 } from '@expo/vector-icons'
 
 interface AddItemButtonProps {
-    mainColor: string
+    iconColor: string
     bgColor: string
+    borderColor: string
     onPress: () => void
 }
 
 export default function AddItemButton({
-    mainColor,
+    iconColor,
     bgColor,
+    borderColor,
     onPress
 }: AddItemButtonProps) {
 
@@ -43,7 +45,7 @@ export default function AddItemButton({
                     style={[
                         styles.button,
                         {
-                            borderColor: mainColor,
+                            borderColor: borderColor,
                             backgroundColor: bgColor
                         }
                     ]}
@@ -53,7 +55,7 @@ export default function AddItemButton({
                 >
                     <FontAwesome6 
                     name='plus' 
-                    color={mainColor} 
+                    color={iconColor} 
                     size={24} 
                     />
                 </Pressable>
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     button: {
         paddingVertical: 10,
         paddingHorizontal: 18,
-        borderRadius: 5,
+        borderRadius: 6,
         marginEnd: 16,
         borderWidth: StyleSheet.hairlineWidth
     }
