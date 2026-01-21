@@ -54,6 +54,7 @@ interface TDocsContext {
     currentYear: CurrentYearState
     selectedMonth: CurrentMonthState
     currentPage: CurrentPageState
+    docsLoaded: boolean
 }
 
 const DEFAULT_CONTEXT: TDocsContext = {
@@ -62,7 +63,8 @@ const DEFAULT_CONTEXT: TDocsContext = {
     entries: [[DEFAULT_ENTRY], () => { }],
     currentYear: ['', () => { }],
     selectedMonth: [0, () => { }],
-    currentPage: ['', () => { }]
+    currentPage: ['', () => { }],
+    docsLoaded: false
 }
 
 export const DocsContext = createContext<TDocsContext>(DEFAULT_CONTEXT)
@@ -80,9 +82,10 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [currentYear, setCurrentYear] = useState<string>('')
     const [selectedMonth, setSelectedMonth] = useState(0)
     const [currentPage, setCurrentPage] = useState('index')
+    const [docsLoaded, setDocsLoaded] = useState(false)
 
     const getCurrentYear = () => {
-        
+
         const currentYear = String(new Date().getFullYear())
         const currentMonth = new Date().getMonth() + 1
 
@@ -98,7 +101,8 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         entries: [entries, setEntries],
         currentYear: [currentYear, setCurrentYear],
         selectedMonth: [selectedMonth, setSelectedMonth],
-        currentPage: [currentPage, setCurrentPage]
+        currentPage: [currentPage, setCurrentPage],
+        docsLoaded: docsLoaded
     }
 
     const getAndSetItems = async () => {
@@ -112,6 +116,7 @@ export default function DocsProvider({ children }: DocsProviderProps) {
             setEntries(entries)
             setItems(items)
             setOutflows(outflows)
+            setDocsLoaded(true)
 
         } catch {
 
@@ -126,12 +131,12 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         async function startDb() {
 
             await initDatabase()
-            
+
             // Migrando dados de db antigos se necessário
             await migrateData()
 
             await getAndSetItems()
-            
+
             getCurrentYear()
 
         }

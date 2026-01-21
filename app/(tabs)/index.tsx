@@ -1,5 +1,5 @@
 // native functions
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 
 // custom functions
 import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/utils/common'
@@ -18,24 +18,18 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 // info components
 import Revenue from '@/components/info/Revenue'
 
-// scheduling components
-import AddSchedulingForm from '@/components/entries/AddEntryForm'
-
-// expense components
-import AddExpenseForm from '@/components/outflows/AddOutflowForm'
 import { colors } from '@/constants/appColors'
+import { Text, View } from 'react-native'
 
 export default function Info() {
-
-    const [addExpenseForm, setAddExpenseForm] = useState(false)
-    const [addSchedulingForm, setAddSchedulingForm] = useState(false)
 
     const appDocs = useContext(DocsContext)
     const [schedulings] = appDocs.entries
     const [expenses] = appDocs.outflows
     const [currentYear, setCurrentYear] = appDocs.currentYear
-    const [currentPage] = appDocs.currentPage
     const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
+
+    const docsLoaded = appDocs.docsLoaded
 
     const filteredEntries = filterSchedulings(schedulings, selectedMonth, currentYear)
     const filteredExpenses = filterExpenses(expenses, selectedMonth, currentYear)
@@ -60,17 +54,19 @@ export default function Info() {
             setSelectedMonth(availableMonths[lastMonth][1])
         }
 
-    }, [schedulings, expenses])
-
-    useEffect(() => {
-        if (currentPage !== 'index') {
-            setAddSchedulingForm(false)
-            setAddExpenseForm(false)
-        }
-    }, [currentPage])
+    }, [schedulings, expenses, 
+        availableMonths, filteredExpenses, 
+        filteredEntries, setCurrentYear, 
+        setSelectedMonth, yearEntries, 
+    yearExpenses])
 
     return (
         <Container>
+            {!docsLoaded && (
+                <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 64 }}>. . .</Text>
+                </View>
+                )}
             {
                 yearEntries[0] && (<MonthInput dropdownIconColor={colors.home.mid} />)
             }
@@ -78,23 +74,17 @@ export default function Info() {
                 filterSchedulings(schedulings, selectedMonth, currentYear)[0]
                     || filterExpenses(expenses, selectedMonth, currentYear)[0]
                     ? <Revenue />
-                    : <AnyInfoWarning
+                    : null
+            }
+            {
+                docsLoaded
+                    && !filterSchedulings(schedulings, selectedMonth, currentYear)[0]
+                    && !filterExpenses(expenses, selectedMonth, currentYear)[0]
+                    ? <AnyInfoWarning
                         text='te informamos sobre seu balanço financeiro mensal.'
                         titleBgColor={colors.home.max}
                         textBgColor={colors.home.min}
-                    />
-            }
-            {
-                addExpenseForm
-                && <AddExpenseForm
-                    setAddExpenseForm={setAddExpenseForm}
-                />
-            }
-            {
-                addSchedulingForm
-                && <AddSchedulingForm
-                    setAddSchedulingForm={setAddSchedulingForm}
-                />
+                    /> : null
             }
         </Container>
     )
