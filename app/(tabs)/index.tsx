@@ -16,12 +16,12 @@ import MonthInput from '@/components/common/MonthInput'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // info components
-import Revenue from '@/components/info/Revenue'
+import Revenue from '@/components/index/Revenue'
 
 import { colors } from '@/constants/appColors'
 import { Alert, Text, View } from 'react-native'
 import AddItemButton from '@/components/common/AddItemButton'
-import { EntryOrOutflowOptions } from '@/components/info/EntryOrOutflowOptions'
+import { EntryOrOutflowOptions } from '@/components/index/EntryOrOutflowOptions'
 import AddEntryForm from '@/components/entries/AddEntryForm'
 import AddOutflowForm from '@/components/outflows/AddOutflowForm'
 
