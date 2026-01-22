@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react'
 
 // custom functions
-import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/utils/common'
+import { areThereAnyItemsAvailable, filterExpenses, filterSchedulings, getAvailableMonths } from '@/utils/common'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
@@ -19,7 +19,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 import Revenue from '@/components/info/Revenue'
 
 import { colors } from '@/constants/appColors'
-import { Text, View } from 'react-native'
+import { Alert, Text, View } from 'react-native'
 import AddItemButton from '@/components/common/AddItemButton'
 import { EntryOrOutflowOptions } from '@/components/info/EntryOrOutflowOptions'
 import AddEntryForm from '@/components/entries/AddEntryForm'
@@ -30,6 +30,7 @@ export default function Info() {
     const appDocs = useContext(DocsContext)
     const [schedulings] = appDocs.entries
     const [expenses] = appDocs.outflows
+    const [items] = appDocs.items
     const [currentYear, setCurrentYear] = appDocs.currentYear
     const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
 
@@ -94,8 +95,15 @@ export default function Info() {
                 showEntryOrOutflowOptions && (
                     <EntryOrOutflowOptions
                         setShowEntryOrOutflowOptions={setShowEntryOrOutflowOptions}
-                        setShowAddEntryForm={setShowAddEntryForm}
-                        setShowAddOutflowForm={setShowAddOutflowForm}
+                        setShowAddEntryForm={() => {
+                            const anyItemsAvailable = areThereAnyItemsAvailable(items)
+                            if (anyItemsAvailable) {
+                                setShowAddEntryForm(true)
+                            }else {
+                                Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
+                            }
+                        }}
+                        setShowAddOutflowForm={()=> setShowAddOutflowForm(true)}
                     />
                 )
             }

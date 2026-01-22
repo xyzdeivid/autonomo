@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { Alert, BackHandler } from 'react-native'
 
 // custom functions
-import { filterSchedulings } from '@/utils/common'
+import { areThereAnyItemsAvailable, filterSchedulings } from '@/utils/common'
 
 // context
 import { DocsContext, } from '@/context/DocsContext'
@@ -22,7 +22,6 @@ import DeleteSchedulingForm from '@/components/entries/AboutEntryCard'
 import { Entry } from '@/types'
 import useDeleteEntry from '@/hooks/useDeleteEntry'
 import { colors } from '@/constants/appColors'
-import { getServices } from '@/utils/schedulings'
 import AddItemButton from '@/components/common/AddItemButton'
 
 export default function Schedulings() {
@@ -33,7 +32,7 @@ export default function Schedulings() {
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
-    
+
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [selectedEntryForDeletion, setSelectedEntryForDeletion] = useState('')
     const entryForDeletion = entries.find(e => e._id === selectedEntryForDeletion)
@@ -70,14 +69,6 @@ export default function Schedulings() {
         })
     }, [])
 
-    const checkServices = () => {
-        if (getServices(items)[0]) {
-            setAddSchedulingForm(true)
-        } else {
-            Alert.alert('Sem produto ou serviço disponível', 'Verifique se você tem algum produto ou serviço registrado. Caso tenha produto, verifique se tem estoque disponível.')
-        }
-    }
-
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -99,7 +90,14 @@ export default function Schedulings() {
                     iconColor={colors.entries.max}
                     bgColor={colors.entries.min}
                     borderColor={colors.entries.midMin}
-                    onPress={() => checkServices()}
+                    onPress={() => {
+                        const itemsAvailable = areThereAnyItemsAvailable(items)
+                        if (itemsAvailable) {
+                            setAddSchedulingForm(true)
+                        } else {
+                            Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
+                        }
+                    }}
                 />
                 {
                     addSchedulingForm

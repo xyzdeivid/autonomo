@@ -6,8 +6,8 @@ const { height } = Dimensions.get('window')
 
 interface EntryOrOutflowOptionsProps {
     setShowEntryOrOutflowOptions: React.Dispatch<React.SetStateAction<boolean>>
-    setShowAddEntryForm: React.Dispatch<React.SetStateAction<boolean>>
-    setShowAddOutflowForm: React.Dispatch<React.SetStateAction<boolean>>
+    setShowAddEntryForm: () => void
+    setShowAddOutflowForm: () => void
 }
 
 export function EntryOrOutflowOptions({ setShowEntryOrOutflowOptions, setShowAddEntryForm, setShowAddOutflowForm }: EntryOrOutflowOptionsProps) {
@@ -40,7 +40,7 @@ export function EntryOrOutflowOptions({ setShowEntryOrOutflowOptions, setShowAdd
                         { backgroundColor: colors.entries.midMax }
                     ]}
                     onPress={() => {
-                        setShowAddEntryForm(true)
+                        setShowAddEntryForm()
                         setShowEntryOrOutflowOptions(false)
                     }}
                 >
@@ -51,7 +51,7 @@ export function EntryOrOutflowOptions({ setShowEntryOrOutflowOptions, setShowAdd
                     { backgroundColor: colors.outflows.midMax }
                 ]}
                 onPress={() => {
-                        setShowAddOutflowForm(true)
+                        setShowAddOutflowForm()
                         setShowEntryOrOutflowOptions(false)
                     }}
                 >

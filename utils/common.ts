@@ -1,6 +1,7 @@
-import { Outflow, Entry } from '@/types/index'
+import { Outflow, Entry, Item } from '@/types/index'
 import { format, parseISO } from 'date-fns'
 import { Alert } from 'react-native'
+import { getServices } from './schedulings'
 
 export function isStockValid(stock: number): boolean {
 
@@ -20,7 +21,7 @@ export function getErrorMessage(error: string): string {
 
         case 'INVALID_FIELD':
             return 'Campo vazio ou inválido.'
-        
+
         case 'DUPLICATE_ITEM':
             return 'Já existe um item com esse nome.'
 
@@ -157,4 +158,9 @@ export const warning = (
     Alert.alert(warningText)
     setLoadingScreen(false)
 
+}
+
+export function areThereAnyItemsAvailable(items: Item[]): boolean {
+    if (getServices(items)[0]) return true
+    return false
 }
