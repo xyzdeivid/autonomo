@@ -7,9 +7,10 @@ interface FormNameFieldProps {
     label: string
     labelBgColor: string
     inputBgColor: string
+    inputBorderColor: string
 }
 
-export function FormNameField({ setName, label, labelBgColor, inputBgColor }: FormNameFieldProps) {
+export function FormNameField({ setName, label, labelBgColor, inputBgColor, inputBorderColor }: FormNameFieldProps) {
     return (
         <FormFieldContainer>
                 <View
@@ -23,7 +24,8 @@ export function FormNameField({ setName, label, labelBgColor, inputBgColor }: Fo
                 <TextInput
                     style={{
                         ...styles.input,
-                        backgroundColor: inputBgColor
+                        backgroundColor: inputBgColor,
+                        borderColor: inputBorderColor
                     }}
                     onChangeText={text => setName(text.trim())}
                 />
@@ -35,13 +37,19 @@ const styles = StyleSheet.create({
 
     labelContainer: {
         fontSize: 16,
-        paddingVertical: 6
+        paddingVertical: 6,
+        borderTopLeftRadius: 6,
+        borderTopRightRadius: 6
     },
 
     input: {
         color: 'black',
         height: 40,
-        textAlign: 'center'
+        textAlign: 'center',
+        borderWidth: 2,
+        borderTopWidth: 0,
+        borderBottomLeftRadius: 6,
+        borderBottomRightRadius: 6
     }
 
 })

@@ -7,7 +7,7 @@ interface FieldContainerProps {
 export function FormFieldContainer({ children }: FieldContainerProps) {
     return (
         <View>
-            <View style={styles.container}>
+            <View>
                 {children}
             </View>
             <View style={styles.hr} />
@@ -16,11 +16,6 @@ export function FormFieldContainer({ children }: FieldContainerProps) {
 }
 
 const styles = StyleSheet.create({
-
-    container: {
-        borderRadius: 6,
-        overflow: 'hidden'
-    },
 
     hr: {
         height: StyleSheet.hairlineWidth,

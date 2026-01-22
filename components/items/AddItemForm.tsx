@@ -37,6 +37,7 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
 
     const labelBgColor = colors.items.midMax
     const inputBgColor = colors.items.min
+    const inputBorderColor = colors.items.midMin
 
     const addItem = useAddItem().addItem
 
@@ -102,6 +103,7 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             submitService={submitNewItem}
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
+                            inputBorderColor={inputBorderColor}
                         />
                     )
                 }
@@ -113,6 +115,7 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             submitBudget={submitNewItem}
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
+                            inputBorderColor={inputBorderColor}
                         />
                     )
                 }
@@ -144,6 +147,7 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             setValue={setValue}
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
+                            inputBorderColor={inputBorderColor}
                         />
                     )
                 }
@@ -160,6 +164,7 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             submitStock={submitNewItem}
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
+                            inputBorderColor={inputBorderColor}
                         />
                     )
                 }
@@ -173,6 +178,7 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             submitNoStock={submitNewItem}
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
+                            inputBorderColor={inputBorderColor}
                         />
                     )
                 }

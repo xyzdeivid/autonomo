@@ -9,19 +9,24 @@ interface FormValueFieldProps {
     label: string
     labelBgColor: string
     inputBgColor: string
+    inputBorderColor: string
     valueChoice?: string
     setValueChoice?: React.Dispatch<React.SetStateAction<string>>
     valueChoiceButtonColors?: [string, string]
 }
 
-export function FormValueField({ setValue, label, labelBgColor, inputBgColor, valueChoice, setValueChoice, valueChoiceButtonColors }: FormValueFieldProps) {
+export function FormValueField({ setValue, label, labelBgColor, inputBgColor, inputBorderColor, valueChoice, setValueChoice, valueChoiceButtonColors }: FormValueFieldProps) {
 
     return (
         <FormFieldContainer>
             <View>
                 <View style={{ flexDirection: 'row' }}>
                     <View
-                    style={{...styles.labelContainer, backgroundColor: labelBgColor}}
+                    style={{
+                        ...styles.labelContainer, 
+                        backgroundColor: labelBgColor,
+                        borderBottomLeftRadius: !valueChoice ? 6 : 0
+                    }}
                     >
                         <Label text={label}/>
                     </View>
@@ -34,7 +39,8 @@ export function FormValueField({ setValue, label, labelBgColor, inputBgColor, va
                         }}
                         style={{
                             ...styles.input,
-                            backgroundColor: inputBgColor
+                            backgroundColor: inputBgColor,
+                            borderColor: inputBorderColor
                         }}
                         keyboardType='numeric'
                         onChangeText={text => {
@@ -72,7 +78,8 @@ export function FormValueField({ setValue, label, labelBgColor, inputBgColor, va
 const styles = StyleSheet.create({
 
     labelContainer: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderTopLeftRadius: 6
     },
 
     input: {
@@ -81,7 +88,9 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center',
         borderTopRightRadius: 6,
-        borderBottomRightRadius: 6
+        borderBottomRightRadius: 6,
+        borderWidth: 2,
+        borderLeftWidth: 0
     },
 
     valueChoiceContainer: {

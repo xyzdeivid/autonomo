@@ -1,5 +1,5 @@
 // native functions
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 // custom functions
 import { filterExpenses, filterSchedulings, getAvailableMonths } from '@/utils/common'
@@ -20,6 +20,10 @@ import Revenue from '@/components/info/Revenue'
 
 import { colors } from '@/constants/appColors'
 import { Text, View } from 'react-native'
+import AddItemButton from '@/components/common/AddItemButton'
+import { EntryOrOutflowOptions } from '@/components/info/EntryOrOutflowOptions'
+import AddEntryForm from '@/components/entries/AddEntryForm'
+import AddOutflowForm from '@/components/outflows/AddOutflowForm'
 
 export default function Info() {
 
@@ -28,6 +32,10 @@ export default function Info() {
     const [expenses] = appDocs.outflows
     const [currentYear, setCurrentYear] = appDocs.currentYear
     const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
+
+    const [showEntryOrOutflowOptions, setShowEntryOrOutflowOptions] = useState(false)
+    const [showAddEntryForm, setShowAddEntryForm] = useState(false)
+    const [showAddOutflowForm, setShowAddOutflowForm] = useState(false)
 
     const docsLoaded = appDocs.docsLoaded
 
@@ -54,11 +62,11 @@ export default function Info() {
             setSelectedMonth(availableMonths[lastMonth][1])
         }
 
-    }, [schedulings, expenses, 
-        availableMonths, filteredExpenses, 
-        filteredEntries, setCurrentYear, 
-        setSelectedMonth, yearEntries, 
-    yearExpenses])
+    }, [schedulings, expenses,
+        availableMonths, filteredExpenses,
+        filteredEntries, setCurrentYear,
+        setSelectedMonth, yearEntries,
+        yearExpenses])
 
     return (
         <Container>
@@ -66,7 +74,7 @@ export default function Info() {
                 <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ fontSize: 64 }}>. . .</Text>
                 </View>
-                )}
+            )}
             {
                 yearEntries[0] && (<MonthInput dropdownIconColor={colors.home.mid} />)
             }
@@ -75,6 +83,31 @@ export default function Info() {
                     || filterExpenses(expenses, selectedMonth, currentYear)[0]
                     ? <Revenue />
                     : null
+            }
+            <AddItemButton
+                iconColor={colors.home.max}
+                bgColor={colors.home.min}
+                borderColor={colors.home.midMin}
+                onPress={() => setShowEntryOrOutflowOptions(true)}
+            />
+            {
+                showEntryOrOutflowOptions && (
+                    <EntryOrOutflowOptions
+                        setShowEntryOrOutflowOptions={setShowEntryOrOutflowOptions}
+                        setShowAddEntryForm={setShowAddEntryForm}
+                        setShowAddOutflowForm={setShowAddOutflowForm}
+                    />
+                )
+            }
+            {
+                showAddEntryForm && (
+                    <AddEntryForm setAddSchedulingForm={setShowAddEntryForm} />
+                )
+            }
+            {
+                showAddOutflowForm && (
+                    <AddOutflowForm setAddExpenseForm={setShowAddOutflowForm} />
+                )
             }
             {
                 docsLoaded

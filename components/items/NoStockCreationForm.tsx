@@ -11,9 +11,10 @@ interface NoStockCreationFormProps {
     submitNoStock: () => Promise<void>
     labelBgColor: string
     inputBgColor: string
+    inputBorderColor: string
 }
 
-export default function NoStockCreationForm({ name, value, setName, setValue, submitNoStock, labelBgColor, inputBgColor }: NoStockCreationFormProps) {
+export default function NoStockCreationForm({ name, value, setName, setValue, submitNoStock, labelBgColor, inputBgColor, inputBorderColor }: NoStockCreationFormProps) {
 
     return (
         <>
@@ -22,12 +23,14 @@ export default function NoStockCreationForm({ name, value, setName, setValue, su
                 label='Nome do Produto'
                 labelBgColor={labelBgColor}
                 inputBgColor={inputBgColor}
+                inputBorderColor={inputBorderColor}
             />
             <FormValueField
                 setValue={setValue}
                 label='Valor de Venda (un)'
                 labelBgColor={labelBgColor}
                 inputBgColor={inputBgColor}
+                inputBorderColor={inputBorderColor}
             />
             {
                 (name && value) ? (

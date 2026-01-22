@@ -11,9 +11,10 @@ interface ServiceCreationFormProps {
     submitService: () => Promise<void>
     labelBgColor: string
     inputBgColor: string
+    inputBorderColor: string
 }
 
-export default function ServiceCreationForm({ name, value, setName, setValue, submitService, labelBgColor, inputBgColor }: ServiceCreationFormProps) {
+export default function ServiceCreationForm({ name, value, setName, setValue, submitService, labelBgColor, inputBgColor, inputBorderColor }: ServiceCreationFormProps) {
 
     return (
         <>
@@ -22,12 +23,14 @@ export default function ServiceCreationForm({ name, value, setName, setValue, su
                 label='Nome do Serviço'
                 labelBgColor={labelBgColor}
                 inputBgColor={inputBgColor}
+                inputBorderColor={inputBorderColor}
             />
             <FormValueField
                 setValue={setValue}
                 label='Valor'
                 labelBgColor={labelBgColor}
                 inputBgColor={inputBgColor}
+                inputBorderColor={inputBorderColor}
             />
             {
                 (name && value) ? (

@@ -21,7 +21,7 @@ interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProps) {
+export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProps) {
 
     const [name, setName] = useState('')
     const [date, setDate] = useState('')
@@ -36,6 +36,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
 
     const labelBgColor = colors.outflows.midMax
     const inputBgColor = colors.outflows.min
+    const inputBorderColor = colors.outflows.midMin
 
     const addOutflow = useAddOutflow().addOutflow
 
@@ -103,6 +104,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                             label='Nome'
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
+                            inputBorderColor={inputBorderColor}
                         />
                         : <ProductOptionsInput
                             product={product}
@@ -115,6 +117,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     label='Data'
                     labelBgColor={labelBgColor}
                     buttonBgColor={inputBgColor}
+                    buttonBorderColor={inputBorderColor}
                 />
                 {
                     stockIntegrate && (
@@ -123,6 +126,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                             label='Quantidade'
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
+                            inputBorderColor={inputBorderColor}
                         />
                     )
                 }
@@ -131,6 +135,7 @@ export default function AddExpenseForm({ setAddExpenseForm }: AddExpenseFormProp
                     label={checkResaleButtonText()}
                     labelBgColor={labelBgColor}
                     inputBgColor={inputBgColor}
+                    inputBorderColor={inputBorderColor}
                     valueChoice={stockIntegrate ? valueChoice : undefined}
                     setValueChoice={setValueChoice}
                     valueChoiceButtonColors={[labelBgColor, inputBgColor]}

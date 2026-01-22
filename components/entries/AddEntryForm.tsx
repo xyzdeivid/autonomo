@@ -20,7 +20,7 @@ interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
+export default function AddEntryForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
 
     const [services] = useContext(DocsContext).items
     const [service, setService] = useState<Item>(getServices(services)[0])
@@ -33,6 +33,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
 
     const labelBgColor = colors.entries.midMax
     const inputBgColor = colors.entries.min
+    const inputBorderColor = colors.entries.midMin
 
     const addEntry = useAddEntry().addEntry
 
@@ -100,12 +101,14 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                     label='Cliente'
                     labelBgColor={labelBgColor}
                     inputBgColor={inputBgColor}
+                    inputBorderColor={inputBorderColor}
                 />
                 <FormDateField
                     setTargetDate={setDate}
                     label='Data'
                     labelBgColor={labelBgColor}
                     buttonBgColor={inputBgColor}
+                    buttonBorderColor={inputBorderColor}
                 />
                 {
                     service.category === 'product' ? (
@@ -114,6 +117,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                             label='* Quantidade'
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
+                            inputBorderColor={inputBorderColor}
                         />
                     ) : null
                 }
@@ -124,6 +128,7 @@ export default function AddSchedulingForm({ setAddSchedulingForm }: AddSchedulin
                             label='* Valor'
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
+                            inputBorderColor={inputBorderColor}
                         />
                     ) : null
                 }

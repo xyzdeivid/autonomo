@@ -8,9 +8,10 @@ interface FormAmountFieldProps {
     label: string
     labelBgColor: string
     inputBgColor: string
+    inputBorderColor: string
 }
 
-export function FormAmountField({ setAmount, label, labelBgColor, inputBgColor }: FormAmountFieldProps) {
+export function FormAmountField({ setAmount, label, labelBgColor, inputBgColor, inputBorderColor }: FormAmountFieldProps) {
 
     const [textValue, setTextValue] = useState('')
 
@@ -44,7 +45,8 @@ export function FormAmountField({ setAmount, label, labelBgColor, inputBgColor }
                     }}
                     style={{
                         ...styles.input,
-                        backgroundColor: inputBgColor
+                        backgroundColor: inputBgColor,
+                        borderColor: inputBorderColor
                     }}
                     keyboardType='numeric'
                 />
@@ -58,6 +60,8 @@ const styles = StyleSheet.create({
 
     labelContainer: {
         justifyContent: 'center',
+        borderTopLeftRadius: 6,
+        borderBottomLeftRadius: 6
     },
 
     input: {
@@ -66,7 +70,9 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center',
         borderTopRightRadius: 6,
-        borderBottomRightRadius: 6
+        borderBottomRightRadius: 6,
+        borderWidth: 2,
+        borderLeftWidth: 0
     }
 
 })
