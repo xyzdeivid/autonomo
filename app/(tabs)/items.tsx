@@ -1,30 +1,25 @@
-// native functions
 import { useContext, useEffect, useState } from 'react'
-import { Alert, BackHandler } from 'react-native'
+import { BackHandler } from 'react-native'
 
-// custom functions
 import { getItemsByCategory } from '@/utils/items'
 
-// context
 import { DocsContext } from '@/context/DocsContext'
 
-// common components
 import AddItemButton from '@/components/common/AddItemButton'
 import { AddItemForm } from '@/components/items/AddItemForm'
 import Container from '@/components/common/Container'
 import LoadingScreen from '@/components/common/LoadingScreen'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
-// service components
 import AboutItemCard from '@/components/items/AboutItemCard'
 import { ItemsContent } from '@/components/items/ItemsContent'
 import useDeleteItem from '@/hooks/useDeleteItem'
 import { Item } from '@/types'
 import { colors } from '@/styles/appColors'
-import { getErrorMessage } from '@/utils/common'
+import { showErrorAtSubmitData } from '@/utils/common'
 import { ItemCategoryCard } from '@/components/items/ItemCategoryCard'
 
-export default function Services() {
+export default function Items() {
 
     const appDocs = useContext(DocsContext)
     const [items] = appDocs.items
@@ -70,9 +65,7 @@ export default function Services() {
 
         const result = await deleteItem(id)
 
-        if (!result.success && result.error) {
-            Alert.alert('Erro', getErrorMessage(result.error))
-        }
+        if (!result.success) showErrorAtSubmitData(result.error)
 
         setShowAboutItemCard(false)
         setLoadingScreen(false)

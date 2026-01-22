@@ -1,5 +1,5 @@
 import { View } from 'react-native'
-import SelectCategoryInput from './SelectCategoryInput'
+import { SelectCategoryButton } from './SelectCategoryButton'
 import { ItemsList } from './ItemsList'
 
 import { DocsContext } from '@/context/DocsContext'
@@ -21,7 +21,7 @@ export function ItemsContent({ category, setCategory,
 
     const categoriesAmount = () => {
 
-        const categories: string[] = []
+        let categories: string[] = []
 
         allItems.forEach(current => {
 
@@ -31,6 +31,13 @@ export function ItemsContent({ category, setCategory,
 
         })
 
+        categories = categories.map(current => {
+            if (current === 'budget') return 'service'
+            return current
+        })
+
+        categories = [...new Set(categories)]
+
         return categories.length
 
     }
@@ -38,13 +45,17 @@ export function ItemsContent({ category, setCategory,
     return (
         <View>
             {categoriesAmount() > 1 && (
-                <SelectCategoryInput category={category} setCategory={setCategory} />
+                <SelectCategoryButton
+                    category={category}
+                    setCategory={setCategory}
+                />
             )}
             {items[0] && (
                 <ItemsList
                     setSelectedItemForDeletion={setSelectedItemForDeletion}
                     setShowAboutItemCard={setShowAboutItemCard}
                     items={items}
+                    category={category}
                 />
             )}
         </View>

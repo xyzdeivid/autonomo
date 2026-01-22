@@ -6,20 +6,22 @@ export const sortItems = (items: Item[]) => {
 
 }
 
-export const getItemsByCategory = (services: Item[], category: string) => {
+// Retornando orçamentos junto com 
+// serviços pois são mostrados juntos na lista
+export const getItemsByCategory = (items: Item[], category: string) => {
 
     switch (category) {
         case 'product':
-            return services.filter(service =>
-                service.category === 'product'
+            return items.filter(current =>
+                current.category === 'product'
             )
         case 'service':
-            return services.filter(service =>
-                service.category === 'service'
+            return items.filter(current =>
+                current.category !== 'product'
             )
         case 'budget':
-            return services.filter(service =>
-                service.category === 'budget'
+            return items.filter(current =>
+                current.category !== 'product'
             )
         default:
             return []

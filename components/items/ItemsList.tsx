@@ -9,9 +9,10 @@ interface ItemsListProps {
     setSelectedItemForDeletion: React.Dispatch<React.SetStateAction<string>>
     setShowAboutItemCard: React.Dispatch<React.SetStateAction<boolean>>
     items: Item[]
+    category: string
 }
 
-export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, items }: ItemsListProps) {
+export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, items, category }: ItemsListProps) {
 
     const deleteService = (service: Item) => {
         setSelectedItemForDeletion(service._id)
@@ -25,13 +26,13 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, it
     }
 
     const getWhatIsItemColumn = () => {
-        switch (items[0].category) {
+        switch (category) {
             case 'product':
                 return 'Produto'
             case 'service':
                 return 'Serviço'
             case 'budget':
-                return 'Orçamentário'
+                return 'Serviço'
         }
     }
 
@@ -41,20 +42,20 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, it
                 <DataTable>
                     <DataTable.Header>
                         <DataTable.Title style={styles.text}>{getWhatIsItemColumn()}</DataTable.Title>
-                        {items[0].category !== 'budget' && (
-                            <DataTable.Title style={styles.text}>
-                                Valor
-                                {items[0].category === 'product' ? ' (un)' : null}
-                            </DataTable.Title>
-                        )}
+                        <DataTable.Title style={styles.text}>
+                            Valor
+                            {items[0].category === 'product' ? ' (un)' : null}
+                        </DataTable.Title>
                     </DataTable.Header>
                     {sortItems(items).map(current => {
                         return (
                             <DataTable.Row onPress={() => deleteService(current)} key={current._id}>
                                 <DataTable.Cell style={styles.text}>{current._id}</DataTable.Cell>
-                                {current.category !== 'budget' && (
-                                    <DataTable.Cell style={styles.text}>{moneyFormat(current.value)}</DataTable.Cell>
-                                )}
+                                <DataTable.Cell style={styles.text}>
+                                    {current.category !== 'budget'
+                                        ? moneyFormat(current.value)
+                                        : 'Orçamento'}
+                                </DataTable.Cell>
                             </DataTable.Row>
                         )
                     })}
