@@ -1,4 +1,4 @@
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { Modal, View, Text, StyleSheet, Pressable } from 'react-native'
 
 interface CardWhichProductToChooseProps {

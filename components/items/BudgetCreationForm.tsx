@@ -1,7 +1,7 @@
 import { Text } from 'react-native'
 import { FormNameField } from '../common/FormNameField'
 import SubmitItemButton from '../common/SaveButton'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 
 interface BudgetCreationFormProps {
     name: string

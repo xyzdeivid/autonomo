@@ -1,4 +1,4 @@
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { Pressable, View, Text, StyleSheet } from 'react-native'
 
 interface StockWarningForResaleProps {

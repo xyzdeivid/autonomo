@@ -1,4 +1,4 @@
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { useEffect, useRef } from 'react'
 import { Animated, Dimensions, Pressable, StyleSheet, Text, TouchableOpacity } from 'react-native'
 

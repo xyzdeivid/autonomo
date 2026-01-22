@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { EditNameCard } from '../common/EditNameCard'
 
 interface AddCustomerButtonProps {

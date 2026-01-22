@@ -14,7 +14,7 @@ import useAddOutflow from '@/hooks/useAddOutflow'
 import { Outflow } from '@/types'
 import { createNewOutflow } from '@/utils/createNewOutflow'
 import SaveButton from '../common/SaveButton'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { getErrorMessage } from '@/utils/common'
 
 interface AddExpenseFormProps {

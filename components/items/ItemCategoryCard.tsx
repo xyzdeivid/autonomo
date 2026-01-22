@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Pressable, Dimensions, Animated, TouchableWithoutFeedback } from 'react-native'
 import CardWhichProductToChoose from './CardWhichProductToChoose'
 import { useEffect, useRef, useState } from 'react'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { ProductCategoryButton } from './ProductCategoryButton'
 
 const { height } = Dimensions.get('window')

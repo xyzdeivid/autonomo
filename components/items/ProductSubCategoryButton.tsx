@@ -1,4 +1,4 @@
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface ProductSubCategoryButtonProps {

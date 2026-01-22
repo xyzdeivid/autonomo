@@ -12,7 +12,7 @@ import ResaleCreationForm from './ResaleCreationForm'
 import ResaleOrStockButtons from './ResaleOrStockButtons'
 import StockCreationForm from './StockCreationForm'
 import NoStockCreationForm from './NoStockCreationForm'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { Alert } from 'react-native'
 import { getErrorMessage } from '@/utils/common'
 

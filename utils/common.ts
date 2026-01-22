@@ -164,3 +164,11 @@ export function areThereAnyItemsAvailable(items: Item[]): boolean {
     if (getServices(items)[0]) return true
     return false
 }
+
+export function showErrorAtSubmitData(erro: string | undefined): void {
+    Alert.alert('Erro', erro ? getErrorMessage(erro) : 'Erro desconhecido.')
+}
+
+export function formatDateToISO(date: Date): string {
+    return date.toISOString().split('T')[0]
+}

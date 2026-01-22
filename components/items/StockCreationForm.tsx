@@ -2,7 +2,7 @@ import { FormAmountField } from '../common/FormAmountField'
 import { FormNameField } from '../common/FormNameField'
 import { FormValueField } from '../common/FormValueField'
 import SubmitItemButton from '../common/SaveButton'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 
 interface StockCreationFormProps {
     name: string

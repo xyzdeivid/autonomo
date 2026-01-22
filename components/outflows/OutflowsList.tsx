@@ -7,7 +7,7 @@ import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { orderExpenses } from '@/utils/expenses'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 
 interface ExpensesListProps {
     filteredExpenses: Outflow[]

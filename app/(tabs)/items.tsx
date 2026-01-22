@@ -20,7 +20,7 @@ import AboutItemCard from '@/components/items/AboutItemCard'
 import { ItemsContent } from '@/components/items/ItemsContent'
 import useDeleteItem from '@/hooks/useDeleteItem'
 import { Item } from '@/types'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { getErrorMessage } from '@/utils/common'
 import { ItemCategoryCard } from '@/components/items/ItemCategoryCard'
 

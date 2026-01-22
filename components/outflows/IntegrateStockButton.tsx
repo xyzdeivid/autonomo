@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useState } from 'react'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 
 interface IntegrateStockButtonProps {
     setStockIntegrate: React.Dispatch<React.SetStateAction<boolean>>

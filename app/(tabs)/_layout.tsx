@@ -5,7 +5,7 @@ import { MainDisplaysContext } from '@/context/MainDisplays'
 import { ContentContext } from '@/context/InfoContent'
 import { Keyboard } from 'react-native'
 import { DocsContext } from '@/context/DocsContext'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 
 export default function TabLayout() {
 

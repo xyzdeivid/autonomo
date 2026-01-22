@@ -1,4 +1,4 @@
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { Item } from '@/types'
 import { Picker } from '@react-native-picker/picker'
 import { View } from 'react-native'

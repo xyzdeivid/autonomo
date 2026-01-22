@@ -21,7 +21,7 @@ import DeleteSchedulingForm from '@/components/entries/AboutEntryCard'
 
 import { Entry } from '@/types'
 import useDeleteEntry from '@/hooks/useDeleteEntry'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import AddItemButton from '@/components/common/AddItemButton'
 
 export default function Schedulings() {

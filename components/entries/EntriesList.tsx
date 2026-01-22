@@ -7,7 +7,7 @@ import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { orderSchedulings } from '@/utils/schedulings'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 
 interface SchedulingsListProps {
     filteredSchedulings: Entry[]

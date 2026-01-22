@@ -1,4 +1,4 @@
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { DocsContext } from '@/context/DocsContext'
 import { Picker } from '@react-native-picker/picker'
 import { useContext } from 'react'

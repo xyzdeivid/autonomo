@@ -1,22 +1,35 @@
-import { Alert, BackHandler, Platform } from 'react-native'
-import { Entry } from '@/types'
-import { dateFormat, getErrorMessage, moneyFormat } from '@/utils/common'
+// react & react rative
 import React, { useEffect, useState } from 'react'
-import ConfirmDelete from '../common/ConfirmDelete'
-import LoadingScreen from '../common/LoadingScreen'
-import AddClienteButton from './AddClienteButton'
-import useEditEntryDate from '@/hooks/useEditEntryDate'
-import { ListItemCardProperty } from '../common/ListItemCardProperty'
-import { DeleteListItemButton } from '../common/DeleteListItemButton'
-import { colors } from '@/constants/appColors'
-import { ListItemCardContainer } from '../common/ListItemCardContainer'
-import { ListItemCardBody } from '../common/ListItemCardBody'
-import { parseISO } from 'date-fns'
+import { BackHandler, Platform } from 'react-native'
+
+// libs externas
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
-import { EditNameCard } from '../common/EditNameCard'
+import { parseISO } from 'date-fns'
+
+// arquivos globais
+import { Entry } from '@/types'
+import { dateFormat, formatDateToISO, moneyFormat, showErrorAtSubmitData } from '@/utils/common'
+
+// hooks
 import useEditCustomerName from '@/hooks/useEditCustomerName'
-import { EditAmountCard } from '../common/EditAmountCard'
 import useEditEntryAmount from '@/hooks/useEditEntryAmount'
+import useEditEntryDate from '@/hooks/useEditEntryDate'
+
+// componentes genéricos
+import LoadingScreen from '@/components/common/LoadingScreen'
+import { ListItemCardContainer } from '@/components/common/ListItemCardContainer'
+import { ListItemCardBody } from '@/components/common/ListItemCardBody'
+import { ListItemCardProperty } from '@/components/common/ListItemCardProperty'
+import { EditNameCard } from '@/components/common/EditNameCard'
+import { EditAmountCard } from '@/components/common/EditAmountCard'
+import { DeleteListItemButton } from '@/components/common/DeleteListItemButton'
+import ConfirmDelete from '@/components/common/ConfirmDelete'
+
+// componentes da tela
+import AddClienteButton from './AddClienteButton'
+
+// estilos
+import { colors } from '@/styles/appColors'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -26,19 +39,15 @@ interface AboutSchedulingCardProps {
 
 export default function AboutSchedulingCard({ scheduling, deleteFunction, setFormOff }: AboutSchedulingCardProps) {
 
+    const [showLoadingScreen, setShowLoadingScreen] = useState(false)
     const [showDateTimePicker, setShowDateTimePicker] = useState(false)
     const [showEditNameCard, setShowEditNameCard] = useState(false)
-    const [confirmDelete, setConfirmDelete] = useState(false)
-    const [loadingPage, setLoadingPage] = useState(false)
+    const [showConfirmDeleteCard, setShowConfirmDeleteCard] = useState(false)
     const [showEditAmountCard, setShowEditAmountCard] = useState(false)
 
     const editCustomerName = useEditCustomerName().editCustomerName
     const editEntryDate = useEditEntryDate().editEntryDate
     const editEntryAmount = useEditEntryAmount().editEntryAmount
-
-    const formatDateToISO = (date: Date) => {
-        return date.toISOString().split('T')[0]
-    }
 
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => {
@@ -49,48 +58,38 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     const submitCustomerName = async (customer: string) => {
 
-        setLoadingPage(true)
+        setShowLoadingScreen(true)
 
         const result = await editCustomerName(scheduling._id, customer)
 
-        if (!result.success && result.error) {
+        if (!result.success) showErrorAtSubmitData(result.error)
 
-            Alert.alert('Erro', getErrorMessage(result.error))
-
-        }
-
-        setLoadingPage(false)
+        setShowLoadingScreen(false)
         setShowEditNameCard(false)
 
     }
 
     const submitDate = async (newDate: string) => {
 
-        setLoadingPage(true)
+        setShowLoadingScreen(true)
 
         const result = await editEntryDate(newDate, scheduling._id)
 
-        if (!result.success && result.error) {
+        if (!result.success) showErrorAtSubmitData(result.error)
 
-            Alert.alert('Erro', getErrorMessage(result.error))
-
-        }
-
-        setLoadingPage(false)
+        setShowLoadingScreen(false)
 
     }
 
     const submitAmount = async (newAmount: number) => {
 
-        setLoadingPage(true)
+        setShowLoadingScreen(true)
 
         const result = await editEntryAmount(newAmount, scheduling)
 
-        if (!result.success && result.error) {
-            Alert.alert('Erro', getErrorMessage(result.error))
-        }
+        if (!result.success) showErrorAtSubmitData(result.error)
 
-        setLoadingPage(false)
+        setShowLoadingScreen(false)
         setShowEditAmountCard(false)
 
     }
@@ -102,11 +101,8 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
         if (event.type === 'set' && selectedDate) {
 
             const dateString = formatDateToISO(selectedDate)
-
             if (dateString !== scheduling.date) {
-
                 submitDate(dateString)
-
             }
 
         }
@@ -115,7 +111,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
 
     return (
         <>
-            {loadingPage && <LoadingScreen />}
+            {showLoadingScreen && <LoadingScreen />}
             <ListItemCardContainer
                 bgColor={colors.entries.midMin}
                 setShowCard={setFormOff}
@@ -194,17 +190,17 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                             />
                         )
                     }
-                    <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
+                    <DeleteListItemButton onPress={() => setShowConfirmDeleteCard(true)} />
                 </ListItemCardBody>
             </ListItemCardContainer>
             {
-                confirmDelete && (
+                showConfirmDeleteCard && (
                     <ConfirmDelete
                         name={scheduling.serviceId}
                         deleteFunction={() => {
                             deleteFunction(scheduling)
                         }}
-                        setConfirmDelete={setConfirmDelete}
+                        setConfirmDelete={setShowConfirmDeleteCard}
                     />
                 )
             }

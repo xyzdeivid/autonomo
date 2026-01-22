@@ -18,7 +18,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 // info components
 import Revenue from '@/components/index/Revenue'
 
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 import { Alert, Text, View } from 'react-native'
 import AddItemButton from '@/components/common/AddItemButton'
 import { EntryOrOutflowOptions } from '@/components/index/EntryOrOutflowOptions'

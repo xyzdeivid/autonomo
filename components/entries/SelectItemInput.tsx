@@ -2,7 +2,7 @@ import { Item } from '@/types/index'
 import { Picker } from '@react-native-picker/picker'
 import { StyleSheet, Text, View } from 'react-native'
 import { FormFieldContainer } from '../common/FormFieldContainer'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 
 interface SelectServiceInputProps {
     service: Item

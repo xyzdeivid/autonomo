@@ -21,7 +21,7 @@ import AddExpenseForm from '@/components/outflows/AddOutflowForm'
 import ExpensesList from '@/components/outflows/OutflowsList'
 import AboutOutflowCard from '@/components/outflows/AboutOutflowCard'
 import useDeleteOutflow from '@/hooks/useDeleteOutflow'
-import { colors } from '@/constants/appColors'
+import { colors } from '@/styles/appColors'
 
 export default function Expenses() {
 
