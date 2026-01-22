@@ -3,19 +3,19 @@ import { DataTable } from 'react-native-paper'
 import { Item } from '@/types/index'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import ContainerHandler from '../common/ContainerHandler'
-import { orderServices } from '@/utils/services'
+import { sortItems } from '@/utils/items'
 
-interface ServicesListProps {
+interface ItemsListProps {
     setSelectedItemForDeletion: React.Dispatch<React.SetStateAction<string>>
-    setDeleteServiceForm: React.Dispatch<React.SetStateAction<boolean>>
-    services: Item[]
+    setShowAboutItemCard: React.Dispatch<React.SetStateAction<boolean>>
+    items: Item[]
 }
 
-export default function ServicesList({ setSelectedItemForDeletion, setDeleteServiceForm, services }: ServicesListProps) {
+export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, items }: ItemsListProps) {
 
     const deleteService = (service: Item) => {
         setSelectedItemForDeletion(service._id)
-        setDeleteServiceForm(true)
+        setShowAboutItemCard(true)
     }
 
     const moneyFormat = (value: number) => {
@@ -25,7 +25,7 @@ export default function ServicesList({ setSelectedItemForDeletion, setDeleteServ
     }
 
     const getWhatIsItemColumn = () => {
-        switch (services[0].category) {
+        switch (items[0].category) {
             case 'product':
                 return 'Produto'
             case 'service':
@@ -37,23 +37,23 @@ export default function ServicesList({ setSelectedItemForDeletion, setDeleteServ
 
     return (
         <View>
-            <ContainerHandler filteredTargets={services}>
+            <ContainerHandler filteredTargets={items}>
                 <DataTable>
                     <DataTable.Header>
                         <DataTable.Title style={styles.text}>{getWhatIsItemColumn()}</DataTable.Title>
-                        {services[0].category !== 'budget' && (
+                        {items[0].category !== 'budget' && (
                             <DataTable.Title style={styles.text}>
-                                Valor 
-                                {services[0].category === 'product' ? ' (un)': null}
+                                Valor
+                                {items[0].category === 'product' ? ' (un)' : null}
                             </DataTable.Title>
                         )}
                     </DataTable.Header>
-                    {orderServices(services).map(service => {
+                    {sortItems(items).map(current => {
                         return (
-                            <DataTable.Row onPress={() => deleteService(service)} key={service._id}>
-                                <DataTable.Cell style={styles.text}>{service._id}</DataTable.Cell>
-                                {service.category !== 'budget' && (
-                                    <DataTable.Cell style={styles.text}>{moneyFormat(service.value)}</DataTable.Cell>
+                            <DataTable.Row onPress={() => deleteService(current)} key={current._id}>
+                                <DataTable.Cell style={styles.text}>{current._id}</DataTable.Cell>
+                                {current.category !== 'budget' && (
+                                    <DataTable.Cell style={styles.text}>{moneyFormat(current.value)}</DataTable.Cell>
                                 )}
                             </DataTable.Row>
                         )

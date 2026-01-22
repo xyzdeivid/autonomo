@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { Alert, BackHandler } from 'react-native'
 
 // custom functions
-import { getServicesByCategory, getCategoryAndSet } from '@/utils/services'
+import { getItemsByCategory } from '@/utils/items'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
@@ -17,7 +17,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // service components
 import AboutItemCard from '@/components/items/AboutItemCard'
-import ServicesContent from '@/components/items/ServicesContent'
+import { ItemsContent } from '@/components/items/ItemsContent'
 import useDeleteItem from '@/hooks/useDeleteItem'
 import { Item } from '@/types'
 import { colors } from '@/constants/appColors'
@@ -45,10 +45,6 @@ export default function Services() {
     const deleteItem = useDeleteItem().deleteItem
 
     useEffect(() => {
-        getCategoryAndSet(items, setCategory)
-    }, [items])
-
-    useEffect(() => {
         if (currentPage !== 'services') {
             setShowAddItemForm(false)
             setShowAboutItemCard(false)
@@ -56,11 +52,17 @@ export default function Services() {
     }, [currentPage])
 
     useEffect(() => {
+
         BackHandler.addEventListener('hardwareBackPress', () => {
             setShowAddItemForm(false)
             return null
         })
-    }, [])
+
+        if (items.length > 0) {
+            setCategory(items[0].category)
+        }
+
+    }, [items])
 
     const deleteService = async (id: string) => {
 
@@ -83,12 +85,12 @@ export default function Services() {
             <Container>
                 {
                     items[0]
-                        ? <ServicesContent
+                        ? <ItemsContent
                             category={category}
                             setCategory={setCategory}
-                            services={getServicesByCategory(items, category)}
+                            items={getItemsByCategory(items, category)}
                             setSelectedItemForDeletion={setSelectedItemForDeletion}
-                            setDeleteServiceForm={setShowAboutItemCard}
+                            setShowAboutItemCard={setShowAboutItemCard}
                         />
                         : <AnyInfoWarning
                             text='listamos todos os seus produtos ou serviços.'

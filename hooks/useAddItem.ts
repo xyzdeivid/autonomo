@@ -1,6 +1,5 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Item, Outflow } from '@/types/index'
-import { orderServices } from '@/utils/services'
 import { useContext } from 'react'
 import { addItemUseCase } from '@/services/addItemUseCase'
 
@@ -17,8 +16,7 @@ const useAddItem = () => {
         if (result.success) {
 
             // Atualizando itens na UI
-            const updatedServices = orderServices([...items, item])
-            setItems(updatedServices)
+            setItems(prev => [...prev, item])
 
             // Atualizando despesas na UI se necessário
             if (resaleOutflow) {
