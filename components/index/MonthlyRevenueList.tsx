@@ -1,8 +1,6 @@
 import { Outflow, Entry } from '@/types/index'
-import { moneyFormat } from '@/utils/common'
 import { getExpenses, getProfit, getSchedulingsRevenue } from '@/utils/revenue'
 import { StyleSheet, Text, View } from 'react-native'
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 
 interface RevenueListProps {
     filteredSchedulings: Entry[]
@@ -13,8 +11,8 @@ export default function RevenueList({ filteredSchedulings, filteredExpenses }: R
 
     const checkProfit = () => {
         return getProfit(filteredSchedulings, filteredExpenses) > 0
-            ? ['#000066', '#000099', '#CCCCFF']
-            : ['#CC0000', '#FF0000', '#FFCCCC']
+            ? '#1E3A8A'
+            : '#CC0000'
     }
 
     return (
@@ -24,15 +22,11 @@ export default function RevenueList({ filteredSchedulings, filteredExpenses }: R
                     <View
                         style={{
                             ...styles.infoContainer,
-                            borderColor: '#009900',
-                            backgroundColor: '#006600'
+                            backgroundColor: '#006600',
+                            borderBottomLeftRadius: 8
                         }}
                     >
-                        <View style={styles.label}>
-                            <FontAwesome6 name='circle-dot' size={12} color='#CCFFCC' />
-                            <Text style={{ ...styles.title, color: '#CCFFCC' }}>Receita</Text>
-                        </View>
-                        <Text style={{ color: '#CCFFCC' }}>{moneyFormat(getSchedulingsRevenue(filteredSchedulings))}</Text>
+                        <Text style={styles.title}>Receita</Text>
                     </View>
                 )
             }
@@ -42,32 +36,22 @@ export default function RevenueList({ filteredSchedulings, filteredExpenses }: R
                         style={{
                             ...styles.infoContainer,
                             backgroundColor: '#660000',
-                            borderColor: '#990000'
                         }}
                     >
-                        <View style={styles.label}>
-                            <FontAwesome6 name='circle-dot' size={12} color='#FFCCCC' />
-                            <Text style={{ ...styles.title, color: '#FFCCCC' }}>Despesa</Text>
-                        </View>
-                        <Text style={{ color: '#FFCCCC' }}>{moneyFormat(getExpenses(filteredExpenses))}</Text>
+                        <Text style={styles.title}>Despesa</Text>
                     </View>
                 )
             }
-            {getProfit(filteredSchedulings, filteredExpenses) !== 0 && (
+            {getProfit(filteredSchedulings, filteredExpenses) > 0 && (
                 <View
                     style={{
                         ...styles.infoContainer,
-                        backgroundColor: checkProfit()[0],
-                        borderColor: checkProfit()[1]
+                        backgroundColor: checkProfit(),
+                        borderBottomRightRadius: 8
                     }}
                 >
-                    <View style={styles.label}>
-                        <FontAwesome6 name='circle-dot' size={12} color={checkProfit()[2]} />
-                        <Text style={{ ...styles.title, color: checkProfit()[2] }}>Saldo</Text>
-                    </View>
-                    <Text style={{ color: checkProfit()[2] }}>{moneyFormat(getProfit(filteredSchedulings, filteredExpenses))}</Text>
+                    <Text style={styles.title}>Saldo</Text>
                 </View>
-
             )}
         </View>
     )
@@ -76,27 +60,18 @@ export default function RevenueList({ filteredSchedulings, filteredExpenses }: R
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        marginTop: 20,
+        gap: 16,
+        justifyContent: 'center'
     },
     infoContainer: {
-        display: 'flex',
+        width: 68,
+        paddingVertical: 10,
         alignItems: 'center',
-        padding: 12,
-        borderRadius: 8,
-        borderWidth: 2
-    },
-    label: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 6
+        overflow: 'hidden'
     },
     title: {
         fontWeight: 'bold',
-        color: 'white',
-        marginStart: 4
+        color: 'white'
     }
 })

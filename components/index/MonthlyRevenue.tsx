@@ -8,7 +8,8 @@ import { DocsContext } from '@/context/DocsContext'
 
 import { filterSchedulings, filterExpenses } from '@/utils/common'
 import FinancePeriodButtons from './FinancePeriodButtons'
-import InfoTitle from '../common/InfoTitle'
+import InfoTitle from './InfoTitle'
+import { Hr } from './Hr'
 
 interface MonthlyRevenueProps {
     period: string
@@ -26,6 +27,11 @@ export default function MonthlyRevenue({ period, setPeriod }: MonthlyRevenueProp
     return (
         <View>
             <InfoTitle text='Finanças Gerais' />
+            {
+                filterSchedulings(schedulings, selectedMonth, currentYear)[0] &&
+                <FinancePeriodButtons period={period} setPeriod={setPeriod} />
+            }
+            <Hr />
             <RevenueChart
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth, currentYear)}
                 filteredExpenses={filterExpenses(expenses, selectedMonth, currentYear)}
@@ -34,18 +40,6 @@ export default function MonthlyRevenue({ period, setPeriod }: MonthlyRevenueProp
                 filteredSchedulings={filterSchedulings(schedulings, selectedMonth, currentYear)}
                 filteredExpenses={filterExpenses(expenses, selectedMonth, currentYear)}
             />
-            <View style={{
-                width: '85%',
-                height: 1,
-                backgroundColor: 'lightgray',
-                marginHorizontal: 'auto',
-                marginTop: 20,
-                marginBottom: 24
-            }} />
-            {
-                filterSchedulings(schedulings, selectedMonth, currentYear)[0] &&
-                <FinancePeriodButtons period={period} setPeriod={setPeriod} />
-            }
         </View>
     )
 

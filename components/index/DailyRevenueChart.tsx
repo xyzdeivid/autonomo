@@ -3,7 +3,6 @@ import { filterSchedulings, moneyFormat } from '@/utils/common'
 import { getDays } from '@/utils/info'
 
 import { View, Text, StyleSheet } from 'react-native'
-import { BarChart } from 'react-native-gifted-charts'
 
 import { DocsContext } from '@/context/DocsContext'
 
@@ -27,32 +26,9 @@ export default function DailyRevenueChart() {
         })
     }
 
-    const findTheMostProfitableDay = () => {
-        const values = getDays(filteredSchedulings).map(day => {
-            return day.amount
-        })
-        return values.sort((a, b) => b - a)[0]
-    }
-
     return (
         <View style={styles.container}>
-            <BarChart
-                data={data()}
-                cappedBars
-                capColor='#0080FF'
-                capThickness={4}
-                frontColor='#66B2FF'
-                barBorderTopLeftRadius={3}
-                barBorderTopRightRadius={3}
-                maxValue={findTheMostProfitableDay() + 20}
-                hideYAxisText
-                hideRules
-                yAxisThickness={0}
-                xAxisThickness={0}
-                xAxisColor='lightgray'
-                xAxisLabelTextStyle={{ color: '#000000' }}
-                barWidth={42}
-            />
+            <Text>Ainda não disponível!</Text>
         </View>
     )
 

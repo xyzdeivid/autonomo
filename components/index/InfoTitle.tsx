@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons'
 import { useContext } from 'react'
 import { months } from '@/constants/common'
 import { getMonthName } from '@/utils/common'
 import { DocsContext } from '@/context/DocsContext'
+import { colors } from '@/styles/appColors'
 
 interface InfoTitleProps {
     text: string
@@ -17,7 +17,6 @@ export default function InfoTitle({ text }: InfoTitleProps) {
 
     return (
         <View style={styles.titleContainer}>
-            <FontAwesome name='info-circle' size={16} color='#FFFFFF' />
             <Text style={styles.titleText}>
                 {text} de {getMonthName(months, selectedMonth)}/{currentYear}
             </Text>
@@ -29,20 +28,17 @@ export default function InfoTitle({ text }: InfoTitleProps) {
 const styles = StyleSheet.create({
 
     titleContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 28,
-        marginBottom: 24,
-        backgroundColor: '#000000',
-        marginHorizontal: 16,
-        padding: 10,
-        borderRadius: 10
+        alignSelf: 'flex-start',
+        marginTop: 24,
+        marginBottom: 12,
+        backgroundColor: colors.home.max,
+        padding: 16,
+        borderTopRightRadius: 8,
+        borderBottomRightRadius: 8
     },
 
     titleText: {
-        fontSize: 16,
-        marginStart: 8,
+        fontSize: 20,
         color: '#FFFFFF'
     }
 

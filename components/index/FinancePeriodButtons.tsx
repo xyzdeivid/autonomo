@@ -1,26 +1,24 @@
+import { colors } from '@/styles/appColors'
 import { View, Pressable, Text, StyleSheet } from 'react-native'
 
 interface FinancePeriodButtonsProps {
     period: string
     setPeriod: React.Dispatch<React.SetStateAction<string>>
-    mgTop?: number
 }
 
-export default function FinancePeriodButtons({ period, setPeriod, mgTop }: FinancePeriodButtonsProps) {
+export default function FinancePeriodButtons({ period, setPeriod }: FinancePeriodButtonsProps) {
 
     const checkPeriod = (button: string) => {
         return period === button
-            ? '#000000'
-            : '#404040'
+            ? colors.home.max
+            : colors.home.midMax
     }
 
     return (
-            <View style={{ ...styles.buttonsContainer, marginTop: mgTop ? mgTop : 0 }}>
+            <View style={styles.buttonsContainer}>
                 <Pressable
                     style={{
-                        ...styles.button, backgroundColor: checkPeriod('monthly'),
-                        borderTopLeftRadius: 4,
-                        borderBottomLeftRadius: 4
+                        ...styles.button, backgroundColor: checkPeriod('monthly')
                     }}
                     onPress={() => setPeriod('monthly')}
                 >
@@ -44,8 +42,7 @@ export default function FinancePeriodButtons({ period, setPeriod, mgTop }: Finan
 const styles = StyleSheet.create({
     buttonsContainer: {
         display: 'flex',
-        flexDirection: 'row',
-        marginStart: 20
+        flexDirection: 'row'
     },
     button: {
         paddingHorizontal: 8,
