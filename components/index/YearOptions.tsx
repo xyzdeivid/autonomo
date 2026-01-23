@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import YearPicker from './YearOptions/YearPicker'
-import OpenPickerButton from './YearOptions/OpenPickerButton'
+import YearPicker from './YearPicker'
+import OpenPickerButton from './OpenPickerButton'
 
 interface YearOptionsProps {
     availableYears: string[]
