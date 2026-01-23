@@ -22,7 +22,7 @@ import { EditAmountCard } from '../common/EditAmountCard'
 
 interface AboutItemCardProps {
     item: Item
-    deleteFunction: (id: string) => void
+    deleteFunction: (id: string, category: string) => void
     setFormOff: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -222,7 +222,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                     <ConfirmDelete
                         name={item._id}
                         deleteFunction={() => {
-                            deleteFunction(item._id)
+                            deleteFunction(item._id, item.category)
                         }}
                         setConfirmDelete={setConfirmDelete}
                     />

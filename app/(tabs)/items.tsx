@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
-import { BackHandler } from 'react-native'
+import { useContext, useEffect, useRef, useState } from 'react'
 
-import { getItemsByCategory } from '@/utils/items'
+import { getCategoryOnDeletedItem, getCategoryOnTheFirstRun, getItemsByCategory } from '@/utils/items'
 
 import { DocsContext } from '@/context/DocsContext'
 
@@ -28,6 +27,8 @@ export default function Items() {
     const [showAboutItemCard, setShowAboutItemCard] = useState(false)
     const [selectedItemForDeletion, setSelectedItemForDeletion] = useState('')
 
+    const hasRun = useRef(false)
+
     // Malabarismo por que atualmente o id é o nome :)
     const itemForDeletion: Item = items.find(e => e._id === selectedItemForDeletion) || {} as Item
 
@@ -36,6 +37,7 @@ export default function Items() {
     const [loadingScreen, setLoadingScreen] = useState(false)
 
     const [newItemCategory, setNewItemCategory] = useState('')
+    const [deletedItemCategory, setDeletedItemCategory] = useState('')
 
     const deleteItem = useDeleteItem().deleteItem
 
@@ -48,18 +50,23 @@ export default function Items() {
 
     useEffect(() => {
 
-        BackHandler.addEventListener('hardwareBackPress', () => {
-            setShowAddItemForm(false)
-            return null
-        })
-
-        if (items.length > 0) {
-            setCategory(items[0].category)
+        // set categoria padrão ao abrir app pela primeira vez
+        if (hasRun.current === false) {
+            setCategory(getCategoryOnTheFirstRun(items))
+            hasRun.current = true
+            return
         }
 
-    }, [items])
+        // set categoria do último item deletado se possível
+        if (deletedItemCategory) {
+            setCategory(getCategoryOnDeletedItem(items, deletedItemCategory))
+            setDeletedItemCategory('')
+            return
+        }
 
-    const deleteService = async (id: string) => {
+    }, [items, deletedItemCategory])
+
+    const deleteService = async (id: string, category: string) => {
 
         setLoadingScreen(true)
 
@@ -67,6 +74,7 @@ export default function Items() {
 
         if (!result.success) showErrorAtSubmitData(result.error)
 
+        setDeletedItemCategory(category)
         setShowAboutItemCard(false)
         setLoadingScreen(false)
 
@@ -111,13 +119,14 @@ export default function Items() {
                         categorySelected={newItemCategory}
                         setShowItemCategoryCard={setShowItemCategoryCard}
                         setShowAddItemForm={setShowAddItemForm}
+                        setCategory={setCategory}
                     />
                 }
                 {
                     showAboutItemCard && (
                         <AboutItemCard
                             item={itemForDeletion}
-                            deleteFunction={deleteService}
+                            deleteFunction={(id, category) => deleteService(id, category)}
                             setFormOff={setShowAboutItemCard}
                         />
                     )

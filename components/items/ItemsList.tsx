@@ -14,7 +14,7 @@ interface ItemsListProps {
 
 export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, items, category }: ItemsListProps) {
 
-    const deleteService = (service: Item) => {
+    const showAboutItemCard = (service: Item) => {
         setSelectedItemForDeletion(service._id)
         setShowAboutItemCard(true)
     }
@@ -49,7 +49,7 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, it
                     </DataTable.Header>
                     {sortItems(items).map(current => {
                         return (
-                            <DataTable.Row onPress={() => deleteService(current)} key={current._id}>
+                            <DataTable.Row onPress={() => showAboutItemCard(current)} key={current._id}>
                                 <DataTable.Cell style={styles.text}>{current._id}</DataTable.Cell>
                                 <DataTable.Cell style={styles.text}>
                                     {current.category !== 'budget'

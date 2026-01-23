@@ -33,8 +33,6 @@ export function SelectCategoryButton({
         outputRange: [0, 100]
     })
 
-    console.log(category)
-
     return (
         <View style={styles.container}>
             <Animated.View

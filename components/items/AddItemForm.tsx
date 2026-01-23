@@ -20,9 +20,10 @@ interface AddServiceFormProps {
     categorySelected: string
     setShowItemCategoryCard: React.Dispatch<React.SetStateAction<boolean>>
     setShowAddItemForm: React.Dispatch<React.SetStateAction<boolean>>
+    setCategory: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShowAddItemForm }: AddServiceFormProps) {
+export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShowAddItemForm, setCategory }: AddServiceFormProps) {
 
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
@@ -70,13 +71,11 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
 
             Alert.alert('Erro', getErrorMessage(result.error))
 
-        } else {
-
-            setShowItemCategoryCard(false)
-            setShowAddItemForm(false)
-
         }
 
+        setCategory(categorySelected === 'budget' ? 'service' : categorySelected)
+        setShowItemCategoryCard(false)
+        setShowAddItemForm(false)
         setLoadingScreen(false)
 
     }
