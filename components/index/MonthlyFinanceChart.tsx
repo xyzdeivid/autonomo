@@ -1,10 +1,9 @@
 import { Entry, Outflow } from '@/types'
 import { findGreaterData } from '@/utils/info'
-import { View, StyleSheet, Animated, Text } from 'react-native'
-import { useEffect, useRef } from 'react'
+import { View, StyleSheet, Text, Animated, Dimensions } from 'react-native'
 import { moneyFormat } from '@/utils/common'
 import { calculateMonthlyIncome, calculateMonthlyExpenses, calculateMonthlyProfit } from '@/rules/indexRules'
-
+import { useEffect, useRef } from 'react'
 
 interface MonthlyFinanceChartProps {
     filteredSchedulings: Entry[]
@@ -15,6 +14,17 @@ export function MonthlyFinanceChart({
     filteredSchedulings,
     filteredExpenses
 }: MonthlyFinanceChartProps) {
+
+    const screenWidth = Dimensions.get('window').width
+    const slideAnim = useRef(new Animated.Value(-screenWidth)).current
+
+    useEffect(() => {
+        Animated.timing(slideAnim, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true
+        }).start()
+    }, [slideAnim])
 
     const revenue = calculateMonthlyIncome(filteredSchedulings)
     const expenses = calculateMonthlyExpenses(filteredExpenses)
@@ -43,85 +53,60 @@ export function MonthlyFinanceChart({
         }
     ].filter(Boolean)
 
-    const animatedValues = useRef<Animated.Value[]>([])
-
-    if (animatedValues.current.length !== bars.length) {
-        animatedValues.current = bars.map(
-            (_, index) => animatedValues.current[index] || new Animated.Value(0)
-        )
-    }
-
-    useEffect(() => {
-
-        animatedValues.current.forEach(anim => anim.setValue(0))
-
-        Animated.stagger(
-            120,
-            animatedValues.current.map(anim =>
-                Animated.timing(anim, {
-                    toValue: 1,
-                    duration: 400,
-                    useNativeDriver: false
-                })
-            )
-        ).start()
-
-    }, [bars.length, revenue, expenses, profit])
-
-
     return (
-        <View style={styles.chart}>
-            {bars.map((bar: any, index) => {
-                const heightPercent = (bar.value / maxValue) * 100
-                const animatedHeight = animatedValues.current[index].interpolate({
-                    inputRange: [0, 1],
-                    outputRange: ['0%', `${heightPercent}%`]
-                })
-                return (
-                    <View key={index} style={styles.barWrapper}>
-                        <View style={styles.barContainer}>
-                            <Text style={{ color: bar.capColor, fontWeight: '500', textAlign: 'center' }}>{moneyFormat(bar.value)}</Text>
-                            <Animated.View
-                                style={[
-                                    styles.bar,
-                                    {
-                                        height: animatedHeight,
-                                        backgroundColor: bar.color
-                                    }
-                                ]}
-                            >
+        <Animated.View
+            style={{
+                flex: 1,
+                transform: [{ translateX: slideAnim }]
+            }}
+        >
+            <View style={styles.chart}>
+                {bars.map((bar: any, index) => {
+                    const heightPercent = (bar.value / maxValue) * 100
+                    return (
+                        <View key={index} style={styles.barWrapper}>
+                            <View style={styles.barContainer}>
+                                <Text style={{ color: bar.capColor, fontWeight: '500', textAlign: 'center' }}>
+                                    {moneyFormat(bar.value)}
+                                </Text>
                                 <View
                                     style={[
-                                        styles.cap,
-                                        { backgroundColor: bar.capColor }
+                                        styles.bar,
+                                        {
+                                            height: `${heightPercent}%`,
+                                            backgroundColor: bar.color
+                                        }
                                     ]}
-                                />
-                                <Text style={styles.barLabel}>
-                                    {bar.label}
-                                </Text>
-                            </Animated.View>
+                                >
+                                    <View
+                                        style={[
+                                            styles.cap,
+                                            { backgroundColor: bar.capColor }
+                                        ]}
+                                    />
+                                </View>
+                            </View>
                         </View>
-                    </View>
-                )
-            })}
-        </View>
+                    )
+                })}
+            </View>
+            <View style={styles.labelsContainer}>
+                {revenue > 0 && <Text style={styles.label}>Receita</Text>}
+                {expenses > 0 && <Text style={styles.label}>Despesa</Text>}
+                {profit > 0 && <Text style={styles.label}>Saldo</Text>}
+            </View>
+        </Animated.View>
     )
 }
 
 const styles = StyleSheet.create({
 
     chart: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'flex-end',
         justifyContent: 'center',
-        height: 200,
-        gap: 16,
-        backgroundColor: '#F5F7F8',
-        paddingTop: 36,
-        marginHorizontal: 24,
-        borderRadius: 12,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: '#0000001A'
+        gap: 16
     },
 
     barWrapper: {
@@ -151,13 +136,16 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 8
     },
 
-    barLabel: {
-        position: 'absolute',
-        bottom: 6,
-        width: '100%',
-        textAlign: 'center',
-        fontWeight: '600',
-        color: '#FFFFFF',
+    labelsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 16,
+        paddingTop: 8
+    },
+
+    label: {
+        width: 72,
+        textAlign: 'center'
     }
 
 })

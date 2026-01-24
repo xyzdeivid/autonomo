@@ -4,17 +4,9 @@ import { MonthlyFinanceChart } from './MonthlyFinanceChart'
 
 import { DocsContext } from '@/context/DocsContext'
 
-import FinancePeriodButtons from './FinancePeriodButtons'
-import InfoTitle from './InfoTitle'
-import { Hr } from './Hr'
 import { filterExpensesByMonth, filterIncomesByMonth } from '@/rules/domainRules'
 
-interface MonthlyFinanceProps {
-    period: string
-    setPeriod: React.Dispatch<React.SetStateAction<string>>
-}
-
-export function MonthlyFinance({ period, setPeriod }: MonthlyFinanceProps) {
+export function MonthlyFinance() {
 
     const appDocs = useContext(DocsContext)
     const [entries] = appDocs.entries
@@ -26,18 +18,10 @@ export function MonthlyFinance({ period, setPeriod }: MonthlyFinanceProps) {
     const filteredExpenses = filterExpensesByMonth(outflows, selectedMonth, currentYear)
 
     return (
-        <>
-            <InfoTitle text='Finanças Gerais' />
-            {
-                filteredIncomes[0] &&
-                <FinancePeriodButtons period={period} setPeriod={setPeriod} />
-            }
-            <Hr />
-            <MonthlyFinanceChart
-                filteredSchedulings={filteredIncomes}
-                filteredExpenses={filteredExpenses}
-            />
-        </>
+        <MonthlyFinanceChart
+            filteredSchedulings={filteredIncomes}
+            filteredExpenses={filteredExpenses}
+        />
     )
 
 }
