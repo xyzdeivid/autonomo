@@ -1,15 +1,15 @@
 import { View } from 'react-native'
 import InfoTitle from './InfoTitle'
-import DailyRevenueChart from './DailyRevenueChart'
+import { DailyFinanceChart } from './DailyFinanceChart'
 import FinancePeriodButtons from './FinancePeriodButtons'
 import { Hr } from './Hr'
 
-interface DailyRevenueProps {
+interface DailyFinanceProps {
     period: string
     setPeriod: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function DailyRevenue({ period, setPeriod }: DailyRevenueProps) {
+export function DailyFinance({ period, setPeriod }: DailyFinanceProps) {
 
     return (
         <View>
@@ -19,7 +19,7 @@ export default function DailyRevenue({ period, setPeriod }: DailyRevenueProps) {
                 setPeriod={setPeriod}
             />
             <Hr />
-            <DailyRevenueChart />
+            <DailyFinanceChart />
         </View>
     )
 

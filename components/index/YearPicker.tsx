@@ -24,7 +24,7 @@ export default function YearPicker({ availableYears, setShowPicker }: YearPicker
             })
         ]).start()
 
-    }, [])
+    }, [slideAnim])
 
     const closePicker = () => {
         Animated.parallel([

@@ -1,5 +1,5 @@
 import { Entry as Scheduling, Outflow as Expense } from '@/types/index'
-import { getExpenses, getSchedulingsRevenue } from './revenue'
+import { calculateMonthlyIncome, calculateMonthlyExpenses } from '@/rules/indexRules'
 
 export const getDays = (filteredSchedulings: Scheduling[]) => {
 
@@ -35,10 +35,10 @@ export const getDays = (filteredSchedulings: Scheduling[]) => {
 }
 
 const getData = (schedulings: Scheduling[], expenses: Expense[]) => {
-    if (getSchedulingsRevenue(schedulings) < getExpenses(expenses)) {
-        return getExpenses(expenses)
+    if (calculateMonthlyIncome(schedulings) < calculateMonthlyExpenses(expenses)) {
+        return calculateMonthlyExpenses(expenses)
     } else {
-        return getSchedulingsRevenue(schedulings)
+        return calculateMonthlyIncome(schedulings)
     }
 }
 

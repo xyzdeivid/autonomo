@@ -1,21 +1,22 @@
 import { useContext } from 'react'
-import { filterSchedulings, moneyFormat } from '@/utils/common'
+import { moneyFormat } from '@/utils/common'
 import { getDays } from '@/utils/info'
 
 import { View, Text, StyleSheet } from 'react-native'
 
 import { DocsContext } from '@/context/DocsContext'
+import { filterIncomesByMonth } from '@/rules/domainRules'
 
-export default function DailyRevenueChart() {
+export function DailyFinanceChart() {
 
     const appDocs = useContext(DocsContext)
-    const [schedulings] = appDocs.entries
+    const [entries] = appDocs.entries
     const [currentYear] = appDocs.currentYear
     const [selectedMonth] = appDocs.selectedMonth
-    const filteredSchedulings = filterSchedulings(schedulings, selectedMonth, currentYear)
+    const filteredIncomes = filterIncomesByMonth(entries, selectedMonth, currentYear)
 
     const data = () => {
-        return getDays(filteredSchedulings).map(day => {
+        return getDays(filteredIncomes).map(day => {
             return {
                 label: `Dia ${day.day}`,
                 value: day.amount,

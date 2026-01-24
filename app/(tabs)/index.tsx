@@ -16,7 +16,7 @@ import MonthInput from '@/components/common/MonthInput'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 // info components
-import Revenue from '@/components/index/Revenue'
+import { Finance } from '@/components/index/Finance'
 
 import { colors } from '@/styles/appColors'
 import { Alert, Text, View } from 'react-native'
@@ -82,7 +82,7 @@ export default function Info() {
             {
                 filterSchedulings(schedulings, selectedMonth, currentYear)[0]
                     || filterExpenses(expenses, selectedMonth, currentYear)[0]
-                    ? <Revenue />
+                    ? <Finance />
                     : null
             }
             <AddItemButton
@@ -99,11 +99,11 @@ export default function Info() {
                             const anyItemsAvailable = areThereAnyItemsAvailable(items)
                             if (anyItemsAvailable) {
                                 setShowAddEntryForm(true)
-                            }else {
+                            } else {
                                 Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
                             }
                         }}
-                        setShowAddOutflowForm={()=> setShowAddOutflowForm(true)}
+                        setShowAddOutflowForm={() => setShowAddOutflowForm(true)}
                     />
                 )
             }
