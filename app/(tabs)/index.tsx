@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react'
 
 // custom functions
-import { areThereAnyItemsAvailable, filterExpenses, filterSchedulings, getAvailableMonths } from '@/utils/common'
+import { areThereAnyItemsAvailable, getAvailableMonths } from '@/utils/common'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
@@ -15,21 +15,26 @@ import Container from '@/components/common/Container'
 import MonthInput from '@/components/common/MonthInput'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
-// info components
-import { Finance } from '@/components/index/Finance'
-
 import { colors } from '@/styles/appColors'
-import { Alert, Text, View } from 'react-native'
+import { Alert, Text, View, StyleSheet } from 'react-native'
 import AddItemButton from '@/components/common/AddItemButton'
 import { EntryOrOutflowOptions } from '@/components/index/EntryOrOutflowOptions'
 import AddEntryForm from '@/components/entries/AddEntryForm'
 import AddOutflowForm from '@/components/outflows/AddOutflowForm'
+import { InsightSelectionButtons } from '@/components/index/InsightSelectionButtons'
+import InfoTitle from '@/components/index/InfoTitle'
+import { Hr } from '@/components/index/Hr'
+import { filterExpensesByMonth, filterIncomesByMonth } from '@/rules/domainRules'
+import { MonthlyFinanceChart } from '@/components/index/MonthlyFinanceChart'
+import { DailyFinanceChart } from '@/components/index/DailyFinanceChart'
 
 export default function Info() {
 
+    const [insightToShow, setInsightToShow] = useState('monthly')
+
     const appDocs = useContext(DocsContext)
-    const [schedulings] = appDocs.entries
-    const [expenses] = appDocs.outflows
+    const [entries] = appDocs.entries
+    const [outflows] = appDocs.outflows
     const [items] = appDocs.items
     const [currentYear, setCurrentYear] = appDocs.currentYear
     const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
@@ -40,15 +45,15 @@ export default function Info() {
 
     const docsLoaded = appDocs.docsLoaded
 
-    const filteredEntries = filterSchedulings(schedulings, selectedMonth, currentYear)
-    const filteredExpenses = filterExpenses(expenses, selectedMonth, currentYear)
-    const availableMonths = getAvailableMonths(schedulings, expenses, currentYear, months)
+    const filteredIncomes = filterIncomesByMonth(entries, selectedMonth, currentYear)
+    const filteredExpenses = filterExpensesByMonth(outflows, selectedMonth, currentYear)
+    const availableMonths = getAvailableMonths(entries, outflows, currentYear, months)
 
-    const yearEntries = schedulings.filter(entry => (
+    const yearEntries = entries.filter(entry => (
         entry.date.split('-')[0] === currentYear
     ))
 
-    const yearExpenses = expenses.filter(expense => (
+    const yearExpenses = outflows.filter(expense => (
         expense.date.split('-')[0] === currentYear
     ))
 
@@ -58,16 +63,40 @@ export default function Info() {
             setCurrentYear(String(new Date().getFullYear()))
         }
 
-        if (!filteredEntries[0] && !filteredExpenses[0]) {
+        if (!filteredIncomes[0] && !filteredExpenses[0]) {
             const lastMonth = availableMonths.length - 1
             setSelectedMonth(availableMonths[lastMonth][1])
         }
 
-    }, [schedulings, expenses,
+    }, [entries, outflows,
         availableMonths, filteredExpenses,
-        filteredEntries, setCurrentYear,
+        filteredIncomes, setCurrentYear,
         setSelectedMonth, yearEntries,
         yearExpenses])
+
+    const getContent = () => {
+
+        switch (insightToShow) {
+
+            case 'monthly':
+                return <MonthlyFinanceChart
+                    filteredSchedulings={filteredIncomes}
+                    filteredExpenses={filteredExpenses}
+                />
+
+            case 'daily':
+                return <DailyFinanceChart
+                    filteredIncomes={filteredIncomes}
+                />
+
+        }
+
+    }
+
+    function getTitle(): string {
+        if (insightToShow === 'monthly') return 'Finanças Gerais'
+        return 'Receita Diária'
+    }
 
     return (
         <Container>
@@ -79,12 +108,19 @@ export default function Info() {
             {
                 yearEntries[0] && (<MonthInput dropdownIconColor={colors.home.mid} />)
             }
-            {
-                filterSchedulings(schedulings, selectedMonth, currentYear)[0]
-                    || filterExpenses(expenses, selectedMonth, currentYear)[0]
-                    ? <Finance />
-                    : null
-            }
+            <InsightSelectionButtons
+                insightToShow={insightToShow}
+                setInsightToShow={setInsightToShow}
+            />
+            <InfoTitle text={getTitle()} />
+            <Hr />
+            <View style={{
+                ...styles.container,
+                paddingTop: insightToShow === 'monthly' ? 32 : 0,
+                paddingBottom: insightToShow === 'monthly' ? 8 : 0
+            }}>
+                {getContent()}
+            </View>
             <AddItemButton
                 iconColor={colors.home.max}
                 bgColor={colors.home.min}
@@ -119,8 +155,8 @@ export default function Info() {
             }
             {
                 docsLoaded
-                    && !filterSchedulings(schedulings, selectedMonth, currentYear)[0]
-                    && !filterExpenses(expenses, selectedMonth, currentYear)[0]
+                    && !filteredIncomes[0]
+                    && !filteredExpenses[0]
                     ? <AnyInfoWarning
                         text='te informamos sobre seu balanço financeiro mensal.'
                         titleBgColor={colors.home.max}
@@ -131,3 +167,18 @@ export default function Info() {
     )
 
 }
+
+const styles = StyleSheet.create({
+
+    container: {
+        backgroundColor: '#F5F7F8',
+        marginHorizontal: 24,
+        borderRadius: 12,
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: '#0000001A',
+        height: 300,
+        justifyContent: 'center',
+        overflow: 'hidden'
+    }
+
+})

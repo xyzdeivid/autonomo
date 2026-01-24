@@ -29,8 +29,6 @@ const styles = StyleSheet.create({
 
     titleContainer: {
         alignSelf: 'flex-start',
-        marginTop: 24,
-        marginBottom: 12,
         backgroundColor: colors.home.max,
         padding: 16,
         borderTopRightRadius: 8,

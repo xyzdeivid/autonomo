@@ -1,15 +1,18 @@
 import { LineChart } from 'react-native-gifted-charts'
 import { getDays } from '@/utils/info'
-import { useContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Animated, Dimensions } from 'react-native'
 
 
-import { DocsContext } from '@/context/DocsContext'
-import { filterIncomesByMonth } from '@/rules/domainRules'
 import { colors } from '@/styles/appColors'
 import { moneyFormat } from '@/utils/common'
+import { Entry } from '@/types'
 
-export function DailyFinanceChart() {
+interface DailyFinanceChartProps {
+    filteredIncomes: Entry[]
+}
+
+export function DailyFinanceChart({ filteredIncomes }: DailyFinanceChartProps) {
 
     const screenWidth = Dimensions.get('window').width
     const slideAnim = useRef(new Animated.Value(screenWidth)).current
@@ -21,13 +24,6 @@ export function DailyFinanceChart() {
             useNativeDriver: true
         }).start()
     }, [slideAnim])
-
-
-    const appDocs = useContext(DocsContext)
-    const [entries] = appDocs.entries
-    const [currentYear] = appDocs.currentYear
-    const [selectedMonth] = appDocs.selectedMonth
-    const filteredIncomes = filterIncomesByMonth(entries, selectedMonth, currentYear)
 
     const data = () => {
         return getDays(filteredIncomes).map(day => {

@@ -8,7 +8,7 @@ export function Hr() {
                 height: 1,
                 backgroundColor: '#0000001A',
                 marginVertical: 24,
-                marginHorizontal: 10
+                marginHorizontal: 36
             }}
         />
     )
