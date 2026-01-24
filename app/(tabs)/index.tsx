@@ -16,21 +16,15 @@ import MonthInput from '@/components/common/MonthInput'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 import { colors } from '@/styles/appColors'
-import { Alert, Text, View, StyleSheet } from 'react-native'
+import { Alert, Text, View } from 'react-native'
 import AddItemButton from '@/components/common/AddItemButton'
 import { EntryOrOutflowOptions } from '@/components/index/EntryOrOutflowOptions'
 import AddEntryForm from '@/components/entries/AddEntryForm'
 import AddOutflowForm from '@/components/outflows/AddOutflowForm'
-import { InsightSelectionButtons } from '@/components/index/InsightSelectionButtons'
-import InfoTitle from '@/components/index/InfoTitle'
-import { Hr } from '@/components/index/Hr'
 import { filterExpensesByMonth, filterIncomesByMonth } from '@/rules/domainRules'
-import { MonthlyFinanceChart } from '@/components/index/MonthlyFinanceChart'
-import { DailyFinanceChart } from '@/components/index/DailyFinanceChart'
+import { Insight } from '@/components/index/Insight'
 
 export default function Info() {
-
-    const [insightToShow, setInsightToShow] = useState('monthly')
 
     const appDocs = useContext(DocsContext)
     const [entries] = appDocs.entries
@@ -74,30 +68,6 @@ export default function Info() {
         setSelectedMonth, yearEntries,
         yearExpenses])
 
-    const getContent = () => {
-
-        switch (insightToShow) {
-
-            case 'monthly':
-                return <MonthlyFinanceChart
-                    filteredSchedulings={filteredIncomes}
-                    filteredExpenses={filteredExpenses}
-                />
-
-            case 'daily':
-                return <DailyFinanceChart
-                    filteredIncomes={filteredIncomes}
-                />
-
-        }
-
-    }
-
-    function getTitle(): string {
-        if (insightToShow === 'monthly') return 'Finanças Gerais'
-        return 'Receita Diária'
-    }
-
     return (
         <Container>
             {!docsLoaded && (
@@ -108,19 +78,19 @@ export default function Info() {
             {
                 yearEntries[0] && (<MonthInput dropdownIconColor={colors.home.mid} />)
             }
-            <InsightSelectionButtons
-                insightToShow={insightToShow}
-                setInsightToShow={setInsightToShow}
-            />
-            <InfoTitle text={getTitle()} />
-            <Hr />
-            <View style={{
-                ...styles.container,
-                paddingTop: insightToShow === 'monthly' ? 32 : 0,
-                paddingBottom: insightToShow === 'monthly' ? 8 : 0
-            }}>
-                {getContent()}
-            </View>
+            {
+                docsLoaded
+                    && !filteredIncomes[0]
+                    && !filteredExpenses[0]
+                    ? <AnyInfoWarning
+                        text='te informamos sobre seu balanço financeiro mensal.'
+                        titleBgColor={colors.home.max}
+                        textBgColor={colors.home.min}
+                    /> : <Insight
+                        filteredIncomes={filteredIncomes}
+                        filteredExpenses={filteredExpenses}
+                    />
+            }
             <AddItemButton
                 iconColor={colors.home.max}
                 bgColor={colors.home.min}
@@ -153,32 +123,7 @@ export default function Info() {
                     <AddOutflowForm setAddExpenseForm={setShowAddOutflowForm} />
                 )
             }
-            {
-                docsLoaded
-                    && !filteredIncomes[0]
-                    && !filteredExpenses[0]
-                    ? <AnyInfoWarning
-                        text='te informamos sobre seu balanço financeiro mensal.'
-                        titleBgColor={colors.home.max}
-                        textBgColor={colors.home.min}
-                    /> : null
-            }
         </Container>
     )
 
 }
-
-const styles = StyleSheet.create({
-
-    container: {
-        backgroundColor: '#F5F7F8',
-        marginHorizontal: 24,
-        borderRadius: 12,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: '#0000001A',
-        height: 300,
-        justifyContent: 'center',
-        overflow: 'hidden'
-    }
-
-})
