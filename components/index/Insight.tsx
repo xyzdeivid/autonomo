@@ -1,11 +1,11 @@
 import { View, StyleSheet } from 'react-native'
-import { Hr } from './Hr'
 import InfoTitle from './InfoTitle'
 import { InsightSelectionButtons } from './InsightSelectionButtons'
 import { MonthlyFinanceChart } from './MonthlyFinanceChart'
 import { DailyFinanceChart } from './DailyFinanceChart'
 import { Entry, Outflow } from '@/types'
 import { useState } from 'react'
+import { Hr } from './Hr'
 
 interface InsightProps {
     filteredIncomes: Entry[]

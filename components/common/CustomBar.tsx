@@ -69,7 +69,7 @@ function TabButton({
             <Text
                 style={{
                     fontSize: 12,
-                    color: '#8a8c8f',
+                    color: '#8A8C8F',
                     fontWeight: '600',
                 }}
             >
@@ -86,7 +86,7 @@ type Props = Parameters<
 
 const TAB_CONFIG = {
     index: {
-        label: 'Balanço',
+        label: 'Início',
         icon: 'stats-chart',
         color: colors.home.max,
     },

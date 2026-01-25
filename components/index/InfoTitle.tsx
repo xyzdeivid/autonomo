@@ -3,7 +3,6 @@ import { useContext } from 'react'
 import { months } from '@/constants/common'
 import { getMonthName } from '@/utils/common'
 import { DocsContext } from '@/context/DocsContext'
-import { colors } from '@/styles/appColors'
 
 interface InfoTitleProps {
     text: string
@@ -28,16 +27,12 @@ export default function InfoTitle({ text }: InfoTitleProps) {
 const styles = StyleSheet.create({
 
     titleContainer: {
-        alignSelf: 'flex-start',
-        backgroundColor: colors.home.max,
-        padding: 16,
-        borderTopRightRadius: 8,
-        borderBottomRightRadius: 8
+        
     },
 
     titleText: {
         fontSize: 20,
-        color: '#FFFFFF'
+        textAlign: 'center'
     }
 
 })

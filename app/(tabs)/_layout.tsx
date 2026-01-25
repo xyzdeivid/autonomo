@@ -10,10 +10,10 @@ export default function Layout() {
                 headerTitle: () => (
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                         <Text style={{ fontSize: 20, fontWeight: '600', color: '#06596B' }}>Autônomo</Text>
-                        <Image 
-                        source={require('@/assets/images/header-icon.png')} 
-                        style={{ width: 32, height: 32 }} 
-                        resizeMode='contain'
+                        <Image
+                            source={require('@/assets/images/header-icon.png')}
+                            style={{ width: 40, height: 40 }}
+                            resizeMode='contain'
                         />
                     </View>
                 )
