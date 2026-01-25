@@ -38,7 +38,7 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, it
 
     return (
         <View>
-            <ContainerHandler filteredTargets={items}>
+            <ContainerHandler>
                 <DataTable>
                     <DataTable.Header>
                         <DataTable.Title style={styles.text}>{getWhatIsItemColumn()}</DataTable.Title>

@@ -33,7 +33,7 @@ export default function SchedulingsList({ filteredSchedulings, setSelectedEntryF
                 text='receitas'
                 color={colors.entries.max}
             />
-            <ContainerHandler filteredTargets={filteredSchedulings}>
+            <ContainerHandler>
                 <DataTable>
                     <DataTable.Header>
                         <DataTable.Title style={styles.text}>Cliente</DataTable.Title>

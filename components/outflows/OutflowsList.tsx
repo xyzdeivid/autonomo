@@ -41,7 +41,7 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
                 text='despesas'
                 color={colors.outflows.max}
             />
-            <ContainerHandler filteredTargets={filteredExpenses}>
+            <ContainerHandler>
                 <DataTable>
                     <DataTable.Header>
                         <DataTable.Title style={styles.text}>Nome</DataTable.Title>
