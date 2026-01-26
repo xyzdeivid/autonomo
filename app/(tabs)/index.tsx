@@ -87,8 +87,6 @@ export default function Info() {
                         titleBgColor={colors.home.max}
                         textBgColor={colors.home.min}
                     /> : <Insight
-                        filteredIncomes={filteredIncomes}
-                        filteredExpenses={filteredExpenses}
                     />
             }
             <AddItemButton

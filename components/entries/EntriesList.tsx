@@ -7,7 +7,7 @@ import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { colors } from '@/styles/appColors'
-import useGetEntriesToShowOnTheList from '@/hooks/useGetEntriesToShowOnTheList'
+import useGetEntriesToShowOnTheList from '@/hooks/useGetMonthEntries'
 
 interface SchedulingsListProps {
     setSelectedEntryForDeletion: React.Dispatch<React.SetStateAction<string>>

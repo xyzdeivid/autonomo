@@ -6,13 +6,11 @@ import { Animated, Dimensions } from 'react-native'
 
 import { colors } from '@/styles/appColors'
 import { moneyFormat } from '@/utils/common'
-import { Entry } from '@/types'
+import useGetMonthEntries from '@/hooks/useGetMonthEntries'
 
-interface DailyFinanceChartProps {
-    filteredIncomes: Entry[]
-}
+export function DailyFinanceChart() {
 
-export function DailyFinanceChart({ filteredIncomes }: DailyFinanceChartProps) {
+    const entries = useGetMonthEntries()
 
     const screenWidth = Dimensions.get('window').width
     const slideAnim = useRef(new Animated.Value(screenWidth)).current
@@ -26,7 +24,7 @@ export function DailyFinanceChart({ filteredIncomes }: DailyFinanceChartProps) {
     }, [slideAnim])
 
     const data = () => {
-        return getDays(filteredIncomes).map(day => {
+        return getDays(entries).map(day => {
             return {
                 value: day.amount,
                 dataPointText: moneyFormat(day.amount),

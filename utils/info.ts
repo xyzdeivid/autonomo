@@ -1,5 +1,4 @@
-import { Entry as Scheduling, Outflow as Expense } from '@/types/index'
-import { calculateMonthlyIncome, calculateMonthlyExpenses } from '@/rules/indexRules'
+import { Entry as Scheduling } from '@/types/index'
 
 export const getDays = (filteredSchedulings: Scheduling[]) => {
 
@@ -32,19 +31,6 @@ export const getDays = (filteredSchedulings: Scheduling[]) => {
 
     return formatDays
 
-}
-
-const getData = (schedulings: Scheduling[], expenses: Expense[]) => {
-    if (calculateMonthlyIncome(schedulings) < calculateMonthlyExpenses(expenses)) {
-        return calculateMonthlyExpenses(expenses)
-    } else {
-        return calculateMonthlyIncome(schedulings)
-    }
-}
-
-export const findGreaterData = (schedulings: Scheduling[], expenses: Expense[]) => {
-    const data = getData(schedulings, expenses)
-    return data
 }
 
 export const thereIsProduct = (schedulings: Scheduling[]) => {

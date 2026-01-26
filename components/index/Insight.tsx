@@ -3,16 +3,10 @@ import InfoTitle from './InfoTitle'
 import { InsightSelectionButtons } from './InsightSelectionButtons'
 import { MonthlyFinanceChart } from './MonthlyFinanceChart'
 import { DailyFinanceChart } from './DailyFinanceChart'
-import { Entry, Outflow } from '@/types'
 import { useState } from 'react'
 import { Hr } from './Hr'
 
-interface InsightProps {
-    filteredIncomes: Entry[]
-    filteredExpenses: Outflow[]
-}
-
-export function Insight({ filteredIncomes, filteredExpenses }: InsightProps) {
+export function Insight() {
 
     const [insightToShow, setInsightToShow] = useState('monthly')
 
@@ -22,13 +16,10 @@ export function Insight({ filteredIncomes, filteredExpenses }: InsightProps) {
 
             case 'monthly':
                 return <MonthlyFinanceChart
-                    filteredSchedulings={filteredIncomes}
-                    filteredExpenses={filteredExpenses}
                 />
 
             case 'daily':
                 return <DailyFinanceChart
-                    filteredIncomes={filteredIncomes}
                 />
 
         }

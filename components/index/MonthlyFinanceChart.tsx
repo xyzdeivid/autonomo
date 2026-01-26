@@ -1,19 +1,11 @@
-import { Entry, Outflow } from '@/types'
-import { findGreaterData } from '@/utils/info'
 import { View, StyleSheet, Text, Animated, Dimensions } from 'react-native'
 import { moneyFormat } from '@/utils/common'
-import { calculateMonthlyIncome, calculateMonthlyExpenses, calculateMonthlyProfit } from '@/rules/indexRules'
 import { useEffect, useRef } from 'react'
+import useGetMonthlyIncome from '@/hooks/useGetMonthlyIncome'
+import useGetMonthlyExpenses from '@/hooks/useGetMonthlyExpenses'
+import useGetMonthlyProfit from '@/hooks/useGetMonthlyProfit'
 
-interface MonthlyFinanceChartProps {
-    filteredSchedulings: Entry[]
-    filteredExpenses: Outflow[]
-}
-
-export function MonthlyFinanceChart({
-    filteredSchedulings,
-    filteredExpenses
-}: MonthlyFinanceChartProps) {
+export function MonthlyFinanceChart() {
 
     const screenWidth = Dimensions.get('window').width
     const slideAnim = useRef(new Animated.Value(-screenWidth)).current
@@ -26,11 +18,11 @@ export function MonthlyFinanceChart({
         }).start()
     }, [slideAnim])
 
-    const revenue = calculateMonthlyIncome(filteredSchedulings)
-    const expenses = calculateMonthlyExpenses(filteredExpenses)
-    const profit = calculateMonthlyProfit(filteredSchedulings, filteredExpenses)
+    const revenue = useGetMonthlyIncome()
+    const expenses = useGetMonthlyExpenses()
+    const profit = useGetMonthlyProfit()
 
-    const maxValue = findGreaterData(filteredSchedulings, filteredExpenses)
+    const maxValue = revenue > expenses ? revenue : expenses
 
     const bars = [
         revenue > 0 && {
