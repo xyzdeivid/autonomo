@@ -1,5 +1,5 @@
 import { DocsContext } from '@/context/DocsContext'
-import { getMonthlyIncomeUseCase } from '@/services/getMonthlyIncomeUseCase'
+import { getMonthlyIncomeUseCase } from '@/services/index/getMonthlyIncomeUseCase'
 import { useContext } from 'react'
 
 export default function useGetMonthlyIncome() {

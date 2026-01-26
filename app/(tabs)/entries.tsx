@@ -20,7 +20,7 @@ import SchedulingsList from '@/components/entries/EntriesList'
 import DeleteSchedulingForm from '@/components/entries/AboutEntryCard'
 
 import { Entry } from '@/types'
-import useDeleteEntry from '@/hooks/useDeleteEntry'
+import useDeleteEntry from '@/hooks/entries/useDeleteEntry'
 import { colors } from '@/styles/appColors'
 import AddItemButton from '@/components/common/AddItemButton'
 

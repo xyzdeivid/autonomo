@@ -1,7 +1,7 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Item, Outflow } from '@/types'
 import { useContext } from 'react'
-import { addOutflowUseCase } from '@/services/addOutflowUseCase'
+import { addOutflowUseCase } from '@/services/outflows/addOutflowUseCase'
 
 const useAddOutflow = () => {
 

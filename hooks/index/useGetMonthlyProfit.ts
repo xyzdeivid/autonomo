@@ -1,5 +1,5 @@
 import { DocsContext } from '@/context/DocsContext'
-import { getMonthlyProfitUseCase } from '@/services/getMonthlyProfitUseCase'
+import { getMonthlyProfitUseCase } from '@/services/index/getMonthlyProfitUseCase'
 import { useContext } from 'react'
 
 export default function useGetMonthlyProfit() {

@@ -7,7 +7,7 @@ import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { colors } from '@/styles/appColors'
-import useGetOutflowsToShowOnTheList from '@/hooks/useGetOutflowsToShowOnTheList'
+import useGetOutflowsToShowOnTheList from '@/hooks/outflows/useGetOutflowsToShowOnTheList'
 
 interface OutflowsListProps {
     setExpenseForDeletion: React.Dispatch<React.SetStateAction<string>>

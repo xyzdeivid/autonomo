@@ -1,9 +1,9 @@
 import { View, StyleSheet, Text, Animated, Dimensions } from 'react-native'
 import { moneyFormat } from '@/utils/common'
 import { useEffect, useRef } from 'react'
-import useGetMonthlyIncome from '@/hooks/useGetMonthlyIncome'
-import useGetMonthlyExpenses from '@/hooks/useGetMonthlyExpenses'
-import useGetMonthlyProfit from '@/hooks/useGetMonthlyProfit'
+import useGetMonthlyIncome from '@/hooks/index/useGetMonthlyIncome'
+import useGetMonthlyExpenses from '@/hooks/index/useGetMonthlyExpenses'
+import useGetMonthlyProfit from '@/hooks/index/useGetMonthlyProfit'
 
 export function MonthlyFinanceChart() {
 

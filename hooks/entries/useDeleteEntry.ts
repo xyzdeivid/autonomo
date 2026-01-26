@@ -1,7 +1,7 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Entry } from '@/types'
 import { useContext } from 'react'
-import { deleteEntryUseCase } from '@/services/deleteEntryUseCase'
+import { deleteEntryUseCase } from '@/services/entries/deleteEntryUseCase'
 
 const useDeleteEntry = () => {
 

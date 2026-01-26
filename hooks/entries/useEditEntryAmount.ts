@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
 import { Entry } from '@/types'
-import { editEntryAmountUseCase } from '@/services/editEntryAmountUseCase'
+import { editEntryAmountUseCase } from '@/services/entries/editEntryAmountUseCase'
 
 const useEditEntryAmount = () => {
 

@@ -12,7 +12,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 import AboutItemCard from '@/components/items/AboutItemCard'
 import { ItemsContent } from '@/components/items/ItemsContent'
-import useDeleteItem from '@/hooks/useDeleteItem'
+import useDeleteItem from '@/hooks/items/useDeleteItem'
 import { Item } from '@/types'
 import { colors } from '@/styles/appColors'
 import { showErrorAtSubmitData } from '@/utils/common'

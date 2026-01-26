@@ -1,5 +1,5 @@
 import { DocsContext } from '@/context/DocsContext'
-import { editEntryDateUseCase } from '@/services/editEntryDateUseCase'
+import { editEntryDateUseCase } from '@/services/entries/editEntryDateUseCase'
 import { useContext } from 'react'
 
 const useEditEntryDate = () => {

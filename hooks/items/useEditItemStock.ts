@@ -1,5 +1,5 @@
 import { DocsContext } from '@/context/DocsContext'
-import { editItemStockUseCase } from '@/services/editItemStockUseCase'
+import { editItemStockUseCase } from '@/services/items/editItemStockUseCase'
 import { useContext } from 'react'
 
 const useEditItemStock = () => {

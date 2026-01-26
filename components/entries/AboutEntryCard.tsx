@@ -11,9 +11,9 @@ import { Entry } from '@/types'
 import { dateFormat, formatDateToISO, moneyFormat, showErrorAtSubmitData } from '@/utils/common'
 
 // hooks
-import useEditCustomerName from '@/hooks/useEditCustomerName'
-import useEditEntryAmount from '@/hooks/useEditEntryAmount'
-import useEditEntryDate from '@/hooks/useEditEntryDate'
+import useEditCustomerName from '@/hooks/entries/useEditCustomerName'
+import useEditEntryAmount from '@/hooks/entries/useEditEntryAmount'
+import useEditEntryDate from '@/hooks/entries/useEditEntryDate'
 
 // componentes genéricos
 import LoadingScreen from '@/components/common/LoadingScreen'

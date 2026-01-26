@@ -1,7 +1,7 @@
 import { Entry, Item } from '@/types/index'
 import { useContext } from 'react'
 import { DocsContext } from '@/context/DocsContext'
-import { addEntryUseCase } from '@/services/addEntryUseCase'
+import { addEntryUseCase } from '@/services/entries/addEntryUseCase'
 
 const useAddEntry = () => {
 

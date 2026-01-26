@@ -1,5 +1,5 @@
 import { DocsContext } from '@/context/DocsContext'
-import { editOutflowNameUseCase } from '@/services/editOutflowNameUseCase'
+import { editOutflowNameUseCase } from '@/services/outflows/editOutflowNameUseCase'
 import { useContext } from 'react'
 
 const useEditOutflowName = () => {

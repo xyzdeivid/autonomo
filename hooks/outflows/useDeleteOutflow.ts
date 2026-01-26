@@ -1,7 +1,7 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Outflow } from '@/types'
 import { useContext } from 'react'
-import { deleteOutflowUseCase } from '@/services/deleteOutflowUseCase'
+import { deleteOutflowUseCase } from '@/services/outflows/deleteOutflowUseCase'
 
 const useDeleteOutflow = () => {
 

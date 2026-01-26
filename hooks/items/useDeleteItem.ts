@@ -1,5 +1,5 @@
 import { DocsContext } from '@/context/DocsContext'
-import { deleteItemUseCase } from '@/services/deleteItemUseCase'
+import { deleteItemUseCase } from '@/services/items/deleteItemUseCase'
 import { useContext } from 'react'
 
 const useDeleteItem = () => {

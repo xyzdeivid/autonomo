@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import { SelectCategoryButton } from './SelectCategoryButton'
 import { ItemsList } from './ItemsList'
 
-import useGetCategoriesAmount from '@/hooks/useGetCategoriesAmount'
+import useGetCategoriesAmount from '@/hooks/items/useGetCategoriesAmount'
 
 interface ItemsContentProps {
     category: string

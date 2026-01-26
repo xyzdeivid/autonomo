@@ -20,7 +20,7 @@ import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 import AddExpenseForm from '@/components/outflows/AddOutflowForm'
 import ExpensesList from '@/components/outflows/OutflowsList'
 import AboutOutflowCard from '@/components/outflows/AboutOutflowCard'
-import useDeleteOutflow from '@/hooks/useDeleteOutflow'
+import useDeleteOutflow from '@/hooks/outflows/useDeleteOutflow'
 import { colors } from '@/styles/appColors'
 
 export default function Expenses() {

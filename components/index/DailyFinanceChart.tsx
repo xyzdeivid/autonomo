@@ -6,7 +6,7 @@ import { Animated, Dimensions } from 'react-native'
 
 import { colors } from '@/styles/appColors'
 import { moneyFormat } from '@/utils/common'
-import useGetMonthEntries from '@/hooks/useGetMonthEntries'
+import useGetMonthEntries from '@/hooks/entries/useGetMonthEntries'
 
 export function DailyFinanceChart() {
 

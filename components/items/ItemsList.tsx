@@ -4,7 +4,7 @@ import { Item } from '@/types/index'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import ContainerHandler from '../common/ContainerHandler'
 import { sortItems } from '@/utils/items'
-import useGetItemsByCategory from '@/hooks/useGetItemsByCategory'
+import useGetItemsByCategory from '@/hooks/items/useGetItemsByCategory'
 
 interface ItemsListProps {
     setSelectedItemForDeletion: React.Dispatch<React.SetStateAction<string>>
