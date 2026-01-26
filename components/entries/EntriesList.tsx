@@ -6,16 +6,17 @@ import ContainerHandler from '../common/ContainerHandler'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
-import { orderSchedulings } from '@/utils/schedulings'
 import { colors } from '@/styles/appColors'
+import useGetEntriesToShowOnTheList from '@/hooks/useGetEntriesToShowOnTheList'
 
 interface SchedulingsListProps {
-    filteredSchedulings: Entry[]
     setSelectedEntryForDeletion: React.Dispatch<React.SetStateAction<string>>
     setDeleteSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function SchedulingsList({ filteredSchedulings, setSelectedEntryForDeletion, setDeleteSchedulingForm }: SchedulingsListProps) {
+export default function SchedulingsList({ setSelectedEntryForDeletion, setDeleteSchedulingForm }: SchedulingsListProps) {
+
+    const entries = useGetEntriesToShowOnTheList()
 
     const dateFormat = (date: string) => {
         const formatedDate = format(parseISO(date), 'dd/MM')
@@ -41,7 +42,7 @@ export default function SchedulingsList({ filteredSchedulings, setSelectedEntryF
                         <DataTable.Title style={styles.text}>Data</DataTable.Title>
                         <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                     </DataTable.Header>
-                    {orderSchedulings(filteredSchedulings).map(scheduling => {
+                    {entries.map(scheduling => {
                         return (
                             <DataTable.Row onPress={() => deleteScheduling(scheduling)} key={scheduling._id}>
                                 <DataTable.Cell style={styles.text}>

@@ -4,29 +4,6 @@ export function sortItems(items: Item[]): Item[] {
     return items.sort((a, b) => b.value - a.value)
 }
 
-// Retornando orçamentos junto com 
-// serviços pois são mostrados juntos na lista
-export function getItemsByCategory(items: Item[], category: string): Item[] {
-
-    switch (category) {
-        case 'product':
-            return items.filter(current =>
-                current.category === 'product'
-            )
-        case 'service':
-            return items.filter(current =>
-                current.category !== 'product'
-            )
-        case 'budget':
-            return items.filter(current =>
-                current.category !== 'product'
-            )
-        default:
-            return []
-    }
-
-}
-
 export function createNewService(
     choice: string, name: string,
     value: number, amount: number,

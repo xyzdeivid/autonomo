@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 
-import { getCategoryOnDeletedItem, getCategoryOnTheFirstRun, getItemsByCategory } from '@/utils/items'
+import { getCategoryOnDeletedItem, getCategoryOnTheFirstRun } from '@/utils/items'
 
 import { DocsContext } from '@/context/DocsContext'
 
@@ -32,21 +32,13 @@ export default function Items() {
     // Malabarismo por que atualmente o id é o nome :)
     const itemForDeletion: Item = items.find(e => e._id === selectedItemForDeletion) || {} as Item
 
-    const [currentPage] = appDocs.currentPage
     const [category, setCategory] = useState('')
     const [loadingScreen, setLoadingScreen] = useState(false)
 
     const [newItemCategory, setNewItemCategory] = useState('')
     const [deletedItemCategory, setDeletedItemCategory] = useState('')
 
-    const deleteItem = useDeleteItem().deleteItem
-
-    useEffect(() => {
-        if (currentPage !== 'services') {
-            setShowAddItemForm(false)
-            setShowAboutItemCard(false)
-        }
-    }, [currentPage])
+    const { deleteItem } = useDeleteItem()
 
     useEffect(() => {
 
@@ -89,7 +81,6 @@ export default function Items() {
                         ? <ItemsContent
                             category={category}
                             setCategory={setCategory}
-                            items={getItemsByCategory(items, category)}
                             setSelectedItemForDeletion={setSelectedItemForDeletion}
                             setShowAboutItemCard={setShowAboutItemCard}
                         />

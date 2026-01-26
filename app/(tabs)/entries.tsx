@@ -1,6 +1,6 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
-import { Alert, BackHandler } from 'react-native'
+import { Alert } from 'react-native'
 
 // custom functions
 import { areThereAnyItemsAvailable, filterSchedulings } from '@/utils/common'
@@ -62,13 +62,6 @@ export default function Schedulings() {
         }
     }, [currentPage])
 
-    useEffect(() => {
-        BackHandler.addEventListener('hardwareBackPress', () => {
-            setAddSchedulingForm(false)
-            return null
-        })
-    }, [])
-
     return (
         <>
             {loadingScreen && <LoadingScreen />}
@@ -76,7 +69,6 @@ export default function Schedulings() {
                 {
                     filterSchedulings(entries, selectedMonth, currentYear)[0]
                         ? <SchedulingsList
-                            filteredSchedulings={filterSchedulings(entries, selectedMonth, currentYear)}
                             setSelectedEntryForDeletion={setSelectedEntryForDeletion}
                             setDeleteSchedulingForm={setDeleteSchedulingForm}
                         />

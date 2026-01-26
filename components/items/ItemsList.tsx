@@ -4,18 +4,20 @@ import { Item } from '@/types/index'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import ContainerHandler from '../common/ContainerHandler'
 import { sortItems } from '@/utils/items'
+import useGetItemsByCategory from '@/hooks/useGetItemsByCategory'
 
 interface ItemsListProps {
     setSelectedItemForDeletion: React.Dispatch<React.SetStateAction<string>>
     setShowAboutItemCard: React.Dispatch<React.SetStateAction<boolean>>
-    items: Item[]
     category: string
 }
 
-export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, items, category }: ItemsListProps) {
+export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, category }: ItemsListProps) {
 
-    const showAboutItemCard = (service: Item) => {
-        setSelectedItemForDeletion(service._id)
+    const { items, isProductCategory } = useGetItemsByCategory(category)
+
+    const showAboutItemCard = (item: Item) => {
+        setSelectedItemForDeletion(item._id)
         setShowAboutItemCard(true)
     }
 
@@ -44,7 +46,7 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, it
                         <DataTable.Title style={styles.text}>{getWhatIsItemColumn()}</DataTable.Title>
                         <DataTable.Title style={styles.text}>
                             Valor
-                            {items[0].category === 'product' ? ' (un)' : null}
+                            {isProductCategory ? ' (un)' : null}
                         </DataTable.Title>
                     </DataTable.Header>
                     {sortItems(items).map(current => {

@@ -78,9 +78,8 @@ export default function Expenses() {
                 {
                     filterExpenses(expenses, selectedMonth, currentYear)[0]
                         ? <ExpensesList
-                            filteredExpenses={filterExpenses(expenses, selectedMonth, currentYear)}
                             setExpenseForDeletion={setSelectedExpenseId}
-                            setDeleteExpenseForm={setDeleteExpenseForm}
+                            setDeleteOuflowForm={setDeleteExpenseForm}
                         />
                         : <AnyInfoWarning
                             text='listamos todas as suas despesas financeiras do mês.'
@@ -101,10 +100,9 @@ export default function Expenses() {
                     />
                 }
                 {
-                    // Se temos um ID e o formulário está ativo, mostramos o card
                     (deleteExpenseForm && expenseForDeletion) && (
                         <AboutOutflowCard
-                            outflow={expenseForDeletion} // Agora este objeto vem atualizado da lista do contexto!
+                            outflow={expenseForDeletion}
                             deleteFunction={deleteExpense}
                             setFormOff={setDeleteExpenseForm}
                         />

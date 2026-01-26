@@ -6,20 +6,21 @@ import ContainerHandler from '../common/ContainerHandler'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
-import { orderExpenses } from '@/utils/expenses'
 import { colors } from '@/styles/appColors'
+import useGetOutflowsToShowOnTheList from '@/hooks/useGetOutflowsToShowOnTheList'
 
-interface ExpensesListProps {
-    filteredExpenses: Outflow[]
+interface OutflowsListProps {
     setExpenseForDeletion: React.Dispatch<React.SetStateAction<string>>
-    setDeleteExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
+    setDeleteOuflowForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, setDeleteExpenseForm }: ExpensesListProps) {
+export default function OutflowsList({ setExpenseForDeletion, setDeleteOuflowForm }: OutflowsListProps) {
 
-    const deleteExpense = (expense: Outflow) => {
+    const outflows = useGetOutflowsToShowOnTheList()
+
+    const deleteOuflow = (expense: Outflow) => {
         setExpenseForDeletion(expense._id)
-        setDeleteExpenseForm(true)
+        setDeleteOuflowForm(true)
     }
 
     const dateFormat = (date: string) => {
@@ -48,9 +49,9 @@ export default function ExpensesList({ filteredExpenses, setExpenseForDeletion, 
                         <DataTable.Title style={styles.text}>Data</DataTable.Title>
                         <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                     </DataTable.Header>
-                    {orderExpenses(filteredExpenses).map(expense => {
+                    {outflows.map(expense => {
                         return (
-                            <DataTable.Row onPress={() => deleteExpense(expense)} key={expense._id}>
+                            <DataTable.Row onPress={() => deleteOuflow(expense)} key={expense._id}>
                                 <DataTable.Cell style={styles.text}>{getExpenseName(expense)}</DataTable.Cell>
                                 <DataTable.Cell style={styles.text}>{dateFormat(expense.date)}</DataTable.Cell>
                                 <DataTable.Cell style={styles.text}>{moneyFormat(expense.value)}</DataTable.Cell>
