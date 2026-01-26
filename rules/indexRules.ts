@@ -15,3 +15,12 @@ export function calculateMonthlyExpenses(outflows: Outflow[]): number {
 export function calculateMonthlyProfit(entries: Entry[], outflows: Outflow[]): number {
     return calculateMonthlyIncome(entries) - calculateMonthlyExpenses(outflows)
 }
+
+export function calculatePercentageOfMonthlyRevenueSavings(entries: Entry[], outflows: Outflow[]): number {
+
+    const monthlyIncome = calculateMonthlyIncome(entries)
+    const monthlyProfit = calculateMonthlyProfit(entries, outflows)
+
+    return Math.floor((monthlyProfit * 100) / monthlyIncome)
+
+}
