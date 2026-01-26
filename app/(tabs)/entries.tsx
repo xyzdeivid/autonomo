@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { Alert } from 'react-native'
 
 // custom functions
-import { areThereAnyItemsAvailable, filterSchedulings } from '@/utils/common'
+import { filterSchedulings } from '@/utils/common'
 
 // context
 import { DocsContext, } from '@/context/DocsContext'
@@ -19,10 +19,11 @@ import AddSchedulingForm from '@/components/entries/AddEntryForm'
 import SchedulingsList from '@/components/entries/EntriesList'
 import DeleteSchedulingForm from '@/components/entries/AboutEntryCard'
 
-import { Entry } from '@/types'
+import { Entry, Item } from '@/types'
 import useDeleteEntry from '@/hooks/entries/useDeleteEntry'
 import { colors } from '@/styles/appColors'
 import AddItemButton from '@/components/common/AddItemButton'
+import { getServices } from '@/utils/schedulings'
 
 export default function Schedulings() {
 
@@ -61,6 +62,11 @@ export default function Schedulings() {
             setDeleteSchedulingForm(false)
         }
     }, [currentPage])
+
+    function areThereAnyItemsAvailable(items: Item[]): boolean {
+        if (getServices(items)[0]) return true
+        return false
+    }
 
     return (
         <>

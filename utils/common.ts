@@ -1,7 +1,6 @@
-import { Outflow, Entry, Item } from '@/types/index'
+import { Outflow, Entry } from '@/types/index'
 import { format, parseISO } from 'date-fns'
 import { Alert } from 'react-native'
-import { getServices } from './schedulings'
 
 export function isStockValid(stock: number): boolean {
 
@@ -159,12 +158,6 @@ export const warning = (
     setLoadingScreen(false)
 
 }
-
-export function areThereAnyItemsAvailable(items: Item[]): boolean {
-    if (getServices(items)[0]) return true
-    return false
-}
-
 export function showErrorAtSubmitData(erro: string | undefined): void {
     Alert.alert('Erro', erro ? getErrorMessage(erro) : 'Erro desconhecido.')
 }

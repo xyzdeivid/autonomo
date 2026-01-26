@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react'
 
 // custom functions
-import { areThereAnyItemsAvailable, getAvailableMonths } from '@/utils/common'
+import { getAvailableMonths } from '@/utils/common'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
@@ -23,6 +23,8 @@ import AddEntryForm from '@/components/entries/AddEntryForm'
 import AddOutflowForm from '@/components/outflows/AddOutflowForm'
 import { filterExpensesByMonth, filterIncomesByMonth } from '@/rules/domainRules'
 import { Insight } from '@/components/index/Insight'
+import { getServices } from '@/utils/schedulings'
+import { Item } from '@/types'
 
 export default function Info() {
 
@@ -67,6 +69,12 @@ export default function Info() {
         filteredIncomes, setCurrentYear,
         setSelectedMonth, yearEntries,
         yearExpenses])
+
+    function areThereAnyItemsAvailable(items: Item[]): boolean {
+        if (getServices(items)[0]) return true
+        return false
+    }
+
 
     return (
         <Container>
