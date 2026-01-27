@@ -13,32 +13,55 @@ const useEditEntryAmount = () => {
 
         const product = items.find(current => current._id === entry.serviceId)
 
-        if (entry.serviceAmount !== undefined && product?.amount !== undefined) {
+        if (entry.serviceAmount !== undefined) {
 
-            const result = await editEntryAmountUseCase(newAmount, entry.serviceAmount,
-                product.amount, entry._id, product._id)
+            console.log(entry.serviceValue)
+
+            const result = await editEntryAmountUseCase(
+                newAmount,
+                entry.serviceAmount,
+                entry._id,
+                entry.serviceValue,
+                product?.amount,
+                product?._id
+            )
 
             if (result.success) {
 
-                // Atualizando receitas na UI
-                setEntries(prev =>
-                    prev.map(current => {
-                        if (current._id === entry._id) {
-                            return { ...current, serviceAmount: newAmount }
-                        }
-                        return current
-                    })
-                )
+                if (result.newEntryValue) {
 
-                // Atualizando estoque de produto na UI
-                setItems(prev =>
-                    prev.map(current => {
-                        if (current._id === product._id) {
-                            return { ...current, amount: result.newStock }
-                        }
-                        return current
-                    })
-                )
+                    const newValue = result.newEntryValue
+
+                    // Atualizando receitas na UI
+                    setEntries(prev =>
+                        prev.map(current => {
+                            if (current._id === entry._id) {
+                                return {
+                                    ...current,
+                                    serviceValue: newValue,
+                                    serviceAmount: newAmount
+                                }
+                            }
+                            return current
+                        })
+                    )
+                }
+
+                if (product !== undefined && product.amount !== undefined) {
+                    // Atualizando estoque de produto na UI
+                    setItems(prev =>
+                        prev.map(current => {
+                            if (current._id === product._id) {
+                                return {
+                                    ...current,
+                                    serviceValue: result.newEntryValue,
+                                    amount: result.newStock
+                                }
+                            }
+                            return current
+                        })
+                    )
+                }
 
             }
 

@@ -30,6 +30,18 @@ export async function deleteEntry(id: string): Promise<void> {
 
 }
 
+export async function editEntryAmount(newAmount: number, newEntryValue: number, entryId: string): Promise<void> {
+
+    await db.runAsync(
+        `UPDATE entries
+        SET serviceAmount = ?,
+        serviceValue = ?
+        WHERE _id = ?`,
+        [newAmount, newEntryValue, entryId]
+    )
+
+}
+
 export async function getAllEntries(): Promise<Entry[]> {
 
     const rows = await db.getAllAsync<Entry>('SELECT * FROM entries')
@@ -72,6 +84,12 @@ export async function editEntryDateToDb(newDate: string, id: string): Promise<vo
         WHERE _id = ?`,
         [newDate, id]
     )
+
+}
+
+export async function editEntryAmountToDb(newAmount: number, newEntryValue: number, id: string): Promise<void> {
+
+    await editEntryAmount(newAmount, newEntryValue, id)
 
 }
 

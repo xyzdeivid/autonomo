@@ -1,10 +1,11 @@
+import { editEntryAmountToDb } from '@/database/entryRepositories'
 import { editEntryAmountAndItemStockToDb } from '@/database/transactionRepositories'
-import { canEditEntryAmount, newProductStockOnEditEntryAmount } from '@/rules/entryRules'
+import { canEditEntryAmount, newEntryValueOnEditAmount, newProductStockOnEditEntryAmount } from '@/rules/entryRules'
 import { UseCase } from '@/types'
 
 export async function editEntryAmountUseCase(newAmount: number, oldAmount: number,
-    productAmount: number, entryId: string,
-    productId: string): Promise<UseCase & { newStock?: number }> {
+    entryId: string, productValue: number, productAmount?: number,
+    productId?: string): Promise<UseCase & { newEntryValue?: number, newStock?: number }> {
 
     // *****REGRAS DE NEGÓCIO*****
 
@@ -13,16 +14,34 @@ export async function editEntryAmountUseCase(newAmount: number, oldAmount: numbe
         success: false, error: editEntryAmount.reason
     }
 
-    const newProductStock = newProductStockOnEditEntryAmount(newAmount, oldAmount, productAmount)
+    const newEntryValue = newEntryValueOnEditAmount(productValue, oldAmount, newAmount)
 
     // *****INSERÇÃO NO DB*****
 
     try {
 
-        await editEntryAmountAndItemStockToDb(newAmount, entryId, newProductStock, productId)
+        if (productAmount !== undefined && productId !== undefined) {
+
+            const newProductStock = newProductStockOnEditEntryAmount(newAmount, oldAmount, productAmount)
+            await editEntryAmountAndItemStockToDb(newAmount, newEntryValue, entryId, newProductStock, productId)
+
+            console.log('Com estoque')
+
+            return {
+                success: true,
+                newEntryValue, 
+                newStock: newProductStock
+            }
+
+        }
+
+        await editEntryAmountToDb(newAmount, newEntryValue, entryId)
+
+        console.log('Sem estoque')
 
         return {
-            success: true, newStock: newProductStock
+            success: true,
+            newEntryValue
         }
 
     } catch {

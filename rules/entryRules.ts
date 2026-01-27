@@ -76,7 +76,7 @@ export function canEditEntryDate(newDate: string): CanDo {
     if (!validField) return {
         valid: false, reason: 'INVALID_FIELD'
     }
-    
+
     // Verificando se data editada é futura
     const todayOrPast = isTodayOrPast(newDate)
     if (!todayOrPast) return {
@@ -99,25 +99,38 @@ export function newProductStockOnEditEntryAmount(newAmount: number, oldAmount: n
     return (productAmount + oldAmount) - newAmount
 }
 
-export function canEditEntryAmount(newAmount: number, oldAmount: number, productAmount: number): CanDo {
+export function canEditEntryAmount(newAmount: number, oldAmount: number, productAmount?: number): CanDo {
 
     // Verificando se campos são válidos
     if (
-        typeof newAmount !== 'number' 
+        typeof newAmount !== 'number'
         || newAmount <= 0
-        || typeof oldAmount !== 'number' 
-        || typeof productAmount !== 'number'
+        || typeof oldAmount !== 'number'
     ) return {
         valid: false, reason: 'INVALID_FIELD'
     }
+    if (productAmount !== undefined) {
+        if (typeof productAmount !== 'number') return {
+            valid: false, reason: 'INVALID_FIELD'
+        }
+    }
 
-    const newProductStock = newProductStockOnEditEntryAmount(newAmount, oldAmount, productAmount)
-    if (newProductStock < 0) return {
-        valid: false, reason: 'INSUFFICIENT_STOCK'
+    // Verificando se o estoque é suficiente caso o produto não seja por encomenda
+    if (productAmount !== undefined) {
+        const newProductStock = newProductStockOnEditEntryAmount(newAmount, oldAmount, productAmount)
+        if (newProductStock < 0) return {
+            valid: false, reason: 'INSUFFICIENT_STOCK'
+        }
     }
 
     return {
         valid: true
     }
+
+}
+
+export function newEntryValueOnEditAmount(productValue: number, oldAmount: number, newAmount: number): number  {
+
+    return (productValue / oldAmount) * newAmount
 
 }
