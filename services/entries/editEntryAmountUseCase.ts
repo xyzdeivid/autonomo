@@ -25,8 +25,6 @@ export async function editEntryAmountUseCase(newAmount: number, oldAmount: numbe
             const newProductStock = newProductStockOnEditEntryAmount(newAmount, oldAmount, productAmount)
             await editEntryAmountAndItemStockToDb(newAmount, newEntryValue, entryId, newProductStock, productId)
 
-            console.log('Com estoque')
-
             return {
                 success: true,
                 newEntryValue, 
@@ -36,8 +34,6 @@ export async function editEntryAmountUseCase(newAmount: number, oldAmount: numbe
         }
 
         await editEntryAmountToDb(newAmount, newEntryValue, entryId)
-
-        console.log('Sem estoque')
 
         return {
             success: true,

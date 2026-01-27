@@ -15,8 +15,6 @@ const useEditEntryAmount = () => {
 
         if (entry.serviceAmount !== undefined) {
 
-            console.log(entry.serviceValue)
-
             const result = await editEntryAmountUseCase(
                 newAmount,
                 entry.serviceAmount,

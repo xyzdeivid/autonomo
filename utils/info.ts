@@ -57,7 +57,7 @@ export const thereIsBudget = (schedulings: Scheduling[]) => {
     return false
 }
 
-export const availableYears = (entries: Scheduling[]) => {
+export const getAvailableYears = (entries: Scheduling[]) => {
 
     let years = [String(new Date().getFullYear())]
 

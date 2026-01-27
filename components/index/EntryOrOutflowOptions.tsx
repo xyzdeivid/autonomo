@@ -75,9 +75,8 @@ const styles = StyleSheet.create({
 
     body: {
         backgroundColor: '#FFF',
-        borderRadius: 6,
-        overflow: 'hidden',
-        margin: 16
+        borderTopLeftRadius: 8,
+        overflow: 'hidden'
     },
 
     button: {
