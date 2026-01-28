@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { Hr } from './Hr'
 import useGetPercentageOfMonthlyRevenueSavings from '@/hooks/index/useGetPercentageOfMonthlyRevenueSavings'
 import AntDesign from '@expo/vector-icons/AntDesign'
+import { useShowMonthlyRevenueSavingsInsight } from '@/hooks/index/useShowMonthlyRevenueSavingsInsight'
 
 export function Insight() {
 
@@ -33,6 +34,7 @@ export function Insight() {
         return 'Receita Diária'
     }
 
+    const showMonthlyRevenueSavingsInsight = useShowMonthlyRevenueSavingsInsight(insightToShow)
     const percentageOfSavings = useGetPercentageOfMonthlyRevenueSavings()
 
     return (
@@ -51,7 +53,7 @@ export function Insight() {
                 {getContent()}
             </View>
             {
-                insightToShow === 'monthly' && (
+                showMonthlyRevenueSavingsInsight && (
                     <View style={styles.insightTextContainer}>
                         <AntDesign name='exclamation-circle' size={12} color='#000000CC' />
                         <Text style={styles.insightText}>Você está economizando {percentageOfSavings}% da sua receita.</Text>

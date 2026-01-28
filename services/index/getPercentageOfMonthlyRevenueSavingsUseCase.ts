@@ -2,7 +2,7 @@ import { filterExpensesByMonth, filterIncomesByMonth } from '@/rules/domainRules
 import { Entry, Outflow } from '@/types'
 import { calculatePercentageOfMonthlyRevenueSavings } from '@/rules/indexRules'
 
-export function getPercentageOfMonthlyRevenueSavingsUseCase(entries: Entry[], outflows: Outflow[], month: number, year: string) {
+export function getPercentageOfMonthlyRevenueSavingsUseCase(entries: Entry[], outflows: Outflow[], month: number, year: string): number {
 
     const monthlyEntries = filterIncomesByMonth(entries, month, year)
     const monthlyOutflows = filterExpensesByMonth(outflows, month, year)

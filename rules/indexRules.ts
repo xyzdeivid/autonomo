@@ -21,6 +21,6 @@ export function calculatePercentageOfMonthlyRevenueSavings(entries: Entry[], out
     const monthlyIncome = calculateMonthlyIncome(entries)
     const monthlyProfit = calculateMonthlyProfit(entries, outflows)
 
-    return Math.floor((monthlyProfit * 100) / monthlyIncome)
+    return Number(((monthlyProfit * 100) / monthlyIncome).toFixed(2))
 
 }
