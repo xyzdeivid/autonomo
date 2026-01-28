@@ -9,20 +9,21 @@ interface AnyInfoWarningProps {
 export default function AnyInfoWarning({ text, titleBgColor, textBgColor }: AnyInfoWarningProps) {
 
     return (
-        <View style={styles.container}>
-            <Text style={{
-                ...styles.warningTextTitle,
-                backgroundColor: titleBgColor
-            }}>
-                Nenhuma informação disponível!
-            </Text>
-            <Text style={{
-                ...styles.warningText,
-                backgroundColor: textBgColor,
-                borderBottomColor: titleBgColor
-            }}>
-                Nesta seção, {text}
-            </Text>
+        <View style={styles.overlay}>
+            <View style={styles.container}>
+                <Text style={{
+                    ...styles.warningTextTitle,
+                    backgroundColor: titleBgColor
+                }}>
+                    Nenhuma informação disponível!
+                </Text>
+                <Text style={{
+                    ...styles.warningText,
+                    backgroundColor: textBgColor
+                }}>
+                    Nesta seção, {text}
+                </Text>
+            </View>
         </View>
     )
 
@@ -30,23 +31,32 @@ export default function AnyInfoWarning({ text, titleBgColor, textBgColor }: AnyI
 
 const styles = StyleSheet.create({
 
+    overlay: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
     container: {
-        marginTop: 40,
-        marginHorizontal: 30
+        marginHorizontal: 24
     },
 
     warningTextTitle: {
         textAlign: 'center',
         color: '#FFFFFF',
-        padding: 8,
-        borderTopLeftRadius: 4,
-        borderTopRightRadius: 4
+        padding: 12,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
+        fontSize: 16
     },
 
     warningText: {
-        borderBottomWidth: 1,
         paddingVertical: 16,
-        paddingHorizontal: 12
+        paddingHorizontal: 12,
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8
     }
 
 })

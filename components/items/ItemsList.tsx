@@ -40,15 +40,15 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, ca
 
     return (
         <View>
-            <ContainerHandler>
-                <DataTable>
-                    <DataTable.Header>
-                        <DataTable.Title style={styles.text}>{getWhatIsItemColumn()}</DataTable.Title>
-                        <DataTable.Title style={styles.text}>
-                            Valor
-                            {isProductCategory ? ' (un)' : null}
-                        </DataTable.Title>
-                    </DataTable.Header>
+            <DataTable>
+                <DataTable.Header>
+                    <DataTable.Title style={styles.text}>{getWhatIsItemColumn()}</DataTable.Title>
+                    <DataTable.Title style={styles.text}>
+                        Valor
+                        {isProductCategory ? ' (un)' : null}
+                    </DataTable.Title>
+                </DataTable.Header>
+                <ContainerHandler>
                     {sortItems(items).map(current => {
                         return (
                             <DataTable.Row onPress={() => showAboutItemCard(current)} key={current._id}>
@@ -61,8 +61,8 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, ca
                             </DataTable.Row>
                         )
                     })}
-                </DataTable>
-            </ContainerHandler>
+                </ContainerHandler>
+            </DataTable>
             <MoreInfoWarning />
         </View>
     )

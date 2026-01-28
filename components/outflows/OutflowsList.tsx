@@ -42,13 +42,13 @@ export default function OutflowsList({ setExpenseForDeletion, setDeleteOuflowFor
                 text='despesas'
                 color={colors.outflows.max}
             />
-            <ContainerHandler>
-                <DataTable>
-                    <DataTable.Header>
-                        <DataTable.Title style={styles.text}>Nome</DataTable.Title>
-                        <DataTable.Title style={styles.text}>Data</DataTable.Title>
-                        <DataTable.Title style={styles.text}>Valor</DataTable.Title>
-                    </DataTable.Header>
+            <DataTable>
+                <DataTable.Header>
+                    <DataTable.Title style={styles.text}>Nome</DataTable.Title>
+                    <DataTable.Title style={styles.text}>Data</DataTable.Title>
+                    <DataTable.Title style={styles.text}>Valor</DataTable.Title>
+                </DataTable.Header>
+                <ContainerHandler>
                     {outflows.map(expense => {
                         return (
                             <DataTable.Row onPress={() => deleteOuflow(expense)} key={expense._id}>
@@ -58,8 +58,8 @@ export default function OutflowsList({ setExpenseForDeletion, setDeleteOuflowFor
                             </DataTable.Row>
                         )
                     })}
-                </DataTable>
-            </ContainerHandler>
+                </ContainerHandler>
+            </DataTable>
             <MoreInfoWarning />
         </View>
     )

@@ -8,13 +8,13 @@ export default function Layout() {
             tabBar={(props) => <CustomTabBar {...props} />}
             screenOptions={() => ({
                 headerTitle: () => (
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                        <Text style={{ fontSize: 20, fontWeight: '600', color: '#06596B' }}>Autônomo</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Image
                             source={require('@/assets/images/header-icon.png')}
                             style={{ width: 40, height: 40 }}
                             resizeMode='contain'
                         />
+                        <Text style={{ marginStart: 4, marginTop: 4, fontSize: 20, fontWeight: '600', color: '#06596B' }}>Autônomo</Text>
                     </View>
                 )
             })}

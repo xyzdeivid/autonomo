@@ -8,7 +8,7 @@ interface ContainerHandlerProps {
 export default function ContainerHandler({ children }: ContainerHandlerProps) {
 
         return (
-                <ScrollView style={{ maxHeight: 500 }}>
+                <ScrollView style={{ maxHeight: 450 }}>
                     {children}
                 </ScrollView>
         )

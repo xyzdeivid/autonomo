@@ -34,14 +34,15 @@ export default function SchedulingsList({ setSelectedEntryForDeletion, setDelete
                 text='receitas'
                 color={colors.entries.max}
             />
-            <ContainerHandler>
-                <DataTable>
-                    <DataTable.Header>
-                        <DataTable.Title style={styles.text}>Cliente</DataTable.Title>
-                        <DataTable.Title style={styles.text}>Item</DataTable.Title>
-                        <DataTable.Title style={styles.text}>Data</DataTable.Title>
-                        <DataTable.Title style={styles.text}>Valor</DataTable.Title>
-                    </DataTable.Header>
+
+            <DataTable>
+                <DataTable.Header>
+                    <DataTable.Title style={styles.text}>Cliente</DataTable.Title>
+                    <DataTable.Title style={styles.text}>Item</DataTable.Title>
+                    <DataTable.Title style={styles.text}>Data</DataTable.Title>
+                    <DataTable.Title style={styles.text}>Valor</DataTable.Title>
+                </DataTable.Header>
+                <ContainerHandler>
                     {entries.map(scheduling => {
                         return (
                             <DataTable.Row onPress={() => deleteScheduling(scheduling)} key={scheduling._id}>
@@ -58,8 +59,8 @@ export default function SchedulingsList({ setSelectedEntryForDeletion, setDelete
                             </DataTable.Row>
                         )
                     })}
-                </DataTable>
-            </ContainerHandler>
+                </ContainerHandler>
+            </DataTable>
             <MoreInfoWarning />
         </View>
     )

@@ -5,7 +5,7 @@ export default function MoreInfoWarning() {
 
     return (
         <View style={styles.container}>
-            <FontAwesome name='info-circle' size={10} color='#000000' />
+            <FontAwesome name='info-circle' size={16} color='#000000' />
             <Text style={styles.text}>Para mais informações ou exclusão do registro, basta clicar sobre!</Text>
         </View>
     )
@@ -22,8 +22,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     text: {
-        fontSize: 10,
+        fontSize: 12,
         color: 'gray',
-        marginStart: 2
+        marginStart: 4,
+        marginBottom: 1
     }
 })
