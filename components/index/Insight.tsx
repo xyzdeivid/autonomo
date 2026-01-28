@@ -1,5 +1,4 @@
 import { View, StyleSheet, Text } from 'react-native'
-import InfoTitle from './InfoTitle'
 import { InsightSelectionButtons } from './InsightSelectionButtons'
 import { MonthlyFinanceChart } from './MonthlyFinanceChart'
 import { DailyFinanceChart } from './DailyFinanceChart'
@@ -29,11 +28,6 @@ export function Insight() {
 
     }
 
-    function getTitle(): string {
-        if (insightToShow === 'monthly') return 'Finanças Gerais'
-        return 'Receita Diária'
-    }
-
     const showMonthlyRevenueSavingsInsight = useShowMonthlyRevenueSavingsInsight(insightToShow)
     const percentageOfSavings = useGetPercentageOfMonthlyRevenueSavings()
 
@@ -43,7 +37,6 @@ export function Insight() {
                 insightToShow={insightToShow}
                 setInsightToShow={setInsightToShow}
             />
-            <InfoTitle text={getTitle()} />
             <Hr />
             <View style={{
                 ...styles.container,

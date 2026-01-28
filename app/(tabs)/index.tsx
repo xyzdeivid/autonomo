@@ -12,7 +12,6 @@ import { months } from '@/constants/common'
 
 // common components
 import Container from '@/components/common/Container'
-import MonthInput from '@/components/common/MonthInput'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 import { colors } from '@/styles/appColors'
@@ -85,9 +84,6 @@ export default function Info() {
                     <Text style={{ fontSize: 64 }}>. . .</Text>
                 </View>
             )}
-            {
-                yearEntries[0] && (<MonthInput dropdownIconColor={colors.home.mid} />)
-            }
             {
                 docsLoaded
                     && !filteredIncomes[0]

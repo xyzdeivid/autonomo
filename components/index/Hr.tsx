@@ -7,8 +7,7 @@ export function Hr() {
             style={{
                 height: StyleSheet.hairlineWidth,
                 backgroundColor: '#0000001A',
-                marginVertical: 24,
-                marginHorizontal: 36
+                marginVertical: 16
             }}
         />
     )

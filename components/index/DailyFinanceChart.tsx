@@ -1,5 +1,5 @@
 import { LineChart } from 'react-native-gifted-charts'
-import { getDays } from '@/utils/info'
+import { getDays } from '@/utils'
 import { useEffect, useRef } from 'react'
 import { Animated, Dimensions } from 'react-native'
 

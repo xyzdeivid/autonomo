@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import { useContext } from 'react'
 import { months } from '@/constants/common'
 import { getMonthName } from '@/utils/common'
@@ -15,24 +15,19 @@ export default function InfoTitle({ text }: InfoTitleProps) {
     const [currentYear] = appDocs.currentYear
 
     return (
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>
-                {text} de {getMonthName(months, selectedMonth)}/{currentYear}
-            </Text>
-        </View>
+        <Text style={styles.titleText}>
+            {text} de {getMonthName(months, selectedMonth)}/{currentYear}
+        </Text>
     )
 
 }
 
 const styles = StyleSheet.create({
 
-    titleContainer: {
-        
-    },
-
     titleText: {
-        fontSize: 20,
-        textAlign: 'center'
+        fontSize: 16,
+        textAlign: 'center',
+        paddingVertical: 20,
     }
 
 })

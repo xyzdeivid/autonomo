@@ -1,12 +1,7 @@
-import { DocsContext } from '@/context/DocsContext'
-import { getAvailableYears } from '@/utils/info'
-import { useContext } from 'react'
+import { useGetAvailableMonths } from './useGetAvailableMonths'
 
 export default function useShowYearButton() {
 
-    const [entries] = useContext(DocsContext).entries
-    const availableYears = getAvailableYears(entries)
-
-    return availableYears.length > 1
+    return useGetAvailableMonths().length > 1
 
 }

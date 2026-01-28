@@ -1,11 +1,9 @@
 import { colors } from '@/styles/appColors'
-import { useEffect, useRef } from 'react'
 import {
     View,
     Text,
     TouchableOpacity,
-    StyleSheet,
-    Animated
+    StyleSheet
 } from 'react-native'
 
 interface SelectCategoryButtonProps {
@@ -18,31 +16,20 @@ export function SelectCategoryButton({
     setCategory
 }: SelectCategoryButtonProps) {
 
-    const translateX = useRef(new Animated.Value(0)).current
+    function getBackgroundColor(button: string) {
 
-    useEffect(() => {
-        Animated.timing(translateX, {
-            toValue: category !== 'product' ? 1 : 0,
-            duration: 200,
-            useNativeDriver: false
-        }).start()
-    }, [translateX, category])
+        if (button === category) return colors.items.max
+        return colors.items.mid
 
-    const sliderPosition = translateX.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 100]
-    })
+    }
 
     return (
         <View style={styles.container}>
-            <Animated.View
-                style={[
-                    styles.slider,
-                    { left: sliderPosition }
-                ]}
-            />
             <TouchableOpacity
-                style={styles.button}
+                style={{
+                    ...styles.button,
+                    backgroundColor: getBackgroundColor('product')
+                }}
                 onPress={() => setCategory('product')}
                 activeOpacity={0.8}
             >
@@ -56,7 +43,10 @@ export function SelectCategoryButton({
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={styles.button}
+                style={{
+                    ...styles.button,
+                    backgroundColor: getBackgroundColor('service')
+                }}
                 onPress={() => setCategory('service')}
                 activeOpacity={0.8}
             >

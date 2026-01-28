@@ -1,11 +1,9 @@
 import { colors } from '@/styles/appColors'
-import { useEffect, useRef } from 'react'
 import {
     View,
     Text,
     TouchableOpacity,
-    StyleSheet,
-    Animated
+    StyleSheet
 } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 
@@ -19,31 +17,20 @@ export function InsightSelectionButtons({
     setInsightToShow
 }: InsightSelectionButtonsProps) {
 
-    const translateX = useRef(new Animated.Value(0)).current
+    function getBackgroundColor(insight: string) {
 
-    useEffect(() => {
-        Animated.timing(translateX, {
-            toValue: insightToShow !== 'monthly' ? 1 : 0,
-            duration: 200,
-            useNativeDriver: false
-        }).start()
-    }, [translateX, insightToShow])
+        if (insight === insightToShow) return colors.home.max
+        return colors.home.mid
 
-    const sliderPosition = translateX.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 160]
-    })
+    }
 
     return (
         <View style={styles.container}>
-            <Animated.View
-                style={[
-                    styles.slider,
-                    { left: sliderPosition }
-                ]}
-            />
             <TouchableOpacity
-                style={styles.button}
+                style={{
+                    ...styles.button,
+                    backgroundColor: getBackgroundColor('monthly')
+                }}
                 onPress={() => setInsightToShow('monthly')}
                 activeOpacity={0.8}
             >
@@ -60,7 +47,10 @@ export function InsightSelectionButtons({
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={styles.button}
+                style={{
+                    ...styles.button,
+                    backgroundColor: getBackgroundColor('daily')
+                }}
                 onPress={() => setInsightToShow('daily')}
                 activeOpacity={0.8}
             >
@@ -85,21 +75,12 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginHorizontal: 'auto',
-        marginTop: 12,
-        marginBottom: 28,
+        marginTop: 24,
         backgroundColor: colors.home.mid,
         borderRadius: 6,
         overflow: 'hidden',
         height: 48,
         width: 320,
-    },
-
-    slider: {
-        position: 'absolute',
-        width: 160,
-        height: '100%',
-        backgroundColor: colors.home.max,
-        borderRadius: 6
     },
 
     button: {

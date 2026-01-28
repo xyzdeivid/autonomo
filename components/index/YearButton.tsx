@@ -3,10 +3,14 @@ import { useContext, useRef, useState } from 'react'
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { YearOptionsList } from './YearOptionsList'
+import { getMonthName } from '@/utils/common'
+import { months } from '@/constants/common'
 
 export function YearButton() {
 
-    const [currentYear] = useContext(DocsContext).currentYear
+    const appDocs = useContext(DocsContext)
+    const [currentYear] = appDocs.currentYear
+    const [selectedMonth] = appDocs.selectedMonth
 
     const scale = useRef(new Animated.Value(1)).current
 
@@ -38,7 +42,7 @@ export function YearButton() {
                         onPress={() => setShowYearList(true)}
                     >
                         <Ionicons name="calendar" size={16} color="#00000080" />
-                        <Text style={styles.text}>{currentYear}</Text>
+                        <Text style={styles.text}>{getMonthName(months, selectedMonth)} de {currentYear}</Text>
                     </Pressable>
                 </Animated.View>
             </View>
