@@ -98,7 +98,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-end',
         justifyContent: 'center',
-        gap: 16
+        gap: 16,
+        paddingTop: 32
     },
 
     barWrapper: {
@@ -132,7 +133,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         gap: 16,
-        paddingTop: 8
+        paddingTop: 4,
+        paddingBottom: 8
     },
 
     label: {

@@ -24,3 +24,14 @@ export function calculatePercentageOfMonthlyRevenueSavings(entries: Entry[], out
     return Number(((monthlyProfit * 100) / monthlyIncome).toFixed(2))
 
 }
+
+export function calculateAverageRevenuePerWorkingDay(monthlyEntries: Entry[]): number {
+
+    let daysWorked = monthlyEntries.map(entry => entry.date.slice(-2))
+    daysWorked = [...new Set(daysWorked)]
+
+    const monthlyIncome = calculateMonthlyIncome(monthlyEntries)
+
+    return monthlyIncome / daysWorked.length
+
+}
