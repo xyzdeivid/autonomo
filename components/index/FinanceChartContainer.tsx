@@ -17,12 +17,9 @@ export function FinanceChartContainer({ children }: FinanceChartContainerProps) 
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: '#F5F7F8',
-        borderRadius: 12,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: '#0000001A',
         height: 300,
-        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center',
         overflow: 'hidden'
     }
 

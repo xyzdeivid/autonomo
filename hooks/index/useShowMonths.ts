@@ -1,6 +1,6 @@
 import { useGetAvailableMonths } from './useGetAvailableMonths'
 
-export default function useShowYearButton() {
+export function useShowMonths() {
 
     return useGetAvailableMonths().length > 1
 

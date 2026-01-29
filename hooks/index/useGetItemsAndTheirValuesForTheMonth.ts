@@ -9,6 +9,8 @@ export function useGetItemsAndTheirValuesForTheMonth() {
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
 
-    return getItemsAndTheirValuesForTheMonth(entries, selectedMonth, currentYear)
+    const itemsAndTheirValues = getItemsAndTheirValuesForTheMonth(entries, selectedMonth, currentYear)
+
+    return itemsAndTheirValues.sort((a, b) => b.totalRevenue - a.totalRevenue)
 
 }

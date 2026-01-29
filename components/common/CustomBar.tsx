@@ -91,7 +91,7 @@ const TAB_CONFIG = {
         color: colors.home.max,
     },
     items: {
-        label: 'Catálogo',
+        label: 'Itens',
         icon: 'pricetags',
         color: colors.items.max,
     },

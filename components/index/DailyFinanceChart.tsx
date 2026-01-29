@@ -8,12 +8,17 @@ import { colors } from '@/styles/appColors'
 import { moneyFormat } from '@/utils/common'
 import useGetMonthEntries from '@/hooks/entries/useGetMonthEntries'
 
-export function DailyFinanceChart() {
+interface DailyFinanceChartProps {
+    comingFrom: string
+}
+
+export function DailyFinanceChart({ comingFrom }: DailyFinanceChartProps) {
 
     const entries = useGetMonthEntries()
 
     const screenWidth = Dimensions.get('window').width
-    const slideAnim = useRef(new Animated.Value(screenWidth)).current
+    const direction = comingFrom === 'left' ? screenWidth : -screenWidth
+    const slideAnim = useRef(new Animated.Value(direction)).current
 
     useEffect(() => {
         Animated.timing(slideAnim, {

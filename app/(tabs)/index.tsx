@@ -25,7 +25,6 @@ import { Insight } from '@/components/index/Insight'
 import { getServices } from '@/utils/schedulings'
 import { Item } from '@/types'
 import { YearButton } from '@/components/index/YearButton'
-import useShowYearButton from '@/hooks/index/useShowYearButton'
 
 export default function Info() {
 
@@ -95,7 +94,7 @@ export default function Info() {
                     /> : <Insight
                     />
             }
-            {useShowYearButton() && <YearButton />}
+            <YearButton />
             <AddItemButton
                 iconColor={colors.home.max}
                 bgColor={colors.home.min}

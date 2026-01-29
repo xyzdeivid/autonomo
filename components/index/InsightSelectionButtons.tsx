@@ -1,9 +1,10 @@
+import { useRef, useEffect } from 'react'
 import { colors } from '@/styles/appColors'
 import {
-    View,
     Text,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet,
+    ScrollView
 } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 
@@ -17,56 +18,88 @@ export function InsightSelectionButtons({
     setInsightToShow
 }: InsightSelectionButtonsProps) {
 
+    const scrollRef = useRef<ScrollView>(null)
+
+    const positions = useRef<Record<string, number>>({})
+
     function getBackgroundColor(insight: string) {
+        return insight === insightToShow ? colors.home.max : colors.home.mid
+    }
 
-        if (insight === insightToShow) return colors.home.max
-        return colors.home.mid
+    useEffect(() => {
 
+        const x = positions.current[insightToShow]
+
+        if (x !== undefined) {
+            scrollRef.current?.scrollTo({
+                x: x - 40,
+                animated: true
+            })
+        }
+    }, [insightToShow])
+
+    function savePosition(insight: string, x: number) {
+        positions.current[insight] = x
     }
 
     return (
-        <View style={styles.container}>
+        <ScrollView
+            ref={scrollRef}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.container}
+        >
             <TouchableOpacity
                 style={{
                     ...styles.button,
                     backgroundColor: getBackgroundColor('monthly')
                 }}
+                onLayout={(e) =>
+                    savePosition('monthly', e.nativeEvent.layout.x)
+                }
                 onPress={() => setInsightToShow('monthly')}
                 activeOpacity={0.8}
             >
-                <View style={styles.iconContainer}>
-                    <AntDesign name="bar-chart" size={24} color="white" />
-                </View>
-                <Text
-                    style={[
-                        styles.text,
-                        insightToShow === 'product' && styles.textActive
-                    ]}
-                >
-                    Finanças Gerais
+                <AntDesign name='bar-chart' size={20} color='white' />
+                <Text style={[styles.text, insightToShow === 'monthly' && styles.textActive]}>
+                    Balanço
                 </Text>
             </TouchableOpacity>
+
             <TouchableOpacity
                 style={{
                     ...styles.button,
                     backgroundColor: getBackgroundColor('daily')
                 }}
+                onLayout={(e) =>
+                    savePosition('daily', e.nativeEvent.layout.x)
+                }
                 onPress={() => setInsightToShow('daily')}
                 activeOpacity={0.8}
             >
-                <View style={styles.iconContainer}>
-                    <AntDesign name="line-chart" size={24} color="white" />
-                    </View>
-                <Text
-                    style={[
-                        styles.text,
-                        insightToShow !== 'product' && styles.textActive
-                    ]}
-                >
-                    Receita Diária
+                <AntDesign name='line-chart' size={20} color='white' />
+                <Text style={[styles.text, insightToShow === 'daily' && styles.textActive]}>
+                    Receita por Dia
                 </Text>
             </TouchableOpacity>
-        </View>
+
+            <TouchableOpacity
+                style={{
+                    ...styles.button,
+                    backgroundColor: getBackgroundColor('items')
+                }}
+                onLayout={(e) =>
+                    savePosition('items', e.nativeEvent.layout.x)
+                }
+                onPress={() => setInsightToShow('items')}
+                activeOpacity={0.8}
+            >
+                <AntDesign name='unordered-list' size={20} color='white' />
+                <Text style={[styles.text, insightToShow === 'items' && styles.textActive]}>
+                    Receita de Itens
+                </Text>
+            </TouchableOpacity>
+        </ScrollView>
     )
 }
 
@@ -74,30 +107,22 @@ const styles = StyleSheet.create({
 
     container: {
         flexDirection: 'row',
-        marginHorizontal: 'auto',
         marginTop: 24,
-        backgroundColor: colors.home.mid,
-        borderRadius: 6,
-        overflow: 'hidden',
-        height: 48,
-        width: 320,
+        justifyContent: 'flex-start',
+        gap: 8,
+        paddingHorizontal: 6
     },
 
     button: {
-        flex: 1,
+        padding: 8,
+        borderRadius: 8,
         flexDirection: 'row',
-        justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 1
-    },
-
-    iconContainer: {
-        padding: 4,
-        borderRadius: 4,
-        marginEnd: 4
+        gap: 4
     },
 
     text: {
+        fontSize: 16,
         color: 'white',
         fontWeight: '500'
     },
@@ -105,5 +130,5 @@ const styles = StyleSheet.create({
     textActive: {
         fontWeight: '700'
     }
-
+    
 })

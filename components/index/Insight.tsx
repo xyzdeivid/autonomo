@@ -4,20 +4,25 @@ import { useState } from 'react'
 import { Hr } from './Hr'
 import { MonthlyFinanceContent } from './MonthlyFinanceContent'
 import { DailyFinanceContent } from './DailyFinanceContent'
+import { ItemsContent } from './ItemsContent'
 
 export function Insight() {
 
     const [insightToShow, setInsightToShow] = useState('monthly')
+    const [comingFrom, setComingFrom] = useState('')
 
     const getContent = () => {
 
         switch (insightToShow) {
 
             case 'monthly':
-                return <MonthlyFinanceContent />
+                return <MonthlyFinanceContent setComingFrom={setComingFrom} />
 
             case 'daily':
-                return <DailyFinanceContent />
+                return <DailyFinanceContent comingFrom={comingFrom} />
+
+            case 'items':
+                return <ItemsContent setComingFrom={setComingFrom} />
         }
 
     }
