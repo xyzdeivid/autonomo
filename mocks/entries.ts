@@ -1,5 +1,8 @@
 import { Entry } from '@/types'
 
+// DADOS DO MOCK
+// Receita média por dia trabalhado: 103.6
+
 export const entries: Entry[] = [
     { _id: '1', date: '2026-01-01', serviceId: 'Serviço 1', serviceCategory: 'service', serviceValue: 10, serviceIsThereAmount: false },
     { _id: '2', date: '2026-01-02', serviceId: 'Serviço 2', serviceCategory: 'service', serviceValue: 15, serviceIsThereAmount: false },
@@ -53,5 +56,15 @@ export const entries: Entry[] = [
     { _id: '50', date: '2026-01-16', serviceId: 'Serviço 1', serviceCategory: 'service', serviceValue: 10, serviceIsThereAmount: false },
 ]
 
-// DADOS DO MOCK
-// Receita média por dia trabalhado: 103.6
+export const getOnlyServicesAndBudgetsEntriesMock: Entry[] = [
+    { _id: '1', date: '2026-01-01', serviceId: 'Serviço 1', serviceCategory: 'service', serviceValue: 10, serviceIsThereAmount: false },
+    { _id: '2', date: '2026-01-02', serviceId: 'Serviço 2', serviceCategory: 'service', serviceValue: 15, serviceIsThereAmount: false },
+    { _id: '3', date: '2026-01-03', serviceId: 'Produto 1', serviceCategory: 'product', serviceValue: 20, serviceIsThereAmount: true, serviceAmount: 1 },
+    { _id: '4', date: '2026-01-04', serviceId: 'Produto 1', serviceCategory: 'product', serviceValue: 40, serviceIsThereAmount: true, serviceAmount: 2 },
+    { _id: '5', date: '2026-01-05', serviceId: 'Produto 2', serviceCategory: 'product', serviceValue: 25, serviceIsThereAmount: true, serviceAmount: 1 },
+    { _id: '6', date: '2026-01-06', serviceId: 'Serviço 1', serviceCategory: 'service', serviceValue: 10, serviceIsThereAmount: false },
+    { _id: '7', date: '2026-01-07', serviceId: 'Orçamentário', serviceCategory: 'budget', serviceValue: 55, serviceIsThereAmount: false },
+    { _id: '8', date: '2026-01-08', serviceId: 'Produto 2', serviceCategory: 'product', serviceValue: 50, serviceIsThereAmount: true, serviceAmount: 2 },
+    { _id: '9', date: '2026-01-09', serviceId: 'Serviço 2', serviceCategory: 'service', serviceValue: 15, serviceIsThereAmount: false },
+    { _id: '10', date: '2026-01-10', serviceId: 'Produto 1', serviceCategory: 'product', serviceValue: 60, serviceIsThereAmount: true, serviceAmount: 3 },
+]

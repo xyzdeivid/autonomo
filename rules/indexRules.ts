@@ -35,3 +35,35 @@ export function calculateAverageRevenuePerWorkingDay(monthlyEntries: Entry[]): n
     return monthlyIncome / daysWorked.length
 
 }
+
+export function getOnlyServicesAndBudgetsEntries(entries: Entry[]): Entry[] {
+
+    return entries.filter(current => current.serviceCategory === 'service' || current.serviceCategory === 'budget')
+
+}
+
+type CalculateRankingOfItemsWithHighestRevenue = { productName: string, totalRevenue: number }[]
+
+export function calculateItemsAndTheirValuesForTheMonth(
+    entries: Entry[]
+): CalculateRankingOfItemsWithHighestRevenue {
+
+    const servicesAndBudgets: CalculateRankingOfItemsWithHighestRevenue = [] as 
+    CalculateRankingOfItemsWithHighestRevenue
+
+    for (const item of entries) {
+
+        // Verificando se já foi colocado em array
+        if (servicesAndBudgets.some(value => value.productName === item.serviceId)) {
+            for (const service of servicesAndBudgets) {
+                if (service.productName === item.serviceId) service.totalRevenue += item.serviceValue
+            }
+        } else {
+            servicesAndBudgets.push({ productName: item.serviceId, totalRevenue: item.serviceValue })
+        }
+
+    }
+
+    return servicesAndBudgets
+
+}
