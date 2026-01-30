@@ -1,5 +1,7 @@
-import { entries, getOnlyServicesAndBudgetsEntriesMock } from '@/mocks/entries'
-import { calculateMonthlyIncome, calculateAverageRevenuePerWorkingDay, getOnlyServicesAndBudgetsEntries, calculateItemsAndTheirValuesForTheMonth } from './indexRules'
+import { entries, onlyEntriesWithCustomer, onlyEntriesWithoutCustomer } from '@/mocks/entries'
+import { calculateMonthlyIncome, calculateAverageRevenuePerWorkingDay, 
+    calculateItemsAndTheirValuesForTheMonth, getOnlyRevenuesWithCustomers, 
+    calculateCustomersAndTheirRevenueForTheMonth } from './indexRules'
 
 test('retornar valor total de receita no mês', () => {
     expect(calculateMonthlyIncome(entries)).toBe(2590)
@@ -7,20 +9,6 @@ test('retornar valor total de receita no mês', () => {
 
 test('retornar média de faturamento por dia trabalhado', () => {
     expect(calculateAverageRevenuePerWorkingDay(entries)).toBe(103.6)
-})
-
-test('retornar apenas serviços e orçamentários', () => {
-
-    const expected = [
-        { _id: '1', date: '2026-01-01', serviceId: 'Serviço 1', serviceCategory: 'service', serviceValue: 10, serviceIsThereAmount: false },
-        { _id: '2', date: '2026-01-02', serviceId: 'Serviço 2', serviceCategory: 'service', serviceValue: 15, serviceIsThereAmount: false },
-        { _id: '6', date: '2026-01-06', serviceId: 'Serviço 1', serviceCategory: 'service', serviceValue: 10, serviceIsThereAmount: false },
-        { _id: '7', date: '2026-01-07', serviceId: 'Orçamentário', serviceCategory: 'budget', serviceValue: 55, serviceIsThereAmount: false },
-        { _id: '9', date: '2026-01-09', serviceId: 'Serviço 2', serviceCategory: 'service', serviceValue: 15, serviceIsThereAmount: false },
-    ]
-
-    expect(getOnlyServicesAndBudgetsEntries(getOnlyServicesAndBudgetsEntriesMock)).toEqual(expected)
-
 })
 
 test('retornar itens com seus valores no mês', () => {
@@ -34,5 +22,34 @@ test('retornar itens com seus valores no mês', () => {
     ]
 
     expect(calculateItemsAndTheirValuesForTheMonth(entries)).toEqual(expected)
+
+})
+
+test('retornar apenas receitas com clientes', () => {
+
+    expect(getOnlyRevenuesWithCustomers(entries)).toEqual(onlyEntriesWithCustomer)
+
+})
+
+test('retornar clientes com suas receitas no mês', () => {
+
+    const expected = [
+        { customerName: 'Carlos', totalRevenue: 190 },
+        { customerName: 'Ana', totalRevenue: 145 },
+        { customerName: 'Bruno', totalRevenue: 35 },
+        { customerName: 'Mariana', totalRevenue: 70 },
+        { customerName: 'Lucas', totalRevenue: 60 },
+        { customerName: 'Fernanda', totalRevenue: 205 },
+        { customerName: 'Rafael', totalRevenue: 60 },
+        { customerName: 'Juliana', totalRevenue: 95 },
+        { customerName: 'Pedro', totalRevenue: 85 },
+        { customerName: 'Camila', totalRevenue: 195 },
+        { customerName: 'João', totalRevenue: 235 }
+    ]
+
+    expect(calculateCustomersAndTheirRevenueForTheMonth(entries)).toEqual(expected)
+
+    // Caso em que todas as receitas não tem cliente
+    expect(calculateCustomersAndTheirRevenueForTheMonth(onlyEntriesWithoutCustomer)).toEqual([])
 
 })

@@ -36,34 +36,68 @@ export function calculateAverageRevenuePerWorkingDay(monthlyEntries: Entry[]): n
 
 }
 
-export function getOnlyServicesAndBudgetsEntries(entries: Entry[]): Entry[] {
-
-    return entries.filter(current => current.serviceCategory === 'service' || current.serviceCategory === 'budget')
-
-}
-
 type CalculateRankingOfItemsWithHighestRevenue = { productName: string, totalRevenue: number }[]
 
 export function calculateItemsAndTheirValuesForTheMonth(
     entries: Entry[]
 ): CalculateRankingOfItemsWithHighestRevenue {
 
-    const servicesAndBudgets: CalculateRankingOfItemsWithHighestRevenue = [] as 
-    CalculateRankingOfItemsWithHighestRevenue
+    const itemsAndTheirValues: CalculateRankingOfItemsWithHighestRevenue = [] as
+        CalculateRankingOfItemsWithHighestRevenue
 
-    for (const item of entries) {
+    for (const entry of entries) {
 
         // Verificando se já foi colocado em array
-        if (servicesAndBudgets.some(value => value.productName === item.serviceId)) {
-            for (const service of servicesAndBudgets) {
-                if (service.productName === item.serviceId) service.totalRevenue += item.serviceValue
+        if (itemsAndTheirValues.some(value => value.productName === entry.serviceId)) {
+            for (const service of itemsAndTheirValues) {
+                if (service.productName === entry.serviceId) service.totalRevenue += entry.serviceValue
             }
         } else {
-            servicesAndBudgets.push({ productName: item.serviceId, totalRevenue: item.serviceValue })
+            itemsAndTheirValues.push({ productName: entry.serviceId, totalRevenue: entry.serviceValue })
         }
 
     }
 
-    return servicesAndBudgets
+    return itemsAndTheirValues
+
+}
+
+export function getOnlyRevenuesWithCustomers(entries: Entry[]): Entry[] {
+
+    return entries.filter(current => current.customer !== undefined)
+
+}
+
+type CalculateCustomersAndTheirRevenueForTheMonth = { customerName: string, totalRevenue: number }[]
+
+export function calculateCustomersAndTheirRevenueForTheMonth(entries: Entry[]): CalculateCustomersAndTheirRevenueForTheMonth | [] {
+
+    const customers: CalculateCustomersAndTheirRevenueForTheMonth = [] as
+        CalculateCustomersAndTheirRevenueForTheMonth
+
+    for (const entry of entries) {
+
+        if (entry.customer !== undefined) {
+
+            if (customers.some(current => current.customerName === entry.customer)) {
+
+                for (const customer of customers) {
+
+                    if (customer.customerName === entry.customer) customer.totalRevenue += entry.serviceValue
+
+                }
+
+            } else {
+
+                customers.push({ customerName: entry.customer, totalRevenue: entry.serviceValue })
+
+            }
+        }
+
+    }
+
+    if (customers.length === 0) return []
+
+    return customers
 
 }
