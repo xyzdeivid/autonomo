@@ -1,15 +1,16 @@
 import { useGetItemsAndTheirValuesForTheMonth } from '@/hooks/index/useGetItemsAndTheirValuesForTheMonth'
-import { moneyFormat } from '@/utils/common'
-import { Animated, Dimensions, StyleSheet, Text } from 'react-native'
+import { Animated, Dimensions } from 'react-native'
 import ContainerHandler from '../common/ContainerHandler'
 import { useEffect, useRef } from 'react'
 import { Info } from './Info'
+import { ListItem } from './ListItem'
 
 interface ItemsContentProps {
+    comingFrom: string
     setComingFrom: React.Dispatch<React.SetStateAction<string>>
 }
 
-export function ItemsContent({ setComingFrom }: ItemsContentProps) {
+export function ItemsContent({ comingFrom, setComingFrom }: ItemsContentProps) {
 
     useEffect(() => {
         setComingFrom('right')
@@ -18,7 +19,8 @@ export function ItemsContent({ setComingFrom }: ItemsContentProps) {
     const itemsAndTheirValuesForTheMonth = useGetItemsAndTheirValuesForTheMonth()
 
     const screenWidth = Dimensions.get('window').width
-    const slideAnim = useRef(new Animated.Value(screenWidth)).current
+    const direction = comingFrom === 'right' ? -screenWidth : screenWidth
+    const slideAnim = useRef(new Animated.Value(direction)).current
 
     useEffect(() => {
         Animated.timing(slideAnim, {
@@ -40,9 +42,7 @@ export function ItemsContent({ setComingFrom }: ItemsContentProps) {
                 <ContainerHandler>
                     {itemsAndTheirValuesForTheMonth.map((current, index) => {
                         return (
-                            <Text key={index} style={styles.item}>
-                                <Text style={{ fontWeight: '500' }}>{current.productName}:</Text> {moneyFormat(current.totalRevenue)}
-                            </Text>
+                            <ListItem key={index} name={current.productName} value={current.totalRevenue} />
                         )
                     })}
                 </ContainerHandler>
@@ -51,19 +51,3 @@ export function ItemsContent({ setComingFrom }: ItemsContentProps) {
     )
 
 }
-
-const styles = StyleSheet.create({
-
-    container: {
-        marginTop: 12
-    },
-
-    item: {
-        fontSize: 16,
-        paddingBottom: 12,
-        marginBottom: 12,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#0000001A'
-    }
-
-})

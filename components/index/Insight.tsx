@@ -5,6 +5,7 @@ import { Hr } from './Hr'
 import { MonthlyFinanceContent } from './MonthlyFinanceContent'
 import { DailyFinanceContent } from './DailyFinanceContent'
 import { ItemsContent } from './ItemsContent'
+import { CustomersContent } from './CustomersContent'
 
 export function Insight() {
 
@@ -16,13 +17,26 @@ export function Insight() {
         switch (insightToShow) {
 
             case 'monthly':
-                return <MonthlyFinanceContent setComingFrom={setComingFrom} />
+                return <MonthlyFinanceContent
+                    setComingFrom={setComingFrom}
+                />
 
             case 'daily':
-                return <DailyFinanceContent comingFrom={comingFrom} />
+                return <DailyFinanceContent
+                    comingFrom={comingFrom}
+                    setComingFrom={setComingFrom}
+                />
 
             case 'items':
-                return <ItemsContent setComingFrom={setComingFrom} />
+                return <ItemsContent
+                    comingFrom={comingFrom}
+                    setComingFrom={setComingFrom}
+                />
+
+            case 'customers':
+                return <CustomersContent
+                    setComingFrom={setComingFrom}
+                />
         }
 
     }

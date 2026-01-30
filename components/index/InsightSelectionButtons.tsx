@@ -7,6 +7,7 @@ import {
     ScrollView
 } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 interface InsightSelectionButtonsProps {
     insightToShow: string
@@ -97,6 +98,23 @@ export function InsightSelectionButtons({
                 <AntDesign name='unordered-list' size={20} color='white' />
                 <Text style={[styles.text, insightToShow === 'items' && styles.textActive]}>
                     Receita de Itens
+                </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={{
+                    ...styles.button,
+                    backgroundColor: getBackgroundColor('customers')
+                }}
+                onLayout={(e) =>
+                    savePosition('customers', e.nativeEvent.layout.x)
+                }
+                onPress={() => setInsightToShow('customers')}
+                activeOpacity={0.8}
+            >
+                <MaterialCommunityIcons name='face-man' size={20} color='white' />
+                <Text style={[styles.text, insightToShow === 'items' && styles.textActive]}>
+                    Receita de Clientes
                 </Text>
             </TouchableOpacity>
         </ScrollView>
