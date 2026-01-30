@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 interface InsightSelectionButtonsProps {
     insightToShow: string
@@ -95,7 +96,7 @@ export function InsightSelectionButtons({
                 onPress={() => setInsightToShow('items')}
                 activeOpacity={0.8}
             >
-                <AntDesign name='unordered-list' size={20} color='white' />
+                <Ionicons name='pricetags' size={18} color='white' />
                 <Text style={[styles.text, insightToShow === 'items' && styles.textActive]}>
                     Receita de Itens
                 </Text>
