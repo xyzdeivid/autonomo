@@ -36,8 +36,7 @@ export function CustomersContent({ setComingFrom }: CustomersContentProps) {
             <Info text='Receita de cada cliente no mês.' />
             <Animated.View
                 style={{
-                    transform: [{ translateX: slideAnim }],
-                    marginTop: 12
+                    transform: [{ translateX: slideAnim }]
                 }}
             >
                 <ContainerHandler>

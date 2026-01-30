@@ -46,7 +46,8 @@ export function MonthlyFinanceChart() {
     ].filter(Boolean)
 
     return (
-        <Animated.View
+        <View style={{ height: 300 }}>
+            <Animated.View
             style={{
                 flex: 1,
                 transform: [{ translateX: slideAnim }]
@@ -88,6 +89,7 @@ export function MonthlyFinanceChart() {
                 {profit > 0 && <Text style={styles.label}>Saldo</Text>}
             </View>
         </Animated.View>
+        </View>
     )
 }
 
@@ -98,8 +100,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-end',
         justifyContent: 'center',
-        gap: 16,
-        paddingTop: 32
+        gap: 16
     },
 
     barWrapper: {
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
 
     barContainer: {
         height: '100%',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        paddingTop: 18
     },
 
     bar: {
@@ -124,17 +126,14 @@ const styles = StyleSheet.create({
         height: 8,
         width: '100%',
         position: 'absolute',
-        top: 0,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8
+        top: 0
     },
 
     labelsContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         gap: 16,
-        paddingTop: 4,
-        paddingBottom: 8
+        marginTop: 4
     },
 
     label: {

@@ -1,24 +1,25 @@
-import { StyleSheet, Text, View } from 'react-native'
-import AntDesign from '@expo/vector-icons/AntDesign'
+import { colors } from '@/styles/appColors'
+import { StyleSheet, Text } from 'react-native'
 
 export function Info({ text }: { text: string }) {
 
     return (
-        <View style={styles.container}>
-            <AntDesign name="double-right" size={16} color="black" />
-            <Text style={{ fontSize: 16 }}>{text}</Text>
-        </View>
+            <Text style={styles.text}>{text}</Text>
     )
 
 }
 
 const styles = StyleSheet.create({
 
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-        marginBottom: 12
+    text: {
+        textAlign: 'center',
+        fontSize: 16,
+        backgroundColor: colors.home.max,
+        color: '#FFF',
+        padding: 4,
+        marginTop: 12,
+        marginBottom: 16,
+        borderRadius: 4
     }
 
 })

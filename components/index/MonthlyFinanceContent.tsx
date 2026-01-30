@@ -1,4 +1,3 @@
-import { FinanceChartContainer } from './FinanceChartContainer'
 import { MonthlyFinanceChart } from './MonthlyFinanceChart'
 import { useGetPercentageOfSavingsText } from '@/hooks/index/useGetPercentageOfSavingsText'
 import { TextInsight } from './TextInsight'
@@ -22,9 +21,7 @@ export function MonthlyFinanceContent({ setComingFrom }: MonthlyFinanceContentPr
     return (
         <>
             <Info text='Balanço financeiro do mês.' />
-            <FinanceChartContainer>
                 <MonthlyFinanceChart />
-            </FinanceChartContainer>
             {
                 showMonthTextInsights && <TextInsight text={percentageOfSavingsText} />
             }

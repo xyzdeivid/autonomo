@@ -1,5 +1,4 @@
 import { DailyFinanceChart } from './DailyFinanceChart'
-import { FinanceChartContainer } from './FinanceChartContainer'
 import { TextInsight } from './TextInsight'
 import { useGetAverageRevenuePerWorkingDayText } from '@/hooks/index/useGetAverageRevenuePerWorkingDayText'
 import { Info } from './Info'
@@ -21,9 +20,7 @@ export function DailyFinanceContent({ comingFrom, setComingFrom }: DailyFinanceC
     return (
         <>
             <Info text='Receita de cada dia do mês.' />
-            <FinanceChartContainer>
-                <DailyFinanceChart comingFrom={comingFrom} />
-            </FinanceChartContainer>
+            <DailyFinanceChart comingFrom={comingFrom} />
             <TextInsight text={averageRevenuePerWorkingDay} />
         </>
     )

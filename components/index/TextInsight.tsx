@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     insightTextContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 16
+        marginTop: 12
     },
 
     insightText: {

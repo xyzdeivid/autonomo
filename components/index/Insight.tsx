@@ -1,7 +1,6 @@
 import { View } from 'react-native'
 import { InsightSelectionButtons } from './InsightSelectionButtons'
 import { useState } from 'react'
-import { Hr } from './Hr'
 import { MonthlyFinanceContent } from './MonthlyFinanceContent'
 import { DailyFinanceContent } from './DailyFinanceContent'
 import { ItemsContent } from './ItemsContent'
@@ -47,8 +46,9 @@ export function Insight() {
                 insightToShow={insightToShow}
                 setInsightToShow={setInsightToShow}
             />
-            <Hr />
-            {getContent()}
+            <View style={{ marginTop: 12 }}>
+                {getContent()}
+            </View>
         </View>
     )
 

@@ -44,7 +44,8 @@ export function DailyFinanceChart({ comingFrom }: DailyFinanceChartProps) {
     return (
         <Animated.View
             style={{
-                transform: [{ translateX: slideAnim }]
+                transform: [{ translateX: slideAnim }],
+                marginTop: 2
             }}
         >
             <LineChart

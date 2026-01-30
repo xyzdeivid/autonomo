@@ -36,7 +36,6 @@ export function ItemsContent({ comingFrom, setComingFrom }: ItemsContentProps) {
             <Animated.View
                 style={{
                     transform: [{ translateX: slideAnim }],
-                    marginTop: 12
                 }}
             >
                 <ContainerHandler>
