@@ -4,6 +4,7 @@ import { useGetPercentageOfSavingsText } from '@/hooks/index/useGetPercentageOfS
 import { TextInsight } from './TextInsight'
 import { Info } from './Info'
 import { useEffect } from 'react'
+import { useShowMonthTextInsights } from '@/hooks/index/useShowMonthTextInsight'
 
 interface MonthlyFinanceContentProps {
     setComingFrom: React.Dispatch<React.SetStateAction<string>>
@@ -16,6 +17,7 @@ export function MonthlyFinanceContent({ setComingFrom }: MonthlyFinanceContentPr
     }, [setComingFrom])
 
     const percentageOfSavingsText = useGetPercentageOfSavingsText()
+    const showMonthTextInsights = useShowMonthTextInsights()
 
     return (
         <>
@@ -23,7 +25,9 @@ export function MonthlyFinanceContent({ setComingFrom }: MonthlyFinanceContentPr
             <FinanceChartContainer>
                 <MonthlyFinanceChart />
             </FinanceChartContainer>
-            <TextInsight text={percentageOfSavingsText} />
+            {
+                showMonthTextInsights && <TextInsight text={percentageOfSavingsText} />
+            }
         </>
     )
 
