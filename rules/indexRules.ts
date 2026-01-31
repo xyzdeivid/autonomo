@@ -101,3 +101,33 @@ export function calculateCustomersAndTheirRevenueForTheMonth(entries: Entry[]): 
     return customers
 
 }
+
+type CalculateAmountPerItemPerMonth = { itemName: string, amount: number }[]
+
+export function calculateAmountPerItemPerMonth(entries: Entry[]): CalculateAmountPerItemPerMonth | [] {
+
+    const items: CalculateAmountPerItemPerMonth = [] as CalculateAmountPerItemPerMonth
+
+    for (const entry of entries) {
+
+        if (items.some(current => current.itemName === entry.serviceId)) {
+
+            for (const item of items) {
+
+                if (item.itemName === entry.serviceId) item.amount += entry.serviceCategory === 'product' && entry.serviceAmount !== undefined ? entry.serviceAmount : 1
+
+            }
+
+        } else {
+
+            items.push({ itemName: entry.serviceId, amount: entry.serviceCategory === 'product' && entry.serviceAmount !== undefined ? entry.serviceAmount : 1 })
+
+        }
+
+    }
+
+    if (items.length === 0) return []
+
+    return items
+
+}

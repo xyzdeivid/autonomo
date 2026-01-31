@@ -9,7 +9,7 @@ import { moneyFormat } from '@/utils/common'
 import useGetMonthEntries from '@/hooks/entries/useGetMonthEntries'
 
 interface DailyFinanceChartProps {
-    comingFrom: string
+    comingFrom: number
 }
 
 export function DailyFinanceChart({ comingFrom }: DailyFinanceChartProps) {
@@ -17,7 +17,7 @@ export function DailyFinanceChart({ comingFrom }: DailyFinanceChartProps) {
     const entries = useGetMonthEntries()
 
     const screenWidth = Dimensions.get('window').width
-    const direction = comingFrom === 'left' ? screenWidth : -screenWidth
+    const direction = comingFrom < 1 ? screenWidth : -screenWidth
     const slideAnim = useRef(new Animated.Value(direction)).current
 
     useEffect(() => {
@@ -50,11 +50,11 @@ export function DailyFinanceChart({ comingFrom }: DailyFinanceChartProps) {
         >
             <LineChart
                 data={data()}
-                spacing={48}
-                initialSpacing={48}
+                spacing={56}
+                initialSpacing={24}
                 textColor1='black'
                 textShiftY={-8}
-                textShiftX={-10}
+                textShiftX={-12}
                 textFontSize={12}
                 thickness={2}
                 hideRules

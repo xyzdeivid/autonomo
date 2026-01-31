@@ -6,13 +6,13 @@ import { useEffect } from 'react'
 import { useShowMonthTextInsights } from '@/hooks/index/useShowMonthTextInsight'
 
 interface MonthlyFinanceContentProps {
-    setComingFrom: React.Dispatch<React.SetStateAction<string>>
+    setComingFrom: React.Dispatch<React.SetStateAction<number>>
 }
 
 export function MonthlyFinanceContent({ setComingFrom }: MonthlyFinanceContentProps) {
 
     useEffect(() => {
-        setComingFrom('left')
+        setComingFrom(0)
     }, [setComingFrom])
 
     const percentageOfSavingsText = useGetPercentageOfSavingsText()

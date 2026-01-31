@@ -6,9 +6,6 @@ import {
     StyleSheet,
     ScrollView
 } from 'react-native'
-import AntDesign from '@expo/vector-icons/AntDesign'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-import Ionicons from '@expo/vector-icons/Ionicons'
 
 interface InsightSelectionButtonsProps {
     insightToShow: string
@@ -62,12 +59,10 @@ export function InsightSelectionButtons({
                 onPress={() => setInsightToShow('monthly')}
                 activeOpacity={0.8}
             >
-                <AntDesign name='bar-chart' size={20} color='white' />
                 <Text style={[styles.text, insightToShow === 'monthly' && styles.textActive]}>
                     Balanço
                 </Text>
             </TouchableOpacity>
-
             <TouchableOpacity
                 style={{
                     ...styles.button,
@@ -79,12 +74,10 @@ export function InsightSelectionButtons({
                 onPress={() => setInsightToShow('daily')}
                 activeOpacity={0.8}
             >
-                <AntDesign name='line-chart' size={20} color='white' />
                 <Text style={[styles.text, insightToShow === 'daily' && styles.textActive]}>
                     Receita por Dia
                 </Text>
             </TouchableOpacity>
-
             <TouchableOpacity
                 style={{
                     ...styles.button,
@@ -96,12 +89,10 @@ export function InsightSelectionButtons({
                 onPress={() => setInsightToShow('items')}
                 activeOpacity={0.8}
             >
-                <Ionicons name='pricetags' size={18} color='white' />
                 <Text style={[styles.text, insightToShow === 'items' && styles.textActive]}>
                     Receita por Itens
                 </Text>
             </TouchableOpacity>
-
             <TouchableOpacity
                 style={{
                     ...styles.button,
@@ -113,9 +104,23 @@ export function InsightSelectionButtons({
                 onPress={() => setInsightToShow('customers')}
                 activeOpacity={0.8}
             >
-                <MaterialCommunityIcons name='face-man' size={20} color='white' />
-                <Text style={[styles.text, insightToShow === 'items' && styles.textActive]}>
+                <Text style={[styles.text, insightToShow === 'customers' && styles.textActive]}>
                     Receita por Clientes
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={{
+                    ...styles.button,
+                    backgroundColor: getBackgroundColor('amount')
+                }}
+                onLayout={(e) =>
+                    savePosition('amount', e.nativeEvent.layout.x)
+                }
+                onPress={() => setInsightToShow('amount')}
+                activeOpacity={0.8}
+            >
+                <Text style={[styles.text, insightToShow === 'amount' && styles.textActive]}>
+                    Quantidade por Itens
                 </Text>
             </TouchableOpacity>
         </ScrollView>
@@ -149,5 +154,5 @@ const styles = StyleSheet.create({
     textActive: {
         fontWeight: '700'
     }
-    
+
 })

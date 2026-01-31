@@ -1,7 +1,10 @@
 import { entries, onlyEntriesWithCustomer, onlyEntriesWithoutCustomer } from '@/mocks/entries'
-import { calculateMonthlyIncome, calculateAverageRevenuePerWorkingDay, 
-    calculateItemsAndTheirValuesForTheMonth, getOnlyRevenuesWithCustomers, 
-    calculateCustomersAndTheirRevenueForTheMonth } from './indexRules'
+import {
+    calculateMonthlyIncome, calculateAverageRevenuePerWorkingDay,
+    calculateItemsAndTheirValuesForTheMonth, getOnlyRevenuesWithCustomers,
+    calculateCustomersAndTheirRevenueForTheMonth,
+    calculateAmountPerItemPerMonth
+} from './indexRules'
 
 test('retornar valor total de receita no mês', () => {
     expect(calculateMonthlyIncome(entries)).toBe(2590)
@@ -51,5 +54,19 @@ test('retornar clientes com suas receitas no mês', () => {
 
     // Caso em que todas as receitas não tem cliente
     expect(calculateCustomersAndTheirRevenueForTheMonth(onlyEntriesWithoutCustomer)).toEqual([])
+
+})
+
+test('retornar quantidade de produtos vendidos e serviços prestados', () => {
+
+    const expected = [
+        { itemName: 'Serviço 1', amount: 10 },
+        { itemName: 'Serviço 2', amount: 10 },
+        { itemName: 'Produto 1', amount: 23 },
+        { itemName: 'Produto 2', amount: 23 },
+        { itemName: 'Orçamentário', amount: 10 }
+    ]
+
+    expect(calculateAmountPerItemPerMonth(entries)).toEqual(expected)
 
 })

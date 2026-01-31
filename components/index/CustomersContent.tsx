@@ -7,19 +7,21 @@ import { ListItem } from './ListItem'
 import { useShowCustomersAndTheirRevenue } from '@/hooks/index/useShowCustomersAndTheirRevenue'
 
 interface CustomersContentProps {
-    setComingFrom: React.Dispatch<React.SetStateAction<string>>
+    comingFrom: number
+    setComingFrom: React.Dispatch<React.SetStateAction<number>>
 }
 
-export function CustomersContent({ setComingFrom }: CustomersContentProps) {
+export function CustomersContent({ comingFrom, setComingFrom }: CustomersContentProps) {
 
     useEffect(() => {
-        setComingFrom('right')
+        setComingFrom(3)
     }, [setComingFrom])
 
     const customersAndTheirRevenue = useGetCustomersAndTheirRevenueForTheMonth()
 
     const screenWidth = Dimensions.get('window').width
-    const slideAnim = useRef(new Animated.Value(screenWidth)).current
+    const direction = comingFrom < 3 ? screenWidth : -screenWidth
+    const slideAnim = useRef(new Animated.Value(direction)).current
 
     useEffect(() => {
         Animated.timing(slideAnim, {
@@ -42,7 +44,12 @@ export function CustomersContent({ setComingFrom }: CustomersContentProps) {
                 <ContainerHandler>
                     {showCustomersAndTheirRevenue ? customersAndTheirRevenue.map((current, index) => {
                         return (
-                            <ListItem key={index} name={current.customerName} value={current.totalRevenue} />
+                            <ListItem
+                                key={index}
+                                name={current.customerName}
+                                value={current.totalRevenue}
+                                money={true}
+                            />
                         )
                     }) : <Text>Nenhuma receita com cliente cadastrado.</Text>}
                 </ContainerHandler>

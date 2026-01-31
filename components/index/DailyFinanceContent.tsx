@@ -5,14 +5,14 @@ import { Info } from './Info'
 import { useEffect } from 'react'
 
 interface DailyFinanceContentProps {
-    comingFrom: string
-    setComingFrom: React.Dispatch<React.SetStateAction<string>>
+    comingFrom: number
+    setComingFrom: React.Dispatch<React.SetStateAction<number>>
 }
 
 export function DailyFinanceContent({ comingFrom, setComingFrom }: DailyFinanceContentProps) {
 
     useEffect(() => {
-        setComingFrom('left')
+        setComingFrom(1)
     }, [setComingFrom])
 
     const averageRevenuePerWorkingDay = useGetAverageRevenuePerWorkingDayText()

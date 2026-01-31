@@ -6,20 +6,20 @@ import { Info } from './Info'
 import { ListItem } from './ListItem'
 
 interface ItemsContentProps {
-    comingFrom: string
-    setComingFrom: React.Dispatch<React.SetStateAction<string>>
+    comingFrom: number
+    setComingFrom: React.Dispatch<React.SetStateAction<number>>
 }
 
 export function ItemsContent({ comingFrom, setComingFrom }: ItemsContentProps) {
 
     useEffect(() => {
-        setComingFrom('right')
+        setComingFrom(2)
     }, [setComingFrom])
 
     const itemsAndTheirValuesForTheMonth = useGetItemsAndTheirValuesForTheMonth()
 
     const screenWidth = Dimensions.get('window').width
-    const direction = comingFrom === 'right' ? -screenWidth : screenWidth
+    const direction = comingFrom < 2 ? screenWidth : -screenWidth
     const slideAnim = useRef(new Animated.Value(direction)).current
 
     useEffect(() => {
@@ -41,7 +41,12 @@ export function ItemsContent({ comingFrom, setComingFrom }: ItemsContentProps) {
                 <ContainerHandler>
                     {itemsAndTheirValuesForTheMonth.map((current, index) => {
                         return (
-                            <ListItem key={index} name={current.productName} value={current.totalRevenue} />
+                            <ListItem
+                                key={index}
+                                name={current.productName}
+                                value={current.totalRevenue}
+                                money={true}
+                            />
                         )
                     })}
                 </ContainerHandler>

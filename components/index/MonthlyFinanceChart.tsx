@@ -100,18 +100,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-end',
         justifyContent: 'center',
-        gap: 16
+        gap: 8
     },
 
     barWrapper: {
         alignItems: 'center',
-        width: 72
+        width: 84
     },
 
     barContainer: {
         height: '100%',
         justifyContent: 'flex-end',
-        paddingTop: 18
+        paddingTop: 18,
+        alignItems: 'center'
     },
 
     bar: {

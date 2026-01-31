@@ -5,11 +5,12 @@ import { MonthlyFinanceContent } from './MonthlyFinanceContent'
 import { DailyFinanceContent } from './DailyFinanceContent'
 import { ItemsContent } from './ItemsContent'
 import { CustomersContent } from './CustomersContent'
+import { AmountContent } from './AmountContent'
 
 export function Insight() {
 
     const [insightToShow, setInsightToShow] = useState('monthly')
-    const [comingFrom, setComingFrom] = useState('')
+    const [comingFrom, setComingFrom] = useState(0)
 
     const getContent = () => {
 
@@ -34,6 +35,12 @@ export function Insight() {
 
             case 'customers':
                 return <CustomersContent
+                    comingFrom={comingFrom}
+                    setComingFrom={setComingFrom}
+                />
+
+            case 'amount':
+                return <AmountContent
                     setComingFrom={setComingFrom}
                 />
         }
