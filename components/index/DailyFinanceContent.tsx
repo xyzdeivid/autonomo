@@ -19,7 +19,7 @@ export function DailyFinanceContent({ comingFrom, setComingFrom }: DailyFinanceC
 
     return (
         <>
-            <Info text='Receita de cada dia do mês.' />
+            <Info text='Quanto você ganhou em cada dia do mês.' />
             <DailyFinanceChart comingFrom={comingFrom} />
             <TextInsight text={averageRevenuePerWorkingDay} />
         </>

@@ -98,7 +98,7 @@ export function InsightSelectionButtons({
             >
                 <Ionicons name='pricetags' size={18} color='white' />
                 <Text style={[styles.text, insightToShow === 'items' && styles.textActive]}>
-                    Receita de Itens
+                    Receita por Itens
                 </Text>
             </TouchableOpacity>
 
@@ -115,7 +115,7 @@ export function InsightSelectionButtons({
             >
                 <MaterialCommunityIcons name='face-man' size={20} color='white' />
                 <Text style={[styles.text, insightToShow === 'items' && styles.textActive]}>
-                    Receita de Clientes
+                    Receita por Clientes
                 </Text>
             </TouchableOpacity>
         </ScrollView>

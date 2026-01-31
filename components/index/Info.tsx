@@ -1,25 +1,25 @@
-import { colors } from '@/styles/appColors'
-import { StyleSheet, Text } from 'react-native'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
+import { StyleSheet, Text, View } from 'react-native'
 
 export function Info({ text }: { text: string }) {
 
     return (
-            <Text style={styles.text}>{text}</Text>
+        <View style={styles.container}>
+            <FontAwesome name="circle" size={8} color="#000000" />
+            <Text>{text}</Text>
+        </View>
     )
 
 }
 
 const styles = StyleSheet.create({
 
-    text: {
-        textAlign: 'center',
-        fontSize: 16,
-        backgroundColor: colors.home.max,
-        color: '#FFF',
-        padding: 4,
+    container: {
         marginTop: 12,
-        marginBottom: 16,
-        borderRadius: 4
+        marginBottom: 24,
+        flexDirection: 'row',
+        gap: 4,
+        alignItems: 'center'
     }
 
 })
