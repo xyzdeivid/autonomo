@@ -1,9 +1,10 @@
 import { useGetItemsAndTheirValuesForTheMonth } from '@/hooks/index/useGetItemsAndTheirValuesForTheMonth'
-import { Animated, Dimensions } from 'react-native'
+import { Animated, Dimensions, Text } from 'react-native'
 import ContainerHandler from '../common/ContainerHandler'
 import { useEffect, useRef } from 'react'
 import { Info } from './Info'
 import { ListItem } from './ListItem'
+import { useShowInsights } from '@/hooks/index/useShowInsights'
 
 interface ItemsContentProps {
     comingFrom: number
@@ -30,6 +31,8 @@ export function ItemsContent({ comingFrom, setComingFrom }: ItemsContentProps) {
         }).start()
     }, [slideAnim])
 
+    const showInsights = useShowInsights()
+
     return (
         <>
             <Info text='Quanto você faturou com cada produto ou serviço no mês.' />
@@ -38,18 +41,25 @@ export function ItemsContent({ comingFrom, setComingFrom }: ItemsContentProps) {
                     transform: [{ translateX: slideAnim }],
                 }}
             >
-                <ContainerHandler>
-                    {itemsAndTheirValuesForTheMonth.map((current, index) => {
-                        return (
-                            <ListItem
-                                key={index}
-                                name={current.productName}
-                                value={current.totalRevenue}
-                                money={true}
-                            />
-                        )
-                    })}
-                </ContainerHandler>
+                {
+                    showInsights &&
+                    <ContainerHandler>
+                        {itemsAndTheirValuesForTheMonth.map((current, index) => {
+                            return (
+                                <ListItem
+                                    key={index}
+                                    name={current.productName}
+                                    value={current.totalRevenue}
+                                    money={true}
+                                />
+                            )
+                        })}
+                    </ContainerHandler>
+                }
+                {
+                    !showInsights &&
+                    <Text>Nenhuma receita cadastrada.</Text>
+                }
             </Animated.View>
         </>
     )

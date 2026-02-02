@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         color: 'gray',
         marginStart: 4,
-        marginBottom: 1
+        marginBottom: 1,
+        maxWidth: '95%'
     }
 
 })

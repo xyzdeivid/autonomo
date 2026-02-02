@@ -2,7 +2,9 @@ import { DailyFinanceChart } from './DailyFinanceChart'
 import { TextInsight } from './TextInsight'
 import { useGetAverageRevenuePerWorkingDayText } from '@/hooks/index/useGetAverageRevenuePerWorkingDayText'
 import { Info } from './Info'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { useShowInsights } from '@/hooks/index/useShowInsights'
+import { Animated, Dimensions, Text, View } from 'react-native'
 
 interface DailyFinanceContentProps {
     comingFrom: number
@@ -11,17 +13,46 @@ interface DailyFinanceContentProps {
 
 export function DailyFinanceContent({ comingFrom, setComingFrom }: DailyFinanceContentProps) {
 
+    const screenWidth = Dimensions.get('window').width
+    const direction = comingFrom < 1 ? screenWidth : -screenWidth
+    const slideAnim = useRef(new Animated.Value(direction)).current
+
+    useEffect(() => {
+        Animated.timing(slideAnim, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true
+        }).start()
+    }, [slideAnim])
+
     useEffect(() => {
         setComingFrom(1)
     }, [setComingFrom])
 
     const averageRevenuePerWorkingDay = useGetAverageRevenuePerWorkingDayText()
+    const showInsights = useShowInsights()
 
     return (
         <>
             <Info text='Quanto você faturou em cada dia do mês.' />
-            <DailyFinanceChart comingFrom={comingFrom} />
-            <TextInsight text={averageRevenuePerWorkingDay} />
+            <Animated.View
+                style={{
+                    transform: [{ translateX: slideAnim }],
+                    marginTop: 2
+                }}
+            >
+                {
+                    showInsights &&
+                    <View>
+                        <DailyFinanceChart />
+                        <TextInsight text={averageRevenuePerWorkingDay} />
+                    </View>
+                }
+                {
+                    !showInsights &&
+                    <Text>Nenhuma receita cadastrada.</Text>
+                }
+            </Animated.View>
         </>
     )
 

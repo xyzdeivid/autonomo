@@ -1,7 +1,7 @@
 const itemColor = '#330066'
 const outflowColor = '#660000'
 const entryColor = '#006600'
-const homeColor = '#08819B'
+const homeColor = '#06687E'
 
 export const colors = {
 

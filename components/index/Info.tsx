@@ -6,8 +6,8 @@ export function Info({ text }: { text: string }) {
 
     return (
         <View style={styles.container}>
-            <FontAwesome name="circle" size={8} color="#000000" style={{ marginStart: 4 }} />
-            <Text style={{ fontSize: 16, maxWidth: '95%' }}>{text}</Text>
+            <FontAwesome name="info-circle" size={16} color="#000000C8" style={{ marginEnd: 4 }} />
+            <Text style={styles.text}>{text}</Text>
         </View>
     )
 
@@ -21,9 +21,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 4,
         alignItems: 'center',
-        backgroundColor: colors.home.min,
-        padding: 4,
-        borderRadius: 8
+        backgroundColor: colors.home.midMin,
+        padding: 8,
+        borderRadius: 8,
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: colors.home.mid
+    },
+
+    text: {
+        fontSize: 16,
+        maxWidth: '95%',
+        fontWeight: '500',
+        color: '#000000C8'
     }
 
 })
