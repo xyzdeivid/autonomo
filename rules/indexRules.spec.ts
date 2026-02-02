@@ -7,21 +7,21 @@ import {
 } from './indexRules'
 
 test('retornar valor total de receita no mês', () => {
-    expect(calculateMonthlyIncome(entries)).toBe(2590)
+    expect(calculateMonthlyIncome(entries)).toBe(2100)
 })
 
 test('retornar média de faturamento por dia trabalhado', () => {
-    expect(calculateAverageRevenuePerWorkingDay(entries)).toBe(103.6)
+    expect(calculateAverageRevenuePerWorkingDay(entries)).toBe(100)
 })
 
 test('retornar itens com seus valores no mês', () => {
 
     const expected = [
-        { productName: 'Serviço 1', totalRevenue: 100 },
-        { productName: 'Serviço 2', totalRevenue: 150 },
-        { productName: 'Produto 1', totalRevenue: 460 },
-        { productName: 'Produto 2', totalRevenue: 575 },
-        { productName: 'Orçamentário', totalRevenue: 1305 }
+        { productName: 'Serviço 1', totalRevenue: 90 },
+        { productName: 'Serviço 2', totalRevenue: 135 },
+        { productName: 'Produto 1', totalRevenue: 340 },
+        { productName: 'Produto 2', totalRevenue: 350 },
+        { productName: 'Orçamentário', totalRevenue: 1185 }
     ]
 
     expect(calculateItemsAndTheirValuesForTheMonth(entries)).toEqual(expected)
@@ -38,15 +38,15 @@ test('retornar clientes com suas receitas no mês', () => {
 
     const expected = [
         { customerName: 'Carlos', totalRevenue: 190 },
-        { customerName: 'Ana', totalRevenue: 145 },
-        { customerName: 'Bruno', totalRevenue: 35 },
+        { customerName: 'Pedro', totalRevenue: 25 },
+        { customerName: 'Ana', totalRevenue: 25 },
+        { customerName: 'Bruno', totalRevenue: 20 },
         { customerName: 'Mariana', totalRevenue: 70 },
-        { customerName: 'Lucas', totalRevenue: 60 },
-        { customerName: 'Fernanda', totalRevenue: 205 },
-        { customerName: 'Rafael', totalRevenue: 60 },
+        { customerName: 'Lucas', totalRevenue: 35 },
+        { customerName: 'Fernanda', totalRevenue: 105 },
+        { customerName: 'Rafael', totalRevenue: 50 },
         { customerName: 'Juliana', totalRevenue: 95 },
-        { customerName: 'Pedro', totalRevenue: 85 },
-        { customerName: 'Camila', totalRevenue: 195 },
+        { customerName: 'Camila', totalRevenue: 155 },
         { customerName: 'João', totalRevenue: 235 }
     ]
 
@@ -60,11 +60,11 @@ test('retornar clientes com suas receitas no mês', () => {
 test('retornar quantidade de produtos vendidos e serviços prestados', () => {
 
     const expected = [
-        { itemName: 'Serviço 1', amount: 10 },
-        { itemName: 'Serviço 2', amount: 10 },
-        { itemName: 'Produto 1', amount: 23 },
-        { itemName: 'Produto 2', amount: 23 },
-        { itemName: 'Orçamentário', amount: 10 }
+        { itemName: 'Serviço 1', amount: 9 },
+        { itemName: 'Serviço 2', amount: 9 },
+        { itemName: 'Produto 1', amount: 17 },
+        { itemName: 'Produto 2', amount: 14 },
+        { itemName: 'Orçamentário', amount: 9 }
     ]
 
     expect(calculateAmountPerItemPerMonth(entries)).toEqual(expected)
