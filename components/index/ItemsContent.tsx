@@ -32,7 +32,7 @@ export function ItemsContent({ comingFrom, setComingFrom }: ItemsContentProps) {
 
     return (
         <>
-            <Info text='Quanto você ganhou de cada produto ou serviço no mês.' />
+            <Info text='Quanto você faturou com cada produto ou serviço no mês.' />
             <Animated.View
                 style={{
                     transform: [{ translateX: slideAnim }],

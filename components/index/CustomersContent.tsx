@@ -35,7 +35,7 @@ export function CustomersContent({ comingFrom, setComingFrom }: CustomersContent
 
     return (
         <>
-            <Info text='Quanto você ganhou de cada cliente no mês.' />
+            <Info text='Quanto você faturou com cada cliente no mês.' />
             <Animated.View
                 style={{
                     transform: [{ translateX: slideAnim }]

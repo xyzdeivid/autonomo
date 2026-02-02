@@ -131,10 +131,12 @@ const styles = StyleSheet.create({
 
     container: {
         flexDirection: 'row',
-        marginTop: 24,
         justifyContent: 'flex-start',
         gap: 8,
-        paddingHorizontal: 6
+        paddingHorizontal: 6,
+        paddingVertical: 24,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: '#0000001A'
     },
 
     button: {
