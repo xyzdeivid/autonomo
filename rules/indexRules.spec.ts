@@ -1,9 +1,10 @@
-import { entries, onlyEntriesWithCustomer, onlyEntriesWithoutCustomer } from '@/mocks/entries'
+import { dailyRevenue, entries, onlyEntriesWithCustomer, onlyEntriesWithoutCustomer } from '@/mocks/entries'
 import {
     calculateMonthlyIncome, calculateAverageRevenuePerWorkingDay,
     calculateItemsAndTheirValuesForTheMonth, getOnlyRevenuesWithCustomers,
     calculateCustomersAndTheirRevenueForTheMonth,
-    calculateAmountPerItemPerMonth
+    calculateAmountPerItemPerMonth,
+    getRevenuePerDayInTheMonth
 } from './indexRules'
 
 test('retornar valor total de receita no mês', () => {
@@ -68,5 +69,11 @@ test('retornar quantidade de produtos vendidos e serviços prestados', () => {
     ]
 
     expect(calculateAmountPerItemPerMonth(entries)).toEqual(expected)
+
+})
+
+test('retornar receita de cada dia no mês', () => {
+
+    expect(getRevenuePerDayInTheMonth(entries)).toEqual(dailyRevenue)
 
 })

@@ -1,20 +1,17 @@
 import { LineChart } from 'react-native-gifted-charts'
-import { getDays } from '@/utils'
 import { useEffect, useRef } from 'react'
 import { Animated, Dimensions } from 'react-native'
 
 
 import { colors } from '@/styles/appColors'
 import { moneyFormat } from '@/utils/common'
-import useGetMonthEntries from '@/hooks/entries/useGetMonthEntries'
+import { useGetRevenuePerDayInTheMonth } from '@/hooks/index/useGetRevenuePerDayInTheMonth'
 
 interface DailyFinanceChartProps {
     comingFrom: number
 }
 
 export function DailyFinanceChart({ comingFrom }: DailyFinanceChartProps) {
-
-    const entries = useGetMonthEntries()
 
     const screenWidth = Dimensions.get('window').width
     const direction = comingFrom < 1 ? screenWidth : -screenWidth
@@ -28,12 +25,14 @@ export function DailyFinanceChart({ comingFrom }: DailyFinanceChartProps) {
         }).start()
     }, [slideAnim])
 
+    const revenuePerDayInTheMonth = useGetRevenuePerDayInTheMonth()
+
     const data = () => {
-        return getDays(entries).map(day => {
+        return revenuePerDayInTheMonth.map(current => {
             return {
-                value: day.amount,
-                dataPointText: moneyFormat(day.amount),
-                label: day.day
+                value: current.value,
+                dataPointText: moneyFormat(current.value),
+                label: current.day
             }
         })
     }

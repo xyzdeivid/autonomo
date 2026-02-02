@@ -131,3 +131,37 @@ export function calculateAmountPerItemPerMonth(entries: Entry[]): CalculateAmoun
     return items
 
 }
+
+type GetRevenuePerDayInTheMonth = { day: string, value: number }[]
+
+export function getRevenuePerDayInTheMonth(
+    entries: Entry[]
+): GetRevenuePerDayInTheMonth {
+
+    if (entries.length === 0) return []
+
+    const revenueMap: Record<string, number> = {}
+    let lastDay = 0
+
+    for (const entry of entries) {
+        const day = entry.date.slice(-2)
+        const dayNumber = Number(day)
+
+        revenueMap[day] = (revenueMap[day] ?? 0) + entry.serviceValue
+
+        if (dayNumber > lastDay) lastDay = dayNumber
+    }
+
+    const result: GetRevenuePerDayInTheMonth = []
+
+    for (let day = 1; day <= lastDay; day++) {
+        const dayStr = String(day).padStart(2, '0')
+
+        result.push({
+            day: dayStr,
+            value: revenueMap[dayStr] ?? 0
+        })
+    }
+
+    return result
+}

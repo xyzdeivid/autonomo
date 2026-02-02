@@ -107,3 +107,31 @@ export const onlyEntriesWithoutCustomer: Entry[] = [
     { _id: '41', date: '2026-01-24', serviceId: 'Produto 1', serviceCategory: 'product', serviceValue: 80, serviceIsThereAmount: true, serviceAmount: 4 },
     { _id: '32', date: '2026-01-25', serviceId: 'Orçamentário', serviceCategory: 'budget', serviceValue: 90, serviceIsThereAmount: false }
 ]
+
+export const dailyRevenue = [
+    { day: '01', value: 20 },
+    { day: '02', value: 25 },
+    { day: '03', value: 35 },
+    { day: '04', value: 50 },
+    { day: '05', value: 90 },
+    { day: '06', value: 25 },
+    { day: '07', value: 95 },
+    { day: '08', value: 260 },
+    { day: '09', value: 65 },
+    { day: '10', value: 0 },
+    { day: '11', value: 0 },
+    { day: '12', value: 60 },
+    { day: '13', value: 175 },
+    { day: '14', value: 75 },
+    { day: '15', value: 210 },
+    { day: '16', value: 30 },
+    { day: '17', value: 0 },
+    { day: '18', value: 0 },
+    { day: '19', value: 95 },
+    { day: '20', value: 315 },
+    { day: '21', value: 230 },
+    { day: '22', value: 50 },
+    { day: '23', value: 25 },
+    { day: '24', value: 80 },
+    { day: '25', value: 90 }
+]
