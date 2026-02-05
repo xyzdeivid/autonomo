@@ -16,8 +16,7 @@ export function Info({ text }: { text: string }) {
 const styles = StyleSheet.create({
 
     container: {
-        marginTop: 12,
-        marginBottom: 24,
+        marginBottom: 8,
         flexDirection: 'row',
         gap: 4,
         alignItems: 'center',
