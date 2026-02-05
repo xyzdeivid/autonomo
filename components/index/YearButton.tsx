@@ -5,7 +5,6 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import { YearOptionsList } from './YearOptionsList'
 import { getMonthName } from '@/utils/common'
 import { months } from '@/constants/common'
-import { useShowMonths } from '@/hooks/index/useShowMonths'
 
 export function YearButton() {
 
@@ -30,8 +29,6 @@ export function YearButton() {
         }).start()
     }
 
-    const showMonths = useShowMonths()
-
     const [showYearList, setShowYearList] = useState(false)
 
     return (
@@ -43,7 +40,7 @@ export function YearButton() {
                         onPressIn={handlePressIn}
                         onPressOut={handlePressOut}
                         onPress={() => {
-                            if (showMonths) setShowYearList(true)
+                            setShowYearList(true)
                         }}
                     >
                         <Ionicons name="calendar" size={16} color="#00000080" />

@@ -1,14 +1,8 @@
 // native functions
-import { useContext, useEffect, useState } from 'react'
-
-// custom functions
-import { getAvailableMonths } from '@/utils/common'
+import { useContext, useState } from 'react'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
-
-// constants
-import { months } from '@/constants/common'
 
 // common components
 import Container from '@/components/common/Container'
@@ -32,8 +26,8 @@ export default function Info() {
     const [entries] = appDocs.entries
     const [outflows] = appDocs.outflows
     const [items] = appDocs.items
-    const [currentYear, setCurrentYear] = appDocs.currentYear
-    const [selectedMonth, setSelectedMonth] = appDocs.selectedMonth
+    const [currentYear] = appDocs.currentYear
+    const [selectedMonth] = appDocs.selectedMonth
 
     const [showEntryOrOutflowOptions, setShowEntryOrOutflowOptions] = useState(false)
     const [showAddEntryForm, setShowAddEntryForm] = useState(false)
@@ -43,32 +37,6 @@ export default function Info() {
 
     const filteredIncomes = filterIncomesByMonth(entries, selectedMonth, currentYear)
     const filteredExpenses = filterExpensesByMonth(outflows, selectedMonth, currentYear)
-    const availableMonths = getAvailableMonths(entries, outflows, currentYear, months)
-
-    const yearEntries = entries.filter(entry => (
-        entry.date.split('-')[0] === currentYear
-    ))
-
-    const yearExpenses = outflows.filter(expense => (
-        expense.date.split('-')[0] === currentYear
-    ))
-
-    useEffect(() => {
-
-        if (!yearEntries[0] && !yearExpenses[0]) {
-            setCurrentYear(String(new Date().getFullYear()))
-        }
-
-        if (!filteredIncomes[0] && !filteredExpenses[0]) {
-            const lastMonth = availableMonths.length - 1
-            setSelectedMonth(availableMonths[lastMonth][1])
-        }
-
-    }, [entries, outflows,
-        availableMonths, filteredExpenses,
-        filteredIncomes, setCurrentYear,
-        setSelectedMonth, yearEntries,
-        yearExpenses])
 
     function areThereAnyItemsAvailable(items: Item[]): boolean {
         if (getServices(items)[0]) return true
