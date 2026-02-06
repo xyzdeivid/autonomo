@@ -35,9 +35,8 @@ export default function ListInfoTitle({ text, color }: ListInfoTitleProps) {
 const styles = StyleSheet.create({
 
     container: {
-        marginTop: 20,
-        marginBottom: 14,
-        marginStart: 8
+        marginTop: 16,
+        marginBottom: 12
     },
 
     text: {

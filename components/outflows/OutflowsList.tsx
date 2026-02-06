@@ -1,13 +1,13 @@
 import { Outflow } from '@/types/index'
 import { format, parseISO } from 'date-fns'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
-import ContainerHandler from '../common/ContainerHandler'
 import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { colors } from '@/styles/appColors'
 import useGetOutflowsToShowOnTheList from '@/hooks/outflows/useGetOutflowsToShowOnTheList'
+import { ListContainer } from '../common/ListContainer'
 
 interface OutflowsListProps {
     setExpenseForDeletion: React.Dispatch<React.SetStateAction<string>>
@@ -37,7 +37,7 @@ export default function OutflowsList({ setExpenseForDeletion, setDeleteOuflowFor
     }
 
     return (
-        <View>
+        <ListContainer>
             <ListInfoTitle
                 text='despesas'
                 color={colors.outflows.max}
@@ -48,20 +48,18 @@ export default function OutflowsList({ setExpenseForDeletion, setDeleteOuflowFor
                     <DataTable.Title style={styles.text}>Data</DataTable.Title>
                     <DataTable.Title style={styles.text}>Valor</DataTable.Title>
                 </DataTable.Header>
-                <ContainerHandler>
-                    {outflows.map(expense => {
-                        return (
-                            <DataTable.Row onPress={() => deleteOuflow(expense)} key={expense._id}>
-                                <DataTable.Cell style={styles.text}>{getExpenseName(expense)}</DataTable.Cell>
-                                <DataTable.Cell style={styles.text}>{dateFormat(expense.date)}</DataTable.Cell>
-                                <DataTable.Cell style={styles.text}>{moneyFormat(expense.value)}</DataTable.Cell>
-                            </DataTable.Row>
-                        )
-                    })}
-                </ContainerHandler>
+                {outflows.map(expense => {
+                    return (
+                        <DataTable.Row onPress={() => deleteOuflow(expense)} key={expense._id}>
+                            <DataTable.Cell style={styles.text}>{getExpenseName(expense)}</DataTable.Cell>
+                            <DataTable.Cell style={styles.text}>{dateFormat(expense.date)}</DataTable.Cell>
+                            <DataTable.Cell style={styles.text}>{moneyFormat(expense.value)}</DataTable.Cell>
+                        </DataTable.Row>
+                    )
+                })}
             </DataTable>
             <MoreInfoWarning />
-        </View>
+        </ListContainer>
     )
 
 }

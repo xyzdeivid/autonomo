@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { StyleSheet, View, Animated, Easing } from 'react-native'
+import { StyleSheet, View, Animated, Easing, ScrollView } from 'react-native'
 
 interface FormContainerProps {
     children: React.ReactNode
@@ -37,7 +37,9 @@ export default function FormContainer({ children }: FormContainerProps) {
                 },
             ]}
         >
-            <View>{children}</View>
+            <ScrollView contentContainerStyle={{ paddingBottom: 172 }}>
+                {children}
+            </ScrollView>
         </Animated.View>
     )
 }

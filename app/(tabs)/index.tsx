@@ -64,8 +64,8 @@ export default function Info() {
             }
             <YearButton />
             <AddItemButton
-                iconColor={colors.home.max}
-                bgColor={colors.home.min}
+                iconColor={'#FFF'}
+                bgColor={colors.home.midMax}
                 borderColor={colors.home.midMin}
                 onPress={() => setShowEntryOrOutflowOptions(true)}
             />

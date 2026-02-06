@@ -1,7 +1,6 @@
 import { Animated, Dimensions, Text } from 'react-native'
 import { Info } from './Info'
 import { useEffect, useRef } from 'react'
-import ContainerHandler from '../common/ContainerHandler'
 import { useGetItemsAndTheirAmountForTheMonth } from '@/hooks/index/useGetItemsAndTheirAmountForTheMonth'
 import { ListItem } from './ListItem'
 import { useShowInsights } from '@/hooks/index/useShowInsights'
@@ -40,8 +39,7 @@ export function AmountContent({ setComingFrom }: AmountContentProps) {
             >
                 {
                     showInsights &&
-                    <ContainerHandler>
-                        {itemsAndTheirAmount.map((current, index) => {
+                        itemsAndTheirAmount.map((current, index) => {
                             return (
                                 <ListItem
                                     key={index}
@@ -49,8 +47,7 @@ export function AmountContent({ setComingFrom }: AmountContentProps) {
                                     value={current.amount}
                                     money={false} />
                             )
-                        })}
-                    </ContainerHandler>
+                        })
                 }
                 {
                     !showInsights &&

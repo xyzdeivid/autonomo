@@ -1,7 +1,6 @@
 import { Animated, Dimensions, Text } from 'react-native'
 import { Info } from './Info'
 import { useEffect, useRef } from 'react'
-import ContainerHandler from '../common/ContainerHandler'
 import { useGetCustomersAndTheirRevenueForTheMonth } from '@/hooks/index/useGetCustomersAndTheirRevenueForTheMonth'
 import { ListItem } from './ListItem'
 import { useShowCustomersAndTheirRevenue } from '@/hooks/index/useShowCustomersAndTheirRevenue'
@@ -41,18 +40,16 @@ export function CustomersContent({ comingFrom, setComingFrom }: CustomersContent
                     transform: [{ translateX: slideAnim }]
                 }}
             >
-                <ContainerHandler>
-                    {showCustomersAndTheirRevenue ? customersAndTheirRevenue.map((current, index) => {
-                        return (
-                            <ListItem
-                                key={index}
-                                name={current.customerName}
-                                value={current.totalRevenue}
-                                money={true}
-                            />
-                        )
-                    }) : <Text>Nenhuma receita com cliente cadastrado.</Text>}
-                </ContainerHandler>
+                {showCustomersAndTheirRevenue ? customersAndTheirRevenue.map((current, index) => {
+                    return (
+                        <ListItem
+                            key={index}
+                            name={current.customerName}
+                            value={current.totalRevenue}
+                            money={true}
+                        />
+                    )
+                }) : <Text>Nenhuma receita com cliente cadastrado.</Text>}
             </Animated.View>
         </>
     )

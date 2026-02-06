@@ -1,6 +1,5 @@
 import { useGetItemsAndTheirValuesForTheMonth } from '@/hooks/index/useGetItemsAndTheirValuesForTheMonth'
 import { Animated, Dimensions, Text } from 'react-native'
-import ContainerHandler from '../common/ContainerHandler'
 import { useEffect, useRef } from 'react'
 import { Info } from './Info'
 import { ListItem } from './ListItem'
@@ -43,18 +42,16 @@ export function ItemsContent({ comingFrom, setComingFrom }: ItemsContentProps) {
             >
                 {
                     showInsights &&
-                    <ContainerHandler>
-                        {itemsAndTheirValuesForTheMonth.map((current, index) => {
-                            return (
-                                <ListItem
-                                    key={index}
-                                    name={current.productName}
-                                    value={current.totalRevenue}
-                                    money={true}
-                                />
-                            )
-                        })}
-                    </ContainerHandler>
+                    itemsAndTheirValuesForTheMonth.map((current, index) => {
+                        return (
+                            <ListItem
+                                key={index}
+                                name={current.productName}
+                                value={current.totalRevenue}
+                                money={true}
+                            />
+                        )
+                    })
                 }
                 {
                     !showInsights &&

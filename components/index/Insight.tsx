@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { InsightSelectionButtons } from './InsightSelectionButtons'
 import { useState } from 'react'
 import { MonthlyFinanceContent } from './MonthlyFinanceContent'
@@ -48,15 +48,19 @@ export function Insight() {
     }
 
     return (
-        <View style={{ marginHorizontal: 24 }}>
+        <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 72 }}
+        >
             <InsightSelectionButtons
                 insightToShow={insightToShow}
                 setInsightToShow={setInsightToShow}
             />
+
             <View style={{ marginTop: 12 }}>
                 {getContent()}
             </View>
-        </View>
+        </ScrollView>
     )
 
 }

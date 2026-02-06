@@ -72,14 +72,14 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         bottom: 0,
         width: '100%',
-        marginBottom: 16
+        marginBottom: 12
     },
 
     button: {
         paddingVertical: 10,
         paddingHorizontal: 18,
         borderRadius: 6,
-        marginEnd: 16,
+        marginEnd: 12,
         borderWidth: StyleSheet.hairlineWidth
     }
 })

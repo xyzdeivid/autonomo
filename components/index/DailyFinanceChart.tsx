@@ -26,7 +26,7 @@ export function DailyFinanceChart() {
         <LineChart
             data={data()}
             spacing={56}
-            initialSpacing={24}
+            initialSpacing={16}
             textColor1='black'
             textShiftY={-8}
             textShiftX={-12}

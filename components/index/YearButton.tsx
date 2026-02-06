@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         alignSelf: 'flex-start',
-        marginBottom: 16,
-        marginStart: 16
+        marginBottom: 12,
+        marginStart: 12
     },
 
     button: {
-        backgroundColor: '#0000001A',
+        backgroundColor: '#ebebeb',
         padding: 8,
         borderRadius: 8,
         flexDirection: 'row',
