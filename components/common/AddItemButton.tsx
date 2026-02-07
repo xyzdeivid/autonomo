@@ -1,7 +1,8 @@
 import {
     Pressable,
     StyleSheet,
-    Animated
+    Animated,
+    View
 } from 'react-native'
 import { useRef } from 'react'
 import { FontAwesome6 } from '@expo/vector-icons'
@@ -38,27 +39,26 @@ export default function AddItemButton({
     }
 
     return (
-        <Animated.View style={{ transform: [{ scale }] }}>
-            <Pressable
-                style={[
-                    styles.button,
-                    {
-                        borderColor: borderColor,
-                        backgroundColor: bgColor
-                    }
-                ]}
-                onPressIn={handlePressIn}
-                onPressOut={handlePressOut}
-                onPress={onPress}
-            >
-                <FontAwesome6
-                    name='plus'
-                    color={iconColor}
-                    size={24}
-                />
-            </Pressable>
-        </Animated.View>
+        <View style={{ alignItems: 'flex-end' }}>
+            <Animated.View style={{ transform: [{ scale }] }}>
+                <Pressable
+                    style={[
+                        styles.button,
+                        {
+                            borderColor: borderColor,
+                            backgroundColor: bgColor
+                        }
+                    ]}
+                    onPressIn={handlePressIn}
+                    onPressOut={handlePressOut}
+                    onPress={onPress}
+                >
+                    <FontAwesome6 name="plus" color={iconColor} size={24} />
+                </Pressable>
+            </Animated.View>
+        </View>
     )
+
 }
 
 
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 8,
         margin: 8,
-        borderWidth: StyleSheet.hairlineWidth,
-        alignSelf: 'flex-end'
+        borderWidth: StyleSheet.hairlineWidth
     }
 })

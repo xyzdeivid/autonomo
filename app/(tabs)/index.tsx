@@ -14,20 +14,16 @@ import AddItemButton from '@/components/common/AddItemButton'
 import { EntryOrOutflowOptions } from '@/components/index/EntryOrOutflowOptions'
 import AddEntryForm from '@/components/entries/AddEntryForm'
 import AddOutflowForm from '@/components/outflows/AddOutflowForm'
-import { filterExpensesByMonth, filterIncomesByMonth } from '@/rules/domainRules'
 import { Insight } from '@/components/index/Insight'
 import { getServices } from '@/utils/schedulings'
 import { Item } from '@/types'
 import { YearButton } from '@/components/index/YearButton'
+import { useShowAnyInfoWarning } from '@/hooks/index/useShowAnyInfoWarning'
 
 export default function Info() {
 
     const appDocs = useContext(DocsContext)
-    const [entries] = appDocs.entries
-    const [outflows] = appDocs.outflows
     const [items] = appDocs.items
-    const [currentYear] = appDocs.currentYear
-    const [selectedMonth] = appDocs.selectedMonth
 
     const [showEntryOrOutflowOptions, setShowEntryOrOutflowOptions] = useState(false)
     const [showAddEntryForm, setShowAddEntryForm] = useState(false)
@@ -35,13 +31,12 @@ export default function Info() {
 
     const docsLoaded = appDocs.docsLoaded
 
-    const filteredIncomes = filterIncomesByMonth(entries, selectedMonth, currentYear)
-    const filteredExpenses = filterExpensesByMonth(outflows, selectedMonth, currentYear)
-
     function areThereAnyItemsAvailable(items: Item[]): boolean {
         if (getServices(items)[0]) return true
         return false
     }
+
+    const showAnyInfoWarning = useShowAnyInfoWarning()
 
 
     return (
@@ -52,23 +47,25 @@ export default function Info() {
                 </View>
             )}
             {
-                docsLoaded
-                    && !filteredIncomes[0]
-                    && !filteredExpenses[0]
-                    ? <AnyInfoWarning
-                        text='te informamos sobre seu balanço financeiro mensal.'
+                showAnyInfoWarning
+                    ?
+                    <AnyInfoWarning
+                        text='te informamos sobre seu balanço financeiro mensal. Mas para isso, você precisar registras suas receitas e despesas.'
                         titleBgColor={colors.home.max}
                         textBgColor={colors.home.min}
-                    /> : <Insight
-                    />
+                    /> :
+                    <>
+                        <Insight
+                        />
+                        <AddItemButton
+                            iconColor={'#FFF'}
+                            bgColor={colors.home.midMax}
+                            borderColor={colors.home.midMin}
+                            onPress={() => setShowEntryOrOutflowOptions(true)}
+                        />
+                    </>
             }
             <YearButton />
-            <AddItemButton
-                iconColor={'#FFF'}
-                bgColor={colors.home.midMax}
-                borderColor={colors.home.midMin}
-                onPress={() => setShowEntryOrOutflowOptions(true)}
-            />
             {
                 showEntryOrOutflowOptions && (
                     <EntryOrOutflowOptions

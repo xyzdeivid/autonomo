@@ -74,29 +74,40 @@ export default function Schedulings() {
             <Container>
                 {
                     filterSchedulings(entries, selectedMonth, currentYear)[0]
-                        ? <SchedulingsList
-                            setSelectedEntryForDeletion={setSelectedEntryForDeletion}
-                            setDeleteSchedulingForm={setDeleteSchedulingForm}
-                        />
+                        ? <>
+                            <SchedulingsList
+                                setSelectedEntryForDeletion={setSelectedEntryForDeletion}
+                                setDeleteSchedulingForm={setDeleteSchedulingForm}
+                            />
+                            <AddItemButton
+                                iconColor={'#FFF'}
+                                bgColor={colors.entries.midMax}
+                                borderColor={colors.entries.midMin}
+                                onPress={() => {
+                                    const itemsAvailable = areThereAnyItemsAvailable(items)
+                                    if (itemsAvailable) {
+                                        setAddSchedulingForm(true)
+                                    } else {
+                                        Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
+                                    }
+                                }}
+                            />
+                        </>
                         : <AnyInfoWarning
                             text='listamos todas as suas receitas financeiras do mês.'
                             titleBgColor={colors.entries.max}
                             textBgColor={colors.entries.min}
+                            addDataButtonText='Adicionar Receita'
+                            onAddDataButtonPress={() => {
+                                const itemsAvailable = areThereAnyItemsAvailable(items)
+                                if (itemsAvailable) {
+                                    setAddSchedulingForm(true)
+                                } else {
+                                    Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
+                                }
+                            }}
                         />
                 }
-                <AddItemButton
-                    iconColor={'#FFF'}
-                    bgColor={colors.entries.midMax}
-                    borderColor={colors.entries.midMin}
-                    onPress={() => {
-                        const itemsAvailable = areThereAnyItemsAvailable(items)
-                        if (itemsAvailable) {
-                            setAddSchedulingForm(true)
-                        } else {
-                            Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
-                        }
-                    }}
-                />
                 {
                     addSchedulingForm
                     && <AddSchedulingForm

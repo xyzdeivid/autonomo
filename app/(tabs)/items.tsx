@@ -78,24 +78,29 @@ export default function Items() {
             <Container>
                 {
                     items[0]
-                        ? <ItemsContent
-                            category={category}
-                            setCategory={setCategory}
-                            setSelectedItemForDeletion={setSelectedItemForDeletion}
-                            setShowAboutItemCard={setShowAboutItemCard}
-                        />
+                        ? <>
+                            <ItemsContent
+                                category={category}
+                                setCategory={setCategory}
+                                setSelectedItemForDeletion={setSelectedItemForDeletion}
+                                setShowAboutItemCard={setShowAboutItemCard}
+                            />
+                            <AddItemButton
+                                iconColor={'#FFF'}
+                                bgColor={colors.items.midMax}
+                                borderColor={colors.items.midMin}
+                                onPress={() => setShowItemCategoryCard(true)}
+                            />
+                        </>
                         : <AnyInfoWarning
                             text='listamos todos os seus produtos ou serviços.'
                             titleBgColor={colors.items.max}
                             textBgColor={colors.items.min}
+                            addDataButtonText='Adicionar Item'
+                            onAddDataButtonPress={() => setShowItemCategoryCard(true)}
                         />
                 }
-                <AddItemButton
-                    iconColor={'#FFF'}
-                    bgColor={colors.items.midMax}
-                    borderColor={colors.items.midMin}
-                    onPress={() => setShowItemCategoryCard(true)}
-                />
+
                 {
                     showItemCategoryCard
                     && <ItemCategoryCard

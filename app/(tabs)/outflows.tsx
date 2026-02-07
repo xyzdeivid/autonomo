@@ -77,22 +77,27 @@ export default function Expenses() {
             <Container>
                 {
                     filterExpenses(expenses, selectedMonth, currentYear)[0]
-                        ? <ExpensesList
-                            setOutflowForDeletion={setSelectedExpenseId}
-                            setDeleteOuflowForm={setDeleteExpenseForm}
-                        />
+                        ? <>
+                            <ExpensesList
+                                setOutflowForDeletion={setSelectedExpenseId}
+                                setDeleteOuflowForm={setDeleteExpenseForm}
+                            />
+                            <AddItemButton
+                                iconColor={'#FFF'}
+                                bgColor={colors.outflows.midMax}
+                                borderColor={colors.outflows.midMin}
+                                onPress={() => setAddExpenseForm(true)}
+                            />
+                        </>
                         : <AnyInfoWarning
                             text='listamos todas as suas despesas financeiras do mês.'
                             titleBgColor={colors.outflows.max}
                             textBgColor={colors.outflows.min}
+                            addDataButtonText='Adicionar Despesa'
+                            onAddDataButtonPress={() => setAddExpenseForm(true)}
                         />
                 }
-                <AddItemButton
-                    iconColor={'#FFF'}
-                    bgColor={colors.outflows.midMax}
-                    borderColor={colors.outflows.midMin}
-                    onPress={() => setAddExpenseForm(true)}
-                />
+
                 {
                     addExpenseForm
                     && <AddExpenseForm
