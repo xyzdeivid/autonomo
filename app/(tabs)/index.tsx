@@ -50,7 +50,7 @@ export default function Info() {
                 showAnyInfoWarning
                     ?
                     <AnyInfoWarning
-                        text='te informamos sobre seu balanço financeiro mensal. Mas para isso, você precisar registras suas receitas e despesas.'
+                        text='informamos sobre seu balanço financeiro mensal. Porém, para isso, você precisa registrar suas receitas e despesas.'
                         titleBgColor={colors.home.max}
                         textBgColor={colors.home.min}
                     /> :

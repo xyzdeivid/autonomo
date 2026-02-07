@@ -50,6 +50,7 @@ export function Insight() {
     return (
         <ScrollView
             contentContainerStyle={{ paddingHorizontal: 16 }}
+            persistentScrollbar
         >
             <InsightSelectionButtons
                 insightToShow={insightToShow}

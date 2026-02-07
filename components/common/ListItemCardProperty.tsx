@@ -1,4 +1,3 @@
-import { FontAwesome6 } from '@expo/vector-icons'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface ListItemCardPropertyProps {
@@ -17,7 +16,7 @@ export function ListItemCardProperty({ label, text, bgColor, onEditButtonPress }
         }}>
             <View style={styles.infoContainer}>
                 <Text style={styles.label}>{label}: </Text>
-                <Text style={styles.text}>
+                <Text style={styles.text} numberOfLines={1}>
                     {text}
                 </Text>
                 {
@@ -31,11 +30,6 @@ export function ListItemCardProperty({ label, text, bgColor, onEditButtonPress }
                     )
                 }
             </View>
-            <FontAwesome6
-                name='circle'
-                size={12}
-                color='white'
-            />
         </View>
     )
 
@@ -65,7 +59,8 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontSize: 16
+        fontSize: 16,
+        flexShrink: 1
     },
 
     button: {
