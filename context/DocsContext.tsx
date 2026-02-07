@@ -6,8 +6,6 @@ import { getAllOutflows } from '@/database/outflowRepositories'
 import { initDatabase } from '@/database/initDatabase'
 import { migrateData } from '@/storage/migrationDataFromAsyncStorage'
 import { Entry, Item, Outflow } from '@/types'
-import { entries as mockEntries } from '@/mocks/entries'
-import { outflows as mockOutflows } from '@/mocks/outflows'
 
 type SetItems = React.Dispatch<React.SetStateAction<Item[]>>
 
@@ -115,9 +113,9 @@ export default function DocsProvider({ children }: DocsProviderProps) {
             const outflows = await getAllOutflows()
             const entries = await getAllEntries()
 
-            setEntries(mockEntries)
+            setEntries(entries)
             setItems(items)
-            setOutflows(mockOutflows)
+            setOutflows(outflows)
             setDocsLoaded(true)
 
         } catch {
