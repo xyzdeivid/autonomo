@@ -49,8 +49,7 @@ export function Insight() {
 
     return (
         <ScrollView
-            style={{ flex: 1 }}
-            contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 72 }}
+            contentContainerStyle={{ paddingHorizontal: 16 }}
         >
             <InsightSelectionButtons
                 insightToShow={insightToShow}
