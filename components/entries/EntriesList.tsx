@@ -1,13 +1,12 @@
 import { Entry } from '@/types/index'
 import { format, parseISO } from 'date-fns'
-import { StyleSheet } from 'react-native'
+import { FlatList, StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
-import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { colors } from '@/styles/appColors'
 import useGetEntriesToShowOnTheList from '@/hooks/entries/useGetMonthEntries'
-import { ListContainer } from '../common/ListContainer'
+import Feather from '@expo/vector-icons/Feather'
 
 interface SchedulingsListProps {
     setSelectedEntryForDeletion: React.Dispatch<React.SetStateAction<string>>
@@ -29,44 +28,51 @@ export default function SchedulingsList({ setSelectedEntryForDeletion, setDelete
     }
 
     return (
-        <ListContainer>
+        <>
             <ListInfoTitle
                 text='receitas'
                 color={colors.entries.max}
             />
-
-            <DataTable>
-                <DataTable.Header>
-                    <DataTable.Title style={styles.text}>Cliente</DataTable.Title>
-                    <DataTable.Title style={styles.text}>Item</DataTable.Title>
-                    <DataTable.Title style={styles.text}>Data</DataTable.Title>
-                    <DataTable.Title style={styles.text}>Valor</DataTable.Title>
-                </DataTable.Header>
-                {entries.map(scheduling => {
-                    return (
-                        <DataTable.Row onPress={() => deleteScheduling(scheduling)} key={scheduling._id}>
-                            <DataTable.Cell style={styles.text}>
-                                {
-                                    scheduling.customer
-                                        ? scheduling.customer
-                                        : '*'
-                                }
-                            </DataTable.Cell>
-                            <DataTable.Cell style={styles.text}>{scheduling.serviceId}</DataTable.Cell>
-                            <DataTable.Cell style={styles.text}>{dateFormat(scheduling.date)}</DataTable.Cell>
-                            <DataTable.Cell style={styles.text}>{moneyFormat(scheduling.serviceValue)}</DataTable.Cell>
-                        </DataTable.Row>
-                    )
-                })}
-            </DataTable>
-            <MoreInfoWarning />
-        </ListContainer>
+            <DataTable.Header>
+                <DataTable.Title style={styles.text}>Cliente</DataTable.Title>
+                <DataTable.Title style={styles.text}>Item</DataTable.Title>
+                <DataTable.Title style={styles.text}>Data</DataTable.Title>
+                <DataTable.Title style={styles.text}>Valor</DataTable.Title>
+                <DataTable.Title style={styles.text}>#</DataTable.Title>
+            </DataTable.Header>
+            <FlatList
+                data={entries}
+                keyExtractor={item => item._id}
+                renderItem={({ item }) => (
+                    <DataTable.Row>
+                        <DataTable.Cell style={styles.text}>
+                            {
+                                item.customer
+                                    ? item.customer
+                                    : '*'
+                            }
+                        </DataTable.Cell>
+                        <DataTable.Cell style={styles.text}>{item.serviceId}</DataTable.Cell>
+                        <DataTable.Cell style={styles.text}>{dateFormat(item.date)}</DataTable.Cell>
+                        <DataTable.Cell style={styles.text}>{moneyFormat(item.serviceValue)}</DataTable.Cell>
+                        <DataTable.Cell
+                            style={styles.text}
+                            onPress={() => deleteScheduling(item)}
+                        >
+                            <Feather name='edit' size={16} color='black' />
+                        </DataTable.Cell>
+                    </DataTable.Row>
+                )}
+            />
+        </>
     )
 
 }
 
 const styles = StyleSheet.create({
+
     text: {
         justifyContent: 'center'
     }
+
 })

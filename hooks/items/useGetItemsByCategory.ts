@@ -1,5 +1,6 @@
 import { DocsContext } from '@/context/DocsContext'
 import { Item } from '@/types'
+import { sortItems } from '@/utils/items'
 import { useContext } from 'react'
 
 export default function useGetItemsByCategory(category: string) {
@@ -32,7 +33,7 @@ export default function useGetItemsByCategory(category: string) {
     }
 
     return {
-        items: getItemsByCategory(),
+        items: sortItems(getItemsByCategory()),
         isProductCategory: isProductCategory()
     }
 

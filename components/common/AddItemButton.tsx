@@ -1,7 +1,6 @@
 import {
     Pressable,
     StyleSheet,
-    View,
     Animated
 } from 'react-native'
 import { useRef } from 'react'
@@ -39,47 +38,38 @@ export default function AddItemButton({
     }
 
     return (
-        <View style={styles.container}>
-            <Animated.View style={{ transform: [{ scale }] }}>
-                <Pressable
-                    style={[
-                        styles.button,
-                        {
-                            borderColor: borderColor,
-                            backgroundColor: bgColor
-                        }
-                    ]}
-                    onPressIn={handlePressIn}
-                    onPressOut={handlePressOut}
-                    onPress={onPress}
-                >
-                    <FontAwesome6 
-                    name='plus' 
-                    color={iconColor} 
-                    size={24} 
-                    />
-                </Pressable>
-            </Animated.View>
-        </View>
+        <Animated.View style={{ transform: [{ scale }] }}>
+            <Pressable
+                style={[
+                    styles.button,
+                    {
+                        borderColor: borderColor,
+                        backgroundColor: bgColor
+                    }
+                ]}
+                onPressIn={handlePressIn}
+                onPressOut={handlePressOut}
+                onPress={onPress}
+            >
+                <FontAwesome6
+                    name='plus'
+                    color={iconColor}
+                    size={24}
+                />
+            </Pressable>
+        </Animated.View>
     )
 }
 
 
 const styles = StyleSheet.create({
 
-    container: {
-        position: 'absolute',
-        alignItems: 'flex-end',
-        bottom: 0,
-        width: '100%',
-        marginBottom: 12
-    },
-
     button: {
-        paddingVertical: 10,
-        paddingHorizontal: 18,
-        borderRadius: 6,
-        marginEnd: 12,
-        borderWidth: StyleSheet.hairlineWidth
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        margin: 8,
+        borderWidth: StyleSheet.hairlineWidth,
+        alignSelf: 'flex-end'
     }
 })

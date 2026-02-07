@@ -1,25 +1,24 @@
 import { Outflow } from '@/types/index'
 import { format, parseISO } from 'date-fns'
-import { StyleSheet } from 'react-native'
+import { FlatList, StyleSheet } from 'react-native'
 import { DataTable } from 'react-native-paper'
-import MoreInfoWarning from '../common/MoreInfoWarning'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { colors } from '@/styles/appColors'
 import useGetOutflowsToShowOnTheList from '@/hooks/outflows/useGetOutflowsToShowOnTheList'
-import { ListContainer } from '../common/ListContainer'
+import { Feather } from '@expo/vector-icons'
 
 interface OutflowsListProps {
-    setExpenseForDeletion: React.Dispatch<React.SetStateAction<string>>
+    setOutflowForDeletion: React.Dispatch<React.SetStateAction<string>>
     setDeleteOuflowForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function OutflowsList({ setExpenseForDeletion, setDeleteOuflowForm }: OutflowsListProps) {
+export default function OutflowsList({ setOutflowForDeletion, setDeleteOuflowForm }: OutflowsListProps) {
 
     const outflows = useGetOutflowsToShowOnTheList()
 
-    const deleteOuflow = (expense: Outflow) => {
-        setExpenseForDeletion(expense._id)
+    const deleteOuflow = (item: Outflow) => {
+        setOutflowForDeletion(item._id)
         setDeleteOuflowForm(true)
     }
 
@@ -28,38 +27,44 @@ export default function OutflowsList({ setExpenseForDeletion, setDeleteOuflowFor
         return formatedDate
     }
 
-    const getExpenseName = (expense: Outflow): string => {
+    const getitemName = (item: Outflow): string => {
 
-        if (expense.amount) return `Reposição de ${expense.name}`
+        if (item.amount) return `Reposição de ${item.name}`
 
-        return expense.name
+        return item.name
 
     }
 
     return (
-        <ListContainer>
+        <>
             <ListInfoTitle
                 text='despesas'
                 color={colors.outflows.max}
             />
-            <DataTable>
-                <DataTable.Header>
-                    <DataTable.Title style={styles.text}>Nome</DataTable.Title>
-                    <DataTable.Title style={styles.text}>Data</DataTable.Title>
-                    <DataTable.Title style={styles.text}>Valor</DataTable.Title>
-                </DataTable.Header>
-                {outflows.map(expense => {
-                    return (
-                        <DataTable.Row onPress={() => deleteOuflow(expense)} key={expense._id}>
-                            <DataTable.Cell style={styles.text}>{getExpenseName(expense)}</DataTable.Cell>
-                            <DataTable.Cell style={styles.text}>{dateFormat(expense.date)}</DataTable.Cell>
-                            <DataTable.Cell style={styles.text}>{moneyFormat(expense.value)}</DataTable.Cell>
-                        </DataTable.Row>
-                    )
-                })}
-            </DataTable>
-            <MoreInfoWarning />
-        </ListContainer>
+            <DataTable.Header>
+                <DataTable.Title style={styles.text}>Nome</DataTable.Title>
+                <DataTable.Title style={styles.text}>Data</DataTable.Title>
+                <DataTable.Title style={styles.text}>Valor</DataTable.Title>
+                <DataTable.Title style={styles.text}>#</DataTable.Title>
+            </DataTable.Header>
+            <FlatList
+                data={outflows}
+                keyExtractor={item => item._id}
+                renderItem={({ item }) => (
+                    <DataTable.Row>
+                        <DataTable.Cell style={styles.text}>{getitemName(item)}</DataTable.Cell>
+                        <DataTable.Cell style={styles.text}>{dateFormat(item.date)}</DataTable.Cell>
+                        <DataTable.Cell style={styles.text}>{moneyFormat(item.value)}</DataTable.Cell>
+                        <DataTable.Cell
+                            style={styles.text}
+                            onPress={() => deleteOuflow(item)}
+                        >
+                            <Feather name='edit' size={16} color='black' />
+                        </DataTable.Cell>
+                    </DataTable.Row>
+                )}
+            />
+        </>
     )
 
 }

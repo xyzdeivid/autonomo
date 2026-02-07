@@ -78,7 +78,7 @@ export default function Expenses() {
                 {
                     filterExpenses(expenses, selectedMonth, currentYear)[0]
                         ? <ExpensesList
-                            setExpenseForDeletion={setSelectedExpenseId}
+                            setOutflowForDeletion={setSelectedExpenseId}
                             setDeleteOuflowForm={setDeleteExpenseForm}
                         />
                         : <AnyInfoWarning

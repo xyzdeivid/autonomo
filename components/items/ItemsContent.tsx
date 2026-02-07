@@ -17,7 +17,7 @@ export function ItemsContent({ category, setCategory,
         const categoriesAmount = useGetCategoriesAmount()
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             {categoriesAmount > 1 && (
                 <SelectCategoryButton
                     category={category}
