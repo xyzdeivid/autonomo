@@ -16,6 +16,8 @@ import { EditNameCard } from '../common/EditNameCard'
 import { parseISO } from 'date-fns'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import { EditValueCard } from '../common/EditValueCard'
+import { CardFooter } from '../common/CardFooter'
+import { CloseCardButton } from '../common/CloseCardButton'
 
 
 interface AboutOutflowCardProps {
@@ -170,11 +172,11 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                         }
                     />
                     {showEditValueCard && (
-                        <EditValueCard 
-                        visible={showEditValueCard}
-                        currentValue={outflow.value}
-                        onSuccessButtonPress={newValue => submitValueToEdit(newValue)}
-                        onCancelButtonPress={() => setShowEditValueCard(false)}
+                        <EditValueCard
+                            visible={showEditValueCard}
+                            currentValue={outflow.value}
+                            onSuccessButtonPress={newValue => submitValueToEdit(newValue)}
+                            onCancelButtonPress={() => setShowEditValueCard(false)}
                         />
                     )}
                     {
@@ -193,7 +195,10 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                             </>
                         )
                     }
-                    <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
+                    <CardFooter>
+                        <CloseCardButton onPress={() => setFormOff(false)} />
+                        <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
+                    </CardFooter>
                 </ListItemCardBody>
             </ListItemCardContainer>
             {

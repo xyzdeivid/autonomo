@@ -19,6 +19,8 @@ import { getErrorMessage, moneyFormat } from '@/utils/common'
 import { EditNameCard } from '../common/EditNameCard'
 import { EditValueCard } from '../common/EditValueCard'
 import { EditAmountCard } from '../common/EditAmountCard'
+import { CloseCardButton } from '../common/CloseCardButton'
+import { CardFooter } from '../common/CardFooter'
 
 interface AboutItemCardProps {
     item: Item
@@ -27,7 +29,7 @@ interface AboutItemCardProps {
 }
 
 export default function AboutItemCard({ item, deleteFunction, setFormOff }: AboutItemCardProps) {
-    
+
     const [showEditNameCard, setShowEditNameCard] = useState(false)
 
     const [showEditValueCard, setShowEditValueCard] = useState(false)
@@ -125,7 +127,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
 
         const result = await addOutflow(newReplenishOuflow, item)
 
-        if(!result.success && result.error) {
+        if (!result.success && result.error) {
 
             Alert.alert('Erro', getErrorMessage(result.error))
 
@@ -199,7 +201,10 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                         )
                     }
                     <View style={{ marginTop: item.resale ? 16 : 0 }}>
-                        <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
+                        <CardFooter>
+                            <CloseCardButton onPress={() => setFormOff(false)} />
+                            <DeleteListItemButton onPress={() => setConfirmDelete(true)} />
+                        </CardFooter>
                     </View>
                 </ListItemCardBody>
                 {

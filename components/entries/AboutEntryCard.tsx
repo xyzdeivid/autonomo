@@ -30,6 +30,8 @@ import AddClienteButton from './AddClienteButton'
 
 // estilos
 import { colors } from '@/styles/appColors'
+import { CardFooter } from '../common/CardFooter'
+import { CloseCardButton } from '../common/CloseCardButton'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -190,7 +192,10 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                             />
                         )
                     }
-                    <DeleteListItemButton onPress={() => setShowConfirmDeleteCard(true)} />
+                    <CardFooter>
+                        <CloseCardButton onPress={() => setFormOff(false)} />
+                        <DeleteListItemButton onPress={() => setShowConfirmDeleteCard(true)} />
+                    </CardFooter>
                 </ListItemCardBody>
             </ListItemCardContainer>
             {

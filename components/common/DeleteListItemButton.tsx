@@ -21,11 +21,9 @@ export function DeleteListItemButton({ onPress }: DeleteListItemButtonProps) {
 const styles = StyleSheet.create({
 
     container: {
-        marginTop: 2,
         alignSelf: 'center',
         padding: 10,
-        paddingStart: 0,
-        marginBottom: 12
+        paddingStart: 0
     },
 
     button: {
