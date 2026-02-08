@@ -9,7 +9,7 @@ import Container from '@/components/common/Container'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 import { colors } from '@/styles/appColors'
-import { Alert, Text, View } from 'react-native'
+import { Alert } from 'react-native'
 import AddItemButton from '@/components/common/AddItemButton'
 import { EntryOrOutflowOptions } from '@/components/index/EntryOrOutflowOptions'
 import AddEntryForm from '@/components/entries/AddEntryForm'
@@ -19,6 +19,7 @@ import { getServices } from '@/utils/schedulings'
 import { Item } from '@/types'
 import { YearButton } from '@/components/index/YearButton'
 import { useShowAnyInfoWarning } from '@/hooks/index/useShowAnyInfoWarning'
+import { InitialLoading } from '@/components/index/InitialLoading'
 
 export default function Info() {
 
@@ -42,9 +43,7 @@ export default function Info() {
     return (
         <Container>
             {!docsLoaded && (
-                <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 64 }}>. . .</Text>
-                </View>
+                <InitialLoading />
             )}
             {
                 showAnyInfoWarning
@@ -59,8 +58,7 @@ export default function Info() {
                         />
                         <AddItemButton
                             iconColor={'#FFF'}
-                            bgColor={colors.home.midMax}
-                            borderColor={colors.home.midMin}
+                            bgColor={colors.home.max}
                             onPress={() => setShowEntryOrOutflowOptions(true)}
                         />
                     </>

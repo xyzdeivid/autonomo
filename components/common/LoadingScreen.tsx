@@ -13,7 +13,7 @@ export default function LoadingScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: '#FFF',
         width: '100%',
         height: '100%',
         display: 'flex',

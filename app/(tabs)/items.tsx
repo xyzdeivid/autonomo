@@ -87,8 +87,7 @@ export default function Items() {
                             />
                             <AddItemButton
                                 iconColor={'#FFF'}
-                                bgColor={colors.items.midMax}
-                                borderColor={colors.items.midMin}
+                                bgColor={colors.items.max}
                                 onPress={() => setShowItemCategoryCard(true)}
                             />
                         </>

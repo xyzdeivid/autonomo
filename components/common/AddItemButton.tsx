@@ -10,14 +10,12 @@ import { FontAwesome6 } from '@expo/vector-icons'
 interface AddItemButtonProps {
     iconColor: string
     bgColor: string
-    borderColor: string
     onPress: () => void
 }
 
 export default function AddItemButton({
     iconColor,
     bgColor,
-    borderColor,
     onPress
 }: AddItemButtonProps) {
 
@@ -45,7 +43,6 @@ export default function AddItemButton({
                     style={[
                         styles.button,
                         {
-                            borderColor: borderColor,
                             backgroundColor: bgColor
                         }
                     ]}

@@ -81,8 +81,7 @@ export default function Schedulings() {
                             />
                             <AddItemButton
                                 iconColor={'#FFF'}
-                                bgColor={colors.entries.midMax}
-                                borderColor={colors.entries.midMin}
+                                bgColor={colors.entries.max}
                                 onPress={() => {
                                     const itemsAvailable = areThereAnyItemsAvailable(items)
                                     if (itemsAvailable) {
