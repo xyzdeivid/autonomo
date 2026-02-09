@@ -5,8 +5,6 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 
 import DocsProvider from '@/context/DocsContext'
-import HideTabBarProvider from '@/context/MainDisplays'
-import ContentProvider from '@/context/InfoContent'
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -30,14 +28,10 @@ export default function RootLayout() {
   }
 
   return (
-    <HideTabBarProvider>
-      <DocsProvider>
-        <ContentProvider>
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            </Stack>
-        </ContentProvider>
-      </DocsProvider>
-    </HideTabBarProvider>
+    <DocsProvider>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </DocsProvider>
   )
 }

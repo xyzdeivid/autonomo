@@ -8,7 +8,6 @@ import { filterExpenses, getErrorMessage } from '@/utils/common'
 // context
 import { DocsContext } from '@/context/DocsContext'
 import { Outflow } from '@/types'
-import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
 import Container from '@/components/common/Container'
@@ -33,7 +32,6 @@ export default function Expenses() {
     const expenseForDeletion = expenses.find(e => e._id === selectedExpenseId)
     const [deleteExpenseForm, setDeleteExpenseForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
     const [, setWhatIsExpenseCard] = useState(false)
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
@@ -52,7 +50,6 @@ export default function Expenses() {
 
         setDeleteExpenseForm(false)
         setLoadingScreen(false)
-        setHideTabBar(false)
 
     }
 

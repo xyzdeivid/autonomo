@@ -7,7 +7,6 @@ import { filterSchedulings } from '@/utils/common'
 
 // context
 import { DocsContext, } from '@/context/DocsContext'
-import { MainDisplaysContext } from '@/context/MainDisplays'
 
 // common components
 import Container from '@/components/common/Container'
@@ -42,7 +41,6 @@ export default function Schedulings() {
 
     const deleteEntry = useDeleteEntry().deleteEntry
 
-    const [, setHideTabBar] = useContext(MainDisplaysContext).tabBar
 
     const deleteScheduling = async (scheduling: Entry) => {
 
@@ -52,7 +50,6 @@ export default function Schedulings() {
 
         setDeleteSchedulingForm(false)
         setLoadingScreen(false)
-        setHideTabBar(false)
 
     }
 
