@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
 import { OptionsListContainer } from './OptionsListContainer'
+import { useSetTheme } from '@/hooks/index/useSetTheme'
 
 interface ThemeOptionsListProps {
     setShowThemeOptionsList: React.Dispatch<React.SetStateAction<boolean>>
@@ -7,6 +8,14 @@ interface ThemeOptionsListProps {
 }
 
 export function ThemeOptionsList({ setShowThemeOptionsList, setShowSettingsCard }: ThemeOptionsListProps) {
+
+    const setTheme = useSetTheme().setTheme
+
+    function onThemeOptionPress(theme: 'light' | 'dark' | 'system') {
+        setTheme(theme)
+        setShowThemeOptionsList(false)
+        setShowSettingsCard(false)
+    }
 
     return (
         <OptionsListContainer
@@ -20,16 +29,26 @@ export function ThemeOptionsList({ setShowThemeOptionsList, setShowSettingsCard 
             >
                 <Pressable
                     style={{ ...styles.button, borderBottomWidth: StyleSheet.hairlineWidth }}
+                    onPress={() => {
+                        onThemeOptionPress('system')
+                    }}
                 >
                     <Text>Sistema</Text>
                 </Pressable>
                 <Pressable
                     style={{ ...styles.button, borderBottomWidth: StyleSheet.hairlineWidth }}
+                    onPress={() => {
+                        onThemeOptionPress('light')
+                    }}
                 >
                     <Text>Claro</Text>
                 </Pressable>
                 <Pressable
                     style={styles.button}
+                    onPress={() => {
+                        onThemeOptionPress('dark')
+
+                    }}
                 >
                     <Text>Escuro</Text>
                 </Pressable>

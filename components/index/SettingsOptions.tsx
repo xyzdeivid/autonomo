@@ -1,5 +1,6 @@
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
+import { useGetThemeText } from '@/hooks/index/useGetThemeText'
 import { getMonthName } from '@/utils/common'
 import { FontAwesome5, Fontisto } from '@expo/vector-icons'
 import { useContext } from 'react'
@@ -15,6 +16,8 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
     const appDocs = useContext(DocsContext)
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
+
+    const themeText = useGetThemeText()
 
     return (
         <>
@@ -39,7 +42,7 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
                     style={styles.button}
                     onPress={() => setShowThemeOptionsList(true)}
                 >
-                    <Text style={{ textAlign: 'center' }}>Claro</Text>
+                    <Text style={{ textAlign: 'center' }}>{themeText}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.buttonContainer}>

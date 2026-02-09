@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 
 import DocsProvider from '@/context/DocsContext'
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
+import ThemeProvider from '@/context/ThemeContext'
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
@@ -29,9 +30,11 @@ export default function RootLayout() {
 
   return (
     <DocsProvider>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+      <ThemeProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+      </ThemeProvider>
     </DocsProvider>
   )
 }
