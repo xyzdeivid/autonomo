@@ -3,6 +3,7 @@ import { useGetAvailableMonths } from '@/hooks/index/useGetAvailableMonths'
 import { getMonthNameByMonthNumber } from '@/utils'
 import { useContext, } from 'react'
 import { StyleSheet, Text, ScrollView, TouchableOpacity, View, Pressable } from 'react-native'
+import { OptionsListContainer } from './OptionsListContainer'
 
 interface YearOptionsListProps {
     setShowAvailableMonthsOptionsList: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,9 +19,9 @@ export function AvailableMonthsOptionsList({ setShowAvailableMonthsOptionsList, 
     const availableMonths = useGetAvailableMonths()
 
     return (
-        <Pressable style={styles.container} onPress={() => {
-            setShowAvailableMonthsOptionsList(false)
-        }}>
+        <OptionsListContainer
+            onPressOutside={() => setShowAvailableMonthsOptionsList(false)}
+        >
             <Pressable
                 onPress={() => { }}
             >
@@ -56,21 +57,11 @@ export function AvailableMonthsOptionsList({ setShowAvailableMonthsOptionsList, 
                     ))}
                 </ScrollView>
             </Pressable>
-        </Pressable>
+        </OptionsListContainer>
     )
 }
 
 const styles = StyleSheet.create({
-
-    container: {
-        position: 'absolute',
-        height: '100%',
-        width: '100%',
-        zIndex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#00000040'
-    },
 
     overlay: {
         maxHeight: 300,

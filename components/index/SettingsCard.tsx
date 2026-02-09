@@ -2,6 +2,7 @@ import { Animated, Dimensions, Pressable, StyleSheet } from 'react-native'
 import { SettingsOptions } from './SettingsOptions'
 import { useEffect, useRef, useState } from 'react'
 import { AvailableMonthsOptionsList } from './AvailableMonthsOptionsList'
+import { ThemeOptionsList } from './ThemeOptionsList'
 
 const { height } = Dimensions.get('window')
 
@@ -21,6 +22,7 @@ export function SettingsCard({ setShowSettingsCard }:
     }, [slideAnim])
 
     const [showAvailableMonthsOptionsList, setShowAvailableMonthsOptionsList] = useState(false)
+    const [showThemeOptionsList, setShowThemeOptionsList] = useState(false)
 
     return (
         <>
@@ -33,6 +35,7 @@ export function SettingsCard({ setShowSettingsCard }:
                     <Pressable onPress={() => { }}>
                         <SettingsOptions
                             setShowAvailableMonthsOptionsList={setShowAvailableMonthsOptionsList}
+                            setShowThemeOptionsList={setShowThemeOptionsList}
                         />
                     </Pressable>
                 </Animated.View>
@@ -41,6 +44,13 @@ export function SettingsCard({ setShowSettingsCard }:
                 showAvailableMonthsOptionsList &&
                 <AvailableMonthsOptionsList
                     setShowAvailableMonthsOptionsList={setShowAvailableMonthsOptionsList}
+                    setShowSettingsCard={setShowSettingsCard}
+                />
+            }
+            {
+                showThemeOptionsList &&
+                <ThemeOptionsList
+                    setShowThemeOptionsList={setShowThemeOptionsList}
                     setShowSettingsCard={setShowSettingsCard}
                 />
             }

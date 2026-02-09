@@ -7,9 +7,10 @@ import { View, StyleSheet, Text, TouchableOpacity, Pressable } from 'react-nativ
 
 interface SettingsOptionsProps {
     setShowAvailableMonthsOptionsList: React.Dispatch<React.SetStateAction<boolean>>
+    setShowThemeOptionsList: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export function SettingsOptions({ setShowAvailableMonthsOptionsList }: SettingsOptionsProps) {
+export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThemeOptionsList }: SettingsOptionsProps) {
 
     const appDocs = useContext(DocsContext)
     const [selectedMonth] = appDocs.selectedMonth
@@ -34,9 +35,12 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList }: SettingsO
                     <FontAwesome5 name="paint-brush" size={12} color="black" />
                     <Text>Tema</Text>
                 </View>
-                <Pressable style={styles.button}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setShowThemeOptionsList(true)}
+                >
                     <Text style={{ textAlign: 'center' }}>Claro</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
             <View style={styles.buttonContainer}>
                 <View style={styles.label}>

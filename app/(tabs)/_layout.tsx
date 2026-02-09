@@ -7,10 +7,6 @@ export default function Layout() {
         <Tabs
             tabBar={(props) => <CustomTabBar {...props} />}
             screenOptions={() => ({
-                headerShadowVisible: false,
-                headerTitleContainerStyle: {
-                    width: '100%'
-                },
                 headerTitle: () => (
                     <View style={styles.logoContainer}>
                         <Image
@@ -32,25 +28,19 @@ export default function Layout() {
     )
 }
 
-const BACKGROUND_COLOR = '#F3F3F3'
-
 const styles = StyleSheet.create({
 
     logoContainer: {
-        backgroundColor: BACKGROUND_COLOR,
-        padding: 8,
-        paddingTop: 6,
-        borderRadius: 8,
-        elevation: 3,
         flexDirection: 'row',
         alignItems: 'flex-end',
-        width: '100%'
+        alignSelf: 'flex-start'
     },
 
     logoText: {
         fontSize: 20,
         marginStart: -4,
-        color: '#06687E'
+        color: '#06687E',
+        marginBottom: 0.5
     }
 
 })
