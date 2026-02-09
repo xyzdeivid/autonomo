@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { StyleSheet, View, Animated, Easing, ScrollView } from 'react-native'
+import { StyleSheet, Animated, Easing, ScrollView } from 'react-native'
 
 interface FormContainerProps {
     children: React.ReactNode

@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { View, Text, StyleSheet, Pressable, Animated } from 'react-native'
+import { CurrentMonthCard } from './CurrentMonthCard'
 
 interface AnyInfoWarningProps {
     text: string,
@@ -35,6 +36,9 @@ export default function AnyInfoWarning({ text,
 
     return (
         <View style={styles.overlay}>
+            <View style={{ alignSelf: 'stretch', marginHorizontal: 24 }}>
+                <CurrentMonthCard />
+            </View>
             <View style={styles.container}>
                 <Text style={{
                     ...styles.warningTextTitle,

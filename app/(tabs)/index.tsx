@@ -17,7 +17,7 @@ import AddOutflowForm from '@/components/outflows/AddOutflowForm'
 import { Insight } from '@/components/index/Insight'
 import { getServices } from '@/utils/schedulings'
 import { Item } from '@/types'
-import { YearButton } from '@/components/index/YearButton'
+import { SettingsButton } from '@/components/index/SettingsButton'
 import { useShowAnyInfoWarning } from '@/hooks/index/useShowAnyInfoWarning'
 import { InitialLoading } from '@/components/index/InitialLoading'
 
@@ -63,7 +63,7 @@ export default function Info() {
                         />
                     </>
             }
-            <YearButton />
+            <SettingsButton />
             {
                 showEntryOrOutflowOptions && (
                     <EntryOrOutflowOptions

@@ -1,16 +1,9 @@
-import { DocsContext } from '@/context/DocsContext'
-import { useContext, useRef, useState } from 'react'
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native'
+import { useRef, useState } from 'react'
+import { Animated, Pressable, StyleSheet, View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { YearOptionsList } from './YearOptionsList'
-import { getMonthName } from '@/utils/common'
-import { months } from '@/constants/common'
+import { SettingsCard } from './SettingsCard'
 
-export function YearButton() {
-
-    const appDocs = useContext(DocsContext)
-    const [currentYear] = appDocs.currentYear
-    const [selectedMonth] = appDocs.selectedMonth
+export function SettingsButton() {
 
     const scale = useRef(new Animated.Value(1)).current
 
@@ -29,7 +22,7 @@ export function YearButton() {
         }).start()
     }
 
-    const [showYearList, setShowYearList] = useState(false)
+    const [showSettingsCard, setShowSettingsCard] = useState(false)
 
     return (
         <>
@@ -40,15 +33,14 @@ export function YearButton() {
                         onPressIn={handlePressIn}
                         onPressOut={handlePressOut}
                         onPress={() => {
-                            setShowYearList(true)
+                            setShowSettingsCard(true)
                         }}
                     >
-                        <Ionicons name="calendar" size={16} color="#00000080" />
-                        <Text style={styles.text}>{getMonthName(months, selectedMonth)} de {currentYear}</Text>
+                        <Ionicons name="settings" size={24} color="#00000080" />
                     </Pressable>
                 </Animated.View>
             </View>
-            {showYearList && <YearOptionsList setShowYearList={setShowYearList} />}
+            {showSettingsCard && <SettingsCard setShowSettingsCard={setShowSettingsCard} />}
         </>
     )
 

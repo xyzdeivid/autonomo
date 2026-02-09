@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 20,
         borderRadius: 8,
-        margin: 8,
-        borderWidth: StyleSheet.hairlineWidth
+        margin: 8
     }
 })

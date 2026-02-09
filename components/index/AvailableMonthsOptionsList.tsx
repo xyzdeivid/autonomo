@@ -1,55 +1,47 @@
 import { DocsContext } from '@/context/DocsContext'
 import { useGetAvailableMonths } from '@/hooks/index/useGetAvailableMonths'
 import { getMonthNameByMonthNumber } from '@/utils'
-import { useContext, useEffect, useRef } from 'react'
-import { StyleSheet, Text, ScrollView, TouchableOpacity, View, Pressable, Animated, Dimensions } from 'react-native'
-
-const { height } = Dimensions.get('window')
+import { useContext, } from 'react'
+import { StyleSheet, Text, ScrollView, TouchableOpacity, View, Pressable } from 'react-native'
 
 interface YearOptionsListProps {
-    setShowYearList: React.Dispatch<React.SetStateAction<boolean>>
+    setShowAvailableMonthsOptionsList: React.Dispatch<React.SetStateAction<boolean>>
+    setShowSettingsCard: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export function YearOptionsList({ setShowYearList }: YearOptionsListProps) {
+export function AvailableMonthsOptionsList({ setShowAvailableMonthsOptionsList, setShowSettingsCard }: YearOptionsListProps) {
 
     const appDocs = useContext(DocsContext)
     const [, setCurrentYear] = appDocs.currentYear
     const [, setSelectedMonth] = appDocs.selectedMonth
 
-    const slideAnim = useRef(new Animated.Value(height)).current
-
-    useEffect(() => {
-        Animated.parallel([
-            Animated.timing(slideAnim, {
-                toValue: 0,
-                duration: 300,
-                useNativeDriver: true,
-            })
-        ]).start()
-    }, [slideAnim])
-
     const availableMonths = useGetAvailableMonths()
 
     return (
-        <Pressable style={styles.container} onPress={() => setShowYearList(false)}>
-            <Animated.View style={[
-                { transform: [{ translateY: slideAnim }] }
-            ]}>
-                <ScrollView style={styles.overlay}>
+        <Pressable style={styles.container} onPress={() => {
+            setShowAvailableMonthsOptionsList(false)
+        }}>
+            <Pressable
+                onPress={() => { }}
+            >
+                <ScrollView
+                    style={styles.overlay}
+                >
                     {availableMonths.map((month, index) => (
                         <View
                             key={index}
                             style={{
                                 borderBottomColor: '#00000040',
-                                borderBottomWidth: index === availableMonths.length - 1 
-                                ? 0 : StyleSheet.hairlineWidth
+                                borderBottomWidth: index === availableMonths.length - 1
+                                    ? 0 : StyleSheet.hairlineWidth
                             }}
                         >
                             <TouchableOpacity
                                 onPress={() => {
                                     setSelectedMonth(Number(month.month))
                                     setCurrentYear(month.year)
-                                    setShowYearList(false)
+                                    setShowAvailableMonthsOptionsList(false)
+                                    setShowSettingsCard(false)
                                 }}
                                 key={index}
                             >
@@ -63,7 +55,7 @@ export function YearOptionsList({ setShowYearList }: YearOptionsListProps) {
                         </View>
                     ))}
                 </ScrollView>
-            </Animated.View>
+            </Pressable>
         </Pressable>
     )
 }
@@ -75,18 +67,20 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         zIndex: 1,
-        justifyContent: 'flex-end'
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#00000040'
     },
 
     overlay: {
-        width: 210,
-        maxHeight: 150,
+        maxHeight: 300,
         backgroundColor: '#f6f6f6',
-        borderTopRightRadius: 8
+        borderRadius: 8
     },
 
     year: {
-        padding: 12,
+        paddingVertical: 12,
+        paddingHorizontal: 32,
         textAlign: 'center',
         fontSize: 16,
         borderColor: '#00000040'
