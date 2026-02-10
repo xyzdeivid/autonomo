@@ -28,10 +28,10 @@ export function SettingsCard({ setShowSettingsCard }:
         <>
             <Pressable style={styles.container} onPress={() => setShowSettingsCard(false)}>
                 <Animated.View
-                    style={[
-                        styles.overlay,
-                        { transform: [{ translateY: slideAnim }] }
-                    ]}>
+                    style={{
+                        ...styles.overlay,
+                        transform: [{ translateY: slideAnim }]
+                    }}>
                     <Pressable onPress={() => { }}>
                         <SettingsOptions
                             setShowAvailableMonthsOptionsList={setShowAvailableMonthsOptionsList}
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
 
     overlay: {
-        backgroundColor: '#fff',
+        backgroundColor: '#4E4E4E',
         borderTopRightRadius: 8
     }
 

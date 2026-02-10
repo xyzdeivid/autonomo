@@ -4,8 +4,12 @@ import { useEffect, useRef } from 'react'
 import useGetMonthlyIncome from '@/hooks/index/useGetMonthlyIncome'
 import useGetMonthlyExpenses from '@/hooks/index/useGetMonthlyExpenses'
 import useGetMonthlyProfit from '@/hooks/index/useGetMonthlyProfit'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
+import { colors } from '@/styles/appColors'
 
 export function MonthlyFinanceChart() {
+
+    const theme = useGetTheme()
 
     const screenWidth = Dimensions.get('window').width
     const slideAnim = useRef(new Animated.Value(-screenWidth)).current
@@ -48,47 +52,53 @@ export function MonthlyFinanceChart() {
     return (
         <View style={{ height: 300 }}>
             <Animated.View
-            style={{
-                flex: 1,
-                transform: [{ translateX: slideAnim }]
-            }}
-        >
-            <View style={styles.chart}>
-                {bars.map((bar: any, index) => {
-                    const heightPercent = (bar.value / maxValue) * 100
-                    return (
-                        <View key={index} style={styles.barWrapper}>
-                            <View style={styles.barContainer}>
-                                <Text style={{ color: bar.capColor, fontWeight: '500', textAlign: 'center' }}>
-                                    {moneyFormat(bar.value)}
-                                </Text>
-                                <View
-                                    style={[
-                                        styles.bar,
-                                        {
-                                            height: `${heightPercent}%`,
-                                            backgroundColor: bar.color
-                                        }
-                                    ]}
-                                >
+                style={{
+                    flex: 1,
+                    transform: [{ translateX: slideAnim }]
+                }}
+            >
+                <View style={styles.chart}>
+                    {bars.map((bar: any, index) => {
+                        const heightPercent = (bar.value / maxValue) * 100
+                        return (
+                            <View key={index} style={styles.barWrapper}>
+                                <View style={styles.barContainer}>
+                                    <Text
+                                        style={{
+                                            color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light,
+                                            fontWeight: '500',
+                                            textAlign: 'center'
+                                        }}
+                                    >
+                                        {moneyFormat(bar.value)}
+                                    </Text>
                                     <View
                                         style={[
-                                            styles.cap,
-                                            { backgroundColor: bar.capColor }
+                                            styles.bar,
+                                            {
+                                                height: `${heightPercent}%`,
+                                                backgroundColor: bar.color
+                                            }
                                         ]}
-                                    />
+                                    >
+                                        <View
+                                            style={[
+                                                styles.cap,
+                                                { backgroundColor: bar.capColor }
+                                            ]}
+                                        />
+                                    </View>
                                 </View>
                             </View>
-                        </View>
-                    )
-                })}
-            </View>
-            <View style={styles.labelsContainer}>
-                {revenue > 0 && <Text style={styles.label}>Receita</Text>}
-                {expenses > 0 && <Text style={styles.label}>Despesa</Text>}
-                {profit > 0 && <Text style={styles.label}>Saldo</Text>}
-            </View>
-        </Animated.View>
+                        )
+                    })}
+                </View>
+                <View style={styles.labelsContainer}>
+                    {revenue > 0 && <Text style={styles.label}>Receita</Text>}
+                    {expenses > 0 && <Text style={styles.label}>Despesa</Text>}
+                    {profit > 0 && <Text style={styles.label}>Saldo</Text>}
+                </View>
+            </Animated.View>
         </View>
     )
 }

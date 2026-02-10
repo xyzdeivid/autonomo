@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { View, Text, StyleSheet, Pressable, Animated } from 'react-native'
 import { CurrentMonthCard } from './CurrentMonthCard'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface AnyInfoWarningProps {
     text: string,
@@ -16,6 +17,8 @@ export default function AnyInfoWarning({ text,
     addDataButtonText,
     onAddDataButtonPress
 }: AnyInfoWarningProps) {
+
+    const theme = useGetTheme()
 
     const scale = useRef(new Animated.Value(1)).current
 
@@ -48,7 +51,8 @@ export default function AnyInfoWarning({ text,
                 </Text>
                 <Text style={{
                     ...styles.warningText,
-                    backgroundColor: textBgColor
+                    backgroundColor: textBgColor,
+                    color: theme === 'dark' ? '#FFF' : '#000'
                 }}>
                     Nesta seção, {text}
                 </Text>

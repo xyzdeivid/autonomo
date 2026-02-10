@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { colors } from '@/styles/appColors'
 import { useEffect, useRef } from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 type TabButtonProps = {
     label: string
@@ -20,6 +21,7 @@ function TabButton({
     focused,
     onPress,
 }: TabButtonProps) {
+    
     const scale = useRef(new Animated.Value(1)).current
     const bgAnim = useRef(new Animated.Value(0)).current
 
@@ -108,7 +110,9 @@ const TAB_CONFIG = {
 } as const
 
 export default function CustomTabBar({ state, navigation }: Props) {
+
     const insets = useSafeAreaInsets()
+    const theme = useGetTheme()
 
     return (
         <View
@@ -116,9 +120,9 @@ export default function CustomTabBar({ state, navigation }: Props) {
                 flexDirection: 'row',
                 paddingBottom: insets.bottom,
                 paddingTop: 12,
-                backgroundColor: '#fff',
+                backgroundColor: theme === 'dark' ? '#000' : '#FFF',
                 borderTopWidth: StyleSheet.hairlineWidth,
-                borderTopColor: '#0000001A'
+                borderTopColor: theme === 'dark' ? '#303030' : '#0000001A',
             }}
         >
             {state.routes.map((route, index) => {

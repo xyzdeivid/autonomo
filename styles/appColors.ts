@@ -35,6 +35,16 @@ export const colors = {
         mid: `${homeColor}80`,
         midMin: `${homeColor}40`,
         min: `${homeColor}1A`
+    },
+
+    cardBackground: {
+        dark: '#303030',
+        light: '#EBEBEB'
+    },
+
+    cardText: {
+        dark: '#FFFFFF',
+        light: '#000000'
     }
 
 }

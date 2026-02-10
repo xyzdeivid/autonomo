@@ -1,10 +1,11 @@
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
 import { useGetThemeText } from '@/hooks/index/useGetThemeText'
+import { colors } from '@/styles/appColors'
 import { getMonthName } from '@/utils/common'
 import { FontAwesome5, Fontisto } from '@expo/vector-icons'
 import { useContext } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Pressable } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 interface SettingsOptionsProps {
     setShowAvailableMonthsOptionsList: React.Dispatch<React.SetStateAction<boolean>>
@@ -19,41 +20,79 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
 
     const themeText = useGetThemeText()
 
+    const options = [
+        {
+            label: 'Período',
+            icon: <FontAwesome5
+                name='calendar-day'
+                size={12}
+                color={colors.cardText.dark}
+            />,
+            onPress: () => setShowAvailableMonthsOptionsList(true),
+            text: `${getMonthName(months, selectedMonth)}/${currentYear}`
+        },
+        {
+            label: 'Tema',
+            icon: <FontAwesome5
+                name='paint-brush'
+                size={12}
+                color={colors.cardText.dark}
+            />,
+            onPress: () => setShowThemeOptionsList(true),
+            text: themeText
+        },
+        {
+            label: 'Lembrete',
+            icon: <Fontisto
+                name='bell-alt'
+                size={12}
+                color={colors.cardText.dark}
+            />,
+            onPress: () => { /* Lógica para abrir opções de lembrete */ },
+            text: 'Nenhum'
+        }
+    ]
+
     return (
         <>
-            <View style={{ ...styles.buttonContainer, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#FFF' }}>
-                <View style={styles.label}>
-                    <FontAwesome5 name="calendar-day" size={12} color="black" />
-                    <Text>Período</Text>
-                </View>
-                <TouchableOpacity
-                    style={{ ...styles.button, borderTopRightRadius: 8 }}
-                    onPress={() => setShowAvailableMonthsOptionsList(true)}
-                >
-                    <Text style={{ textAlign: 'center' }}>{getMonthName(months, selectedMonth)}/{currentYear}</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={{ ...styles.buttonContainer, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#FFF' }}>
-                <View style={styles.label}>
-                    <FontAwesome5 name="paint-brush" size={12} color="black" />
-                    <Text>Tema</Text>
-                </View>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => setShowThemeOptionsList(true)}
-                >
-                    <Text style={{ textAlign: 'center' }}>{themeText}</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.buttonContainer}>
-                <View style={styles.label}>
-                    <Fontisto name="bell-alt" size={12} color="black" />
-                    <Text>Lembrete</Text>
-                </View>
-                <Pressable style={styles.button}>
-                    <Text style={{ textAlign: 'center' }}>Nenhum</Text>
-                </Pressable>
-            </View>
+            {options.map((option, index) => {
+                return (
+                    <View
+                        key={index}
+                        style={{
+                            ...styles.buttonContainer
+                        }}
+                    >
+                        <View
+                            style={{
+                                ...styles.label,
+                                backgroundColor: colors.cardBackground.dark
+                            }}
+                        >
+                            {option.icon}
+                            <Text
+                                style={{ color: colors.cardText.dark }}
+                            >
+                                {option.label}
+                            </Text>
+                        </View>
+                        <View
+                            style={styles.button}
+                        >
+                            <TouchableOpacity onPress={option.onPress}>
+                                <Text
+                                    style={{
+                                        textAlign: 'center',
+                                        color: colors.cardText.dark
+                                    }}
+                                >
+                                    {option.text}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )
+            })}
         </>
     )
 
@@ -61,36 +100,25 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
 
 const styles = StyleSheet.create({
 
-    container: {
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start',
-        zIndex: 1
-    },
-
-    overlay: {
-        backgroundColor: '#fff',
-    },
-
     buttonContainer: {
         flexDirection: 'row',
         alignItems: 'center'
     },
 
     label: {
-        backgroundColor: '#ebebeb',
         padding: 8,
         width: 100,
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8
+        gap: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: '#FFFFFF80'
     },
 
     button: {
-        backgroundColor: '#d3d3d3',
         width: 120,
+        borderBottomWidth: 1,
+        borderBottomColor: '#FFFFFF80',
         padding: 8
     }
 

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        padding: 12,
+        padding: 8,
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: '#FFF'
     },

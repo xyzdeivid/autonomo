@@ -1,12 +1,21 @@
 import { Tabs } from 'expo-router'
 import CustomTabBar from '@/components/common/CustomBar'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 export default function Layout() {
+
+    const theme = useGetTheme()
+
     return (
         <Tabs
             tabBar={(props) => <CustomTabBar {...props} />}
             screenOptions={() => ({
+                headerStyle: {
+                    backgroundColor: theme === 'dark' ? '#000' : '#FFF',
+                    borderBottomColor: theme === 'dark' ? '#303030' : 'transparent',
+                    borderBottomWidth: StyleSheet.hairlineWidth
+                },
                 headerTitle: () => (
                     <View style={styles.logoContainer}>
                         <Image

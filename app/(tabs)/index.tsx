@@ -20,8 +20,11 @@ import { Item } from '@/types'
 import { SettingsButton } from '@/components/index/SettingsButton'
 import { useShowAnyInfoWarning } from '@/hooks/index/useShowAnyInfoWarning'
 import { InitialLoading } from '@/components/index/InitialLoading'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 export default function Info() {
+
+    const theme = useGetTheme()
 
     const appDocs = useContext(DocsContext)
     const [items] = appDocs.items
@@ -51,7 +54,7 @@ export default function Info() {
                     <AnyInfoWarning
                         text='informamos sobre seu balanço financeiro mensal. Porém, para isso, você precisa registrar suas receitas e despesas.'
                         titleBgColor={colors.home.max}
-                        textBgColor={colors.home.min}
+                        textBgColor={theme === 'light' ? colors.home.min : colors.home.mid}
                     /> :
                     <>
                         <Insight

@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 import { createContext, useEffect, useState } from 'react'
 import { Alert, useColorScheme } from 'react-native'
 
@@ -26,13 +27,18 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
 
                 const storedTheme = await AsyncStorage.getItem('theme')
 
-                if (storedTheme === 'light' || storedTheme === 'dark') {
+                if (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system') {
 
                     setTheme(storedTheme)
+                    setStatusBarBackgroundColor(storedTheme === 'dark' ? '#000000' : '#FFFFFF')
+                    setStatusBarStyle(storedTheme === 'dark' ? 'light' : 'dark')
 
-                } else if (storedTheme === 'system' && colorScheme != null) {
+                }
+                
+                if (storedTheme === 'system' && colorScheme != null) {
 
-                    setTheme(colorScheme)
+                    setStatusBarBackgroundColor(colorScheme === 'dark' ? '#000000' : '#FFFFFF')
+                    setStatusBarStyle(colorScheme === 'dark' ? 'light' : 'dark')
 
                 }
 
