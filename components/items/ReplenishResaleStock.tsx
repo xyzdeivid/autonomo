@@ -49,15 +49,30 @@ const ReplenishResaleStock = ({ resaleProductName, setReplenishDate,
                         <Text style={styles.cardTitle}>Reposição de {resaleProductName}</Text>
                         <View style={{ width: '100%', height: 1, backgroundColor: 'black', marginBottom: 24 }} />
                     </View>
-                    <FormDateField setTargetDate={setReplenishDate} />
+                    <FormDateField
+                        setTargetDate={setReplenishDate}
+                        label='Data'
+                        labelBgColor='black'
+                        buttonBgColor='transparent'
+                        buttonBorderColor='transparent'
+                    />
                     <FormValueField
-                        label={valueLabelChoice()}
                         setValue={setReplenishValue}
+                        label={valueLabelChoice()}
+                        labelBgColor='black'
+                        inputBgColor='transparent'
+                        inputBorderColor='transparent'
                         valueChoice={replenishValueChoice}
                         setValueChoice={setReplenishValueChoice}
                         valueChoiceButtonColors={['black', 'rgba(0,0,0,0.6)']}
                     />
-                    <FormAmountField text='Quantidade' setAmount={setReplenishAmount} />
+                    <FormAmountField
+                        label='Quantidade'
+                        setAmount={setReplenishAmount}
+                        labelBgColor='black'
+                        inputBgColor='transparent'
+                        inputBorderColor='transparent'
+                    />
                     <View style={styles.buttonsContainer}>
                         <Pressable
                             style={{ backgroundColor: 'lightgray', padding: 10, borderRadius: 10 }}

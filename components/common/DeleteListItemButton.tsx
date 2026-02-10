@@ -1,3 +1,4 @@
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { Pressable, StyleSheet, View, Text } from 'react-native'
 
@@ -7,8 +8,16 @@ interface DeleteListItemButtonProps {
 
 export function DeleteListItemButton({ onPress }: DeleteListItemButtonProps) {
 
+    const theme = useGetTheme()
+
     return (
-        <Pressable onPress={onPress} style={styles.container}>
+        <Pressable 
+        onPress={onPress} 
+        style={{
+            ...styles.container,
+            backgroundColor: theme === 'dark' ? '#FFF': 'transparent'
+        }}
+        >
             <View style={styles.button}>
                 <FontAwesome6 name='trash' color='darkred' size={16}/>
                 <Text style={styles.text}>Excluir</Text>
@@ -22,8 +31,8 @@ const styles = StyleSheet.create({
 
     container: {
         alignSelf: 'center',
-        padding: 10,
-        paddingStart: 0
+        padding: 4,
+        borderRadius: 4
     },
 
     button: {

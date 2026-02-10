@@ -1,3 +1,4 @@
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { colors } from '@/styles/appColors'
 import { Pressable, View, Text, StyleSheet } from 'react-native'
 
@@ -7,13 +8,15 @@ interface StockWarningForResaleProps {
 
 export function StockWarningForResale({ onRestockButtonPress }: StockWarningForResaleProps) {
 
+    const theme = useGetTheme()
+
     return (
         <View>
             <View>
                 <View>
-                    <Text style={styles.warning}>Evite erros no seu saldo!</Text>
+                    <Text style={{ ...styles.warning, color: theme === 'dark' ? '#FFF' : '#000' }}>Evite erros no seu saldo!</Text>
                 </View>
-                <Text>
+                <Text style={{ color: theme === 'dark' ? '#FFF' : '#000' }}>
                     Para produtos que são revendidos, não recomendamos editar estoque manualmente. Ao clicar em <Text style={{ fontWeight: 'bold' }}>Repor Estoque</Text>,
                     você atualiza o estoque e registra a despesa da compra do produto de uma só vez.
                 </Text>

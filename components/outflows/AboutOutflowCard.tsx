@@ -18,6 +18,7 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { EditValueCard } from '../common/EditValueCard'
 import { CardFooter } from '../common/CardFooter'
 import { CloseCardButton } from '../common/CloseCardButton'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 
 interface AboutOutflowCardProps {
@@ -27,6 +28,8 @@ interface AboutOutflowCardProps {
 }
 
 export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }: AboutOutflowCardProps) {
+
+    const theme = useGetTheme()
 
     const [showDateTimePicker, setShowDateTimePicker] = useState(false)
     const [confirmDelete, setConfirmDelete] = useState(false)
@@ -127,7 +130,9 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                 <ListItemCardBody>
                     {
                         outflow.amount && (
-                            <Text style={styles.replenishLabel}>Reposição de Estoque</Text>
+                            <Text style={{ ...styles.replenishLabel, color: theme === 'dark' ? '#FFF' : colors.outflows.max }}>
+                                Reposição de Estoque
+                            </Text>
                         )
                     }
                     <ListItemCardProperty
@@ -137,7 +142,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                         onEditButtonPress={!outflow.amount ? () => {
                             setShowEditNameCard(true)
                         } : undefined}
-                        bgColor={colors.outflows.min}
+                        bgColor={theme === 'dark' ? colors.outflows.mid : colors.outflows.min}
                     />
                     {
                         showEditNameCard && (
@@ -152,7 +157,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                     <ListItemCardProperty
                         label='Data'
                         text={dateFormat(outflow.date)}
-                        bgColor={colors.outflows.min}
+                        bgColor={theme === 'dark' ? colors.outflows.mid : colors.outflows.min}
                         onEditButtonPress={() => setShowDateTimePicker(true)}
                     />
                     {showDateTimePicker && (
@@ -166,7 +171,7 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                     <ListItemCardProperty
                         label='Valor'
                         text={moneyFormat(outflow.value)}
-                        bgColor={colors.outflows.min}
+                        bgColor={theme === 'dark' ? colors.outflows.mid : colors.outflows.min}
                         onEditButtonPress={!outflow.amount ? () => setShowEditValueCard(true)
                             : undefined
                         }
@@ -185,12 +190,12 @@ export default function AboutOutflowCard({ outflow, deleteFunction, setFormOff }
                                 <ListItemCardProperty
                                     label='Valor (un)'
                                     text={moneyFormat(outflow.value / outflow.amount)}
-                                    bgColor={colors.outflows.min}
+                                    bgColor={theme === 'dark' ? colors.outflows.mid : colors.outflows.min}
                                 />
                                 <ListItemCardProperty
                                     label='Quantidade'
                                     text={String(outflow.amount)}
-                                    bgColor={colors.outflows.min}
+                                    bgColor={theme === 'dark' ? colors.outflows.mid : colors.outflows.min}
                                 />
                             </>
                         )
@@ -220,7 +225,6 @@ const styles = StyleSheet.create({
 
     replenishLabel: {
         fontSize: 16,
-        color: colors.outflows.max,
         fontWeight: 'bold',
         marginBottom: 24
     },

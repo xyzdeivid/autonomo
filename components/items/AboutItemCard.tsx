@@ -21,6 +21,7 @@ import { EditValueCard } from '../common/EditValueCard'
 import { EditAmountCard } from '../common/EditAmountCard'
 import { CloseCardButton } from '../common/CloseCardButton'
 import { CardFooter } from '../common/CardFooter'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface AboutItemCardProps {
     item: Item
@@ -29,6 +30,8 @@ interface AboutItemCardProps {
 }
 
 export default function AboutItemCard({ item, deleteFunction, setFormOff }: AboutItemCardProps) {
+
+    const theme = useGetTheme()
 
     const [showEditNameCard, setShowEditNameCard] = useState(false)
 
@@ -150,7 +153,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                     <ListItemCardProperty
                         label='Nome'
                         text={item._id}
-                        bgColor={colors.items.min}
+                        bgColor={theme === 'dark' ? colors.items.mid : colors.items.min}
                         onEditButtonPress={() => setShowEditNameCard(true)}
                     />
                     {showEditNameCard && (
@@ -165,7 +168,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                         <ListItemCardProperty
                             label='Valor'
                             text={moneyFormat(item.value)}
-                            bgColor={colors.items.min}
+                            bgColor={theme === 'dark' ? colors.items.mid : colors.items.min}
                             onEditButtonPress={() => setShowEditValueCard(true)}
                         />
                     )}
@@ -182,7 +185,7 @@ export default function AboutItemCard({ item, deleteFunction, setFormOff }: Abou
                             <ListItemCardProperty
                                 label='Estoque'
                                 text={String(item.amount)}
-                                bgColor={colors.items.min}
+                                bgColor={theme === 'dark' ? colors.items.mid : colors.items.min}
                                 onEditButtonPress={() => setShowEditStockCard(true)}
                             />
                         )

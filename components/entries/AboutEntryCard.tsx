@@ -32,6 +32,7 @@ import AddClienteButton from './AddClienteButton'
 import { colors } from '@/styles/appColors'
 import { CardFooter } from '../common/CardFooter'
 import { CloseCardButton } from '../common/CloseCardButton'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface AboutSchedulingCardProps {
     scheduling: Entry
@@ -40,6 +41,8 @@ interface AboutSchedulingCardProps {
 }
 
 export default function AboutSchedulingCard({ scheduling, deleteFunction, setFormOff }: AboutSchedulingCardProps) {
+
+    const theme = useGetTheme()
 
     const [showLoadingScreen, setShowLoadingScreen] = useState(false)
     const [showDateTimePicker, setShowDateTimePicker] = useState(false)
@@ -123,7 +126,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                         ? <ListItemCardProperty
                             label='Cliente'
                             text={scheduling.customer}
-                            bgColor={colors.entries.min}
+                            bgColor={theme === 'dark' ? colors.entries.mid : colors.entries.min}
                             onEditButtonPress={() => setShowEditNameCard(true)}
                         />
                         : <AddClienteButton
@@ -144,12 +147,12 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                     <ListItemCardProperty
                         label='Produto/Serviço'
                         text={scheduling.serviceId}
-                        bgColor={colors.entries.min}
+                        bgColor={theme === 'dark' ? colors.entries.mid : colors.entries.min}
                     />
                     <ListItemCardProperty
                         label='Data'
                         text={dateFormat(scheduling.date)}
-                        bgColor={colors.entries.min}
+                        bgColor={theme === 'dark' ? colors.entries.mid : colors.entries.min}
                         onEditButtonPress={() => setShowDateTimePicker(true)}
                     />
                     {showDateTimePicker && (
@@ -163,7 +166,7 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                     <ListItemCardProperty
                         label='Valor'
                         text={moneyFormat(scheduling.serviceValue)}
-                        bgColor={colors.entries.min}
+                        bgColor={theme === 'dark' ? colors.entries.mid : colors.entries.min}
                     />
                     {
                         (scheduling.serviceAmount && scheduling.serviceCategory === 'product') ? (
@@ -171,12 +174,12 @@ export default function AboutSchedulingCard({ scheduling, deleteFunction, setFor
                                 <ListItemCardProperty
                                     label='Valor (un)'
                                     text={moneyFormat(scheduling.serviceValue / scheduling.serviceAmount)}
-                                    bgColor={colors.entries.min}
+                                    bgColor={theme === 'dark' ? colors.entries.mid : colors.entries.min}
                                 />
                                 <ListItemCardProperty
                                     label='Quantidade'
                                     text={String(scheduling.serviceAmount)}
-                                    bgColor={colors.entries.min}
+                                    bgColor={theme === 'dark' ? colors.entries.mid : colors.entries.min}
                                     onEditButtonPress={() => setShowEditAmountCard(true)}
                                 />
                             </>

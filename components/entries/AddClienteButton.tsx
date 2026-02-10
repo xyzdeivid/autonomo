@@ -20,9 +20,7 @@ export default function AddCustomerButton({ addCustomer }: AddCustomerButtonProp
                     ? <Pressable onPress={() => setActive(true)}>
                         <Text style={{
                             ...styles.text,
-                            borderWidth: 1,
-                            borderColor: colors.entries.max,
-                            color: colors.entries.max,
+                            backgroundColor: colors.entries.max,
                             fontSize: 16
                         }}>Registrar Cliente</Text>
                     </Pressable>
@@ -43,6 +41,7 @@ const styles = StyleSheet.create({
     text: {
         alignSelf: 'flex-start',
         padding: 4,
-        borderRadius: 4
+        borderRadius: 4,
+        color: '#FFF'
     }
 })
