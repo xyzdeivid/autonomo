@@ -51,7 +51,7 @@ export default function ValueOption({
                 onPress={() => setChoice('total')}
             >
                 <Text style={
-                    { color: choice === 'total' ? 'white' : buttonColors[0] }
+                    { color: 'white' }
                 }>
                     Total
                 </Text>
@@ -62,7 +62,7 @@ export default function ValueOption({
                 onPress={() => setChoice('un')}
             >
                 <Text style={
-                    { color: choice === 'un' ? 'white' : buttonColors[0] }
+                    { color: 'white' }
                 }>
                     Un
                 </Text>

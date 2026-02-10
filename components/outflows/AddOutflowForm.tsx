@@ -16,12 +16,15 @@ import { createNewOutflow } from '@/utils/createNewOutflow'
 import SaveButton from '../common/SaveButton'
 import { colors } from '@/styles/appColors'
 import { getErrorMessage } from '@/utils/common'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface AddExpenseFormProps {
     setAddExpenseForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProps) {
+
+    const theme = useGetTheme()
 
     const [name, setName] = useState('')
     const [date, setDate] = useState('')
@@ -35,7 +38,7 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
     const [valueChoice, setValueChoice] = useState('total')
 
     const labelBgColor = colors.outflows.midMax
-    const inputBgColor = colors.outflows.min
+    const inputBgColor = theme === 'dark' ? colors.outflows.midMin : colors.outflows.min
     const inputBorderColor = colors.outflows.midMin
 
     const addOutflow = useAddOutflow().addOutflow
@@ -138,7 +141,7 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
                     inputBorderColor={inputBorderColor}
                     valueChoice={stockIntegrate ? valueChoice : undefined}
                     setValueChoice={setValueChoice}
-                    valueChoiceButtonColors={[labelBgColor, inputBgColor]}
+                    valueChoiceButtonColors={[labelBgColor, colors.outflows.mid]}
                 />
                 {
                     checkAllInputs() && (

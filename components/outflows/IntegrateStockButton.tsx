@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useState } from 'react'
 import { colors } from '@/styles/appColors'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface IntegrateStockButtonProps {
     setStockIntegrate: React.Dispatch<React.SetStateAction<boolean>>
@@ -8,15 +9,26 @@ interface IntegrateStockButtonProps {
 
 export default function IntegrateStockButton({ setStockIntegrate }: IntegrateStockButtonProps) {
 
+    const theme = useGetTheme()
+
     const [active, setActive] = useState(false)
 
     return (
-        <View style={{ marginBottom: 20 }}>
+        <View style={{ 
+            marginBottom: 20,
+            padding: theme === 'dark' ? 8 : 0,
+            backgroundColor: theme === 'dark' ? colors.outflows.midMin : 'transparent',
+            borderRadius: 4
+             }}>
             <View style={styles.container}>
-                <Text style={styles.buttonText}>Reposição de Estoque</Text>
+                <Text style={{
+                    ...styles.buttonText,
+                    color: theme === 'dark' ? '#FFF' : colors.outflows.max
+                }}>Reposição de Estoque</Text>
                 <Pressable
                     style={{
                         ...styles.box,
+                        borderColor: theme === 'dark' ? '#FFF' : colors.outflows.max,
                         backgroundColor: active ? colors.outflows.max : 'transparent'
                     }}
                     onPress={() => {
@@ -25,7 +37,10 @@ export default function IntegrateStockButton({ setStockIntegrate }: IntegrateSto
                     }}
                 />
             </View>
-            <Text style={styles.warningText}>Caso você esteja repondo o estoque de algum produto.</Text>
+            <Text style={{
+                ...styles.warningText,
+                color: theme === 'dark' ? '#FFF' : colors.outflows.mid
+            }}>Caso você esteja repondo o estoque de algum produto.</Text>
         </View>
     )
 
@@ -40,13 +55,11 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         borderWidth: 1,
-        borderColor: colors.outflows.max,
         marginStart: 4,
         borderRadius: 5
     },
     buttonText: {
-        fontWeight: 'bold',
-        color: colors.outflows.max
+        fontWeight: 'bold'
     },
     warningText: {
         color: colors.outflows.mid,
