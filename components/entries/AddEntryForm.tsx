@@ -15,12 +15,15 @@ import useAddEntry from '@/hooks/entries/useAddEntry'
 import SaveButton from '../common/SaveButton'
 import { colors } from '@/styles/appColors'
 import { getErrorMessage } from '@/utils/common'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface AddSchedulingFormProps {
     setAddSchedulingForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function AddEntryForm({ setAddSchedulingForm }: AddSchedulingFormProps) {
+
+    const theme = useGetTheme()
 
     const [services] = useContext(DocsContext).items
     const [service, setService] = useState<Item>(getServices(services)[0])
@@ -32,7 +35,7 @@ export default function AddEntryForm({ setAddSchedulingForm }: AddSchedulingForm
     const [costumerName, setCustomerName] = useState('')
 
     const labelBgColor = colors.entries.midMax
-    const inputBgColor = colors.entries.min
+    const inputBgColor = theme === 'dark' ? colors.entries.midMin : colors.entries.min
     const inputBorderColor = colors.entries.midMin
 
     const addEntry = useAddEntry().addEntry
@@ -134,7 +137,12 @@ export default function AddEntryForm({ setAddSchedulingForm }: AddSchedulingForm
                 }
                 {
                     service.category !== 'service' ? (
-                        <Text style={styles.infoText}>* campo obrigatório</Text>
+                        <Text style={{
+                            ...styles.infoText,
+                            color: theme === 'dark' ? '#FFF' : colors.entries.mid
+                        }}>
+                            * campo obrigatório
+                        </Text>
                     ) : null
                 }
                 {

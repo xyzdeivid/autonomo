@@ -3,6 +3,7 @@ import { Picker } from '@react-native-picker/picker'
 import { StyleSheet, Text, View } from 'react-native'
 import { FormFieldContainer } from '../common/FormFieldContainer'
 import { colors } from '@/styles/appColors'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface SelectServiceInputProps {
     service: Item
@@ -12,6 +13,8 @@ interface SelectServiceInputProps {
 }
 
 export default function SelectServiceInput({ service, setService, services, amount }: SelectServiceInputProps) {
+
+    const theme = useGetTheme()
 
     return (
         <FormFieldContainer>
@@ -31,7 +34,10 @@ export default function SelectServiceInput({ service, setService, services, amou
             </View>
             {
                 amount ? (
-                    <Text style={{ color: colors.entries.max, marginTop: 4 }}>Estoque: {amount}</Text>
+                    <Text style={{
+                        color: theme === 'dark' ? '#FFF' : colors.entries.max,
+                        marginTop: 4
+                    }}>Estoque: {amount}</Text>
                 ) : null
             }
         </FormFieldContainer>

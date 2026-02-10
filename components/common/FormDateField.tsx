@@ -4,6 +4,7 @@ import { Platform, Text, Pressable, View, StyleSheet } from 'react-native'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker'
 import { FormFieldContainer } from './FormFieldContainer'
 import { Label } from './Label'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface FormDateFieldProps {
     setTargetDate: React.Dispatch<React.SetStateAction<string>>
@@ -14,6 +15,8 @@ interface FormDateFieldProps {
 }
 
 export function FormDateField({ setTargetDate, label, labelBgColor, buttonBgColor, buttonBorderColor }: FormDateFieldProps) {
+
+    const theme = useGetTheme()
 
     const [date, setDate] = useState(new Date())
     const [show, setShow] = useState(false)
@@ -63,7 +66,7 @@ export function FormDateField({ setTargetDate, label, labelBgColor, buttonBgColo
                     }}
                     onPress={showDatepicker}
                 >
-                    <Text style={{ color: labelBgColor }}>{dateFormat(getDate())}</Text>
+                    <Text style={{ color: theme === 'dark' ? '#FFF' : labelBgColor }}>{dateFormat(getDate())}</Text>
                 </Pressable>
                 {show && (
                     <DateTimePicker

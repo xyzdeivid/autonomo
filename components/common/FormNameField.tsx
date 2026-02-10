@@ -1,6 +1,7 @@
 import { StyleSheet, TextInput, View } from 'react-native'
 import { FormFieldContainer } from './FormFieldContainer'
 import { Label } from './Label'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface FormNameFieldProps {
     setName: React.Dispatch<React.SetStateAction<string>>
@@ -11,6 +12,9 @@ interface FormNameFieldProps {
 }
 
 export function FormNameField({ setName, label, labelBgColor, inputBgColor, inputBorderColor }: FormNameFieldProps) {
+
+    const theme = useGetTheme()
+
     return (
         <FormFieldContainer>
                 <View
@@ -24,6 +28,7 @@ export function FormNameField({ setName, label, labelBgColor, inputBgColor, inpu
                 <TextInput
                     style={{
                         ...styles.input,
+                        color: theme === 'dark' ? '#FFF' : '#000',
                         backgroundColor: inputBgColor,
                         borderColor: inputBorderColor
                     }}
@@ -31,6 +36,7 @@ export function FormNameField({ setName, label, labelBgColor, inputBgColor, inpu
                 />
         </FormFieldContainer>
     )
+
 }
 
 const styles = StyleSheet.create({
@@ -43,7 +49,6 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        color: 'black',
         height: 40,
         textAlign: 'center',
         borderWidth: 2,

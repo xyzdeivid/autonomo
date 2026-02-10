@@ -3,6 +3,7 @@ import { MaskedTextInput } from 'react-native-mask-text'
 import { Label } from './Label'
 import ValueOption from './ValueOption'
 import { FormFieldContainer } from './FormFieldContainer'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface FormValueFieldProps {
     setValue: React.Dispatch<React.SetStateAction<number>>
@@ -16,6 +17,8 @@ interface FormValueFieldProps {
 }
 
 export function FormValueField({ setValue, label, labelBgColor, inputBgColor, inputBorderColor, valueChoice, setValueChoice, valueChoiceButtonColors }: FormValueFieldProps) {
+
+    const theme = useGetTheme()
 
     return (
         <FormFieldContainer>
@@ -39,6 +42,7 @@ export function FormValueField({ setValue, label, labelBgColor, inputBgColor, in
                         }}
                         style={{
                             ...styles.input,
+                            color: theme === 'dark' ? '#FFF' : '#000',
                             backgroundColor: inputBgColor,
                             borderColor: inputBorderColor
                         }}
@@ -85,7 +89,6 @@ const styles = StyleSheet.create({
     input: {
         width: 80,
         height: 40,
-        color: 'black',
         textAlign: 'center',
         borderTopRightRadius: 6,
         borderBottomRightRadius: 6,

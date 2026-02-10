@@ -1,3 +1,4 @@
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 import React, { useEffect, useRef } from 'react'
 import { StyleSheet, Animated, Easing, ScrollView } from 'react-native'
 
@@ -6,6 +7,8 @@ interface FormContainerProps {
 }
 
 export default function FormContainer({ children }: FormContainerProps) {
+
+    const theme = useGetTheme()
 
     const scale = useRef(new Animated.Value(0.6)).current
     const opacity = useRef(new Animated.Value(0)).current
@@ -31,6 +34,7 @@ export default function FormContainer({ children }: FormContainerProps) {
         <Animated.View
             style={[
                 styles.container,
+                { backgroundColor: theme === 'dark' ? '#000' : '#FFF' },
                 {
                     opacity,
                     transform: [{ scale }],
@@ -46,11 +50,10 @@ export default function FormContainer({ children }: FormContainerProps) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
         width: '100%',
         height: '100%',
         position: 'absolute',
         padding: 16,
-        zIndex: 2,
+        zIndex: 1
     },
 })

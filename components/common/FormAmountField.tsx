@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { TextInput, StyleSheet, View } from 'react-native'
 import { FormFieldContainer } from './FormFieldContainer'
 import { Label } from './Label'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface FormAmountFieldProps {
     setAmount: React.Dispatch<React.SetStateAction<number>>
@@ -12,6 +13,8 @@ interface FormAmountFieldProps {
 }
 
 export function FormAmountField({ setAmount, label, labelBgColor, inputBgColor, inputBorderColor }: FormAmountFieldProps) {
+
+    const theme = useGetTheme()
 
     const [textValue, setTextValue] = useState('')
 
@@ -45,6 +48,7 @@ export function FormAmountField({ setAmount, label, labelBgColor, inputBgColor, 
                     }}
                     style={{
                         ...styles.input,
+                        color: theme === 'dark' ? '#FFF' : '#000',
                         backgroundColor: inputBgColor,
                         borderColor: inputBorderColor
                     }}
@@ -67,7 +71,6 @@ const styles = StyleSheet.create({
     input: {
         width: 80,
         height: 40,
-        color: 'black',
         textAlign: 'center',
         borderTopRightRadius: 6,
         borderBottomRightRadius: 6,
