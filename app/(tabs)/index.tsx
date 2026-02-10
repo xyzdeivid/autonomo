@@ -54,7 +54,7 @@ export default function Info() {
                     <AnyInfoWarning
                         text='informamos sobre seu balanço financeiro mensal. Porém, para isso, você precisa registrar suas receitas e despesas.'
                         titleBgColor={colors.home.max}
-                        textBgColor={theme === 'light' ? colors.home.min : colors.home.mid}
+                        textBgColor={theme === 'dark' ? colors.home.mid : colors.home.min}
                     /> :
                     <>
                         <Insight

@@ -1,9 +1,10 @@
 import { useGetItemsAndTheirValuesForTheMonth } from '@/hooks/index/useGetItemsAndTheirValuesForTheMonth'
-import { Animated, Dimensions, Text } from 'react-native'
+import { Animated, Dimensions } from 'react-native'
 import { useEffect, useRef } from 'react'
 import { Info } from './Info'
 import { ListItem } from './ListItem'
 import { useShowInsights } from '@/hooks/index/useShowInsights'
+import { NoRevenueWarning } from './NoRevenueWarning'
 
 interface ItemsContentProps {
     comingFrom: number
@@ -55,7 +56,7 @@ export function ItemsContent({ comingFrom, setComingFrom }: ItemsContentProps) {
                 }
                 {
                     !showInsights &&
-                    <Text>Nenhuma receita cadastrada.</Text>
+                    <NoRevenueWarning text='Nenhuma receita cadastrada este mês.' />
                 }
             </Animated.View>
         </>

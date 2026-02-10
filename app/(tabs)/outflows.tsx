@@ -21,8 +21,11 @@ import ExpensesList from '@/components/outflows/OutflowsList'
 import AboutOutflowCard from '@/components/outflows/AboutOutflowCard'
 import useDeleteOutflow from '@/hooks/outflows/useDeleteOutflow'
 import { colors } from '@/styles/appColors'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 export default function Expenses() {
+
+    const theme = useGetTheme()
 
     const appDocs = useContext(DocsContext)
     const [expenses] = appDocs.outflows
@@ -88,7 +91,7 @@ export default function Expenses() {
                         : <AnyInfoWarning
                             text='listamos todas as suas despesas financeiras do mês.'
                             titleBgColor={colors.outflows.max}
-                            textBgColor={colors.outflows.min}
+                            textBgColor={theme === 'dark' ? colors.outflows.mid : colors.outflows.min}
                             addDataButtonText='Adicionar Despesa'
                             onAddDataButtonPress={() => setAddExpenseForm(true)}
                         />

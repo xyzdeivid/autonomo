@@ -17,8 +17,11 @@ import { Item } from '@/types'
 import { colors } from '@/styles/appColors'
 import { showErrorAtSubmitData } from '@/utils/common'
 import { ItemCategoryCard } from '@/components/items/ItemCategoryCard'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 export default function Items() {
+
+    const theme = useGetTheme()
 
     const appDocs = useContext(DocsContext)
     const [items] = appDocs.items
@@ -94,7 +97,7 @@ export default function Items() {
                         : <AnyInfoWarning
                             text='listamos todos os seus produtos ou serviços.'
                             titleBgColor={colors.items.max}
-                            textBgColor={colors.items.min}
+                            textBgColor={theme === 'dark' ? colors.items.mid : colors.items.min}
                             addDataButtonText='Adicionar Item'
                             onAddDataButtonPress={() => setShowItemCategoryCard(true)}
                         />

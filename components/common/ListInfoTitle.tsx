@@ -1,5 +1,6 @@
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { getMonthName } from '@/utils/common'
 import { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
@@ -10,6 +11,8 @@ interface ListInfoTitleProps {
 }
 
 export default function ListInfoTitle({ text, color }: ListInfoTitleProps) {
+
+    const theme = useGetTheme()
 
     const appDocs = useContext(DocsContext)
 
@@ -22,7 +25,7 @@ export default function ListInfoTitle({ text, color }: ListInfoTitleProps) {
             <Text
                 style={{
                     ...styles.text,
-                    color: color
+                    color: theme === 'dark' ? '#FFF' : color
                 }}
             >
                 Suas {text} do mês de {getMonthName(months, selectedMonth)}/{currentYear}

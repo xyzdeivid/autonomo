@@ -4,7 +4,8 @@ import { useGetAverageRevenuePerWorkingDayText } from '@/hooks/index/useGetAvera
 import { Info } from './Info'
 import { useEffect, useRef } from 'react'
 import { useShowInsights } from '@/hooks/index/useShowInsights'
-import { Animated, Dimensions, Text, View } from 'react-native'
+import { Animated, Dimensions, View } from 'react-native'
+import { NoRevenueWarning } from './NoRevenueWarning'
 
 interface DailyFinanceContentProps {
     comingFrom: number
@@ -12,6 +13,7 @@ interface DailyFinanceContentProps {
 }
 
 export function DailyFinanceContent({ comingFrom, setComingFrom }: DailyFinanceContentProps) {
+
 
     const screenWidth = Dimensions.get('window').width
     const direction = comingFrom < 1 ? screenWidth : -screenWidth
@@ -50,7 +52,7 @@ export function DailyFinanceContent({ comingFrom, setComingFrom }: DailyFinanceC
                 }
                 {
                     !showInsights &&
-                    <Text>Nenhuma receita cadastrada.</Text>
+                    <NoRevenueWarning text='Nenhuma receita cadastrada este mês.' />
                 }
             </Animated.View>
         </>

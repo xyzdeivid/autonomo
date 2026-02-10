@@ -64,14 +64,13 @@ export default function AnyInfoWarning({ text,
                         <Pressable
                             style={{
                                 ...styles.addDataButton,
-                                backgroundColor: textBgColor,
-                                borderColor: titleBgColor
+                                backgroundColor: titleBgColor
                             }}
                             onPressIn={handlePressIn}
                             onPressOut={handlePressOut}
                             onPress={onAddDataButtonPress}
                         >
-                            <Text style={{ color: titleBgColor }}>{addDataButtonText}</Text>
+                            <Text style={{ color: '#FFF' }}>{addDataButtonText}</Text>
                         </Pressable>
                     </Animated.View>
                     : null
@@ -114,8 +113,7 @@ const styles = StyleSheet.create({
     addDataButton: {
         padding: 8,
         borderRadius: 4,
-        marginTop: 8,
-        borderWidth: StyleSheet.hairlineWidth
+        marginTop: 8
     }
 
 })

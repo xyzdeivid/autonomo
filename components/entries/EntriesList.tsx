@@ -1,12 +1,12 @@
 import { Entry } from '@/types/index'
 import { format, parseISO } from 'date-fns'
-import { FlatList, StyleSheet } from 'react-native'
+import { FlatList } from 'react-native'
 import { DataTable } from 'react-native-paper'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { colors } from '@/styles/appColors'
 import useGetEntriesToShowOnTheList from '@/hooks/entries/useGetMonthEntries'
-import Feather from '@expo/vector-icons/Feather'
+import { DataTableItem } from '../common/DataTableItem'
 
 interface SchedulingsListProps {
     setSelectedEntryForDeletion: React.Dispatch<React.SetStateAction<string>>
@@ -34,33 +34,53 @@ export default function SchedulingsList({ setSelectedEntryForDeletion, setDelete
                 color={colors.entries.max}
             />
             <DataTable.Header>
-                <DataTable.Title style={styles.text}>Cliente</DataTable.Title>
-                <DataTable.Title style={styles.text}>Item</DataTable.Title>
-                <DataTable.Title style={styles.text}>Data</DataTable.Title>
-                <DataTable.Title style={styles.text}>Valor</DataTable.Title>
-                <DataTable.Title style={styles.text}>#</DataTable.Title>
+                <DataTableItem
+                    text='Cliente'
+                    header={true}
+                />
+                <DataTableItem
+                    text='Item'
+                    header={true}
+                />
+                <DataTableItem
+                    text='Data'
+                    header={true}
+                />
+                <DataTableItem
+                    text='Valor'
+                    header={true}
+                />
+                <DataTableItem
+                    text='#'
+                    header={true}
+                />
             </DataTable.Header>
             <FlatList
                 data={entries}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) => (
                     <DataTable.Row>
-                        <DataTable.Cell style={styles.text}>
-                            {
-                                item.customer
-                                    ? item.customer
-                                    : '*'
-                            }
-                        </DataTable.Cell>
-                        <DataTable.Cell style={styles.text}>{item.serviceId}</DataTable.Cell>
-                        <DataTable.Cell style={styles.text}>{dateFormat(item.date)}</DataTable.Cell>
-                        <DataTable.Cell style={styles.text}>{moneyFormat(item.serviceValue)}</DataTable.Cell>
-                        <DataTable.Cell
-                            style={styles.text}
+                        <DataTableItem
+                            text={item.customer ? item.customer : '*'}
+                            header={false}
+                        />
+                        <DataTableItem
+                            text={item.serviceId}
+                            header={false}
+                        />
+                        <DataTableItem
+                            text={dateFormat(item.date)}
+                            header={false}
+                        />
+                        <DataTableItem
+                            text={moneyFormat(item.serviceValue)}
+                            header={false}
+                        />
+                        <DataTableItem
+                            text='Editar'
+                            header={false}
                             onPress={() => deleteScheduling(item)}
-                        >
-                            <Feather name='edit' size={16} color='black' />
-                        </DataTable.Cell>
+                        />
                     </DataTable.Row>
                 )}
             />
@@ -68,11 +88,3 @@ export default function SchedulingsList({ setSelectedEntryForDeletion, setDelete
     )
 
 }
-
-const styles = StyleSheet.create({
-
-    text: {
-        justifyContent: 'center'
-    }
-
-})

@@ -1,12 +1,12 @@
 import { Outflow } from '@/types/index'
 import { format, parseISO } from 'date-fns'
-import { FlatList, StyleSheet } from 'react-native'
+import { FlatList } from 'react-native'
 import { DataTable } from 'react-native-paper'
 import { moneyFormat } from '@/utils/common'
 import ListInfoTitle from '../common/ListInfoTitle'
 import { colors } from '@/styles/appColors'
 import useGetOutflowsToShowOnTheList from '@/hooks/outflows/useGetOutflowsToShowOnTheList'
-import { Feather } from '@expo/vector-icons'
+import { DataTableItem } from '../common/DataTableItem'
 
 interface OutflowsListProps {
     setOutflowForDeletion: React.Dispatch<React.SetStateAction<string>>
@@ -42,25 +42,45 @@ export default function OutflowsList({ setOutflowForDeletion, setDeleteOuflowFor
                 color={colors.outflows.max}
             />
             <DataTable.Header>
-                <DataTable.Title style={styles.text}>Nome</DataTable.Title>
-                <DataTable.Title style={styles.text}>Data</DataTable.Title>
-                <DataTable.Title style={styles.text}>Valor</DataTable.Title>
-                <DataTable.Title style={styles.text}>#</DataTable.Title>
+                <DataTableItem
+                    text='Nome'
+                    header={true}
+                />
+                <DataTableItem
+                    text='Data'
+                    header={true}
+                />
+                <DataTableItem
+                    text='Valor'
+                    header={true}
+                />
+                <DataTableItem
+                    text='#'
+                    header={true}
+                />
             </DataTable.Header>
             <FlatList
                 data={outflows}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) => (
                     <DataTable.Row>
-                        <DataTable.Cell style={styles.text}>{getitemName(item)}</DataTable.Cell>
-                        <DataTable.Cell style={styles.text}>{dateFormat(item.date)}</DataTable.Cell>
-                        <DataTable.Cell style={styles.text}>{moneyFormat(item.value)}</DataTable.Cell>
-                        <DataTable.Cell
-                            style={styles.text}
+                        <DataTableItem
+                            text={getitemName(item)}
+                            header={false}
+                        />
+                        <DataTableItem
+                            text={dateFormat(item.date)}
+                            header={false}
+                        />
+                        <DataTableItem
+                            text={moneyFormat(item.value)}
+                            header={false}
+                        />
+                        <DataTableItem
+                            text='Editar'
+                            header={false}
                             onPress={() => deleteOuflow(item)}
-                        >
-                            <Feather name='edit' size={16} color='black' />
-                        </DataTable.Cell>
+                        />
                     </DataTable.Row>
                 )}
             />
@@ -68,9 +88,3 @@ export default function OutflowsList({ setOutflowForDeletion, setDeleteOuflowFor
     )
 
 }
-
-const styles = StyleSheet.create({
-    text: {
-        justifyContent: 'center'
-    }
-})

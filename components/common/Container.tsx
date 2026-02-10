@@ -8,7 +8,7 @@ export default function Container({ children }: { children: React.ReactNode }) {
     return (
         <View style={{
             flex: 1,
-            backgroundColor: theme === 'dark' ? '#000' : '#FFF'
+            backgroundColor: theme === 'dark' ? '#151515' : '#FFF'
         }}>
             {children}
         </View>

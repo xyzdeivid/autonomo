@@ -19,7 +19,7 @@ export function SelectCategoryButton({
     function getBackgroundColor(button: string) {
 
         if (button === category) return colors.items.max
-        return colors.items.mid
+        return colors.items.min
 
     }
 
@@ -97,7 +97,10 @@ const styles = StyleSheet.create({
     },
 
     textActive: {
-        fontWeight: '700'
+        fontWeight: '700',
+        textDecorationLine: 'underline',
+        textDecorationColor: 'white',
+        textDecorationStyle: 'solid'
     }
 
 })

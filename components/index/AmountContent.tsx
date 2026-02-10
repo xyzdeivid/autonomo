@@ -1,9 +1,10 @@
-import { Animated, Dimensions, Text } from 'react-native'
+import { Animated, Dimensions } from 'react-native'
 import { Info } from './Info'
 import { useEffect, useRef } from 'react'
 import { useGetItemsAndTheirAmountForTheMonth } from '@/hooks/index/useGetItemsAndTheirAmountForTheMonth'
 import { ListItem } from './ListItem'
 import { useShowInsights } from '@/hooks/index/useShowInsights'
+import { NoRevenueWarning } from './NoRevenueWarning'
 
 interface AmountContentProps {
     setComingFrom: React.Dispatch<React.SetStateAction<number>>
@@ -51,7 +52,7 @@ export function AmountContent({ setComingFrom }: AmountContentProps) {
                 }
                 {
                     !showInsights &&
-                    <Text>Nenhuma receita cadastrada.</Text>
+                    <NoRevenueWarning text='Nenhuma receita cadastrada este mês.' />
                 }
             </Animated.View>
         </>

@@ -1,8 +1,8 @@
-import { FlatList, StyleSheet } from 'react-native'
+import { FlatList } from 'react-native'
 import { DataTable } from 'react-native-paper'
 import { Item } from '@/types/index'
 import useGetItemsByCategory from '@/hooks/items/useGetItemsByCategory'
-import { Feather } from '@expo/vector-icons'
+import { DataTableItem } from '../common/DataTableItem'
 
 interface ItemsListProps {
     setSelectedItemForDeletion: React.Dispatch<React.SetStateAction<string>>
@@ -33,36 +33,45 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, ca
                 return 'Serviço'
             case 'budget':
                 return 'Serviço'
+            default:
+                return 'Desconhecido'
         }
     }
 
     return (
         <>
             <DataTable.Header>
-                <DataTable.Title style={styles.text}>{getWhatIsItemColumn()}</DataTable.Title>
-                <DataTable.Title style={styles.text}>
-                    Valor
-                    {isProductCategory ? ' (un)' : null}
-                </DataTable.Title>
-                <DataTable.Title style={styles.text}>#</DataTable.Title>
+                <DataTableItem
+                    text={getWhatIsItemColumn()}
+                    header={true}
+                />
+                <DataTableItem
+                    text={`Valor ${isProductCategory ? '(un)' : ''}`}
+                    header={true}
+                />
+                <DataTableItem
+                    text='#'
+                    header={true}
+                />
             </DataTable.Header>
             <FlatList
                 data={items}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) => (
                     <DataTable.Row>
-                        <DataTable.Cell style={styles.text}>{item._id}</DataTable.Cell>
-                        <DataTable.Cell style={styles.text}>
-                            {item.category !== 'budget'
-                                ? moneyFormat(item.value)
-                                : 'Orçamento'}
-                        </DataTable.Cell>
-                        <DataTable.Cell
-                            style={styles.text}
+                        <DataTableItem
+                            text={item._id}
+                            header={false}
+                        />
+                        <DataTableItem
+                            text={item.category !== 'budget' ? moneyFormat(item.value) : 'Orçamento'}
+                            header={false}
+                        />
+                        <DataTableItem
+                            text='Editar'
+                            header={false}
                             onPress={() => showAboutItemCard(item)}
-                        >
-                            <Feather name='edit' size={16} color='black' />
-                        </DataTable.Cell>
+                        />
                     </DataTable.Row>
                 )}
             />
@@ -70,9 +79,3 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, ca
     )
 
 }
-
-const styles = StyleSheet.create({
-    text: {
-        justifyContent: 'center'
-    }
-})

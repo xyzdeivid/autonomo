@@ -1,9 +1,10 @@
-import { Animated, Dimensions, Text } from 'react-native'
+import { Animated, Dimensions } from 'react-native'
 import { Info } from './Info'
 import { useEffect, useRef } from 'react'
 import { useGetCustomersAndTheirRevenueForTheMonth } from '@/hooks/index/useGetCustomersAndTheirRevenueForTheMonth'
 import { ListItem } from './ListItem'
 import { useShowCustomersAndTheirRevenue } from '@/hooks/index/useShowCustomersAndTheirRevenue'
+import { NoRevenueWarning } from './NoRevenueWarning'
 
 interface CustomersContentProps {
     comingFrom: number
@@ -49,7 +50,7 @@ export function CustomersContent({ comingFrom, setComingFrom }: CustomersContent
                             money={true}
                         />
                     )
-                }) : <Text>Nenhuma receita com cliente cadastrado.</Text>}
+                }) : <NoRevenueWarning text='Nenhuma receita com cliente cadastrado este mês.' />}
             </Animated.View>
         </>
     )

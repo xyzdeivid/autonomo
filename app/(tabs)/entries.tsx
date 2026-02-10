@@ -23,8 +23,11 @@ import useDeleteEntry from '@/hooks/entries/useDeleteEntry'
 import { colors } from '@/styles/appColors'
 import AddItemButton from '@/components/common/AddItemButton'
 import { getServices } from '@/utils/schedulings'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 export default function Schedulings() {
+
+    const theme = useGetTheme()
 
     const appDocs = useContext(DocsContext)
     const [entries] = appDocs.entries
@@ -92,7 +95,7 @@ export default function Schedulings() {
                         : <AnyInfoWarning
                             text='listamos todas as suas receitas financeiras do mês.'
                             titleBgColor={colors.entries.max}
-                            textBgColor={colors.entries.min}
+                            textBgColor={theme === 'dark' ? colors.entries.mid : colors.entries.min}
                             addDataButtonText='Adicionar Receita'
                             onAddDataButtonPress={() => {
                                 const itemsAvailable = areThereAnyItemsAvailable(items)
