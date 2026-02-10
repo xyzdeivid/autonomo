@@ -39,7 +39,6 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
 
     const labelBgColor = colors.outflows.midMax
     const inputBgColor = theme === 'dark' ? colors.cardBackground.dark : colors.outflows.min
-    const inputBorderColor = colors.outflows.midMin
 
     const addOutflow = useAddOutflow().addOutflow
 
@@ -107,7 +106,6 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
                             label='Nome'
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
-                            inputBorderColor={inputBorderColor}
                         />
                         : <ProductOptionsInput
                             product={product}
@@ -120,7 +118,6 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
                     label='Data'
                     labelBgColor={labelBgColor}
                     buttonBgColor={inputBgColor}
-                    buttonBorderColor={inputBorderColor}
                 />
                 {
                     stockIntegrate && (
@@ -129,7 +126,6 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
                             label='Quantidade'
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
-                            inputBorderColor={inputBorderColor}
                         />
                     )
                 }
@@ -138,7 +134,6 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
                     label={checkResaleButtonText()}
                     labelBgColor={labelBgColor}
                     inputBgColor={inputBgColor}
-                    inputBorderColor={inputBorderColor}
                     valueChoice={stockIntegrate ? valueChoice : undefined}
                     setValueChoice={setValueChoice}
                     valueChoiceButtonColors={[labelBgColor, colors.outflows.mid]}

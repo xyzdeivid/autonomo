@@ -10,10 +10,9 @@ interface BudgetCreationFormProps {
     submitBudget: () => Promise<void>
     labelBgColor: string
     inputBgColor: string
-    inputBorderColor: string
 }
 
-export function BudgetCreationForm({ name, setName, submitBudget, labelBgColor, inputBgColor, inputBorderColor }: BudgetCreationFormProps) {
+export function BudgetCreationForm({ name, setName, submitBudget, labelBgColor, inputBgColor }: BudgetCreationFormProps) {
 
     const theme = useGetTheme()
 
@@ -24,7 +23,6 @@ export function BudgetCreationForm({ name, setName, submitBudget, labelBgColor, 
                 label='Nome do Serviço'
                 labelBgColor={labelBgColor}
                 inputBgColor={inputBgColor}
-                inputBorderColor={inputBorderColor}
             />
             <Text style={{ marginBottom: 20, color: theme === 'dark' ? '#FFF' : colors.items.max }}>
                 O valor será definido ao registrar entrada.

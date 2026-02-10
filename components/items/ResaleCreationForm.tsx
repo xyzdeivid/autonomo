@@ -20,7 +20,6 @@ interface ResaleCreationFormProps {
     submitResale: () => Promise<void>
     labelBgColor: string
     inputBgColor: string
-    inputBorderColor: string
 }
 
 export default function ResaleCreationForm({
@@ -33,8 +32,7 @@ export default function ResaleCreationForm({
     setValueOutflowChoice,
     setName,
     setValue,
-    labelBgColor, inputBgColor,
-    inputBorderColor
+    labelBgColor, inputBgColor
 }: ResaleCreationFormProps) {
 
     return (
@@ -44,28 +42,24 @@ export default function ResaleCreationForm({
                 label='Nome do Produto'
                 labelBgColor={labelBgColor}
                 inputBgColor={inputBgColor}
-                inputBorderColor={inputBorderColor}
             />
             <FormDateField
                 setTargetDate={setPurchaseDate}
                 label='Data de Compra'
                 labelBgColor={labelBgColor}
                 buttonBgColor={inputBgColor}
-                buttonBorderColor={inputBorderColor}
             />
             <FormAmountField
                 setAmount={setAmount}
                 label='Quantidade'
                 labelBgColor={labelBgColor}
                 inputBgColor={inputBgColor}
-                inputBorderColor={inputBorderColor}
             />
             <FormValueField
                 setValue={setPurchaseValue}
                 label={valueOutflowChoice === 'total' ? 'Valor de Compra (total)' : 'Valor de Compra (un)'}
                 labelBgColor={labelBgColor}
                 inputBgColor={inputBgColor}
-                inputBorderColor={inputBorderColor}
                 valueChoice={valueOutflowChoice}
                 setValueChoice={setValueOutflowChoice}
                 valueChoiceButtonColors={[labelBgColor, inputBgColor]}
@@ -75,7 +69,6 @@ export default function ResaleCreationForm({
                 label='Valor de Venda (un)'
                 labelBgColor={labelBgColor}
                 inputBgColor={inputBgColor}
-                inputBorderColor={inputBorderColor}
             />
             {
                 (name && amount && purchaseValue && value) ? (

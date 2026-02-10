@@ -11,10 +11,9 @@ interface FormDateFieldProps {
     label: string
     labelBgColor: string
     buttonBgColor: string
-    buttonBorderColor: string
 }
 
-export function FormDateField({ setTargetDate, label, labelBgColor, buttonBgColor, buttonBorderColor }: FormDateFieldProps) {
+export function FormDateField({ setTargetDate, label, labelBgColor, buttonBgColor }: FormDateFieldProps) {
 
     const theme = useGetTheme()
 
@@ -61,8 +60,7 @@ export function FormDateField({ setTargetDate, label, labelBgColor, buttonBgColo
                 <Pressable
                     style={{
                         ...styles.button,
-                        backgroundColor: buttonBgColor,
-                        borderColor: buttonBorderColor
+                        backgroundColor: buttonBgColor
                     }}
                     onPress={showDatepicker}
                 >
@@ -94,9 +92,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         justifyContent: 'center',
         borderTopRightRadius: 6,
-        borderBottomRightRadius: 6,
-        borderWidth: 2,
-        borderLeftWidth: 0
+        borderBottomRightRadius: 6
     }
 
 })

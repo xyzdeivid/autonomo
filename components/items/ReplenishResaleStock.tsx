@@ -54,14 +54,12 @@ const ReplenishResaleStock = ({ resaleProductName, setReplenishDate,
                         label='Data'
                         labelBgColor='black'
                         buttonBgColor='transparent'
-                        buttonBorderColor='transparent'
                     />
                     <FormValueField
                         setValue={setReplenishValue}
                         label={valueLabelChoice()}
                         labelBgColor='black'
                         inputBgColor='transparent'
-                        inputBorderColor='transparent'
                         valueChoice={replenishValueChoice}
                         setValueChoice={setReplenishValueChoice}
                         valueChoiceButtonColors={['black', 'rgba(0,0,0,0.6)']}
@@ -71,7 +69,6 @@ const ReplenishResaleStock = ({ resaleProductName, setReplenishDate,
                         setAmount={setReplenishAmount}
                         labelBgColor='black'
                         inputBgColor='transparent'
-                        inputBorderColor='transparent'
                     />
                     <View style={styles.buttonsContainer}>
                         <Pressable

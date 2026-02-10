@@ -8,10 +8,9 @@ interface FormNameFieldProps {
     label: string
     labelBgColor: string
     inputBgColor: string
-    inputBorderColor: string
 }
 
-export function FormNameField({ setName, label, labelBgColor, inputBgColor, inputBorderColor }: FormNameFieldProps) {
+export function FormNameField({ setName, label, labelBgColor, inputBgColor }: FormNameFieldProps) {
 
     const theme = useGetTheme()
 
@@ -29,8 +28,7 @@ export function FormNameField({ setName, label, labelBgColor, inputBgColor, inpu
                     style={{
                         ...styles.input,
                         color: theme === 'dark' ? '#FFF' : '#000',
-                        backgroundColor: inputBgColor,
-                        borderColor: inputBorderColor
+                        backgroundColor: inputBgColor
                     }}
                     onChangeText={text => setName(text.trim())}
                 />
@@ -51,8 +49,6 @@ const styles = StyleSheet.create({
     input: {
         height: 40,
         textAlign: 'center',
-        borderWidth: 2,
-        borderTopWidth: 0,
         borderBottomLeftRadius: 6,
         borderBottomRightRadius: 6
     }

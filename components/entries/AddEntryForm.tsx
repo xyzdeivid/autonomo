@@ -36,7 +36,6 @@ export default function AddEntryForm({ setAddSchedulingForm }: AddSchedulingForm
 
     const labelBgColor = colors.entries.midMax
     const inputBgColor = theme === 'dark' ? colors.cardBackground.dark : colors.entries.min
-    const inputBorderColor = colors.entries.midMin
 
     const addEntry = useAddEntry().addEntry
 
@@ -104,14 +103,12 @@ export default function AddEntryForm({ setAddSchedulingForm }: AddSchedulingForm
                     label='Cliente'
                     labelBgColor={labelBgColor}
                     inputBgColor={inputBgColor}
-                    inputBorderColor={inputBorderColor}
                 />
                 <FormDateField
                     setTargetDate={setDate}
                     label='Data'
                     labelBgColor={labelBgColor}
                     buttonBgColor={inputBgColor}
-                    buttonBorderColor={inputBorderColor}
                 />
                 {
                     service.category === 'product' ? (
@@ -120,7 +117,6 @@ export default function AddEntryForm({ setAddSchedulingForm }: AddSchedulingForm
                             label='* Quantidade'
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
-                            inputBorderColor={inputBorderColor}
                         />
                     ) : null
                 }
@@ -131,7 +127,6 @@ export default function AddEntryForm({ setAddSchedulingForm }: AddSchedulingForm
                             label='* Valor'
                             labelBgColor={labelBgColor}
                             inputBgColor={inputBgColor}
-                            inputBorderColor={inputBorderColor}
                         />
                     ) : null
                 }

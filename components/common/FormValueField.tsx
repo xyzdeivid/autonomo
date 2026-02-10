@@ -10,13 +10,12 @@ interface FormValueFieldProps {
     label: string
     labelBgColor: string
     inputBgColor: string
-    inputBorderColor: string
     valueChoice?: string
     setValueChoice?: React.Dispatch<React.SetStateAction<string>>
     valueChoiceButtonColors?: [string, string]
 }
 
-export function FormValueField({ setValue, label, labelBgColor, inputBgColor, inputBorderColor, valueChoice, setValueChoice, valueChoiceButtonColors }: FormValueFieldProps) {
+export function FormValueField({ setValue, label, labelBgColor, inputBgColor, valueChoice, setValueChoice, valueChoiceButtonColors }: FormValueFieldProps) {
 
     const theme = useGetTheme()
 
@@ -43,8 +42,7 @@ export function FormValueField({ setValue, label, labelBgColor, inputBgColor, in
                         style={{
                             ...styles.input,
                             color: theme === 'dark' ? '#FFF' : '#000',
-                            backgroundColor: inputBgColor,
-                            borderColor: inputBorderColor
+                            backgroundColor: inputBgColor
                         }}
                         keyboardType='numeric'
                         onChangeText={text => {
@@ -91,9 +89,7 @@ const styles = StyleSheet.create({
         height: 40,
         textAlign: 'center',
         borderTopRightRadius: 6,
-        borderBottomRightRadius: 6,
-        borderWidth: 2,
-        borderLeftWidth: 0
+        borderBottomRightRadius: 6
     },
 
     valueChoiceContainer: {
