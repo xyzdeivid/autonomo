@@ -9,10 +9,7 @@ export function TextInsight({ text }: { text: string }) {
 
     return (
         <View 
-        style={{
-            ...styles.container,
-            borderTopColor: theme === 'dark' ? colors.cardBackground.dark : colors.cardBackground.light
-        }}
+        style={styles.container}
         >
             <View
                 style={{
@@ -42,9 +39,7 @@ export function TextInsight({ text }: { text: string }) {
 const styles = StyleSheet.create({
 
     container: {
-        borderTopWidth: StyleSheet.hairlineWidth,
-        marginTop: 20,
-        paddingTop: 8
+        marginTop: 20
     },
 
     insightTextContainer: {

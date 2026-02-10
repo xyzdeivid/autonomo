@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { CloseFormButton } from './CloseFormButton'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface FormTitleProps {
     text: string
@@ -9,6 +10,8 @@ interface FormTitleProps {
 
 export default function FormTitle({ text, onCloseFormButtonPress, textColor = '#000' }: FormTitleProps) {
 
+    const theme = useGetTheme()
+
     const borderColor = textColor.startsWith('#') ? `${textColor}26` : '#00000015'
     const iconColor = textColor.startsWith('#') ? `${textColor}80` : textColor
 
@@ -17,7 +20,7 @@ export default function FormTitle({ text, onCloseFormButtonPress, textColor = '#
             <View style={styles.topRow}>
                 <Text
                     numberOfLines={1}
-                    style={[styles.text, { color: textColor }]}
+                    style={[styles.text, { color: theme === 'dark' ? '#FFF' : textColor }]}
                 >
                     {text}
                 </Text>
