@@ -1,3 +1,4 @@
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { colors } from '@/styles/appColors'
 import { Pressable, Text, StyleSheet } from 'react-native'
 
@@ -13,19 +14,22 @@ export function ProductCategoryButton({
     categoryEx,
 }: ProductCategoryButtonProps) {
 
+    const theme = useGetTheme()
+
     return (
         <Pressable
             onPress={onPress}
             style={({ pressed }) => [
                 styles.button,
+                { borderColor: theme === 'dark' ? '#FFF' : colors.items.midMin },
                 {
                     backgroundColor: pressed
-                        ? 'white'
-                        : `${colors.items.min}`,
+                        ? theme === 'dark' ? 'black' : 'white'
+                        : theme === 'dark' ? colors.items.midMin : colors.items.min
                 },
             ]}
         >
-            <Text style={[styles.infoText, { color: colors.items.max }]}>
+            <Text style={[styles.infoText, { color: theme === 'dark' ? '#FFF' : colors.items.max }]}>
                 {categoryName}
             </Text>
 
@@ -39,8 +43,8 @@ const styles = StyleSheet.create({
 
     button: {
         padding: 16,
-        borderBottomWidth: 1,
-        borderBottomColor: '#FFF'
+        borderRadius: 8,
+        borderWidth: StyleSheet.hairlineWidth
     },
 
     infoText: {

@@ -1,3 +1,4 @@
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { colors } from '@/styles/appColors'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
@@ -10,6 +11,7 @@ interface ProductSubCategoryButtonProps {
 
 export default function ProductSubCategoryButton({ subCategoryName, subCategoryText, setStep, setSubCategory }: ProductSubCategoryButtonProps) {
 
+    const theme = useGetTheme()
 
     return (
         <View style={{ marginBottom: 20 }}>
@@ -18,8 +20,8 @@ export default function ProductSubCategoryButton({ subCategoryName, subCategoryT
                     styles.container,
                     {
                         backgroundColor: pressed
-                            ? 'white'
-                            : `${colors.items.min}`,
+                            ? theme === 'dark' ? 'black' : 'white'
+                            :  theme === 'dark' ? colors.items.midMax : colors.items.min,
                     },
                 ]}
                 onPress={() => {
@@ -27,12 +29,11 @@ export default function ProductSubCategoryButton({ subCategoryName, subCategoryT
                     if (setSubCategory) setSubCategory(true)
                 }}
             >
-                <Text style={{ color: colors.items.max, fontWeight: 'bold', fontSize: 20 }}>{subCategoryName}</Text>
-                <Text style={styles.text}>
+                <Text style={{ color: theme === 'dark' ? '#FFF' : colors.items.max, fontWeight: 'bold', fontSize: 20 }}>{subCategoryName}</Text>
+                <Text style={{...styles.text, color: theme === 'dark' ? '#FFF' : colors.items.max}}>
                     {subCategoryText}
                 </Text>
             </Pressable>
-
         </View>
     )
 
@@ -46,7 +47,6 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        color: colors.items.max,
         marginTop: 2
     },
 

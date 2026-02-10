@@ -1,4 +1,5 @@
 import { useGetTheme } from '@/hooks/common/useGetTheme'
+import { colors } from '@/styles/appColors'
 import { StyleSheet, View } from 'react-native'
 
 interface ListItemCardBodyProps {
@@ -12,7 +13,7 @@ export function ListItemCardBody({ children }: ListItemCardBodyProps) {
     return (
         <View style={{
             ...styles.body,
-            backgroundColor: theme === 'dark' ? '#202020' : '#FFF'
+            backgroundColor: theme === 'dark' ? colors.cardBackground.dark : colors.cardBackground.light
             }}>
             {children}
         </View>

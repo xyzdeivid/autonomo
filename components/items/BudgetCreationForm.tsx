@@ -2,6 +2,7 @@ import { Text } from 'react-native'
 import { FormNameField } from '../common/FormNameField'
 import SubmitItemButton from '../common/SaveButton'
 import { colors } from '@/styles/appColors'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface BudgetCreationFormProps {
     name: string
@@ -14,6 +15,8 @@ interface BudgetCreationFormProps {
 
 export function BudgetCreationForm({ name, setName, submitBudget, labelBgColor, inputBgColor, inputBorderColor }: BudgetCreationFormProps) {
 
+    const theme = useGetTheme()
+
     return (
         <>
             <FormNameField
@@ -23,7 +26,7 @@ export function BudgetCreationForm({ name, setName, submitBudget, labelBgColor, 
                 inputBgColor={inputBgColor}
                 inputBorderColor={inputBorderColor}
             />
-            <Text style={{ marginBottom: 20, color: colors.items.max }}>
+            <Text style={{ marginBottom: 20, color: theme === 'dark' ? '#FFF' : colors.items.max }}>
                 O valor será definido ao registrar entrada.
             </Text>
             {

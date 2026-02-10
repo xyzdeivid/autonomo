@@ -3,6 +3,7 @@ import CardWhichProductToChoose from './CardWhichProductToChoose'
 import { useEffect, useRef, useState } from 'react'
 import { colors } from '@/styles/appColors'
 import { ProductCategoryButton } from './ProductCategoryButton'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 const { height } = Dimensions.get('window')
 
@@ -13,6 +14,8 @@ interface ItemsCategoriesFormProps {
 }
 
 export function ItemCategoryCard({ setShowItemCategoryCard, setCategory, setShowAddItemForm }: ItemsCategoriesFormProps) {
+
+    const theme = useGetTheme()
 
     const slideAnim = useRef(new Animated.Value(height)).current
     const fadeAnim = useRef(new Animated.Value(0)).current
@@ -56,11 +59,17 @@ export function ItemCategoryCard({ setShowItemCategoryCard, setCategory, setShow
                 ]}
             >
                 <TouchableWithoutFeedback onPress={() => closeForm(false)}>
-                    <Animated.View style={[styles.body, { transform: [{ translateX: slideAnim }] }]}>
-                        <Text style={styles.title}>
+                    <Animated.View
+                        style={[
+                            styles.body,
+                            { backgroundColor: theme === 'dark' ? colors.cardBackground.dark : colors.cardBackground.light },
+                            { transform: [{ translateX: slideAnim }] }
+                        ]}
+                    >
+                        <Text style={{ ...styles.title, color: theme === 'dark' ? '#FFF' : colors.items.max }}>
                             Escolha a categoria do seu novo item de trabalho!
                         </Text>
-                        <View style={{ borderRadius: 10, overflow: 'hidden' }}>
+                        <View style={{ gap: 8 }}>
                             <ProductCategoryButton
                                 categoryName='Produto para venda.'
                                 categoryEx='Ex: Roupa, comida, eletrônico, etc.'
@@ -78,7 +87,7 @@ export function ItemCategoryCard({ setShowItemCategoryCard, setCategory, setShow
                             />
                         </View>
                         <View style={styles.helpContainer}>
-                            <Text>Precisa de ajuda para escolher?</Text>
+                            <Text style={{ color: theme === 'dark' ? '#FFF' : '#000' }}>Precisa de ajuda para escolher?</Text>
                             <Pressable
                                 style={{
                                     backgroundColor: colors.items.max,
@@ -117,7 +126,6 @@ const styles = StyleSheet.create({
     },
 
     body: {
-        backgroundColor: '#FFF',
         borderRadius: 10,
         padding: 16,
         margin: 20
@@ -126,7 +134,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         marginBottom: 16,
-        color: colors.items.max,
         fontWeight: '500',
         textAlign: 'center'
     },

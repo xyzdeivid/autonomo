@@ -38,7 +38,7 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
     const [valueChoice, setValueChoice] = useState('total')
 
     const labelBgColor = colors.outflows.midMax
-    const inputBgColor = theme === 'dark' ? colors.outflows.midMin : colors.outflows.min
+    const inputBgColor = theme === 'dark' ? colors.cardBackground.dark : colors.outflows.min
     const inputBorderColor = colors.outflows.midMin
 
     const addOutflow = useAddOutflow().addOutflow

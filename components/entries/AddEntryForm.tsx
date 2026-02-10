@@ -35,7 +35,7 @@ export default function AddEntryForm({ setAddSchedulingForm }: AddSchedulingForm
     const [costumerName, setCustomerName] = useState('')
 
     const labelBgColor = colors.entries.midMax
-    const inputBgColor = theme === 'dark' ? colors.entries.midMin : colors.entries.min
+    const inputBgColor = theme === 'dark' ? colors.cardBackground.dark : colors.entries.min
     const inputBorderColor = colors.entries.midMin
 
     const addEntry = useAddEntry().addEntry

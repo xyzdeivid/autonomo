@@ -94,9 +94,9 @@ export function MonthlyFinanceChart() {
                     })}
                 </View>
                 <View style={styles.labelsContainer}>
-                    {revenue > 0 && <Text style={styles.label}>Receita</Text>}
-                    {expenses > 0 && <Text style={styles.label}>Despesa</Text>}
-                    {profit > 0 && <Text style={styles.label}>Saldo</Text>}
+                    {revenue > 0 && <Text style={{ ...styles.label, color: theme === 'dark' ? '#FFF' : '#000' }}>Receita</Text>}
+                    {expenses > 0 && <Text style={{ ...styles.label, color: theme === 'dark' ? '#FFF' : '#000' }}>Despesa</Text>}
+                    {profit > 0 && <Text style={{ ...styles.label, color: theme === 'dark' ? '#FFF' : '#000' }}>Saldo</Text>}
                 </View>
             </Animated.View>
         </View>

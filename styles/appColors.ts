@@ -39,7 +39,7 @@ export const colors = {
 
     cardBackground: {
         dark: '#303030',
-        light: '#EBEBEB'
+        light: '#F8F8F8'
     },
 
     cardText: {

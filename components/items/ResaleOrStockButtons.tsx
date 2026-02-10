@@ -5,14 +5,12 @@ interface ResaleOrStockButtonsProps {
     setResale: React.Dispatch<React.SetStateAction<boolean>>
     setStock: React.Dispatch<React.SetStateAction<boolean>>
     setAmount: React.Dispatch<React.SetStateAction<number>>
-    setForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function ResaleOrStockButtons({
     setResale,
     setStep,
-    setStock,
-    setForm
+    setStock
 }: ResaleOrStockButtonsProps) {
 
     return (

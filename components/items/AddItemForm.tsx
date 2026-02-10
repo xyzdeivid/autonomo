@@ -15,6 +15,7 @@ import NoStockCreationForm from './NoStockCreationForm'
 import { colors } from '@/styles/appColors'
 import { Alert } from 'react-native'
 import { getErrorMessage } from '@/utils/common'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface AddServiceFormProps {
     categorySelected: string
@@ -25,6 +26,7 @@ interface AddServiceFormProps {
 
 export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShowAddItemForm, setCategory }: AddServiceFormProps) {
 
+    const theme = useGetTheme()
     const [name, setName] = useState('')
     const [value, setValue] = useState(0)
     const [amount, setAmount] = useState(0)
@@ -37,7 +39,7 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
     const [step, setStep] = useState(0)
 
     const labelBgColor = colors.items.midMax
-    const inputBgColor = colors.items.min
+    const inputBgColor = theme === 'dark' ? colors.cardBackground.dark : colors.items.min
     const inputBorderColor = colors.items.midMin
 
     const addItem = useAddItem().addItem
@@ -125,7 +127,6 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
                             setResale={setResale}
                             setStock={setStock}
                             setAmount={setAmount}
-                            setForm={setShowAddItemForm}
                         />
                     )
                 }

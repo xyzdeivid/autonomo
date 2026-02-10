@@ -6,6 +6,7 @@ import {
     StyleSheet,
     ScrollView
 } from 'react-native'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface InsightSelectionButtonsProps {
     insightToShow: string
@@ -16,6 +17,8 @@ export function InsightSelectionButtons({
     insightToShow,
     setInsightToShow
 }: InsightSelectionButtonsProps) {
+
+    const theme = useGetTheme()
 
     const scrollRef = useRef<ScrollView>(null)
 
@@ -46,7 +49,10 @@ export function InsightSelectionButtons({
             ref={scrollRef}
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.container}
+            contentContainerStyle={{
+                ...styles.container,
+                borderBottomColor: theme === 'dark' ? colors.cardBackground.dark : '#0000001A'
+            }}
         >
             <TouchableOpacity
                 style={{
@@ -135,8 +141,7 @@ const styles = StyleSheet.create({
         gap: 8,
         paddingHorizontal: 6,
         paddingVertical: 12,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#0000001A'
+        borderBottomWidth: StyleSheet.hairlineWidth
     },
 
     button: {
