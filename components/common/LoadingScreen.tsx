@@ -1,10 +1,14 @@
 import { Image, StyleSheet, View } from 'react-native'
 import icon from '@/assets/images/header-icon.png'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
+import { colors } from '@/styles/appColors'
 
 export default function LoadingScreen() {
 
+    const theme = useGetTheme()
+
     return (
-        <View style={styles.container}>
+        <View style={{ ...styles.container, backgroundColor: theme === 'dark' ? colors.cardBackground.dark : colors.cardBackground.light }}>
             <Image source={icon} style={{ width: 64, height: 64 }} />
         </View>
     )
@@ -13,10 +17,8 @@ export default function LoadingScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFF',
         width: '100%',
         height: '100%',
-        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1000,
