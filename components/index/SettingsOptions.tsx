@@ -4,7 +4,7 @@ import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { useGetThemeText } from '@/hooks/index/useGetThemeText'
 import { colors } from '@/styles/appColors'
 import { getMonthName } from '@/utils/common'
-import { FontAwesome5, Fontisto } from '@expo/vector-icons'
+import { FontAwesome5 } from '@expo/vector-icons'
 import { useContext } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
@@ -43,16 +43,6 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
             />,
             onPress: () => setShowThemeOptionsList(true),
             text: themeText
-        },
-        {
-            label: 'Lembrete',
-            icon: <Fontisto
-                name='bell-alt'
-                size={12}
-                color={theme === 'dark' ? colors.cardText.dark : colors.cardText.light}
-            />,
-            onPress: () => { /* Lógica para abrir opções de lembrete */ },
-            text: 'Nenhum'
         }
     ]
 
