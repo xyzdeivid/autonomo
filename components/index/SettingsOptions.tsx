@@ -1,5 +1,6 @@
 import { months } from '@/constants/common'
 import { DocsContext } from '@/context/DocsContext'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { useGetThemeText } from '@/hooks/index/useGetThemeText'
 import { colors } from '@/styles/appColors'
 import { getMonthName } from '@/utils/common'
@@ -14,6 +15,8 @@ interface SettingsOptionsProps {
 
 export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThemeOptionsList }: SettingsOptionsProps) {
 
+    const theme = useGetTheme()
+
     const appDocs = useContext(DocsContext)
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
@@ -26,7 +29,7 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
             icon: <FontAwesome5
                 name='calendar-day'
                 size={12}
-                color={colors.cardText.dark}
+                color={theme === 'dark' ? colors.cardText.dark : colors.cardText.light}
             />,
             onPress: () => setShowAvailableMonthsOptionsList(true),
             text: `${getMonthName(months, selectedMonth)}/${currentYear}`
@@ -36,7 +39,7 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
             icon: <FontAwesome5
                 name='paint-brush'
                 size={12}
-                color={colors.cardText.dark}
+                color={theme === 'dark' ? colors.cardText.dark : colors.cardText.light}
             />,
             onPress: () => setShowThemeOptionsList(true),
             text: themeText
@@ -46,7 +49,7 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
             icon: <Fontisto
                 name='bell-alt'
                 size={12}
-                color={colors.cardText.dark}
+                color={theme === 'dark' ? colors.cardText.dark : colors.cardText.light}
             />,
             onPress: () => { /* Lógica para abrir opções de lembrete */ },
             text: 'Nenhum'
@@ -66,12 +69,12 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
                         <View
                             style={{
                                 ...styles.label,
-                                backgroundColor: colors.cardBackground.dark
+                                backgroundColor: theme === 'dark' ? colors.cardBackground.dark : '#A2A2A2'
                             }}
                         >
                             {option.icon}
                             <Text
-                                style={{ color: colors.cardText.dark }}
+                                style={{ color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}
                             >
                                 {option.label}
                             </Text>
@@ -83,7 +86,7 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
                                 <Text
                                     style={{
                                         textAlign: 'center',
-                                        color: colors.cardText.dark
+                                        color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light
                                     }}
                                 >
                                     {option.text}
@@ -110,15 +113,11 @@ const styles = StyleSheet.create({
         width: 100,
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
-        borderBottomWidth: 1,
-        borderBottomColor: '#FFFFFF80'
+        gap: 8
     },
 
     button: {
         width: 120,
-        borderBottomWidth: 1,
-        borderBottomColor: '#FFFFFF80',
         padding: 8
     }
 

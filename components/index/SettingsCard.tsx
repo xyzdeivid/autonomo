@@ -3,11 +3,14 @@ import { SettingsOptions } from './SettingsOptions'
 import { useEffect, useRef, useState } from 'react'
 import { AvailableMonthsOptionsList } from './AvailableMonthsOptionsList'
 import { ThemeOptionsList } from './ThemeOptionsList'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 const { height } = Dimensions.get('window')
 
 export function SettingsCard({ setShowSettingsCard }:
     { setShowSettingsCard: React.Dispatch<React.SetStateAction<boolean>> }) {
+
+    const theme = useGetTheme()
 
     const slideAnim = useRef(new Animated.Value(height)).current
 
@@ -30,6 +33,7 @@ export function SettingsCard({ setShowSettingsCard }:
                 <Animated.View
                     style={{
                         ...styles.overlay,
+                        backgroundColor: theme === 'dark' ? '#4E4E4E' : '#cbcbcb',
                         transform: [{ translateY: slideAnim }]
                     }}>
                     <Pressable onPress={() => { }}>
@@ -71,7 +75,6 @@ const styles = StyleSheet.create({
     },
 
     overlay: {
-        backgroundColor: '#4E4E4E',
         borderTopRightRadius: 8
     }
 
