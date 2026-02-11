@@ -25,20 +25,23 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
 
             try {
 
-                const storedTheme = await AsyncStorage.getItem('theme')
+                let storedTheme = await AsyncStorage.getItem('theme')
+
+                if (typeof storedTheme !== 'string'
+                    && typeof colorScheme === 'string') {
+
+                    await AsyncStorage.setItem('theme', 'system')
+                    storedTheme = 'system'
+
+                }
 
                 if (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system') {
 
+                    let initialTheme = storedTheme === 'system' ? colorScheme : storedTheme
+
                     setTheme(storedTheme)
-                    setStatusBarBackgroundColor(storedTheme === 'dark' ? '#000000' : '#FFFFFF')
-                    setStatusBarStyle(storedTheme === 'dark' ? 'light' : 'dark')
-
-                }
-                
-                if (storedTheme === 'system' && colorScheme != null) {
-
-                    setStatusBarBackgroundColor(colorScheme === 'dark' ? '#000000' : '#FFFFFF')
-                    setStatusBarStyle(colorScheme === 'dark' ? 'light' : 'dark')
+                    setStatusBarBackgroundColor(initialTheme === 'dark' ? '#000000' : '#FFFFFF')
+                    setStatusBarStyle(initialTheme === 'dark' ? 'light' : 'dark')
 
                 }
 

@@ -12,9 +12,7 @@ export default function Layout() {
             tabBar={(props) => <CustomTabBar {...props} />}
             screenOptions={() => ({
                 headerStyle: {
-                    backgroundColor: theme === 'dark' ? '#000' : '#FFF',
-                    borderBottomColor: theme === 'dark' ? '#303030' : 'transparent',
-                    borderBottomWidth: StyleSheet.hairlineWidth
+                    backgroundColor: theme === 'dark' ? '#000' : '#FFF'
                 },
                 headerTitle: () => (
                     <View style={styles.logoContainer}>
