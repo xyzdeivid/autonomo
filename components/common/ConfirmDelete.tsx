@@ -1,3 +1,5 @@
+import { useGetTheme } from '@/hooks/common/useGetTheme'
+import { colors } from '@/styles/appColors'
 import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface ConfirmDeleteProps {
@@ -8,16 +10,18 @@ interface ConfirmDeleteProps {
 
 export default function ConfirmDelete({ name, deleteFunction, setConfirmDelete }: ConfirmDeleteProps) {
 
+    const theme = useGetTheme()
+
     return (
         <View style={styles.container}>
-            <View style={styles.card}>
-                <Text style={styles.text}>Tem certeza que deseja excluir {name}?</Text>
+            <View style={{ ...styles.card, backgroundColor: theme === 'dark' ? colors.cardBackground.dark : colors.cardBackground.light }}>
+                <Text style={{ ...styles.text, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>Tem certeza que deseja excluir {name}?</Text>
                 <View style={styles.buttonsContainer}>
                     <Pressable
                         style={styles.cancelButton}
                         onPress={() => setConfirmDelete(false)}
                     >
-                        <Text style={{ color: 'darkred' }}>Cancelar</Text>
+                        <Text style={{ color: 'red' }}>Cancelar</Text>
                     </Pressable>
                     <Button
                         color='darkred'
@@ -42,13 +46,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     card: {
-        backgroundColor: 'white',
         padding: 16,
         borderRadius: 8,
         elevation: 4
     },
     text: {
-        backgroundColor: '#E0E0E0',
         fontWeight: 'bold',
         alignSelf: 'flex-start',
         paddingVertical: 4,

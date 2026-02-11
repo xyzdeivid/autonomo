@@ -1,6 +1,8 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
 import { OptionsListContainer } from './OptionsListContainer'
 import { useSetTheme } from '@/hooks/index/useSetTheme'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
+import { colors } from '@/styles/appColors'
 
 interface ThemeOptionsListProps {
     setShowThemeOptionsList: React.Dispatch<React.SetStateAction<boolean>>
@@ -8,6 +10,8 @@ interface ThemeOptionsListProps {
 }
 
 export function ThemeOptionsList({ setShowThemeOptionsList, setShowSettingsCard }: ThemeOptionsListProps) {
+
+    const theme = useGetTheme()
 
     const setTheme = useSetTheme().setTheme
 
@@ -24,24 +28,24 @@ export function ThemeOptionsList({ setShowThemeOptionsList, setShowSettingsCard 
             }}
         >
             <Pressable
-                style={styles.overlay}
+                style={{ ...styles.overlay, backgroundColor: theme === 'dark' ? colors.cardBackground.dark : colors.cardBackground.light }}
                 onPress={() => { }}
             >
                 <Pressable
-                    style={{ ...styles.button, borderBottomWidth: StyleSheet.hairlineWidth }}
+                    style={styles.button}
                     onPress={() => {
                         onThemeOptionPress('system')
                     }}
                 >
-                    <Text>Sistema</Text>
+                    <Text style={{ color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>Sistema</Text>
                 </Pressable>
                 <Pressable
-                    style={{ ...styles.button, borderBottomWidth: StyleSheet.hairlineWidth }}
+                    style={styles.button}
                     onPress={() => {
                         onThemeOptionPress('light')
                     }}
                 >
-                    <Text>Claro</Text>
+                    <Text style={{ color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>Claro</Text>
                 </Pressable>
                 <Pressable
                     style={styles.button}
@@ -50,7 +54,7 @@ export function ThemeOptionsList({ setShowThemeOptionsList, setShowSettingsCard 
 
                     }}
                 >
-                    <Text>Escuro</Text>
+                    <Text style={{ color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>Escuro</Text>
                 </Pressable>
             </Pressable>
         </OptionsListContainer>
@@ -62,14 +66,12 @@ const styles = StyleSheet.create({
 
     overlay: {
         width: 200,
-        backgroundColor: '#FFF',
         borderRadius: 8,
     },
 
     button: {
         padding: 12,
-        alignItems: 'center',
-        borderBottomColor: '#00000040'
+        alignItems: 'center'
     }
 
 })
