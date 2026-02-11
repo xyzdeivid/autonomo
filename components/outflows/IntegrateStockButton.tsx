@@ -14,12 +14,12 @@ export default function IntegrateStockButton({ setStockIntegrate }: IntegrateSto
     const [active, setActive] = useState(false)
 
     return (
-        <View style={{ 
+        <View style={{
             marginBottom: 20,
             padding: theme === 'dark' ? 8 : 0,
             backgroundColor: theme === 'dark' ? colors.outflows.midMin : 'transparent',
             borderRadius: 4
-             }}>
+        }}>
             <View style={styles.container}>
                 <Text style={{
                     ...styles.buttonText,
@@ -29,7 +29,7 @@ export default function IntegrateStockButton({ setStockIntegrate }: IntegrateSto
                     style={{
                         ...styles.box,
                         borderColor: theme === 'dark' ? '#FFF' : colors.outflows.max,
-                        backgroundColor: active ? colors.outflows.max : 'transparent'
+                        backgroundColor: active ? theme === 'dark' ? '#FFF' : colors.outflows.max : 'transparent'
                     }}
                     onPress={() => {
                         setActive(!active)
@@ -49,11 +49,12 @@ export default function IntegrateStockButton({ setStockIntegrate }: IntegrateSto
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     box: {
-        width: 20,
-        height: 20,
+        width: 25,
+        height: 25,
         borderWidth: 1,
         marginStart: 4,
         borderRadius: 5

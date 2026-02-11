@@ -5,18 +5,15 @@ import { useGetTheme } from '@/hooks/common/useGetTheme'
 interface FormTitleProps {
     text: string
     onCloseFormButtonPress: () => void
-    textColor?: string
+    textColor: string
 }
 
-export default function FormTitle({ text, onCloseFormButtonPress, textColor = '#000' }: FormTitleProps) {
+export default function FormTitle({ text, onCloseFormButtonPress, textColor }: FormTitleProps) {
 
     const theme = useGetTheme()
 
-    const borderColor = textColor.startsWith('#') ? `${textColor}26` : '#00000015'
-    const iconColor = textColor.startsWith('#') ? `${textColor}80` : textColor
-
     return (
-        <View style={[styles.container, { borderBottomColor: borderColor }]}>
+        <View style={styles.container}>
             <View style={styles.topRow}>
                 <Text
                     numberOfLines={1}
@@ -27,7 +24,7 @@ export default function FormTitle({ text, onCloseFormButtonPress, textColor = '#
 
                 <CloseFormButton
                     onPress={onCloseFormButtonPress}
-                    color={iconColor}
+                    color={textColor}
                 />
             </View>
         </View>
@@ -38,9 +35,7 @@ const styles = StyleSheet.create({
 
     container: {
         width: '100%',
-        marginBottom: 24,
-        paddingBottom: 12, 
-        borderBottomWidth: 2
+        marginBottom: 24
     },
 
     topRow: {

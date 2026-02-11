@@ -1,6 +1,6 @@
 import { colors } from '@/styles/appColors'
 import { useEffect, useRef } from 'react'
-import { Animated, Dimensions, Pressable, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Animated, Dimensions, Pressable, StyleSheet, Text } from 'react-native'
 
 const { height } = Dimensions.get('window')
 
@@ -34,10 +34,12 @@ export function EntryOrOutflowOptions({ setShowEntryOrOutflowOptions, setShowAdd
                     styles.body,
                     { transform: [{ translateY: slideAnim }] }
                 ]}>
-                <TouchableOpacity
-                    style={[
+                <Pressable
+                    style={({ pressed }) => [
                         styles.button,
-                        { backgroundColor: colors.entries.midMax }
+                        {
+                            backgroundColor: pressed ? colors.entries.max : colors.entries.midMax
+                        }
                     ]}
                     onPress={() => {
                         setShowAddEntryForm()
@@ -45,18 +47,21 @@ export function EntryOrOutflowOptions({ setShowEntryOrOutflowOptions, setShowAdd
                     }}
                 >
                     <Text style={styles.buttonText}>Nova Receita</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[
-                    styles.button,
-                    { backgroundColor: colors.outflows.midMax }
-                ]}
-                onPress={() => {
+                </Pressable>
+                <Pressable
+                    style={({ pressed }) => [
+                        styles.button,
+                        {
+                            backgroundColor: pressed ? colors.outflows.max : colors.outflows.midMax
+                        }
+                    ]}
+                    onPress={() => {
                         setShowAddOutflowForm()
                         setShowEntryOrOutflowOptions(false)
                     }}
                 >
                     <Text style={styles.buttonText}>Nova Despesa</Text>
-                </TouchableOpacity>
+                </Pressable>
             </Animated.View>
         </Pressable>
     )

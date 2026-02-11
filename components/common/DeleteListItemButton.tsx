@@ -11,16 +11,13 @@ export function DeleteListItemButton({ onPress }: DeleteListItemButtonProps) {
     const theme = useGetTheme()
 
     return (
-        <Pressable 
-        onPress={onPress} 
-        style={{
-            ...styles.container,
-            backgroundColor: theme === 'dark' ? '#FFF': 'transparent'
-        }}
+        <Pressable
+            onPress={onPress}
+            style={styles.container}
         >
             <View style={styles.button}>
-                <FontAwesome6 name='trash' color='darkred' size={16}/>
-                <Text style={styles.text}>Excluir</Text>
+                <FontAwesome6 name='trash' color={theme === 'dark' ? 'red' : 'darkred'} size={16} />
+                <Text style={{ ...styles.text, color: theme === 'dark' ? 'red' : 'darkred' }}>Excluir</Text>
             </View>
         </Pressable>
     )
@@ -42,7 +39,6 @@ const styles = StyleSheet.create({
 
     text: {
         marginStart: 4,
-        color: 'darkred',
         fontWeight: '600'
     }
 

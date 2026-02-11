@@ -30,6 +30,7 @@ export function FormNameField({ setName, label, labelBgColor, inputBgColor }: Fo
                         color: theme === 'dark' ? '#FFF' : '#000',
                         backgroundColor: inputBgColor
                     }}
+                    underlineColorAndroid='transparent'
                     onChangeText={text => setName(text.trim())}
                 />
         </FormFieldContainer>
