@@ -85,13 +85,10 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        padding: 8,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#FFF'
+        padding: 12
     },
 
     buttonText: {
-        fontSize: 16,
         color: '#FFF'
     }
 

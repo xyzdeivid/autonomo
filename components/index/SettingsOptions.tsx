@@ -25,7 +25,7 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
 
     const options = [
         {
-            label: 'Período',
+            label: 'Mês',
             icon: <FontAwesome5
                 name='calendar-day'
                 size={12}
@@ -52,19 +52,20 @@ export function SettingsOptions({ setShowAvailableMonthsOptionsList, setShowThem
                 return (
                     <View
                         key={index}
-                        style={{
-                            ...styles.buttonContainer
-                        }}
+                        style={styles.buttonContainer}
                     >
                         <View
                             style={{
                                 ...styles.label,
-                                backgroundColor: theme === 'dark' ? colors.cardBackground.dark : '#A2A2A2'
+                                backgroundColor: theme === 'dark' ? colors.cardBackground.dark : '#c2c2c2'
                             }}
                         >
                             {option.icon}
                             <Text
-                                style={{ color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}
+                                style={{ 
+                                    color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light ,
+                                    fontWeight: '500'
+                                }}
                             >
                                 {option.label}
                             </Text>
@@ -99,16 +100,17 @@ const styles = StyleSheet.create({
     },
 
     label: {
-        padding: 8,
-        width: 100,
+        padding: 12,
+        width: 80,
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8
+        gap: 8,
+        borderRightWidth: StyleSheet.hairlineWidth,
+        borderRightColor: '#FFF'
     },
 
     button: {
-        width: 120,
-        padding: 8
+        width: 120
     }
 
 })
