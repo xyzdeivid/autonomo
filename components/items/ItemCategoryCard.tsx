@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable, Dimensions, Animated, TouchableWithoutFeedback } from 'react-native'
-import CardWhichProductToChoose from './CardWhichProductToChoose'
+import { WhichProductToChooseHelpCard } from './WhichProductToChooseHelpCard'
 import { useEffect, useRef, useState } from 'react'
 import { colors } from '@/styles/appColors'
 import { ProductCategoryButton } from './ProductCategoryButton'
@@ -103,7 +103,7 @@ export function ItemCategoryCard({ setShowItemCategoryCard, setCategory, setShow
                         </View>
                         {
                             showHelpCard && (
-                                <CardWhichProductToChoose setShowHelpCard={setShowHelpCard} />
+                                <WhichProductToChooseHelpCard setShowHelpCard={setShowHelpCard} />
                             )
                         }
                     </Animated.View>
