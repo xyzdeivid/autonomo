@@ -21,6 +21,7 @@ import { SettingsButton } from '@/components/index/SettingsButton'
 import { useShowAnyInfoWarning } from '@/hooks/index/useShowAnyInfoWarning'
 import { InitialLoading } from '@/components/index/InitialLoading'
 import { useGetTheme } from '@/hooks/common/useGetTheme'
+import { FirstTimeCard } from '@/components/index/FirstTimeCard'
 
 export default function Info() {
 
@@ -34,6 +35,7 @@ export default function Info() {
     const [showAddOutflowForm, setShowAddOutflowForm] = useState(false)
 
     const docsLoaded = appDocs.docsLoaded
+    const [firstTime] = appDocs.firstTime
 
     function areThereAnyItemsAvailable(items: Item[]): boolean {
         if (getServices(items)[0]) return true
@@ -42,58 +44,60 @@ export default function Info() {
 
     const showAnyInfoWarning = useShowAnyInfoWarning()
 
-
     return (
-        <Container>
-            {!docsLoaded && (
-                <InitialLoading />
-            )}
-            {
-                showAnyInfoWarning
-                    ?
-                    <AnyInfoWarning
-                        text='informamos sobre seu balanço financeiro mensal. Porém, para isso, você precisa registrar suas receitas e despesas.'
-                        titleBgColor={colors.home.max}
-                        textBgColor={theme === 'dark' ? colors.home.mid : colors.home.min}
-                    /> :
-                    <>
-                        <Insight
+        <>
+            {firstTime && <FirstTimeCard />}
+            <Container>
+                {!docsLoaded && (
+                    <InitialLoading />
+                )}
+                {
+                    showAnyInfoWarning
+                        ?
+                        <AnyInfoWarning
+                            text='informamos sobre seu balanço financeiro mensal. Porém, para isso, você precisa registrar suas receitas e despesas.'
+                            titleBgColor={colors.home.max}
+                            textBgColor={theme === 'dark' ? colors.home.mid : colors.home.min}
+                        /> :
+                        <>
+                            <Insight
+                            />
+                            <AddItemButton
+                                iconColor={'#FFF'}
+                                bgColor={colors.home.max}
+                                onPress={() => setShowEntryOrOutflowOptions(true)}
+                            />
+                        </>
+                }
+                <SettingsButton />
+                {
+                    showEntryOrOutflowOptions && (
+                        <EntryOrOutflowOptions
+                            setShowEntryOrOutflowOptions={setShowEntryOrOutflowOptions}
+                            setShowAddEntryForm={() => {
+                                const anyItemsAvailable = areThereAnyItemsAvailable(items)
+                                if (anyItemsAvailable) {
+                                    setShowAddEntryForm(true)
+                                } else {
+                                    Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
+                                }
+                            }}
+                            setShowAddOutflowForm={() => setShowAddOutflowForm(true)}
                         />
-                        <AddItemButton
-                            iconColor={'#FFF'}
-                            bgColor={colors.home.max}
-                            onPress={() => setShowEntryOrOutflowOptions(true)}
-                        />
-                    </>
-            }
-            <SettingsButton />
-            {
-                showEntryOrOutflowOptions && (
-                    <EntryOrOutflowOptions
-                        setShowEntryOrOutflowOptions={setShowEntryOrOutflowOptions}
-                        setShowAddEntryForm={() => {
-                            const anyItemsAvailable = areThereAnyItemsAvailable(items)
-                            if (anyItemsAvailable) {
-                                setShowAddEntryForm(true)
-                            } else {
-                                Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
-                            }
-                        }}
-                        setShowAddOutflowForm={() => setShowAddOutflowForm(true)}
-                    />
-                )
-            }
-            {
-                showAddEntryForm && (
-                    <AddEntryForm setAddSchedulingForm={setShowAddEntryForm} />
-                )
-            }
-            {
-                showAddOutflowForm && (
-                    <AddOutflowForm setAddExpenseForm={setShowAddOutflowForm} />
-                )
-            }
-        </Container>
+                    )
+                }
+                {
+                    showAddEntryForm && (
+                        <AddEntryForm setAddSchedulingForm={setShowAddEntryForm} />
+                    )
+                }
+                {
+                    showAddOutflowForm && (
+                        <AddOutflowForm setAddExpenseForm={setShowAddOutflowForm} />
+                    )
+                }
+            </Container>
+        </>
     )
 
 }

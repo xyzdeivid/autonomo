@@ -2,14 +2,10 @@ import { colors } from '@/styles/appColors'
 import { Modal, Pressable, Text, View, StyleSheet } from 'react-native'
 import { navigate } from 'expo-router/build/global-state/routing'
 import { useGetTheme } from '@/hooks/common/useGetTheme'
-import { useContext } from 'react'
-import { DocsContext } from '@/context/DocsContext'
 
-export function FirstTimeCard() {
+export function FirstTimeCard({ setShowFirstTimeCard }: { setShowFirstTimeCard: React.Dispatch<React.SetStateAction<boolean>> }) {
 
     const theme = useGetTheme()
-
-    const [, setFirstTime] = useContext(DocsContext).firstTime
 
     return (
         <Modal
@@ -52,7 +48,7 @@ export function FirstTimeCard() {
                                 pressed && styles.buttonPressed
                             ]}
                             onPress={() => {
-                                setFirstTime(false)
+                                setShowFirstTimeCard(false)
                                 navigate('/items')
                             }}
                         >

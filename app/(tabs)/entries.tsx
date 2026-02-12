@@ -1,6 +1,5 @@
 // native functions
 import { useContext, useEffect, useState } from 'react'
-import { Alert } from 'react-native'
 
 // custom functions
 import { filterSchedulings } from '@/utils/common'
@@ -25,6 +24,7 @@ import AddItemButton from '@/components/common/AddItemButton'
 import { getServices } from '@/utils/schedulings'
 import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { FirstTimeCard } from '@/components/entries/FirstTimeCard'
+import { Alert } from 'react-native'
 
 export default function Schedulings() {
 
@@ -36,13 +36,13 @@ export default function Schedulings() {
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
-    const [firstTime] = appDocs.firstTime
 
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [selectedEntryForDeletion, setSelectedEntryForDeletion] = useState('')
     const entryForDeletion = entries.find(e => e._id === selectedEntryForDeletion)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
+    const [showFirstTimeCard, setShowFirstTimeCard] = useState(false)
 
     const deleteEntry = useDeleteEntry().deleteEntry
 
@@ -73,7 +73,7 @@ export default function Schedulings() {
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            {firstTime && <FirstTimeCard />}
+            {showFirstTimeCard && <FirstTimeCard setShowFirstTimeCard={setShowFirstTimeCard} />}
             <Container>
                 {
                     filterSchedulings(entries, selectedMonth, currentYear)[0]
@@ -90,7 +90,11 @@ export default function Schedulings() {
                                     if (itemsAvailable) {
                                         setAddSchedulingForm(true)
                                     } else {
-                                        Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
+                                        if (items.length === 0) {
+                                            setShowFirstTimeCard(true)
+                                        } else {
+                                            Alert.alert('App Autônomo', 'Nenhum produto com estoque disponível')
+                                        }
                                     }
                                 }}
                             />
@@ -105,7 +109,11 @@ export default function Schedulings() {
                                 if (itemsAvailable) {
                                     setAddSchedulingForm(true)
                                 } else {
-                                    Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
+                                    if (items.length === 0) {
+                                        setShowFirstTimeCard(true)
+                                    } else {
+                                        Alert.alert('App Autônomo', 'Nenhum produto com estoque disponível')
+                                    }
                                 }
                             }}
                         />

@@ -67,7 +67,7 @@ const DEFAULT_CONTEXT: TDocsContext = {
     selectedMonth: [0, () => { }],
     currentPage: ['', () => { }],
     docsLoaded: false,
-    firstTime: [true, () => {}]
+    firstTime: [false, () => { }]
 }
 
 export const DocsContext = createContext<TDocsContext>(DEFAULT_CONTEXT)
@@ -86,7 +86,39 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [selectedMonth, setSelectedMonth] = useState(0)
     const [currentPage, setCurrentPage] = useState('index')
     const [docsLoaded, setDocsLoaded] = useState(false)
-    const [firstTime, setFirstTime] = useState(true)
+    const [firstTime, setFirstTime] = useState(false)
+
+    const docs: TDocsContext = {
+        items: [items, setItems],
+        outflows: [outflows, setOutflows],
+        entries: [entries, setEntries],
+        currentYear: [currentYear, setCurrentYear],
+        selectedMonth: [selectedMonth, setSelectedMonth],
+        currentPage: [currentPage, setCurrentPage],
+        docsLoaded,
+        firstTime: [firstTime, setFirstTime]
+    }
+
+    const isFirstTime = async () => {
+
+        try {
+
+            const firstTime = await AsyncStorage.getItem('first-time')
+
+            if (typeof firstTime !== 'string') {
+                await AsyncStorage.setItem('first-time', '.')
+                if (items.length === 0) {
+                    setFirstTime(true)
+                }
+            }
+
+        } catch {
+
+            Alert.alert('Erro', 'Erro ao consultar primeiro acesso de usuário.')
+
+        }
+
+    }
 
     const getCurrentYear = () => {
 
@@ -99,49 +131,13 @@ export default function DocsProvider({ children }: DocsProviderProps) {
 
     }
 
-    const docs: TDocsContext = {
-        items: [items, setItems],
-        outflows: [outflows, setOutflows],
-        entries: [entries, setEntries],
-        currentYear: [currentYear, setCurrentYear],
-        selectedMonth: [selectedMonth, setSelectedMonth],
-        currentPage: [currentPage, setCurrentPage],
-        docsLoaded: docsLoaded,
-        firstTime: [firstTime, setFirstTime]
-    }
-
-    const isFirstTime = async (): Promise<boolean> => {
-
-        try {
-
-            const firstTime = await AsyncStorage.getItem('first-time')
-
-            if (typeof firstTime !== 'string') {
-                await AsyncStorage.setItem('first-time', '.')
-            }
-
-            return typeof firstTime !== 'string'
-
-        } catch {
-
-            Alert.alert('Erro', 'Erro ao verificar primeiro uso!')
-
-            return true
-
-        }
-
-    }
-
     const getAndSetItems = async () => {
 
         try {
 
-            const firstTime = await isFirstTime()
             const items = await getAllItems()
             const outflows = await getAllOutflows()
             const entries = await getAllEntries()
-
-            setFirstTime(firstTime)
             setEntries(entries)
             setItems(items)
             setOutflows(outflows)
@@ -167,6 +163,8 @@ export default function DocsProvider({ children }: DocsProviderProps) {
             await getAndSetItems()
 
             getCurrentYear()
+
+            await isFirstTime()
 
         }
 
