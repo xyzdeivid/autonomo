@@ -6,6 +6,7 @@ import { getAllOutflows } from '@/database/outflowRepositories'
 import { initDatabase } from '@/database/initDatabase'
 import { migrateData } from '@/storage/migrationDataFromAsyncStorage'
 import { Entry, Item, Outflow } from '@/types'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 type SetItems = React.Dispatch<React.SetStateAction<Item[]>>
 
@@ -55,6 +56,7 @@ interface TDocsContext {
     selectedMonth: CurrentMonthState
     currentPage: CurrentPageState
     docsLoaded: boolean
+    firstTime: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
 }
 
 const DEFAULT_CONTEXT: TDocsContext = {
@@ -64,7 +66,8 @@ const DEFAULT_CONTEXT: TDocsContext = {
     currentYear: ['', () => { }],
     selectedMonth: [0, () => { }],
     currentPage: ['', () => { }],
-    docsLoaded: false
+    docsLoaded: false,
+    firstTime: [true, () => {}]
 }
 
 export const DocsContext = createContext<TDocsContext>(DEFAULT_CONTEXT)
@@ -83,6 +86,7 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [selectedMonth, setSelectedMonth] = useState(0)
     const [currentPage, setCurrentPage] = useState('index')
     const [docsLoaded, setDocsLoaded] = useState(false)
+    const [firstTime, setFirstTime] = useState(true)
 
     const getCurrentYear = () => {
 
@@ -102,17 +106,42 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         currentYear: [currentYear, setCurrentYear],
         selectedMonth: [selectedMonth, setSelectedMonth],
         currentPage: [currentPage, setCurrentPage],
-        docsLoaded: docsLoaded
+        docsLoaded: docsLoaded,
+        firstTime: [firstTime, setFirstTime]
+    }
+
+    const isFirstTime = async (): Promise<boolean> => {
+
+        try {
+
+            const firstTime = await AsyncStorage.getItem('first-time')
+
+            if (typeof firstTime !== 'string') {
+                await AsyncStorage.setItem('first-time', '.')
+            }
+
+            return typeof firstTime !== 'string'
+
+        } catch {
+
+            Alert.alert('Erro', 'Erro ao verificar primeiro uso!')
+
+            return true
+
+        }
+
     }
 
     const getAndSetItems = async () => {
 
         try {
 
+            const firstTime = await isFirstTime()
             const items = await getAllItems()
             const outflows = await getAllOutflows()
             const entries = await getAllEntries()
 
+            setFirstTime(firstTime)
             setEntries(entries)
             setItems(items)
             setOutflows(outflows)

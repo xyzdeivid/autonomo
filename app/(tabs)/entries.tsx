@@ -24,6 +24,7 @@ import { colors } from '@/styles/appColors'
 import AddItemButton from '@/components/common/AddItemButton'
 import { getServices } from '@/utils/schedulings'
 import { useGetTheme } from '@/hooks/common/useGetTheme'
+import { FirstTimeCard } from '@/components/entries/FirstTimeCard'
 
 export default function Schedulings() {
 
@@ -35,6 +36,7 @@ export default function Schedulings() {
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
+    const [firstTime] = appDocs.firstTime
 
     const [addSchedulingForm, setAddSchedulingForm] = useState(false)
     const [selectedEntryForDeletion, setSelectedEntryForDeletion] = useState('')
@@ -71,6 +73,7 @@ export default function Schedulings() {
     return (
         <>
             {loadingScreen && <LoadingScreen />}
+            {firstTime && <FirstTimeCard />}
             <Container>
                 {
                     filterSchedulings(entries, selectedMonth, currentYear)[0]

@@ -98,7 +98,7 @@ export default function Items() {
                             text='listamos todos os seus produtos ou serviços.'
                             titleBgColor={colors.items.max}
                             textBgColor={theme === 'dark' ? colors.items.mid : colors.items.min}
-                            addDataButtonText='Adicionar Item'
+                            addDataButtonText='Adicionar Primeiro Item'
                             onAddDataButtonPress={() => setShowItemCategoryCard(true)}
                         />
                 }
