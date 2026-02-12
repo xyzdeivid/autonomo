@@ -3,7 +3,7 @@ import { Modal, Pressable, Text, View, StyleSheet } from 'react-native'
 import { navigate } from 'expo-router/build/global-state/routing'
 import { useGetTheme } from '@/hooks/common/useGetTheme'
 
-export function FirstTimeCard({ setShowFirstTimeCard }: { setShowFirstTimeCard: React.Dispatch<React.SetStateAction<boolean>> }) {
+export function NoItemAvailableCard({ setShowFirstTimeCard }: { setShowFirstTimeCard: React.Dispatch<React.SetStateAction<boolean>> }) {
 
     const theme = useGetTheme()
 

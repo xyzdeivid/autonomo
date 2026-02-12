@@ -9,44 +9,40 @@ import Container from '@/components/common/Container'
 import AnyInfoWarning from '@/components/common/AnyInfoWarning'
 
 import { colors } from '@/styles/appColors'
-import { Alert } from 'react-native'
 import AddItemButton from '@/components/common/AddItemButton'
 import { EntryOrOutflowOptions } from '@/components/index/EntryOrOutflowOptions'
 import AddEntryForm from '@/components/entries/AddEntryForm'
 import AddOutflowForm from '@/components/outflows/AddOutflowForm'
 import { Insight } from '@/components/index/Insight'
-import { getServices } from '@/utils/schedulings'
-import { Item } from '@/types'
 import { SettingsButton } from '@/components/index/SettingsButton'
 import { useShowAnyInfoWarning } from '@/hooks/index/useShowAnyInfoWarning'
 import { InitialLoading } from '@/components/index/InitialLoading'
 import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { FirstTimeCard } from '@/components/index/FirstTimeCard'
+import { NoItemAvailableCard } from '@/components/common/NoItemAvailableCard'
+import { useShowAddEntryForm } from '@/hooks/common/useShowAddEntryForm'
 
 export default function Info() {
 
     const theme = useGetTheme()
 
     const appDocs = useContext(DocsContext)
-    const [items] = appDocs.items
 
     const [showEntryOrOutflowOptions, setShowEntryOrOutflowOptions] = useState(false)
-    const [showAddEntryForm, setShowAddEntryForm] = useState(false)
+    const [showAddEntry, setShowAddEntry] = useState(false)
     const [showAddOutflowForm, setShowAddOutflowForm] = useState(false)
+    const [showNoItemAvailableCard, setShowNoItemAvailableCard] = useState(false)
 
     const docsLoaded = appDocs.docsLoaded
     const [firstTime] = appDocs.firstTime
 
-    function areThereAnyItemsAvailable(items: Item[]): boolean {
-        if (getServices(items)[0]) return true
-        return false
-    }
-
     const showAnyInfoWarning = useShowAnyInfoWarning()
+    const showAddEntryForm = useShowAddEntryForm().showAddEntryForm
 
     return (
         <>
             {firstTime && <FirstTimeCard />}
+            {showNoItemAvailableCard && <NoItemAvailableCard setShowFirstTimeCard={setShowNoItemAvailableCard} />}
             <Container>
                 {!docsLoaded && (
                     <InitialLoading />
@@ -74,21 +70,14 @@ export default function Info() {
                     showEntryOrOutflowOptions && (
                         <EntryOrOutflowOptions
                             setShowEntryOrOutflowOptions={setShowEntryOrOutflowOptions}
-                            setShowAddEntryForm={() => {
-                                const anyItemsAvailable = areThereAnyItemsAvailable(items)
-                                if (anyItemsAvailable) {
-                                    setShowAddEntryForm(true)
-                                } else {
-                                    Alert.alert('Erro', 'Não há nenhum produto ou serviço disponível.')
-                                }
-                            }}
+                            setShowAddEntryForm={() => showAddEntryForm(setShowAddEntry, setShowNoItemAvailableCard)}
                             setShowAddOutflowForm={() => setShowAddOutflowForm(true)}
                         />
                     )
                 }
                 {
-                    showAddEntryForm && (
-                        <AddEntryForm setAddSchedulingForm={setShowAddEntryForm} />
+                    showAddEntry && (
+                        <AddEntryForm setAddSchedulingForm={setShowAddEntry} />
                     )
                 }
                 {

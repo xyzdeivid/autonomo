@@ -17,14 +17,13 @@ import AddSchedulingForm from '@/components/entries/AddEntryForm'
 import SchedulingsList from '@/components/entries/EntriesList'
 import DeleteSchedulingForm from '@/components/entries/AboutEntryCard'
 
-import { Entry, Item } from '@/types'
+import { Entry } from '@/types'
 import useDeleteEntry from '@/hooks/entries/useDeleteEntry'
 import { colors } from '@/styles/appColors'
 import AddItemButton from '@/components/common/AddItemButton'
-import { getServices } from '@/utils/schedulings'
 import { useGetTheme } from '@/hooks/common/useGetTheme'
-import { FirstTimeCard } from '@/components/entries/FirstTimeCard'
-import { Alert } from 'react-native'
+import { NoItemAvailableCard } from '@/components/common/NoItemAvailableCard'
+import { useShowAddEntryForm } from '@/hooks/common/useShowAddEntryForm'
 
 export default function Schedulings() {
 
@@ -32,17 +31,16 @@ export default function Schedulings() {
 
     const appDocs = useContext(DocsContext)
     const [entries] = appDocs.entries
-    const [items] = appDocs.items
     const [selectedMonth] = appDocs.selectedMonth
     const [currentYear] = appDocs.currentYear
     const [currentPage] = appDocs.currentPage
 
-    const [addSchedulingForm, setAddSchedulingForm] = useState(false)
+    const [showAddEntry, setShowAddEntry] = useState(false)
     const [selectedEntryForDeletion, setSelectedEntryForDeletion] = useState('')
     const entryForDeletion = entries.find(e => e._id === selectedEntryForDeletion)
     const [deleteSchedulingForm, setDeleteSchedulingForm] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
-    const [showFirstTimeCard, setShowFirstTimeCard] = useState(false)
+    const [showNoItemAvailableCard, setShowNoItemAvailableCard] = useState(false)
 
     const deleteEntry = useDeleteEntry().deleteEntry
 
@@ -60,20 +58,17 @@ export default function Schedulings() {
 
     useEffect(() => {
         if (currentPage !== 'schedulings') {
-            setAddSchedulingForm(false)
+            setShowAddEntry(false)
             setDeleteSchedulingForm(false)
         }
     }, [currentPage])
 
-    function areThereAnyItemsAvailable(items: Item[]): boolean {
-        if (getServices(items)[0]) return true
-        return false
-    }
+    const showAddEntryForm = useShowAddEntryForm().showAddEntryForm
 
     return (
         <>
             {loadingScreen && <LoadingScreen />}
-            {showFirstTimeCard && <FirstTimeCard setShowFirstTimeCard={setShowFirstTimeCard} />}
+            {showNoItemAvailableCard && <NoItemAvailableCard setShowFirstTimeCard={setShowNoItemAvailableCard} />}
             <Container>
                 {
                     filterSchedulings(entries, selectedMonth, currentYear)[0]
@@ -85,18 +80,7 @@ export default function Schedulings() {
                             <AddItemButton
                                 iconColor={'#FFF'}
                                 bgColor={colors.entries.max}
-                                onPress={() => {
-                                    const itemsAvailable = areThereAnyItemsAvailable(items)
-                                    if (itemsAvailable) {
-                                        setAddSchedulingForm(true)
-                                    } else {
-                                        if (items.length === 0) {
-                                            setShowFirstTimeCard(true)
-                                        } else {
-                                            Alert.alert('App Autônomo', 'Nenhum produto com estoque disponível')
-                                        }
-                                    }
-                                }}
+                                onPress={() => showAddEntryForm(setShowAddEntry, setShowNoItemAvailableCard)}
                             />
                         </>
                         : <AnyInfoWarning
@@ -104,24 +88,13 @@ export default function Schedulings() {
                             titleBgColor={colors.entries.max}
                             textBgColor={theme === 'dark' ? colors.entries.mid : colors.entries.min}
                             addDataButtonText='Adicionar Receita'
-                            onAddDataButtonPress={() => {
-                                const itemsAvailable = areThereAnyItemsAvailable(items)
-                                if (itemsAvailable) {
-                                    setAddSchedulingForm(true)
-                                } else {
-                                    if (items.length === 0) {
-                                        setShowFirstTimeCard(true)
-                                    } else {
-                                        Alert.alert('App Autônomo', 'Nenhum produto com estoque disponível')
-                                    }
-                                }
-                            }}
+                            onAddDataButtonPress={() => showAddEntryForm(setShowAddEntry, setShowNoItemAvailableCard)}
                         />
                 }
                 {
-                    addSchedulingForm
+                    showAddEntry
                     && <AddSchedulingForm
-                        setAddSchedulingForm={setAddSchedulingForm}
+                        setAddSchedulingForm={setShowAddEntry}
                     />
                 }
                 {

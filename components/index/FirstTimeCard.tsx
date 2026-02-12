@@ -36,11 +36,11 @@ export function FirstTimeCard() {
                         <View style={styles.section}>
                             <Text style={{ ...styles.sectionTitle, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>Funcionalidades principais:</Text>
                             <View style={styles.featureList}>
-                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>📊 Balanço financeiro mensal</Text>
-                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>📅 Receita diária detalhada</Text>
-                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>💰 Faturamento por item</Text>
-                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>👤 Faturamento por cliente</Text>
-                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>📈 Volume de vendas</Text>
+                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>- Balanço financeiro mensal</Text>
+                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>- Receita diária</Text>
+                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>- Faturamento por item</Text>
+                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>- Faturamento por cliente</Text>
+                                <Text style={{ ...styles.featureItem, color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light }}>- Volume de vendas</Text>
                             </View>
                         </View>
                     </ScrollView>
