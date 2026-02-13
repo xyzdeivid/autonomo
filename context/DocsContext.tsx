@@ -99,17 +99,22 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         firstTime: [firstTime, setFirstTime]
     }
 
-    const isFirstTime = async () => {
+    const isFirstTime = async (items: Item[] | undefined) => {
 
         try {
 
             const firstTime = await AsyncStorage.getItem('first-time')
 
             if (typeof firstTime !== 'string') {
+
                 await AsyncStorage.setItem('first-time', '.')
-                if (items.length === 0) {
+
+                if (items?.length === 0) {
+
                     setFirstTime(true)
+
                 }
+
             }
 
         } catch {
@@ -143,6 +148,9 @@ export default function DocsProvider({ children }: DocsProviderProps) {
             setOutflows(outflows)
             setDocsLoaded(true)
 
+            // retornando para ser usado no isFirstTime
+            return items
+
         } catch {
 
             Alert.alert('DOCS CONTEXT ERROR', 'Failed to fetch items from the database.')
@@ -160,11 +168,11 @@ export default function DocsProvider({ children }: DocsProviderProps) {
             // Migrando dados de db antigos se necessário
             await migrateData()
 
-            await getAndSetItems()
+            const items = await getAndSetItems()
 
             getCurrentYear()
 
-            await isFirstTime()
+            await isFirstTime(items)
 
         }
 
