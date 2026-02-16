@@ -4,6 +4,7 @@ import { CancelEditButton } from './CancelEditButton'
 import { EditCardContainer } from './EditCardContainer'
 import { EditCardButtonsContainer } from './EditCardButtonsContainer'
 import { useState } from 'react'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface EditNameCardProps {
     visible: boolean
@@ -19,7 +20,17 @@ export function EditNameCard({
     onCancelButtonPress
 }: EditNameCardProps) {
 
+    const theme = useGetTheme()
+
     const [newName, setNewName] = useState('')
+
+    function ableToSave(): boolean {
+
+        if (newName && newName !== currentName) return true
+
+        return false
+
+    }
 
     return (
         <EditCardContainer
@@ -30,19 +41,20 @@ export function EditNameCard({
             <TextInput
                 defaultValue={currentName}
                 onChangeText={text => setNewName(text.trim())}
-                style={styles.input}
+                style={{
+                    ...styles.input,
+                    backgroundColor: theme === 'dark' ? '#1E1D1D' : '#E0E0E0',
+                    color: theme === 'dark' ? '#FFF' : '#000',
+                }}
             />
             <EditCardButtonsContainer>
                 <CancelEditButton
                     onCancelButtonPress={onCancelButtonPress}
                 />
-                {
-                    newName && newName !== currentName && (
-                        <ConfirmEditButton
-                            onPress={() => onConfirmButtonPress(newName)}
-                        />
-                    )
-                }
+                <ConfirmEditButton
+                    onPress={() => onConfirmButtonPress(newName)}
+                    ableToSave={ableToSave()}
+                />
             </EditCardButtonsContainer>
         </EditCardContainer>
     )
@@ -51,7 +63,6 @@ export function EditNameCard({
 const styles = StyleSheet.create({
 
     input: {
-        backgroundColor: '#E0E0E0',
         padding: 10,
         marginTop: 8,
         borderRadius: 4,

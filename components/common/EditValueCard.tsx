@@ -5,6 +5,7 @@ import { CancelEditButton } from './CancelEditButton'
 import { EditCardContainer } from './EditCardContainer'
 import { EditCardButtonsContainer } from './EditCardButtonsContainer'
 import { useState } from 'react'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 
 interface EditValueInputProps {
     visible: boolean
@@ -15,7 +16,17 @@ interface EditValueInputProps {
 
 export function EditValueCard({ visible, currentValue, onSuccessButtonPress, onCancelButtonPress }: EditValueInputProps) {
 
+    const theme = useGetTheme()
+
     const [newValue, setNewValue] = useState(0)
+
+    function ableToSave(): boolean {
+
+        if (newValue && newValue !== currentValue) return true
+
+        return false
+
+    }
 
     return (
         <EditCardContainer
@@ -31,7 +42,12 @@ export function EditValueCard({ visible, currentValue, onSuccessButtonPress, onC
                         groupSeparator: '.',
                         precision: 2
                     }}
-                    style={styles.editInput}
+                    style={{
+                        ...styles.editInput
+                        ,
+                        backgroundColor: theme === 'dark' ? '#1E1D1D' : '#E0E0E0',
+                        color: theme === 'dark' ? '#FFF' : '#000',
+                    }}
                     keyboardType='numeric'
                     onChangeText={text => {
                         // Removendo pontos e vírgulas do valor
@@ -46,11 +62,10 @@ export function EditValueCard({ visible, currentValue, onSuccessButtonPress, onC
                     <CancelEditButton
                         onCancelButtonPress={onCancelButtonPress}
                     />
-                    {newValue && newValue !== currentValue ? (
-                        <ConfirmEditButton
-                            onPress={() => onSuccessButtonPress(newValue)}
-                        />
-                    ): null}
+                    <ConfirmEditButton
+                        onPress={() => onSuccessButtonPress(newValue)}
+                        ableToSave={ableToSave()}
+                    />
                 </EditCardButtonsContainer>
             </View>
         </EditCardContainer>
