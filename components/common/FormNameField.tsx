@@ -30,8 +30,8 @@ export function FormNameField({ setName, label, labelBgColor, inputBgColor }: Fo
                         color: theme === 'dark' ? '#FFF' : '#000',
                         backgroundColor: inputBgColor
                     }}
-                    underlineColorAndroid='transparent'
                     onChangeText={text => setName(text.trim())}
+                    underlineColorAndroid='transparent'
                 />
         </FormFieldContainer>
     )
@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
         height: 40,
         textAlign: 'center',
         borderBottomLeftRadius: 6,
-        borderBottomRightRadius: 6
+        borderBottomRightRadius: 6,
+        borderWidth: 0
     }
 
 })
