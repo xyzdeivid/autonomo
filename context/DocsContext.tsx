@@ -107,11 +107,13 @@ export default function DocsProvider({ children }: DocsProviderProps) {
 
             if (typeof firstTime !== 'string') {
 
-                await AsyncStorage.setItem('first-time', '.')
-
                 if (items?.length === 0) {
 
                     setFirstTime(true)
+
+                } else {
+
+                    await AsyncStorage.setItem('first-time', '.')
 
                 }
 
