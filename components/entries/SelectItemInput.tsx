@@ -1,6 +1,6 @@
 import { Item } from '@/types/index'
 import { Picker } from '@react-native-picker/picker'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import { FormFieldContainer } from '../common/FormFieldContainer'
 import { colors } from '@/styles/appColors'
 import { useGetTheme } from '@/hooks/common/useGetTheme'
@@ -20,7 +20,10 @@ export default function SelectServiceInput({ service, setService, services, amou
         <FormFieldContainer>
             <View style={{ borderRadius: 6, overflow: 'hidden' }}>
                 <Picker
-                    style={styles.inputContainer}
+                    style={{
+                        backgroundColor: theme === 'dark' ? colors.entries.max : colors.entries.midMax,
+                        color: 'white'
+                    }}
                     selectedValue={service}
                     onValueChange={(itemValue) => setService(itemValue)}
                     dropdownIconColor='white'
@@ -44,12 +47,3 @@ export default function SelectServiceInput({ service, setService, services, amou
     )
 
 }
-
-const styles = StyleSheet.create({
-
-    inputContainer: {
-        backgroundColor: colors.entries.midMax,
-        color: 'white'
-    }
-
-})

@@ -38,7 +38,7 @@ export function AddItemForm({ categorySelected, setShowItemCategoryCard, setShow
     const [stock, setStock] = useState(false)
     const [step, setStep] = useState(0)
 
-    const labelBgColor = colors.items.midMax
+    const labelBgColor = theme === 'dark' ? colors.items.max : colors.items.midMax
     const inputBgColor = theme === 'dark' ? colors.cardBackground.dark : colors.items.min
 
     const addItem = useAddItem().addItem
