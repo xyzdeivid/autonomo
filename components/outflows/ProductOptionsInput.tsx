@@ -1,4 +1,3 @@
-import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { colors } from '@/styles/appColors'
 import { Item } from '@/types'
 import { Picker } from '@react-native-picker/picker'
@@ -16,14 +15,12 @@ export default function ProductOptionsInput({
     products
 }: ProductOptionsInputProps) {
 
-    const theme = useGetTheme()
-
     return (
         <View
             style={{
                 borderRadius: 6,
                 overflow: 'hidden',
-                backgroundColor: theme === 'dark' ? colors.outflows.max : colors.outflows.midMax,
+                backgroundColor: colors.outflows.max,
                 marginBottom: 20
             }}
         >

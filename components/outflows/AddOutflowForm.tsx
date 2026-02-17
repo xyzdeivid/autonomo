@@ -37,7 +37,7 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
     const [product, setProduct] = useState(products[0])
     const [valueChoice, setValueChoice] = useState('total')
 
-    const labelBgColor = theme === 'dark' ? colors.outflows.max : colors.outflows.midMax
+    const labelBgColor = colors.outflows.max
     const inputBgColor = theme === 'dark' ? colors.cardBackground.dark : colors.outflows.min
 
     const addOutflow = useAddOutflow().addOutflow
@@ -136,7 +136,10 @@ export default function AddOutflowForm({ setAddExpenseForm }: AddExpenseFormProp
                     inputBgColor={inputBgColor}
                     valueChoice={stockIntegrate ? valueChoice : undefined}
                     setValueChoice={setValueChoice}
-                    valueChoiceButtonColors={[labelBgColor, colors.outflows.mid]}
+                    valueChoiceButtonColors={[
+                        labelBgColor, 
+                        theme === 'dark' ? inputBgColor : colors.outflows.midMax
+                    ]}
                 />
                 {
                     checkAllInputs() && (

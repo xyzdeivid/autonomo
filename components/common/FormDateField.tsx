@@ -64,7 +64,14 @@ export function FormDateField({ setTargetDate, label, labelBgColor, buttonBgColo
                     }}
                     onPress={showDatepicker}
                 >
-                    <Text style={{ color: theme === 'dark' ? '#FFF' : labelBgColor }}>{dateFormat(getDate())}</Text>
+                    <Text
+                        style={{
+                            color: theme === 'dark' ? '#FFF' : '#000',
+                            fontWeight: '500'
+                        }}
+                    >
+                        {dateFormat(getDate())}
+                    </Text>
                 </Pressable>
                 {show && (
                     <DateTimePicker

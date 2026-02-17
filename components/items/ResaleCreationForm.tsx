@@ -1,3 +1,4 @@
+import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { FormAmountField } from '../common/FormAmountField'
 import { FormDateField } from '../common/FormDateField'
 import { FormNameField } from '../common/FormNameField'
@@ -35,6 +36,8 @@ export default function ResaleCreationForm({
     labelBgColor, inputBgColor
 }: ResaleCreationFormProps) {
 
+    const theme = useGetTheme()
+
     return (
         <>
             <FormNameField
@@ -62,7 +65,10 @@ export default function ResaleCreationForm({
                 inputBgColor={inputBgColor}
                 valueChoice={valueOutflowChoice}
                 setValueChoice={setValueOutflowChoice}
-                valueChoiceButtonColors={[labelBgColor, inputBgColor]}
+                valueChoiceButtonColors={[
+                    labelBgColor,
+                    theme === 'dark' ? inputBgColor : colors.items.midMax
+                ]}
             />
             <FormValueField
                 setValue={setValue}

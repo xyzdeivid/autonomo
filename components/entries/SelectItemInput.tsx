@@ -21,7 +21,7 @@ export default function SelectServiceInput({ service, setService, services, amou
             <View style={{ borderRadius: 6, overflow: 'hidden' }}>
                 <Picker
                     style={{
-                        backgroundColor: theme === 'dark' ? colors.entries.max : colors.entries.midMax,
+                        backgroundColor: colors.entries.max,
                         color: 'white'
                     }}
                     selectedValue={service}
