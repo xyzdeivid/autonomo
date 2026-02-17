@@ -18,7 +18,7 @@ export function ListItem({ name, value, money }: ListItemProps) {
             style={{
                 ...styles.item,
                 color: theme === 'dark' ? colors.cardText.dark : colors.cardText.light,
-                borderBottomColor: theme === 'dark' ? colors.cardBackground.dark : colors.cardBackground.light
+                borderBottomColor: theme === 'dark' ? colors.cardBackground.dark : '#0000001A'
             }}
         >
             <Text style={{ fontWeight: '500' }}>{name}: </Text>
