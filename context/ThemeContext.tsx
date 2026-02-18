@@ -6,11 +6,13 @@ import { Alert, useColorScheme } from 'react-native'
 interface ThemeContextType {
     theme: 'light' | 'dark' | 'system'
     setTheme: React.Dispatch<React.SetStateAction<'light' | 'dark' | 'system'>>
+    themeLoaded: boolean
 }
 
 export const ThemeContext = createContext<ThemeContextType>({
     theme: 'system',
-    setTheme: () => { }
+    setTheme: () => { },
+    themeLoaded: false
 })
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -18,6 +20,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     const colorScheme = useColorScheme()
 
     const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
+    const [themeLoaded, setThemeLoaded] = useState(false)
 
     useEffect(() => {
 
@@ -43,6 +46,8 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
                     setStatusBarBackgroundColor(initialTheme === 'dark' ? '#000000' : '#FFFFFF')
                     setStatusBarStyle(initialTheme === 'dark' ? 'light' : 'dark')
 
+                    setThemeLoaded(true)
+
                 }
 
             } catch {
@@ -61,7 +66,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     }, [colorScheme])
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
+        <ThemeContext.Provider value={{ theme, setTheme, themeLoaded }}>
             {children}
         </ThemeContext.Provider>
     )

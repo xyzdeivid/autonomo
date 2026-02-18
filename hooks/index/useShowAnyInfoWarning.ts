@@ -5,7 +5,6 @@ import { useContext } from 'react'
 export function useShowAnyInfoWarning() {
 
     const appDocs = useContext(DocsContext)
-    const docsLoaded = appDocs.docsLoaded
     const [entries] = appDocs.entries
     const [outflows] = appDocs.outflows
     const [selectedMonth] = appDocs.selectedMonth
@@ -14,6 +13,6 @@ export function useShowAnyInfoWarning() {
     const monthEntries = filterIncomesByMonth(entries, selectedMonth, currentYear)
     const monthOutflows = filterExpensesByMonth(outflows, selectedMonth, currentYear)
 
-    return docsLoaded && monthEntries.length === 0 && monthOutflows.length === 0
+    return monthEntries.length === 0 && monthOutflows.length === 0
 
 }

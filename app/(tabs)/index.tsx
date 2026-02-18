@@ -1,5 +1,6 @@
 // native functions
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import * as SplashScreen from 'expo-splash-screen'
 
 // context
 import { DocsContext } from '@/context/DocsContext'
@@ -16,11 +17,11 @@ import AddOutflowForm from '@/components/outflows/AddOutflowForm'
 import { Insight } from '@/components/index/Insight'
 import { SettingsButton } from '@/components/index/SettingsButton'
 import { useShowAnyInfoWarning } from '@/hooks/index/useShowAnyInfoWarning'
-import { InitialLoading } from '@/components/index/InitialLoading'
 import { useGetTheme } from '@/hooks/common/useGetTheme'
 import { FirstTimeCard } from '@/components/index/FirstTimeCard'
 import { NoItemAvailableCard } from '@/components/common/NoItemAvailableCard'
 import { useShowAddEntryForm } from '@/hooks/common/useShowAddEntryForm'
+import { ThemeContext } from '@/context/ThemeContext'
 
 export default function Info() {
 
@@ -33,20 +34,28 @@ export default function Info() {
     const [showAddOutflowForm, setShowAddOutflowForm] = useState(false)
     const [showNoItemAvailableCard, setShowNoItemAvailableCard] = useState(false)
 
-    const docsLoaded = appDocs.docsLoaded
     const [firstTime] = appDocs.firstTime
+    const docsLoaded = appDocs.docsLoaded
+    const themeLoaded = useContext(ThemeContext).themeLoaded
 
     const showAnyInfoWarning = useShowAnyInfoWarning()
     const showAddEntryForm = useShowAddEntryForm().showAddEntryForm
+
+    useEffect(() => {
+
+        if (docsLoaded && themeLoaded) {
+
+            SplashScreen.hideAsync()
+
+        }
+
+    }, [docsLoaded, themeLoaded])
 
     return (
         <>
             {firstTime && <FirstTimeCard />}
             {showNoItemAvailableCard && <NoItemAvailableCard setShowFirstTimeCard={setShowNoItemAvailableCard} />}
             <Container>
-                {!docsLoaded && (
-                    <InitialLoading />
-                )}
                 {
                     showAnyInfoWarning
                         ?
