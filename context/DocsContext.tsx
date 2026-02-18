@@ -7,6 +7,7 @@ import { initDatabase } from '@/database/initDatabase'
 import { migrateData } from '@/storage/migrationDataFromAsyncStorage'
 import { Entry, Item, Outflow } from '@/types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as SplashScreen from 'expo-splash-screen'
 
 type SetItems = React.Dispatch<React.SetStateAction<Item[]>>
 
@@ -55,7 +56,6 @@ interface TDocsContext {
     currentYear: CurrentYearState
     selectedMonth: CurrentMonthState
     currentPage: CurrentPageState
-    docsLoaded: boolean
     firstTime: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
 }
 
@@ -66,7 +66,6 @@ const DEFAULT_CONTEXT: TDocsContext = {
     currentYear: ['', () => { }],
     selectedMonth: [0, () => { }],
     currentPage: ['', () => { }],
-    docsLoaded: false,
     firstTime: [false, () => { }]
 }
 
@@ -85,7 +84,6 @@ export default function DocsProvider({ children }: DocsProviderProps) {
     const [currentYear, setCurrentYear] = useState<string>('')
     const [selectedMonth, setSelectedMonth] = useState(0)
     const [currentPage, setCurrentPage] = useState('index')
-    const [docsLoaded, setDocsLoaded] = useState(false)
     const [firstTime, setFirstTime] = useState(false)
 
     const docs: TDocsContext = {
@@ -95,7 +93,6 @@ export default function DocsProvider({ children }: DocsProviderProps) {
         currentYear: [currentYear, setCurrentYear],
         selectedMonth: [selectedMonth, setSelectedMonth],
         currentPage: [currentPage, setCurrentPage],
-        docsLoaded,
         firstTime: [firstTime, setFirstTime]
     }
 
@@ -121,7 +118,7 @@ export default function DocsProvider({ children }: DocsProviderProps) {
 
         } catch {
 
-            Alert.alert('Erro', 'Erro ao consultar primeiro acesso de usuário.')
+            throw new Error('Erro ao consultar primeiro acesso de usuário.')
 
         }
 
@@ -148,14 +145,13 @@ export default function DocsProvider({ children }: DocsProviderProps) {
             setEntries(entries)
             setItems(items)
             setOutflows(outflows)
-            setDocsLoaded(true)
 
             // retornando para ser usado no isFirstTime
             return items
 
         } catch {
 
-            Alert.alert('DOCS CONTEXT ERROR', 'Failed to fetch items from the database.')
+            throw new Error('Erro ao buscar dados no banco de dados.')
 
         }
 
@@ -163,22 +159,42 @@ export default function DocsProvider({ children }: DocsProviderProps) {
 
     useEffect(() => {
 
-        async function startDb() {
+        async function startApp() {
 
-            await initDatabase()
+            try {
 
-            // Migrando dados de db antigos se necessário
-            await migrateData()
+                await initDatabase()
 
-            const items = await getAndSetItems()
+                // Migrando dados de db antigos se necessário
+                await migrateData()
 
-            getCurrentYear()
+                const items = await getAndSetItems()
 
-            await isFirstTime(items)
+                getCurrentYear()
+
+                await isFirstTime(items)
+
+            } catch (error) {
+
+                if (error instanceof Error) {
+
+                    Alert.alert('Erro', error.message)
+
+                } else {
+
+                    Alert.alert('Erro', 'Erro desconhecido')
+
+                }
+
+            } finally {
+
+                SplashScreen.hideAsync()
+
+            }
 
         }
 
-        startDb()
+        startApp()
 
     }, [])
 

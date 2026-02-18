@@ -1,4 +1,3 @@
-import { Alert } from 'react-native'
 import { db } from './db'
 
 export const initDatabase = async () => {
@@ -36,7 +35,7 @@ export const initDatabase = async () => {
 
   } catch {
 
-    Alert.alert('Database Error', 'Failed to initialize the database.')
+    throw new Error('Erro ao iniciar banco de dados.')
 
   }
 
