@@ -7,6 +7,7 @@ import ListInfoTitle from '../common/ListInfoTitle'
 import { colors } from '@/styles/appColors'
 import useGetEntriesToShowOnTheList from '@/hooks/entries/useGetMonthEntries'
 import { DataTableItem } from '../common/DataTableItem'
+import { DataTableEditButton } from '../common/DataTableEditButton'
 
 interface SchedulingsListProps {
     setSelectedEntryForDeletion: React.Dispatch<React.SetStateAction<string>>
@@ -76,9 +77,7 @@ export default function SchedulingsList({ setSelectedEntryForDeletion, setDelete
                             text={moneyFormat(item.serviceValue)}
                             header={false}
                         />
-                        <DataTableItem
-                            text='Editar'
-                            header={false}
+                        <DataTableEditButton
                             onPress={() => deleteScheduling(item)}
                         />
                     </DataTable.Row>

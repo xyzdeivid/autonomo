@@ -7,6 +7,7 @@ import ListInfoTitle from '../common/ListInfoTitle'
 import { colors } from '@/styles/appColors'
 import useGetOutflowsToShowOnTheList from '@/hooks/outflows/useGetOutflowsToShowOnTheList'
 import { DataTableItem } from '../common/DataTableItem'
+import { DataTableEditButton } from '../common/DataTableEditButton'
 
 interface OutflowsListProps {
     setOutflowForDeletion: React.Dispatch<React.SetStateAction<string>>
@@ -76,9 +77,7 @@ export default function OutflowsList({ setOutflowForDeletion, setDeleteOuflowFor
                             text={moneyFormat(item.value)}
                             header={false}
                         />
-                        <DataTableItem
-                            text='Editar'
-                            header={false}
+                        <DataTableEditButton
                             onPress={() => deleteOuflow(item)}
                         />
                     </DataTable.Row>

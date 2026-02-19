@@ -2,6 +2,8 @@ import { Button, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import { FormDateField } from '../common/FormDateField'
 import { FormValueField } from '../common/FormValueField'
 import { FormAmountField } from '../common/FormAmountField'
+import { useGetTheme } from '@/hooks/common/useGetTheme'
+import { colors } from '@/styles/appColors'
 
 interface ReplenishResaleStockProps {
     resaleProductName: string
@@ -17,6 +19,11 @@ interface ReplenishResaleStockProps {
 const ReplenishResaleStock = ({ resaleProductName, setReplenishDate,
     setReplenishValue, setReplenishAmount,
     setReplenishForm, replenishValueChoice, setReplenishValueChoice, submitReplenishStock }: ReplenishResaleStockProps) => {
+
+        const theme = useGetTheme()
+
+        const labelBgColor = theme === 'dark' ? '#868686' : '#000'
+        const inputBgColor = theme === 'dark' ? '#505050' : 'lightgray'
 
     const valueLabelChoice = () => {
 
@@ -43,32 +50,41 @@ const ReplenishResaleStock = ({ resaleProductName, setReplenishDate,
                 style={styles.container}
             >
                 <View
-                    style={styles.card}
+                    style={{
+                        ...styles.card,
+                        backgroundColor: theme === 'dark' ? colors.cardBackground.dark : colors.cardBackground.light
+                    }}
                 >
                     <View>
-                        <Text style={styles.cardTitle}>Reposição de {resaleProductName}</Text>
-                        <View style={{ width: '100%', height: 1, backgroundColor: 'black', marginBottom: 24 }} />
+                        <Text 
+                        style={{
+                            ...styles.cardTitle,
+                            color: theme === 'dark' ? '#FFF' : '#000'
+                         }}
+                        >
+                        Reposição de {resaleProductName}
+                        </Text>
                     </View>
                     <FormDateField
                         setTargetDate={setReplenishDate}
                         label='Data'
-                        labelBgColor='black'
-                        buttonBgColor='transparent'
+                        labelBgColor={labelBgColor}
+                        buttonBgColor={inputBgColor}
                     />
                     <FormValueField
                         setValue={setReplenishValue}
                         label={valueLabelChoice()}
-                        labelBgColor='black'
-                        inputBgColor='transparent'
+                        labelBgColor={labelBgColor}
+                        inputBgColor={inputBgColor}
                         valueChoice={replenishValueChoice}
                         setValueChoice={setReplenishValueChoice}
-                        valueChoiceButtonColors={['black', 'rgba(0,0,0,0.6)']}
+                        valueChoiceButtonColors={[labelBgColor, 'rgba(0,0,0,0.6)']}
                     />
                     <FormAmountField
                         label='Quantidade'
                         setAmount={setReplenishAmount}
-                        labelBgColor='black'
-                        inputBgColor='transparent'
+                        labelBgColor={labelBgColor}
+                        inputBgColor={inputBgColor}
                     />
                     <View style={styles.buttonsContainer}>
                         <Pressable
@@ -77,7 +93,7 @@ const ReplenishResaleStock = ({ resaleProductName, setReplenishDate,
                         >
                             <Text>Cancelar</Text>
                         </Pressable>
-                        <Button title='Confirmar' color='gray' onPress={() => submitReplenishStock()} />
+                        <Button title='Confirmar' color='blue' onPress={() => submitReplenishStock()} />
                     </View>
                 </View>
             </View>
@@ -99,7 +115,6 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        backgroundColor: 'white',
         padding: 20,
         borderRadius: 20,
         width: '80%'

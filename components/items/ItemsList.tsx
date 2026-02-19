@@ -3,6 +3,7 @@ import { DataTable } from 'react-native-paper'
 import { Item } from '@/types/index'
 import useGetItemsByCategory from '@/hooks/items/useGetItemsByCategory'
 import { DataTableItem } from '../common/DataTableItem'
+import { DataTableEditButton } from '../common/DataTableEditButton'
 
 interface ItemsListProps {
     setSelectedItemForDeletion: React.Dispatch<React.SetStateAction<string>>
@@ -67,9 +68,7 @@ export function ItemsList({ setSelectedItemForDeletion, setShowAboutItemCard, ca
                             text={item.category !== 'budget' ? moneyFormat(item.value) : 'Orçamento'}
                             header={false}
                         />
-                        <DataTableItem
-                            text='Editar'
-                            header={false}
+                        <DataTableEditButton
                             onPress={() => showAboutItemCard(item)}
                         />
                     </DataTable.Row>

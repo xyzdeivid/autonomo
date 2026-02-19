@@ -61,7 +61,7 @@ export function FormValueField({ setValue, label, labelBgColor, inputBgColor, va
                                 setChoice={setValueChoice}
                                 buttonColors={valueChoiceButtonColors}
                             />
-                            <Text style={{ marginStart: 8, flex: 1 }}>
+                            <Text style={{ marginStart: 8, flex: 1, color: theme === 'dark' ? '#FFF' : '#000' }}>
                                 {valueChoice === 'total'
                                     ? 'Valor de todas as unidades compradas'
                                     : 'Valor de cada unidade comprada'
